@@ -1,0 +1,1 @@
+- **fix(usage):** Ollama Cloud quota now reads the documented `/api/balance` with the API key — monthly credit allowance, legacy session/weekly windows and purchased USD credits — keeping the settings-cookie scraper as fallback ([#16732](https://github.com/diegosouzapw/OmniRoute/pull/16732)) — thanks @x-adam
