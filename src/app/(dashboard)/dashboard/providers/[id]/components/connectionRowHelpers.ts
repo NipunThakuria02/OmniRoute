@@ -81,7 +81,7 @@ export interface PriorityUpdate {
 }
 
 interface PrioritizedConnection {
-  id: string;
+  id?: string;
   priority?: number;
 }
 
@@ -93,10 +93,13 @@ interface PrioritizedConnection {
  * in `next` order, so the server's `updated_at` tiebreak never decides it.
  */
 export function buildPriorityUpdates(next: PrioritizedConnection[]): PriorityUpdate[] {
-  return next
-    .map((row, i) => ({ id: row.id, priority: i + 1, current: row.priority }))
-    .filter((row) => Boolean(row.id) && row.current !== row.priority)
-    .map(({ id, priority }) => ({ id, priority }));
+  const updates: PriorityUpdate[] = [];
+  next.forEach((row, i) => {
+    const priority = i + 1;
+    if (!row.id || row.priority === priority) return;
+    updates.push({ id: row.id, priority });
+  });
+  return updates;
 }
 
 const isValidPriority = (value: unknown): value is number =>
@@ -116,7 +119,7 @@ export function buildSwapPriorityUpdates(
 ): PriorityUpdate[] {
   const p1 = conn1.priority;
   const p2 = conn2.priority;
-  if (isValidPriority(p1) && isValidPriority(p2) && p1 !== p2) {
+  if (conn1.id && conn2.id && isValidPriority(p1) && isValidPriority(p2) && p1 !== p2) {
     return [
       { id: conn1.id, priority: p2 },
       { id: conn2.id, priority: p1 },
