@@ -1626,7 +1626,7 @@
   },
   "src/mitm/manager.ts": {
     "@typescript-eslint/no-unused-vars": {
-      "count": 3
+      "count": 2
     }
   },
   "src/server/ws/liveServer.ts": {
@@ -2891,7 +2891,7 @@
   },
   "tests/unit/cli-sync-commands.test.ts": {
     "@typescript-eslint/no-explicit-any": {
-      "count": 21
+      "count": 17
     },
     "@typescript-eslint/no-unused-vars": {
       "count": 2
