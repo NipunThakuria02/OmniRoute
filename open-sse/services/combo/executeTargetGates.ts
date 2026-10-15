@@ -35,6 +35,7 @@ import { resolveQuotaExhaustionCutoffForTarget } from "./quotaExhaustionCutoff.t
 import type { ProtectedPriorityStopCause } from "./protectedPriorityStopStatus.ts";
 import type { AttemptLoopDeps, AttemptLoopState, GateDecision } from "./attemptLoopTypes.ts";
 import { modelAvailabilitySkipReason, type ResolvedComboTarget } from "./types.ts";
+import { recordSkippedConnectionCooldown } from "./skippedConnectionCooldown.ts";
 import type { PreDispatchExclusion } from "./pinRecovery.ts";
 import { getStrategyTraits } from "./strategyRegistry.ts";
 
@@ -350,6 +351,7 @@ export async function evaluateExecuteTargetGates(opts: {
     const available = await deps.isModelAvailable(modelStr, targetForAttempt);
     const skipReason = modelAvailabilitySkipReason(available);
     if (skipReason) {
+      recordSkippedConnectionCooldown(state, available);
       deps.log.debug?.(
         "COMBO",
         skipReason === "model_not_in_catalog"
