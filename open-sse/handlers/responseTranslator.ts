@@ -7,7 +7,10 @@ import {
   isTopLevelCacheWriteOnly,
   pickCacheCreationInPrompt,
 } from "../utils/pickCacheCreationTokens.ts";
-import { normalizeOpenAICompatibleFinishReasonString } from "../utils/finishReason.ts";
+import {
+  normalizeOpenAICompatibleFinishReasonString,
+  openAIFinishReasonToClaudeStopReason,
+} from "../utils/finishReason.ts";
 import { containsTextualToolCallMarker } from "../utils/textualToolCall.ts";
 import { stripObfuscationZeroWidth } from "../utils/zeroWidth.ts";
 import { getAnyReasoningValue } from "../utils/reasoningFields.ts";
@@ -847,9 +850,7 @@ function convertOpenAINonStreamingToClaude(
     }
   }
 
-  let stopReason = toString(choiceObj.finish_reason, "end_turn");
-  if (stopReason === "stop") stopReason = "end_turn";
-  if (stopReason === "tool_calls") stopReason = "tool_use";
+  const stopReason = openAIFinishReasonToClaudeStopReason(choiceObj.finish_reason);
 
   const usageSrc = toRecord(openaiResponse.usage);
   const promptTokens = toNumber(usageSrc.prompt_tokens, 0);

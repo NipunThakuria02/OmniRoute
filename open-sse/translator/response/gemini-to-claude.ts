@@ -1,6 +1,9 @@
 import { register } from "../registry.ts";
 import { FORMATS } from "../formats.ts";
-import { isAbortFinishReason } from "../../utils/finishReason.ts";
+import {
+  isAbortFinishReason,
+  normalizeOpenAICompatibleFinishReason,
+} from "../../utils/finishReason.ts";
 import { restoreClaudeToolName } from "../../services/claudeCodeToolRemapper.ts";
 import {
   buildGeminiThoughtSignatureKey,
@@ -473,12 +476,14 @@ export function geminiToClaudeResponse(chunk, state) {
 
     let stopReason;
     const reason = candidate.finishReason.toLowerCase();
-    if (state.hasToolUse || reason === "tool_calls") {
+    if (normalizeOpenAICompatibleFinishReason(reason) === "content_filter") {
+      // SAFETY/RECITATION/BLOCKLIST/PROHIBITED_CONTENT/…: a safety block is a
+      // refusal, not a completed turn — and it wins over an emitted tool call.
+      stopReason = "refusal";
+    } else if (state.hasToolUse || reason === "tool_calls") {
       stopReason = "tool_use";
     } else if (reason === "max_tokens" || reason === "length") {
       stopReason = "max_tokens";
-    } else if (reason === "safety" || reason === "recitation" || reason === "blocklist") {
-      stopReason = "end_turn";
     } else if (isAbortFinishReason(reason)) {
       stopReason = "tool_use";
     } else {
