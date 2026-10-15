@@ -1175,7 +1175,7 @@
       "dryRun": "Visualizar sem aplicar"
     },
     "pull": {
-      "description": "Baixar config da cloud ou remoto",
+      "description": "Baixar o arquivo de backup completo do servidor (.tar.gz) para [outPath]",
       "source": "Origem (cloud ou context:nome)",
       "merge": "Mesclar com config existente",
       "replace": "Substituir config existente",

@@ -439,6 +439,21 @@ function convertClaudeDocumentBlock(block, preserveCacheControl = false): JsonRe
   return part;
 }
 
+// Text notice for Claude block types OpenAI Chat has no equivalent for (container_upload,
+// newer types). Only the block type is echoed — sanitized and capped — never block data,
+// so a crafted `type` string cannot smuggle instructions into the prompt.
+function sanitizeBlockType(type: string): string {
+  return type
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]/g, "")
+    .slice(0, 64);
+}
+
+function buildOmittedBlocksNotice(types: string[]): string {
+  const safe = new Set(types.map((t) => sanitizeBlockType(t) || "unsupported"));
+  return [...safe].map((t) => `[${t} block omitted: not supported on this route]`).join("\n");
+}
+
 // Convert single Claude message - returns single message or array of messages
 function convertClaudeMessage(msg, preserveCacheControl = false) {
   // Preserve system role for mid-conversation system turns (#6954).
@@ -461,6 +476,7 @@ function convertClaudeMessage(msg, preserveCacheControl = false) {
     const parts = [];
     const toolCalls = [];
     const toolResults = [];
+    const omittedTypes: string[] = [];
     let reasoningContent = null;
 
     for (const block of msg.content) {
@@ -580,6 +596,10 @@ function convertClaudeMessage(msg, preserveCacheControl = false) {
             content: resultContent,
           });
           break;
+
+        default:
+          if (typeof block?.type === "string" && block.type) omittedTypes.push(block.type);
+          break;
       }
     }
 
@@ -628,6 +648,12 @@ function convertClaudeMessage(msg, preserveCacheControl = false) {
 
     if (reasoningContent !== null && role === "assistant") {
       return { role, content: "", reasoning_content: reasoningContent };
+    }
+
+    // Only unsupported blocks: keep the turn with a notice instead of returning null,
+    // which silently deleted it (and could leave the upstream with `messages: []`).
+    if (omittedTypes.length > 0) {
+      return { role, content: buildOmittedBlocksNotice(omittedTypes) };
     }
   }
 
