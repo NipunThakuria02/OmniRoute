@@ -34,6 +34,7 @@ import { applyClientUsageBuffer } from "./clientUsageBuffer.ts";
 import { storeClaudeThinkingFromResponse } from "../../services/claudeThinkingStore.ts";
 import { resolveRequestToolIdentity } from "../../translator/response/openai-responses/requestToolIdentity.ts";
 import { plaintextCollaborationFields } from "../../translator/response/openai-responses/collaborationPlaintextMarker.ts";
+import { finalizeResponsesTerminalStatus } from "../../translator/helpers/responsesTerminalStatus.ts";
 
 export type { NonStreamingClientTranslateInput, NonStreamingClientTranslateResult };
 
@@ -135,7 +136,11 @@ export function translateNonStreamingClientResponse(
   }
   // ── Sanitize response for SDK compatibility ────────────────────────────────
   if (clientResponseFormat === FORMATS.OPENAI_RESPONSES) {
+    // A Chat body's truncation or filter must reach the client as status
+    // "incomplete", as the streaming path does (#14806).
+    const chatFinishReason = translatedResponse?.choices?.[0]?.finish_reason;
     translatedResponse = sanitizeResponsesApiResponse(translatedResponse);
+    if (chatFinishReason) finalizeResponsesTerminalStatus(translatedResponse, chatFinishReason);
     const sanitizedOutput = translatedResponse?.output;
     if (customToolNames && Array.isArray(sanitizedOutput)) {
       for (const item of sanitizedOutput) {

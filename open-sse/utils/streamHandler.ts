@@ -9,6 +9,7 @@ import { PENDING_REQUEST_CLEARED_MARKER } from "./stream.ts";
 import { createCompletedResponsesToolHandoffWatcher } from "./responsesToolHandoff.ts";
 import { createStreamContentWatcher, type StreamContentWatcher } from "./streamReadiness.ts";
 import { hasOpenReasoning } from "./emptyTurnRetry.ts";
+import { createStallWatchdog } from "./streamStallWatchdog.ts";
 import {
   buildSyntheticResponsesFailureId,
   SYNTHETIC_RESPONSES_SEQUENCE_NUMBER,
@@ -911,7 +912,6 @@ export function pipeWithDisconnect(
     );
   }
 
-  let stallTimer: ReturnType<typeof setTimeout> | null = null;
   let activeTimer: ReturnType<typeof setTimeout> | null = null;
   // Erroring the upstream tap unblocks a downstream reader suspended on the
   // transform pipe; aborting the controller alone does not always do that.
@@ -919,10 +919,11 @@ export function pipeWithDisconnect(
   let stallFired = false;
   let activeFired = false;
 
-  const clearStall = () => {
-    if (stallTimer) clearTimeout(stallTimer);
-    stallTimer = null;
-  };
+  // Per-chunk timer by default; one interval with SSE_STALL_WATCHDOG=interval.
+  const stallWatchdog = createStallWatchdog(stallEnabled ? stallTimeoutMs : 0, () =>
+    triggerWatchdog("stall")
+  );
+  const clearStall = stallWatchdog.clear;
   const clearActive = () => {
     if (activeTimer) clearTimeout(activeTimer);
     activeTimer = null;
@@ -954,11 +955,7 @@ export function pipeWithDisconnect(
       console.debug(`[STREAM-HANDLER] ${kind} watchdog abort failed:`, e);
     }
   };
-  const armStall = () => {
-    if (!stallEnabled) return;
-    clearStall();
-    stallTimer = setTimeout(() => triggerWatchdog("stall"), stallTimeoutMs);
-  };
+  const armStall = stallWatchdog.arm;
   const armActive = () => {
     if (!activeEnabled) return;
     clearActive();
