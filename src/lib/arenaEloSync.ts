@@ -666,9 +666,16 @@ export function stopArenaEloSync(): void {
  */
 export function getArenaEloSyncStatus(): SyncStatus {
   const enabled = getEffectiveArenaEloSyncEnabled();
+  const persistedSync = getLatestSyncedAt("arena_elo");
+  // SQLite CURRENT_TIMESTAMP is UTC but omits the timezone suffix.
+  const persistedMs = persistedSync
+    ? Date.parse(
+        persistedSync.includes("T") ? persistedSync : `${persistedSync.replace(" ", "T")}Z`
+      )
+    : NaN;
   return {
     enabled,
-    lastSync: lastSyncTime,
+    lastSync: Number.isFinite(persistedMs) ? new Date(persistedMs).toISOString() : null,
     lastSyncModelCount,
     nextSync:
       syncTimer && lastSyncTime
