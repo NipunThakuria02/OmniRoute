@@ -653,7 +653,10 @@ async function buildUnifiedModelsResponseCore(
         !source.syncedCapability &&
         !source.reasoningEffortsOverride
       ) {
-        return null;
+        // Explicit vision evidence remains valid without registry/synced metadata.
+        return typeof canonical.capabilities.vision === "boolean"
+          ? { capabilities: { vision: canonical.capabilities.vision } }
+          : null;
       }
 
       const synced = getSyncedCapability(providerId, modelId);
@@ -797,6 +800,7 @@ async function buildUnifiedModelsResponseCore(
       const capabilities = mergeComboCapabilities(knownMetadata);
       if (targetMetadata.some((metadata) => metadata === null)) {
         delete capabilities.effort_tiers;
+        delete capabilities.vision;
       }
 
       return {
