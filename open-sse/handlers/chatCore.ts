@@ -2378,8 +2378,14 @@ async function handleChatCoreInner({
       // payloads at high context (150+ msgs, 100+ tools). Fix: #1359.
       // Claude Code sends well-formed Messages API payloads — trust them
       // regardless of combo strategy or cache_control settings.
+      // applyReasoningRuleDirective returns unknown; the hoist helper requires a record.
+      const claudePassthroughBody = applyReasoningRuleDirective({ ...body }, "claude");
       translatedBody = hoistDeferredToolsForTarget(
-        applyReasoningRuleDirective({ ...body }, "claude"),
+        claudePassthroughBody !== null &&
+          typeof claudePassthroughBody === "object" &&
+          !Array.isArray(claudePassthroughBody)
+          ? (claudePassthroughBody as Record<string, unknown>)
+          : { ...(body as Record<string, unknown>) },
         provider
       );
       translatedBody._disableToolPrefix = true;
