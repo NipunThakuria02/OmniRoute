@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { createResponsesAssistantTurnInput } from "../fixtures/responsesAssistantTurn.ts";
 
 const { openaiResponsesToOpenAIRequest, openaiToOpenAIResponsesRequest } =
   await import("../../open-sse/translator/request/openai-responses.ts");
@@ -82,6 +83,39 @@ test("Responses -> Chat converts instructions, inputs, function calls, outputs, 
   (assert as any).deepEqual((result as any).tool_choice, {
     type: "function",
     function: { name: "read_file" },
+  });
+});
+
+test("Responses -> Chat keeps assistant text, reasoning, and function calls in one turn", () => {
+  const result = openaiResponsesToOpenAIRequest(
+    "gpt-4o",
+    createResponsesAssistantTurnInput(),
+    false,
+    { _preserveReasoningContent: true }
+  ) as { messages: Array<Record<string, unknown>> };
+
+  assert.equal(result.messages.length, 2);
+  assert.deepEqual(result.messages[0], {
+    role: "assistant",
+    content: [{ type: "text", text: "I will inspect" }],
+    reasoning_content: "Inspect first",
+    tool_calls: [
+      {
+        id: "call_1",
+        type: "function",
+        function: { name: "read_file", arguments: "{}" },
+      },
+      {
+        id: "call_2",
+        type: "function",
+        function: { name: "search", arguments: "{}" },
+      },
+    ],
+  });
+  assert.deepEqual(result.messages[1], {
+    role: "tool",
+    tool_call_id: "call_1",
+    content: "contents",
   });
 });
 
