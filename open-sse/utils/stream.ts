@@ -95,6 +95,7 @@ import { collectClaudeDelta } from "./streamClaudeDelta.ts";
 import { createStreamTiming, registerStreamTiming, type StreamTiming } from "./streamTiming.ts";
 import { trackStreamPartialUsage } from "./streamPartialUsage.ts";
 import { buildUsageOnlyChunk } from "./usageOnlyChunk.ts";
+import { createSSEOutputSink } from "./sseOutputSink.ts";
 import { normalizeArrayContentChunk } from "./arrayContentDelta.ts";
 
 /**
@@ -802,12 +803,6 @@ export function createSSEStream(options: StreamOptions = {}) {
   // stream, marked from the transform below. ttft() = first-forwarded-SSE-chunk
   // latency (NOT token-level) — see streamTiming.ts.
   const timing: StreamTiming = createStreamTiming();
-  /** Forward a pre-encoded SSE chunk, marking TTFT/ITL on the way. */
-  const forward = (controller: TransformStreamDefaultController<Uint8Array>, bytes: Uint8Array) => {
-    timing.markForward();
-    timing.observeOutput(bytes);
-    controller.enqueue(bytes);
-  };
 
   // Drop internal commentary-phase Responses output before forwarding (#6199).
   // Explicit option wins; otherwise read the feature flag (default on) — resolved once per stream.
@@ -828,6 +823,9 @@ export function createSSEStream(options: StreamOptions = {}) {
     (mode === STREAM_MODE.PASSTHROUGH
       ? clientResponseFormat === FORMATS.CLAUDE
       : sourceFormat === FORMATS.CLAUDE) === true;
+  // Forward a pre-encoded SSE chunk: TTFT/ITL marks + opt-in coalescing (sseOutputSink.ts).
+  const outputSink = createSSEOutputSink(timing, { claudeClient: clientExpectsClaudeStream });
+  const forward = outputSink.forward;
 
   // Antigravity/cloudcode streams terminate naturally on their last
   // `data: {"response":{...}}` event, not on a `[DONE]` marker. Emitting
@@ -1380,7 +1378,7 @@ export function createSSEStream(options: StreamOptions = {}) {
   };
 
   const sseStream = new TransformStream(
-    {
+    outputSink.wrap({
       start(controller) {
         // Start idle watchdog — checks every 10s if provider has stopped sending
         if (STREAM_IDLE_TIMEOUT_MS > 0) {
@@ -3240,7 +3238,7 @@ export function createSSEStream(options: StreamOptions = {}) {
         }
       },
       cancel: () => clearIdleTimer(),
-    },
+    }),
     ...createByteLengthQueueStrategies(streamBufferBytes)
   );
   trackStreamPartialUsage(sseStream, body, () => [state?.usage ?? usage, totalContentLength]);
