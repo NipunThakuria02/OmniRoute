@@ -27,10 +27,8 @@ import { evaluateCliproxyPreflightGate } from "../../../src/lib/services/cliprox
 import { lookupPositiveCap } from "./concurrencyCaps.ts";
 import { recordComboDecision } from "./decisionTrace.ts";
 import { recordPersistedSkipBypass } from "../comboMetrics.ts";
-import {
-  getExhaustedTargetSkipReason,
-  resolvePersistedConnectionCooldownSkipReason,
-} from "./comboPredicates.ts";
+import { getExhaustedTargetSkipReason } from "./comboPredicates.ts";
+import { resolveAndRecordPersistedCooldown } from "./persistedConnectionCooldown.ts";
 import { resolveQuotaExhaustionCutoffForTarget } from "./quotaExhaustionCutoff.ts";
 import type { ProtectedPriorityStopCause } from "./protectedPriorityStopStatus.ts";
 import type { AttemptLoopDeps, AttemptLoopState, GateDecision } from "./attemptLoopTypes.ts";
@@ -203,7 +201,8 @@ export async function evaluateExecuteTargetGates(opts: {
     : { ...target, modelAbortSignal: abortSignal, fallbackAttempts: i };
 
   if (target.connectionId) {
-    const persistedSkip = await resolvePersistedConnectionCooldownSkipReason(
+    const persistedSkip = await resolveAndRecordPersistedCooldown(
+      state,
       target,
       (id) => readConnectionForCooldownGate(id, false),
       allowRateLimitedConnection
