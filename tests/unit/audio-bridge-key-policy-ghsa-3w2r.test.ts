@@ -93,11 +93,15 @@ function audioGuardrail(
   });
 }
 
-/** Key-scope seams: the model policy is evaluated against a known key secret. */
+/**
+ * Key-scope seams: the model policy is evaluated against a known key secret,
+ * and (as in the bridge deps) every STT model has a usable connection.
+ */
 function modelPolicyDeps(isAllowed: (model: string) => boolean) {
   return {
     getKeySecret: async () => "sk-ghsa-3w2r-key-secret",
     isModelAllowed: async (_secret: string, model: string) => isAllowed(model),
+    hasUsableCredentials: async () => true,
   };
 }
 
