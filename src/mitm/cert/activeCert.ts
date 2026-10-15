@@ -50,10 +50,12 @@ export function activeCertDownloadName(mode: CertMigrationDecision): string {
 }
 
 /**
- * Operator-facing "cert missing" message for the active model. The root CA is
- * only minted by starting the bridge (`loadOrCreateMitmCa()` in
- * `startMitmInternal()`); `cert/regenerate` mints a legacy leaf, which would
- * not give a root-CA install anything to trust.
+ * Operator-facing "cert missing" message for the active model. Under the
+ * root-CA model the CA is minted when the bridge starts
+ * (`loadOrCreateMitmCa()` in `startMitmInternal()`) — the normal first-run
+ * path, which also trusts it. `cert/regenerate` now mints/rotates the CA too
+ * (`cert/regenerate.ts`) but does not trust it, so the message keeps pointing
+ * at starting the bridge.
  */
 export function activeCertMissingMessage(mode: CertMigrationDecision): string {
   return mode === "use-root-ca"

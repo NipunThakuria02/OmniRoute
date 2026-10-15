@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
+import { basename } from "node:path";
 import { createInterface } from "node:readline";
-import { apiFetch, getBaseUrl } from "../api.mjs";
+import { apiFetch, getBaseUrl, isRouteUnavailableStatus } from "../api.mjs";
 import { emit } from "../output.mjs";
 import { t } from "../i18n.mjs";
 
@@ -36,6 +37,89 @@ const syncTokenSchema = [
   { key: "lastUsed", header: "Last Used", formatter: fmtTs },
 ];
 
+const EXPORT_ALL_PATH = "/api/db-backups/exportAll";
+// Building the archive (SQLite backup + tar of the call-log artifacts) can outlast the
+// default 30 s request timeout on a large instance.
+const EXPORT_ALL_TIMEOUT_MS = 300_000;
+const SAFE_ARCHIVE_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
+/** Server-suggested filename (Content-Disposition), reduced to a safe bare file name. */
+export function archiveFileName(contentDisposition, now = new Date()) {
+  const match = /filename="?([^";]+)"?/i.exec(contentDisposition || "");
+  const suggested = match ? basename(match[1].trim()) : "";
+  if (SAFE_ARCHIVE_NAME.test(suggested)) return suggested;
+  const stamp = now.toISOString().replace(/[:.]/g, "-").slice(0, 19);
+  return `omniroute-full-backup-${stamp}.tar.gz`;
+}
+
+function pullFailureHint(status) {
+  if (status === 401 || status === 403) {
+    return (
+      "the full backup requires an operator credential: run this on the server host " +
+      "(local CLI credential) or sign in to the dashboard; API keys and remote access " +
+      "tokens are refused."
+    );
+  }
+  if (isRouteUnavailableStatus(status)) {
+    return `the server does not serve GET ${EXPORT_ALL_PATH}; update OmniRoute on the server.`;
+  }
+  return null;
+}
+
+async function reportPullFailure(res) {
+  let message = `HTTP ${res.status}`;
+  try {
+    await res.assertOk();
+  } catch (err) {
+    if (err?.message) message = err.message;
+  }
+  const hint = pullFailureHint(res.status);
+  process.stderr.write(
+    `Error: sync pull failed (HTTP ${res.status}): ${message}${hint ? `\n  ${hint}` : ""}\n`
+  );
+  return res.exitCode || 1;
+}
+
+function writeArchive(target, buf) {
+  try {
+    // `wx`: never clobber an existing file; 0o600: the archive holds the stored credentials.
+    writeFileSync(target, buf, { flag: "wx", mode: 0o600 });
+    return 0;
+  } catch (err) {
+    const reason = err?.code === "EEXIST" ? "file already exists" : err?.code || err?.message;
+    process.stderr.write(`Error: cannot write ${target}: ${reason}\n`);
+    return 1;
+  }
+}
+
+/**
+ * `omniroute sync pull [outPath]` — download the server's full backup archive (`.tar.gz`)
+ * from `GET /api/db-backups/exportAll`. The route is operator-only, so against a loopback
+ * server `apiFetch` attaches the machine-bound local CLI credential.
+ */
+export async function runSyncPull(outPath, globalOpts = {}) {
+  let res;
+  try {
+    res = await apiFetch(EXPORT_ALL_PATH, {
+      apiKey: globalOpts.apiKey,
+      baseUrl: globalOpts.baseUrl,
+      context: globalOpts.context,
+      headers: { accept: "application/gzip, application/json" },
+      timeout: EXPORT_ALL_TIMEOUT_MS,
+    });
+  } catch (err) {
+    process.stderr.write(`Error: sync pull failed: ${err?.message || "network error"}\n`);
+    return err?.exitCode || 1;
+  }
+  if (!res.ok) return reportPullFailure(res);
+
+  const target = outPath || archiveFileName(res.headers.get("content-disposition"));
+  const buf = Buffer.from(await res.arrayBuffer());
+  const exitCode = writeArchive(target, buf);
+  if (exitCode === 0) process.stdout.write(`Saved ${buf.length} bytes to ${target}\n`);
+  return exitCode;
+}
+
 export function registerSync(program) {
   const sync = program.command("sync").description(t("sync.description"));
 
@@ -58,30 +142,11 @@ export function registerSync(program) {
     });
 
   sync
-    .command("pull")
+    .command("pull [outPath]")
     .description(t("sync.pull.description"))
-    .option("--source <s>", t("sync.pull.source"), "cloud")
-    .option("--merge", t("sync.pull.merge"))
-    .option("--replace", t("sync.pull.replace"))
-    .option("--dry-run", t("sync.pull.dryRun"))
-    .action(async (opts, cmd) => {
-      if (opts.merge && opts.replace) {
-        process.stderr.write("--merge and --replace are mutually exclusive\n");
-        process.exit(2);
-      }
-      const res = await apiFetch("/api/db-backups/exportAll", {
-        method: "POST",
-        body: {
-          source: opts.source,
-          strategy: opts.replace ? "replace" : "merge",
-          dryRun: !!opts.dryRun,
-        },
-      });
-      if (!res.ok) {
-        process.stderr.write(`Error: ${res.status}\n`);
-        process.exit(1);
-      }
-      emit(await res.json(), cmd.optsWithGlobals());
+    .action(async (outPath, opts, cmd) => {
+      const exitCode = await runSyncPull(outPath, cmd.optsWithGlobals());
+      if (exitCode !== 0) process.exit(exitCode);
     });
 
   sync

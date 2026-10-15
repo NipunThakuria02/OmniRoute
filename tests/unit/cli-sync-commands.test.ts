@@ -55,25 +55,9 @@ test("sync push envia parts para /api/sync/cloud", async () => {
   assert.ok(capturedBody.parts.includes("settings"));
 });
 
-test("sync pull chama /api/db-backups/exportAll", async () => {
-  let capturedUrl = "";
-  let capturedBody: any = null;
-  const origFetch = globalThis.fetch;
-  globalThis.fetch = ((url: string, opts: any) => {
-    capturedUrl = url;
-    if (opts?.body) capturedBody = JSON.parse(opts.body);
-    return Promise.resolve(makeResp({ imported: 5 }));
-  }) as any;
-
-  await (globalThis.fetch as any)("/api/db-backups/exportAll", {
-    method: "POST",
-    body: JSON.stringify({ source: "cloud", strategy: "merge", dryRun: false }),
-  });
-
-  globalThis.fetch = origFetch;
-  assert.ok(capturedUrl.includes("/api/db-backups/exportAll"));
-  assert.equal(capturedBody.strategy, "merge");
-});
+// `sync pull` is covered against the real commander wiring in
+// tests/unit/cli-sync-pull-exportall.test.ts (GET /api/db-backups/exportAll → .tar.gz on disk).
+// The stub that lived here asserted a POST body with `strategy`, i.e. the 405 bug itself.
 
 test("sync diff passa op=diff na query", async () => {
   let capturedUrl = "";

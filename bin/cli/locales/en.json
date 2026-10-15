@@ -1175,7 +1175,7 @@
       "dryRun": "Preview without applying"
     },
     "pull": {
-      "description": "Pull config from cloud or remote",
+      "description": "Download the server's full backup archive (.tar.gz) to [outPath]",
       "source": "Source (cloud or context:name)",
       "merge": "Merge with existing config",
       "replace": "Replace existing config",

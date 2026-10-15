@@ -301,6 +301,7 @@ import {
   resolveComboContextLimit,
 } from "../services/contextManager.ts";
 import { resolveBackgroundTaskRedirect } from "./chatCore/backgroundRedirect.ts";
+import { resolveCopilotAuto } from "./chatCore/copilotAutoModel.ts";
 import { emitThinkingSignatureDiagnostics } from "./chatCore/thinkingSignatureDiagnostics.ts";
 import type {
   CompressionConfig,
@@ -761,6 +762,9 @@ async function handleChatCoreInner({
     });
   }
 
+  const ca = await resolveCopilotAuto(provider, model, body, credentials, sessionAffinityKey, log);
+  if (ca.errorResult) return ca.errorResult;
+  ({ model, credentials } = ca);
   // Custom aliases remain explicit; lifecycle replacements are advisory and never silently routed.
   let [resolvedModel, effectiveModel, routedLifecycleError] = resolveLifecycle(
     provider,
@@ -3922,8 +3926,4 @@ async function handleChatCoreInner({
     }
   }
 }
-export function isTokenExpiringSoon(expiresAt, bufferMs = 5 * 60 * 1000) {
-  if (!expiresAt) return false;
-  const expiresAtMs = new Date(expiresAt).getTime();
-  return expiresAtMs - Date.now() < bufferMs;
-}
+export { isTokenExpiringSoon } from "./chatCore/tokenExpiry.ts";
