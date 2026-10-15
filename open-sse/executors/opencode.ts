@@ -67,7 +67,7 @@ import {
   surfaceFromBaseUrl,
 } from "./opencodeFreeTierContract.ts";
 import {
-  applyMuseSparkMinOutputTokens,
+  applyOpencodeOutputBudgetFloors,
   createMuseSparkStreamFinishNormalizer,
   isResponsesTerminalLine,
   normalizeMuseSparkFinishReason,
@@ -567,9 +567,9 @@ export class OpencodeExecutor extends BaseExecutor {
       // muse-spark reasoning models consume the entire output budget on hidden
       // server-side reasoning; small caller budgets come back as empty-message
       // 200s ("Provider returned empty content"). Raise tiny budgets to the
-      // floor before dispatch (see MUSE_SPARK_MIN_OUTPUT_TOKENS).
+      // floor before dispatch (see applyOpencodeOutputBudgetFloors).
       if (input.body && typeof input.body === "object" && !Array.isArray(input.body)) {
-        applyMuseSparkMinOutputTokens(
+        applyOpencodeOutputBudgetFloors(
           String(input.model ?? ""),
           input.body as Record<string, unknown>
         );
