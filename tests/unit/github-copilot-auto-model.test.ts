@@ -23,8 +23,7 @@ const { GithubExecutor } = await import("../../open-sse/executors/github.ts");
 const { getModelsByProviderId } = await import("../../open-sse/config/providerModels.ts");
 const { GITHUB_COPILOT_STATIC_FALLBACK_MODELS } =
   await import("../../open-sse/services/githubCopilotModels.ts");
-const { applyCopilotAutoModel } =
-  await import("../../open-sse/handlers/chatCore/copilotAutoModel.ts");
+const { resolveCopilotAuto } = await import("../../open-sse/handlers/chatCore/copilotAutoModel.ts");
 const {
   COPILOT_AUTO_API_VERSION,
   COPILOT_AUTO_REFRESH_WINDOW_MS,
@@ -284,27 +283,25 @@ test("buildHeaders sends Copilot-Session-Token on the auto API version only when
   assert.equal(auto["x-github-api-version"], COPILOT_AUTO_API_VERSION);
 });
 
-test("applyCopilotAutoModel leaves non-auto and non-github requests untouched", async () => {
+test("resolveCopilotAuto leaves non-auto and non-github requests untouched", async () => {
   const calls = mockFetch(() => new Response("{}", { status: 200 }));
   const credentials = freshCredentials();
-  const viaGithub = await applyCopilotAutoModel("github", "gpt-5-mini", {}, credentials);
+  const viaGithub = await resolveCopilotAuto("github", "gpt-5-mini", {}, credentials);
   assert.equal(viaGithub.model, "gpt-5-mini");
   assert.equal(viaGithub.credentials, credentials);
-  const ghe = await applyCopilotAutoModel("ghe-copilot", "auto", {}, credentials);
+  const ghe = await resolveCopilotAuto("ghe-copilot", "auto", {}, credentials);
   assert.equal(ghe.model, "auto", "ghe-copilot does not opt into auto");
   assert.equal(calls.length, 0);
 });
 
-test("applyCopilotAutoModel swaps model, body and a credentials copy without mutating input", async () => {
+test("resolveCopilotAuto swaps model, body and a credentials copy without mutating input", async () => {
   mockFetch(() => autoDecision("claude-sonnet-5"));
   const credentials = freshCredentials();
   const body: Record<string, unknown> = {
     model: "github/auto",
     messages: [{ role: "user", content: "hello" }],
   };
-  const outcome = await applyCopilotAutoModel("github", "auto", body, credentials, {
-    sessionKey: "sess",
-  });
+  const outcome = await resolveCopilotAuto("github", "auto", body, credentials, "sess");
   assert.equal(outcome.errorResult, undefined);
   assert.equal(outcome.model, "claude-sonnet-5");
   assert.equal(body.model, "claude-sonnet-5");
@@ -316,12 +313,12 @@ test("applyCopilotAutoModel swaps model, body and a credentials copy without mut
   );
 });
 
-test("applyCopilotAutoModel surfaces an /auto 4xx as a sanitized error result", async () => {
+test("resolveCopilotAuto surfaces an /auto 4xx as a sanitized error result", async () => {
   mockFetch(
     () =>
       new Response(JSON.stringify({ error: { message: "auto is not enabled" } }), { status: 403 })
   );
-  const outcome = await applyCopilotAutoModel(
+  const outcome = await resolveCopilotAuto(
     "github",
     "auto",
     { messages: [{ role: "user", content: "x" }] },
@@ -335,7 +332,7 @@ test("applyCopilotAutoModel surfaces an /auto 4xx as a sanitized error result", 
   assert.ok(!payload.error.message.includes("at /"), "no stack trace in the error body");
 });
 
-test("applyCopilotAutoModel refreshes a stale Copilot token before calling /auto", async () => {
+test("resolveCopilotAuto mints a fresh Copilot token for /auto when the stored one is stale", async () => {
   const calls = mockFetch((call) => {
     if (call.url.startsWith("https://api.github.com/copilot_internal/v2/token")) {
       return new Response(
@@ -348,21 +345,18 @@ test("applyCopilotAutoModel refreshes a stale Copilot token before calling /auto
     }
     return autoDecision("gpt-5-mini");
   });
-  let persisted: Record<string, unknown> | null = null;
-  const outcome = await applyCopilotAutoModel(
+  const stale = freshCredentials({ copilotToken: undefined, copilotTokenExpiresAt: undefined });
+  const outcome = await resolveCopilotAuto(
     "github",
     "auto",
     { messages: [{ role: "user", content: "x" }] },
-    freshCredentials({ copilotToken: undefined, copilotTokenExpiresAt: undefined }),
-    {
-      onCredentialsRefreshed: (next) => {
-        persisted = next;
-      },
-    }
+    stale
   );
   assert.equal(outcome.model, "gpt-5-mini");
-  assert.equal(outcome.credentials.copilotToken, "copilot-minted");
-  assert.equal(persisted?.copilotToken, "copilot-minted");
+  // The minted token is only used for /auto: the request credentials stay stale so
+  // BaseExecutor.execute() runs its own refresh and persists the token as before.
+  assert.equal(outcome.credentials.copilotToken, undefined);
+  assert.equal(outcome.credentials.copilotSessionToken, "session-gpt-5-mini");
   const autoCall = calls.find((call) => call.url === AUTO_URL);
   assert.equal(headerValue(autoCall?.headers || {}, "authorization"), "Bearer copilot-minted");
 });

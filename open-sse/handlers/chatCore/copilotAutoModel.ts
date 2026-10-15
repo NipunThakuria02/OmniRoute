@@ -36,15 +36,6 @@ export type CopilotAutoExecutor = {
   }) => Promise<CopilotAutoResolution>;
 };
 
-export type CopilotAutoContext = {
-  sessionKey?: string | null;
-  signal?: AbortSignal | null;
-  onCredentialsRefreshed?: ((next: Credentials) => unknown) | null;
-  log?: AutoLog;
-  /** Test seam; defaults to the registered github executor. */
-  executor?: CopilotAutoExecutor;
-};
-
 export type CopilotAutoOutcome = {
   model: string;
   credentials: Credentials;
@@ -52,17 +43,18 @@ export type CopilotAutoOutcome = {
 };
 
 // The /auto call runs before BaseExecutor.execute()'s proactive refresh, so mint a
-// fresh Copilot token here when the stored one is stale (and persist it the same way).
-async function withFreshCopilotToken(
+// fresh Copilot token for it when the stored one is stale. The fresh token is used for
+// /auto only: the request credentials stay as they were, so execute() still runs its
+// own refresh and persists the new token through onCredentialsRefreshed.
+async function credentialsForAutoCall(
   executor: CopilotAutoExecutor,
   credentials: Credentials,
-  ctx: CopilotAutoContext
+  log: AutoLog | undefined
 ): Promise<Credentials> {
   if (isProbeContext() || !executor.needsRefresh(credentials)) return credentials;
   try {
-    const refreshed = await executor.refreshCredentials(credentials, ctx.log ?? null);
+    const refreshed = await executor.refreshCredentials(credentials, log ?? null);
     if (!refreshed) return credentials;
-    await ctx.onCredentialsRefreshed?.(refreshed);
     return {
       ...credentials,
       ...refreshed,
@@ -72,7 +64,7 @@ async function withFreshCopilotToken(
       },
     };
   } catch (error) {
-    ctx.log?.warn?.(
+    log?.warn?.(
       "GITHUB",
       `Copilot token refresh before auto selection failed: ${
         error instanceof Error ? error.message : String(error)
@@ -82,38 +74,44 @@ async function withFreshCopilotToken(
   }
 }
 
-export async function applyCopilotAutoModel(
+/**
+ * Resolve `github/auto` to Copilot's pick. Returns the request's model and credentials
+ * unchanged for every other provider/model; on success the model is the selected id
+ * (also written to `body.model`) and the credentials are a copy carrying
+ * `copilotSessionToken`; an /auto failure comes back as a sanitized `errorResult`.
+ */
+export async function resolveCopilotAuto(
   provider: string | null | undefined,
   model: string,
   body: unknown,
   credentials: Credentials,
-  ctx: CopilotAutoContext = {}
+  sessionKey?: string | null,
+  log?: AutoLog,
+  /** Test seam; defaults to the registered github executor. */
+  executor?: CopilotAutoExecutor
 ): Promise<CopilotAutoOutcome> {
   if (provider !== "github" || !isCopilotAutoModel(model)) return { model, credentials };
 
-  const executor =
-    ctx.executor ?? ((await getExecutor("github")) as unknown as CopilotAutoExecutor);
-  const freshCredentials = await withFreshCopilotToken(executor, credentials, ctx);
-  const resolution = await executor.resolveAutoModel({
+  const github = executor ?? ((await getExecutor("github")) as unknown as CopilotAutoExecutor);
+  const resolution = await github.resolveAutoModel({
     body,
-    credentials: freshCredentials,
-    sessionKey: ctx.sessionKey,
-    signal: ctx.signal,
-    log: ctx.log,
+    credentials: await credentialsForAutoCall(github, credentials, log),
+    sessionKey,
+    log,
   });
   if (!resolution.ok) {
     return {
       model,
-      credentials: freshCredentials,
+      credentials,
       errorResult: createErrorResult(resolution.status, resolution.message),
     };
   }
 
   const selected = resolution.decision.model;
-  ctx.log?.info?.("ROUTING", `GitHub Copilot auto → ${selected}`);
+  log?.info?.("ROUTING", `GitHub Copilot auto → ${selected}`);
   if (body && typeof body === "object") (body as Record<string, unknown>).model = selected;
   return {
     model: selected,
-    credentials: { ...freshCredentials, copilotSessionToken: resolution.decision.sessionToken },
+    credentials: { ...credentials, copilotSessionToken: resolution.decision.sessionToken },
   };
 }
