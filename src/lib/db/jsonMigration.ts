@@ -15,8 +15,9 @@ import type { SqliteAdapter } from "./adapters/types";
 import { normalizeRoutingStrategy } from "@/shared/constants/routingStrategies";
 import { normalizeComboRecord } from "@/lib/combos/steps";
 import { validateComboInvariant } from "@/lib/combos/invariants";
-import { parseModelAccessMode } from "./apiKeys/modelAccessMode";
-import { serializeJsonField } from "./providers/columns";
+import { insertImportedApiKey } from "./apiKeys/importRow";
+import { normalizeBooleanColumn, serializeJsonField } from "./providers/columns";
+import { encryptConnectionFields } from "./encryption";
 import {
   resolveImportedUsageAccountIdentity,
   resolveOrphanedUsageAccountIdentity,
@@ -74,7 +75,8 @@ export function runJsonMigration(
       last_tested, api_key, id_token, provider_specific_data,
       expires_in, display_name, global_priority, default_model,
       token_type, consecutive_use_count, rate_limit_protection, last_used_at,
-      rate_limit_overrides_json, created_at, updated_at
+      rate_limit_overrides_json, "group", max_concurrent, proxy_enabled,
+      per_key_proxy_enabled, quota_visible, quota_window_thresholds_json, created_at, updated_at
     ) VALUES (
       @id, @provider, @authType, @name, @email, @priority, @isActive,
       @accessToken, @refreshToken, @expiresAt, @tokenExpiresAt,
@@ -84,7 +86,8 @@ export function runJsonMigration(
       @lastTested, @apiKey, @idToken, @providerSpecificData,
       @expiresIn, @displayName, @globalPriority, @defaultModel,
       @tokenType, @consecutiveUseCount, @rateLimitProtection, @lastUsedAt,
-      @rateLimitOverridesJson, @createdAt, @updatedAt
+      @rateLimitOverridesJson, @group, @maxConcurrent, @proxyEnabled,
+      @perKeyProxyEnabled, @quotaVisible, @quotaWindowThresholdsJson, @createdAt, @updatedAt
     )
   `);
 
@@ -102,14 +105,6 @@ export function runJsonMigration(
     VALUES (@id, @name, @data, @sortOrder, @createdAt, @updatedAt)
   `);
 
-  const insertKey = db.prepare(`
-    INSERT OR REPLACE INTO api_keys (
-      id, name, key, machine_id, model_access_mode, allowed_models, no_log, created_at
-    ) VALUES (
-      @id, @name, @key, @machineId, @modelAccessMode, @allowedModels, @noLog, @createdAt
-    )
-  `);
-
   const selectExistingOverrides = db.prepare(
     "SELECT rate_limit_overrides_json FROM provider_connections WHERE id = ?"
   );
@@ -124,10 +119,17 @@ export function runJsonMigration(
       let rateLimitOverridesJson = serializeJsonField(conn.rateLimitOverrides);
       if (!hasOverrides && typeof conn.id === "string") {
         const existing = selectExistingOverrides.get(conn.id) as
-          | { rate_limit_overrides_json: string | null }
-          | undefined;
+          { rate_limit_overrides_json: string | null } | undefined;
         if (existing) rateLimitOverridesJson = existing.rate_limit_overrides_json;
       }
+      // GHSA-p42h: the export carries decrypted credentials; re-encrypt them like every other
+      // connection write (no-op when STORAGE_ENCRYPTION_KEY is unset, skips already-encrypted).
+      const creds = encryptConnectionFields({
+        apiKey: conn.apiKey as string | null | undefined,
+        accessToken: conn.accessToken as string | null | undefined,
+        refreshToken: conn.refreshToken as string | null | undefined,
+        idToken: conn.idToken as string | null | undefined,
+      });
       insertConn.run({
         id: conn.id,
         provider: conn.provider,
@@ -136,8 +138,8 @@ export function runJsonMigration(
         email: conn.email ?? null,
         priority: conn.priority ?? 0,
         isActive: conn.isActive === false ? 0 : 1,
-        accessToken: conn.accessToken ?? null,
-        refreshToken: conn.refreshToken ?? null,
+        accessToken: creds.accessToken ?? null,
+        refreshToken: creds.refreshToken ?? null,
         expiresAt: conn.expiresAt ?? null,
         tokenExpiresAt: conn.tokenExpiresAt ?? null,
         scope: conn.scope ?? null,
@@ -153,8 +155,8 @@ export function runJsonMigration(
         healthCheckInterval: conn.healthCheckInterval ?? null,
         lastHealthCheckAt: conn.lastHealthCheckAt ?? null,
         lastTested: conn.lastTested ?? null,
-        apiKey: conn.apiKey ?? null,
-        idToken: conn.idToken ?? null,
+        apiKey: creds.apiKey ?? null,
+        idToken: creds.idToken ?? null,
         providerSpecificData: conn.providerSpecificData
           ? JSON.stringify(conn.providerSpecificData)
           : null,
@@ -168,6 +170,12 @@ export function runJsonMigration(
         rateLimitProtection:
           conn.rateLimitProtection === true || conn.rateLimitProtection === 1 ? 1 : 0,
         rateLimitOverridesJson,
+        group: conn.group ?? null,
+        maxConcurrent: conn.maxConcurrent ?? null,
+        proxyEnabled: normalizeBooleanColumn(conn.proxyEnabled, true) ? 1 : 0,
+        perKeyProxyEnabled: normalizeBooleanColumn(conn.perKeyProxyEnabled, false) ? 1 : 0,
+        quotaVisible: normalizeBooleanColumn(conn.quotaVisible, true) ? 1 : 0,
+        quotaWindowThresholdsJson: serializeJsonField(conn.quotaWindowThresholds),
         createdAt: conn.createdAt ?? new Date().toISOString(),
         updatedAt: conn.updatedAt ?? new Date().toISOString(),
       });
@@ -241,18 +249,10 @@ export function runJsonMigration(
     }
 
     // 6. API Keys
+    // GHSA-p42h: every column the backup carries is restored (revocation, expiry, ban, scopes,
+    // allowlists, limits...) - see apiKeys/importRow.ts.
     for (const apiKey of data.apiKeys ?? []) {
-      const allowedModels = Array.isArray(apiKey.allowedModels) ? apiKey.allowedModels : [];
-      insertKey.run({
-        id: apiKey.id,
-        name: apiKey.name,
-        key: apiKey.key,
-        machineId: apiKey.machineId ?? null,
-        modelAccessMode: parseModelAccessMode(apiKey.modelAccessMode, allowedModels),
-        allowedModels: JSON.stringify(allowedModels),
-        noLog: apiKey.noLog ? 1 : 0,
-        createdAt: apiKey.createdAt ?? new Date().toISOString(),
-      });
+      insertImportedApiKey(db, apiKey);
     }
     // 7. Usage History
     if (data.usageHistory && data.usageHistory.length > 0) {

@@ -8,6 +8,7 @@ import {
   mergeInjectedFallbackOwnerNames,
 } from "./chatCore/memorySkillsInjection.ts";
 import { resolveChatCoreRequestSetup } from "./chatCore/requestSetup.ts";
+import { stripOutputConfigFormatForCompat } from "./chatCore/outputConfigFormatStrip.ts";
 import {
   normalizeOpenAICompatibleTools,
   shouldNormalizeFunctionToolsOnly,
@@ -2446,20 +2447,11 @@ async function handleChatCoreInner({
         delete translatedBody.output_format;
       }
 
-      // Fix #1719: Strip output_config.format for non-Anthropic Claude-compatible providers.
+      // Fix #1719: Strip output_config.format for non-Anthropic Claude-compatible providers
+      // (first-party `claude` OAuth and `anthropic` API-key keep it).
       // Third-party Claude endpoints (MiniMax, DeepSeek via aggregators) reject this field
       // with 400 errors since they don't support Anthropic's structured output / json_schema.
-      if (
-        provider !== "claude" &&
-        translatedBody.output_config &&
-        typeof translatedBody.output_config === "object"
-      ) {
-        const oc = translatedBody.output_config as Record<string, unknown>;
-        delete oc.format;
-        if (Object.keys(oc).length === 0) {
-          delete translatedBody.output_config;
-        }
-      }
+      stripOutputConfigFormatForCompat(translatedBody, provider);
     } else {
       translatedBody = { ...body };
 

@@ -246,6 +246,13 @@ function replayOpenAIReasoningMessage(
   ) {
     message.reasoning_content = message.reasoning;
   }
+  // Serde-based upstreams (z-ai GLM, Moonshot Kimi) alias `reasoning` to
+  // `reasoning_content`, so a turn carrying both is rejected with 400
+  // "duplicate field `reasoning_content`" (9router#4841). Once
+  // `reasoning_content` holds the text it is the canonical carrier.
+  if (typeof message.reasoning === "string" && hasNonEmptyReasoningContent(message)) {
+    delete message.reasoning;
+  }
 
   const toolCalls = Array.isArray(message.tool_calls) ? message.tool_calls : [];
   const hasToolCalls = toolCalls.length > 0;
