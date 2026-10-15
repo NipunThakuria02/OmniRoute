@@ -106,6 +106,8 @@ import {
   maybeOmitCatalogModelName,
   getThinkingCapabilityFields,
   mergeComboCapabilities,
+  hasRoutableComboConnection,
+  selectComboLimitPool,
   visionDerivedModalities,
   getConnectionScopedEffortTiers,
   type ConnectionScopedReasoningCatalog,
@@ -751,6 +753,14 @@ async function buildUnifiedModelsResponseCore(
         ...(inputModalities && inputModalities.length > 0 ? { inputModalities } : {}),
         ...(outputModalities && outputModalities.length > 0 ? { outputModalities } : {}),
         capabilities,
+        routable: isNoAuthProviderKey(providerId, providerAlias, targetModel.providerId)
+          ? !isNoAuthProviderBlocked(
+              blockedProviders,
+              providerId,
+              providerAlias,
+              targetModel.providerId
+            )
+          : hasRoutableComboConnection(target, allProviderConnections),
       };
     };
 
@@ -773,19 +783,18 @@ async function buildUnifiedModelsResponseCore(
         (metadata): metadata is ComboTargetCatalogMetadata => metadata !== null
       );
       if (knownMetadata.length === 0) return baseMetadata;
+      const limitPool = selectComboLimitPool(knownMetadata); // #4627: skip inactive seats
       const contextLength =
         explicitContextLength ??
-        minKnownNumber(knownMetadata.map((metadata) => metadata.contextLength));
+        minKnownNumber(limitPool.map((metadata) => metadata.contextLength));
       const targetMinMaxInput = minKnownNumber(
-        knownMetadata.map((metadata) => metadata.maxInputTokens)
+        limitPool.map((metadata) => metadata.maxInputTokens)
       );
       const maxInputTokens =
         explicitContextLength === undefined
           ? targetMinMaxInput
           : Math.min(explicitContextLength, targetMinMaxInput ?? explicitContextLength);
-      const maxOutputTokens = minKnownNumber(
-        knownMetadata.map((metadata) => metadata.maxOutputTokens)
-      );
+      const maxOutputTokens = minKnownNumber(limitPool.map((metadata) => metadata.maxOutputTokens));
 
       const inputModalities = intersectKnownStringArrays(
         knownMetadata.map((m) => (Array.isArray(m.inputModalities) ? m.inputModalities : []))
