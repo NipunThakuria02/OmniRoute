@@ -1,1 +1,2 @@
 - **ui:** cancel deferred canvas initialization fits on teardown and invalidate the disposed React Flow generation, preventing callbacks into unmounted graphs while preserving active and replacement graph fitting.
+- **tests:** unmount CompressionCockpit React roots before removing their DOM containers, allowing lifecycle cleanup to run before the jsdom environment is disposed.
