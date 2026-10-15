@@ -1,5 +1,6 @@
 import {
-  parseM365ChatHubUrl,
+  inspectM365ChatHubUrl,
+  type M365CredentialParts,
   serializeM365Credential,
 } from "@omniroute/open-sse/utils/m365Credentials.ts";
 
@@ -67,13 +68,16 @@ export function extractM365CredentialFromHar(text: string): M365HarImportResult 
     return { ok: false, error: "noEntries" };
   }
 
-  let matched: ReturnType<typeof parseM365ChatHubUrl> = null;
+  let matched: Required<M365CredentialParts> | null = null;
+  let error = "noChathubUrl";
   for (const entry of entries as HarEntryLike[]) {
     const url = entry?.request?.url;
-    const parsed = typeof url === "string" ? parseM365ChatHubUrl(url) : null;
-    if (parsed) matched = parsed;
+    if (typeof url !== "string") continue;
+    const parsed = inspectM365ChatHubUrl(url);
+    if ("credential" in parsed) matched = parsed.credential;
+    else if (parsed.error !== "noChathubUrl") error = parsed.error;
   }
-  if (!matched) return { ok: false, error: "noChathubUrl" };
+  if (!matched) return { ok: false, error };
   const token = matched.accessToken;
   const chathubPath = matched.chathubPath;
 

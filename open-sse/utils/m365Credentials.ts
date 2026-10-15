@@ -9,8 +9,13 @@ const CHATHUB_PATH = "/m365Copilot/Chathub/";
 const TRUSTED_HOST =
   /^(?:[a-z0-9-]+\.)*(?:m365\.cloud\.microsoft|copilot\.microsoft\.com|substrate\.office\.com)$/i;
 
+export type M365ChatHubUrlResult =
+  | { credential: Required<M365CredentialParts> }
+  | { error: "noChathubUrl" | "missingFields" | "unparsableUrl" };
+
 /** Never infer a destination from an arbitrary pasted URL or HAR entry. */
-export function parseM365ChatHubUrl(raw: string): Required<M365CredentialParts> | null {
+export function inspectM365ChatHubUrl(raw: string): M365ChatHubUrlResult {
+  let trustedPath = false;
   try {
     const url = new URL(raw);
     if (
@@ -22,15 +27,22 @@ export function parseM365ChatHubUrl(raw: string): Required<M365CredentialParts> 
       url.hash ||
       !url.pathname.startsWith(CHATHUB_PATH)
     )
-      return null;
+      return { error: "noChathubUrl" };
+    trustedPath = true;
     const chathubPath = decodeURIComponent(url.pathname.slice(CHATHUB_PATH.length));
     const accessToken = url.searchParams.get("access_token");
+    if (!accessToken || !chathubPath) return { error: "missingFields" };
     // A ChatHub identity is one user@tenant segment, never URL or key/value syntax.
-    if (!accessToken || !/^[\w.-]+@[\w.-]+$/.test(chathubPath)) return null;
-    return { accessToken, chathubPath, host: url.hostname };
+    if (!/^[\w.-]+@[\w.-]+$/.test(chathubPath)) return { error: "unparsableUrl" };
+    return { credential: { accessToken, chathubPath, host: url.hostname } };
   } catch {
-    return null;
+    return { error: trustedPath ? "unparsableUrl" : "noChathubUrl" };
   }
+}
+
+export function parseM365ChatHubUrl(raw: string): Required<M365CredentialParts> | null {
+  const result = inspectM365ChatHubUrl(raw);
+  return "credential" in result ? result.credential : null;
 }
 
 export function parseM365PastedCredential(raw: string): M365CredentialParts {
