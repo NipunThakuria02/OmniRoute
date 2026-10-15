@@ -3,9 +3,10 @@ import React, { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 
-const { instances, initializers } = vi.hoisted(() => ({
+const { instances, initializers, initialization } = vi.hoisted(() => ({
   instances: [] as Array<{ fitView: ReturnType<typeof vi.fn> }>,
   initializers: [] as Array<() => void>,
+  initialization: { automatic: true },
 }));
 
 // The external canvas is the boundary: observe calls into its disposed instance.
@@ -16,7 +17,7 @@ vi.mock("@xyflow/react", () => ({
       instances.push(instance);
       const initialize = () => onInit(instance);
       initializers.push(initialize);
-      initialize();
+      if (initialization.automatic) initialize();
     }, [onInit]);
     return <div data-testid="canvas" />;
   },
@@ -40,6 +41,7 @@ beforeEach(() => {
   );
   instances.length = 0;
   initializers.length = 0;
+  initialization.automatic = true;
   container = document.createElement("div");
   document.body.appendChild(container);
   root = createRoot(container);
@@ -96,6 +98,18 @@ it("ignores a stale external initializer delivered after the replacement graph i
   act(() => initializers[0]());
   act(() => vi.runAllTimers());
   expect(instances[0].fitView).not.toHaveBeenCalled();
+  expect(instances[1].fitView).toHaveBeenCalledWith({ padding: 0.22, duration: 250 });
+});
+
+it("invalidates the old graph while the replacement initializer is still pending", () => {
+  act(() => root!.render(<FlowCanvas nodes={[]} edges={[]} fitKey="before" />));
+  initialization.automatic = false;
+  act(() => root!.render(<FlowCanvas nodes={[]} edges={[]} fitKey="after" />));
+  act(() => vi.runAllTimers());
+  expect(instances[0].fitView).not.toHaveBeenCalled();
+  expect(instances[1].fitView).not.toHaveBeenCalled();
+  act(() => initializers[1]());
+  act(() => vi.runAllTimers());
   expect(instances[1].fitView).toHaveBeenCalledWith({ padding: 0.22, duration: 250 });
 });
 

@@ -80,6 +80,15 @@ export function FlowCanvas({
   const activeInitRef = useRef(initIdentity);
 
   useLayoutEffect(() => {
+    if (activeInitRef.current !== initIdentity) {
+      // A keyed graph is already disposed before its replacement's deferred
+      // onInit arrives. Invalidate both initialization and node-count timers
+      // immediately, and prevent resize callbacks from reaching the old ref.
+      generationRef.current++;
+      if (initTimerRef.current !== null) clearTimeout(initTimerRef.current);
+      initTimerRef.current = null;
+      rfInstance.current = null;
+    }
     activeInitRef.current = initIdentity;
   }, [initIdentity]);
 
