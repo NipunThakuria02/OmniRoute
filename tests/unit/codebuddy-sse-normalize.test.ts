@@ -9,6 +9,7 @@ import assert from "node:assert/strict";
 
 import { CodeBuddyCnExecutor } from "../../open-sse/executors/codebuddy-cn.ts";
 import { CodeBuddyIntlExecutor } from "../../open-sse/executors/codebuddy-intl.ts";
+import { responseFromResult } from "../../open-sse/executors/codebuddy/shared.ts";
 import {
   createSseNormalizeTransform,
   normalizeChatChunk,
@@ -46,7 +47,7 @@ async function executeWithUpstream(
       stream: true,
       credentials: { accessToken: "test-token" },
     });
-    const response = result instanceof Response ? result : result.response;
+    const response = responseFromResult(result);
     return { response, body: await response.text() };
   } finally {
     globalThis.fetch = originalFetch;
