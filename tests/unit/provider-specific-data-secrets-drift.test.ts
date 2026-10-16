@@ -5,6 +5,7 @@
 // honoring an entry.
 import test from "node:test";
 import assert from "node:assert/strict";
+import type { WebSessionCredentialRequirement } from "../../src/shared/providers/webSessionCredentials.ts";
 
 process.env.STORAGE_ENCRYPTION_KEY = "psd-secrets-drift-synthetic-key";
 
@@ -13,6 +14,7 @@ const {
   PROVIDER_SPECIFIC_DATA_STRIPPED_SECRET_KEYS,
   PROVIDER_SPECIFIC_DATA_SECRET_KEYS,
   isProviderSpecificDataSecretKey,
+  isProviderSpecificDataMaskedListKey,
 } = await import("../../src/shared/constants/providerSpecificDataSecrets.ts");
 const { sanitizeProviderSpecificDataForResponse } =
   await import("../../src/lib/providers/requestDefaults.ts");
@@ -73,11 +75,10 @@ test("the constant is well-formed: unique keys, masked ∪ stripped, no overlap"
       ...PROVIDER_SPECIFIC_DATA_STRIPPED_SECRET_KEYS,
     ].sort()
   );
+  const stripped: readonly string[] = PROVIDER_SPECIFIC_DATA_STRIPPED_SECRET_KEYS;
   for (const key of PROVIDER_SPECIFIC_DATA_MASKED_SECRET_KEYS) {
-    assert.ok(
-      !PROVIDER_SPECIFIC_DATA_STRIPPED_SECRET_KEYS.includes(key),
-      `${key} is in both lists`
-    );
+    assert.ok(!stripped.includes(key), `${key} is in both lists`);
+    assert.equal(isProviderSpecificDataMaskedListKey(key), true);
   }
   assert.ok(PROVIDER_SPECIFIC_DATA_MASKED_SECRET_KEYS.includes("extraApiKeys"));
   assert.equal(isProviderSpecificDataSecretKey("extraApiKeys"), true);
@@ -109,7 +110,7 @@ test("every previously stripped key and every audited credential field is in the
 test("the sanitizer removes or masks every key in the constant and keeps the rest", () => {
   const SECRET = "plain-secret-value-0123456789";
   for (const key of PROVIDER_SPECIFIC_DATA_SECRET_KEYS) {
-    const isList = PROVIDER_SPECIFIC_DATA_MASKED_SECRET_KEYS.includes(key);
+    const isList = isProviderSpecificDataMaskedListKey(key);
     const input = { [key]: isList ? [SECRET] : SECRET, keepMe: "visible", region: "eu" };
     const sanitized = sanitizeProviderSpecificDataForResponse(input) as Record<string, unknown>;
     assert.ok(sanitized, `${key}: sanitizer returned nothing`);
@@ -130,7 +131,7 @@ test("the sanitizer removes or masks every key in the constant and keeps the res
 test("the encryptor envelopes every string-valued key in the constant and the decryptor restores it", () => {
   const SECRET = "plain-secret-value-0123456789";
   for (const key of PROVIDER_SPECIFIC_DATA_SECRET_KEYS) {
-    const isList = PROVIDER_SPECIFIC_DATA_MASKED_SECRET_KEYS.includes(key);
+    const isList = isProviderSpecificDataMaskedListKey(key);
     const input = { [key]: isList ? [SECRET, SECRET + "-b"] : SECRET, keepMe: "visible", count: 2 };
     const encrypted = encryptProviderSpecificDataSecrets(input) as Record<string, unknown>;
     assert.notStrictEqual(encrypted, input, `${key}: the encryptor must not mutate its input`);
@@ -177,7 +178,9 @@ test("plaintext (legacy) values decrypt as themselves; missing/empty data is lef
 });
 
 test("every web-session credential requirement stores its credential under a key in the constant", () => {
-  for (const [provider, requirement] of Object.entries(WEB_SESSION_CREDENTIAL_REQUIREMENTS)) {
+  const requirements: Record<string, WebSessionCredentialRequirement> =
+    WEB_SESSION_CREDENTIAL_REQUIREMENTS;
+  for (const [provider, requirement] of Object.entries(requirements)) {
     if (requirement.kind === "none") continue;
     const covered = requirement.storageKeys.filter((key: string) =>
       isProviderSpecificDataSecretKey(key)
