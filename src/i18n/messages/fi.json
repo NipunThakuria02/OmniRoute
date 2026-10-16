@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Tiivis CJK (文言)",
         "description": "Klassisen kiinan ultra-tiivis tyyli (saatavilla vain kiinaksi)."
+      },
+      "antislop-ui": {
+        "label": "Antislop-käyttöliittymäsuodatin",
+        "description": "Tarkoituksensa läpäisseet visuaalit: ei geneerisiä liukuvärejä, mallipohjaisia asetteluja tai kuolleita ohjaimia."
+      },
+      "antislop-copy": {
+        "label": "Antislop-teksti- ja ihmissuodatin",
+        "description": "Rehellinen teksti ja säännöt ihmisille: ei tekoälyn tunnusmerkkejä, WCAG AA -kontrasti, näppäimistö, tilat, mobiilin uudelleenasettelu."
       }
     },
     "resilienceWaitForCooldown": "Odota jäähdytystä",

@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Kısa ve öz CJK (文言)",
         "description": "Klasik Çince ultra kısa ve öz stil (yalnızca Çince için kullanılabilir)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI filtresi",
+        "description": "Amacı test edilmiş görseller: jenerik gradyanlar, şablon düzenler veya ölü kontroller yok."
+      },
+      "antislop-copy": {
+        "label": "Antislop metin ve insan filtresi",
+        "description": "Dürüst metin ve insanlar için kurallar: yapay zekâ izi yok, WCAG AA kontrastı, klavye, durumlar, mobil yeniden akış."
       }
     },
     "resilienceWaitForCooldown": "Bekleme Süresini Bekleyin",

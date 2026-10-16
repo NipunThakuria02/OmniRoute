@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK súc tích (文言)",
         "description": "Văn phong Hán cổ cực kỳ súc tích (chỉ khả dụng với tiếng Trung)."
+      },
+      "antislop-ui": {
+        "label": "Bộ lọc UI Antislop",
+        "description": "Hình ảnh đã qua kiểm tra mục đích: không gradient chung chung, bố cục template hay điều khiển chết."
+      },
+      "antislop-copy": {
+        "label": "Bộ lọc văn bản và con người Antislop",
+        "description": "Văn bản trung thực cùng quy tắc vì con người: không dấu vết AI, tương phản WCAG AA, bàn phím, trạng thái, sắp xếp lại trên di động."
       }
     },
     "resilienceWaitForCooldown": "Chờ thời gian hồi",

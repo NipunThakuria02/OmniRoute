@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Stručné CJK (文言)",
         "description": "Klasický čínský ultra stručný styl (k dispozici pouze pro čínštinu)."
+      },
+      "antislop-ui": {
+        "label": "Antislop filtr UI",
+        "description": "Vizuály s ověřeným účelem: žádné generické přechody, šablonová rozvržení ani nefunkční ovládací prvky."
+      },
+      "antislop-copy": {
+        "label": "Antislop filtr textů a lidí",
+        "description": "Poctivé texty a pravidla pro lidi: žádné stopy AI, kontrast WCAG AA, klávesnice, stavy, mobilní přeskládání."
       }
     },
     "resilienceWaitForCooldown": "Počkejte na Cooldown",

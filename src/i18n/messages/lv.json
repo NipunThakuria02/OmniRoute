@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Lakonisks CJK (文言)",
         "description": "Klasiskās ķīniešu valodas īpaši lakonisks stils (pieejams tikai ķīniešu valodai)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI filtrs",
+        "description": "Vizuāļi ar pārbaudītu mērķi: bez vispārīgiem gradientiem, veidņu izkārtojumiem vai nedarbīgām vadīklām."
+      },
+      "antislop-copy": {
+        "label": "Antislop teksta un cilvēku filtrs",
+        "description": "Godīgs teksts un noteikumi cilvēkiem: bez MI pazīmēm, WCAG AA kontrasts, tastatūra, stāvokļi, mobilā pārkārtošana."
       }
     },
     "resilienceWaitForCooldown": "Gaidīt nogaidīšanas perioda beigas",

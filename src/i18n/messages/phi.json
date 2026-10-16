@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Maikling CJK (文言)",
         "description": "Klasikong Tsino na ultra-maikling estilo (magagamit lamang para sa Tsino)."
+      },
+      "antislop-ui": {
+        "label": "Antislop na filter ng UI",
+        "description": "Mga visual na nasubok ang layunin: walang generic na gradient, template na layout o patay na kontrol."
+      },
+      "antislop-copy": {
+        "label": "Antislop na filter ng teksto at tao",
+        "description": "Tapat na teksto at mga patakaran para sa tao: walang bakas ng AI, WCAG AA na contrast, keyboard, mga estado, mobile reflow."
       }
     },
     "resilienceWaitForCooldown": "Maghintay para sa Cooldown",

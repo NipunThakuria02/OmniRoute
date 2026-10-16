@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK Ringkas (文言)",
         "description": "Gaya ultra-ringkas Tionghoa Klasik (hanya tersedia untuk bahasa Tionghoa)."
+      },
+      "antislop-ui": {
+        "label": "Filter UI Antislop",
+        "description": "Visual yang lolos uji tujuan: tanpa gradien generik, layout template, atau kontrol mati."
+      },
+      "antislop-copy": {
+        "label": "Filter teks dan manusia Antislop",
+        "description": "Teks jujur plus aturan untuk manusia: tanpa ciri AI, kontras WCAG AA, keyboard, status, reflow seluler."
       }
     },
     "resilienceWaitForCooldown": "Tunggu Cooldown",

@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "精简 CJK (文言)",
         "description": "文言文极简风格 (仅适用于中文)。"
+      },
+      "antislop-ui": {
+        "label": "反 AI 套路 UI 过滤器",
+        "description": "经过目的检验的视觉：不用泛泛的渐变、模板布局或无效控件。"
+      },
+      "antislop-copy": {
+        "label": "反 AI 套路文案与人本过滤器",
+        "description": "真诚的文案加上以人为本的规则：没有 AI 腔调、WCAG AA 对比度、键盘、状态、移动端重排。"
       }
     },
     "resilienceWaitForCooldown": "等待冷却",

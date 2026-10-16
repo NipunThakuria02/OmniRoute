@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK Ringkas (文言)",
         "description": "Gaya ultra-ringkas Bahasa Cina Klasik (hanya tersedia untuk bahasa Cina)."
+      },
+      "antislop-ui": {
+        "label": "Penapis UI Antislop",
+        "description": "Visual yang diuji tujuannya: tiada gradien generik, susun atur templat atau kawalan mati."
+      },
+      "antislop-copy": {
+        "label": "Penapis teks dan manusia Antislop",
+        "description": "Teks jujur serta peraturan untuk manusia: tiada tanda AI, kontras WCAG AA, papan kekunci, keadaan, aliran semula mudah alih."
       }
     },
     "resilienceWaitForCooldown": "Tunggu Cooldown",

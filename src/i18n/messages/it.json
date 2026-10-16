@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK conciso (文言)",
         "description": "Stile ultra-conciso in cinese classico (disponibile solo per il cinese)."
+      },
+      "antislop-ui": {
+        "label": "Filtro antislop UI",
+        "description": "Elementi visivi con scopo verificato: niente sfumature generiche, layout da template o controlli morti."
+      },
+      "antislop-copy": {
+        "label": "Filtro antislop testi e persone",
+        "description": "Testi onesti e regole per le persone: niente tic da IA, contrasto WCAG AA, tastiera, stati, adattamento mobile."
       }
     },
     "resilienceWaitForCooldown": "Attendi il raffreddamento",

@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Jedrnati CJK (文言)",
         "description": "Izjemno jedrnat slog klasične kitajščine (na voljo samo za kitajščino)."
+      },
+      "antislop-ui": {
+        "label": "Antislop filter za UI",
+        "description": "Vizualni elementi s preverjenim namenom: brez generičnih prelivov, predložnih postavitev ali mrtvih kontrolnikov."
+      },
+      "antislop-copy": {
+        "label": "Antislop filter za besedilo in ljudi",
+        "description": "Pošteno besedilo in pravila za ljudi: brez znakov UI, kontrast WCAG AA, tipkovnica, stanja, mobilno prelivanje."
       }
     },
     "resilienceWaitForCooldown": "Počakaj na konec ohlajanja",

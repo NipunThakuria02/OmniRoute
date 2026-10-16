@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Sažeti CJK (文言)",
         "description": "Ultrasažeti stil klasičnog kineskog jezika (dostupno samo za kineski)."
+      },
+      "antislop-ui": {
+        "label": "Antislop filtar za UI",
+        "description": "Vizuali provjerene svrhe: bez generičkih gradijenata, predložaka rasporeda ili mrtvih kontrola."
+      },
+      "antislop-copy": {
+        "label": "Antislop filtar za tekst i ljude",
+        "description": "Iskren tekst i pravila za ljude: bez tragova AI-ja, WCAG AA kontrast, tipkovnica, stanja, mobilno prelamanje."
       }
     },
     "resilienceWaitForCooldown": "Pričekaj istek razdoblja hlađenja",

@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK gonta (文言)",
         "description": "Stíl fhíorghonta na Sínise Clasaicí (ar fáil don tSínis amháin)."
+      },
+      "antislop-ui": {
+        "label": "Scagaire Antislop don UI",
+        "description": "Amhairc a ndearnadh tástáil chuspóra orthu: gan grádáin ghinearálta, leagan amach teimpléid ná rialuithe marbha."
+      },
+      "antislop-copy": {
+        "label": "Scagaire Antislop do théacs agus do dhaoine",
+        "description": "Téacs macánta agus rialacha do dhaoine: gan comharthaí AI, codarsnacht WCAG AA, méarchlár, staideanna, athshreabhadh móibíleach."
       }
     },
     "resilienceWaitForCooldown": "Fan go mbeidh an tréimhse fuaraithe thart",

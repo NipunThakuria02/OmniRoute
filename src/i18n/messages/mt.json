@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK konċiż (文言)",
         "description": "Stil ultra-konċiż taċ-Ċiniż Klassiku (disponibbli biss għaċ-Ċiniż)."
+      },
+      "antislop-ui": {
+        "label": "Filtru Antislop għall-UI",
+        "description": "Viżwali b'għan ittestjat: l-ebda gradjent ġeneriku, tqassim ta' mudell jew kontrolli mejta."
+      },
+      "antislop-copy": {
+        "label": "Filtru Antislop għat-test u n-nies",
+        "description": "Test onest u regoli għan-nies: l-ebda sinjal tal-AI, kuntrast WCAG AA, tastiera, stati, adattament għall-mobile."
       }
     },
     "resilienceWaitForCooldown": "Stenna sakemm jintemm il-perjodu ta' stennija",

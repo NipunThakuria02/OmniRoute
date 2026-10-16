@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Knappe CJK (文言)",
         "description": "Klassisch-chinesischer, extrem knapper Stil (nur für Chinesisch verfügbar)."
+      },
+      "antislop-ui": {
+        "label": "Antislop-UI-Filter",
+        "description": "Zweckgeprüfte Visuals: keine generischen Verläufe, Template-Layouts oder toten Bedienelemente."
+      },
+      "antislop-copy": {
+        "label": "Antislop-Filter für Text und Menschen",
+        "description": "Ehrliche Texte plus Regeln für Menschen: keine KI-Floskeln, WCAG-AA-Kontrast, Tastatur, Zustände, mobiler Umbruch."
       }
     },
     "resilienceWaitForCooldown": "Warten Sie auf die Abklingzeit",

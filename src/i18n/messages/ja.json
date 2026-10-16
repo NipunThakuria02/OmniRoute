@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "簡潔なCJK (文言)",
         "description": "漢文の超簡潔スタイル (中国語でのみ利用可能)。"
+      },
+      "antislop-ui": {
+        "label": "アンチスロップUIフィルター",
+        "description": "目的を検証したビジュアル：ありきたりなグラデーション、テンプレートレイアウト、動かないコントロールを排除。"
+      },
+      "antislop-copy": {
+        "label": "アンチスロップ文章・人間フィルター",
+        "description": "誠実な文章と人のためのルール：AIっぽさなし、WCAG AAコントラスト、キーボード、状態表示、モバイルのリフロー。"
       }
     },
     "resilienceWaitForCooldown": "クールダウンを待ちます",

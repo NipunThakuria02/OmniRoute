@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK תמציתי (文言)",
         "description": "סגנון סיני קלאסי אולטרה-תמציתי (זמין עבור סינית בלבד)."
+      },
+      "antislop-ui": {
+        "label": "מסנן Antislop לממשק",
+        "description": "רכיבים חזותיים שעברו מבחן מטרה: בלי מעברי צבע גנריים, פריסות תבנית או פקדים מתים."
+      },
+      "antislop-copy": {
+        "label": "מסנן Antislop לטקסט ולאנשים",
+        "description": "טקסט כן וכללים לאנשים: בלי סימני AI, ניגודיות WCAG AA, מקלדת, מצבים, התאמה לנייד."
       }
     },
     "resilienceWaitForCooldown": "המתן ל-Cooldown",

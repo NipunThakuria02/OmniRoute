@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Yığcam CJK (文言)",
         "description": "Klassik Çin ultra-yığcam üslubu (yalnız Çin dili üçün əlçatandır)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI filtri",
+        "description": "Məqsədi yoxlanmış vizuallar: ümumi qradiyentlər, şablon tərtibatlar və ya işləməyən idarəetmə elementləri yoxdur."
+      },
+      "antislop-copy": {
+        "label": "Antislop mətn və insan filtri",
+        "description": "Dürüst mətn və insanlar üçün qaydalar: Sİ izləri yoxdur, WCAG AA kontrastı, klaviatura, vəziyyətlər, mobil uyğunlaşma."
       }
     },
     "resilienceWaitForCooldown": "Cooldown üçün gözləyin",

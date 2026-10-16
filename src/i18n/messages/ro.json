@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK concis (文言)",
         "description": "Stil ultra-concis în chineza clasică (disponibil doar pentru chineză)."
+      },
+      "antislop-ui": {
+        "label": "Filtru Antislop pentru UI",
+        "description": "Elemente vizuale cu scop verificat: fără degradeuri generice, layouturi șablon sau controale moarte."
+      },
+      "antislop-copy": {
+        "label": "Filtru Antislop pentru text și oameni",
+        "description": "Text onest plus reguli pentru oameni: fără urme de AI, contrast WCAG AA, tastatură, stări, rearanjare pe mobil."
       }
     },
     "resilienceWaitForCooldown": "Așteptați răcirea",

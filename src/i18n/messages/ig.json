@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK dị nkenke (文言)",
         "description": "Ụdị Chinese oge ochie dị oke nkenke (dị naanị maka Chinese)."
+      },
+      "antislop-ui": {
+        "label": "Nzacha Antislop maka UI",
+        "description": "Ihe ngosi a nwalere ebumnuche ha: enweghị gradient nkịtị, nhazi template ma ọ bụ njikwa nwụrụ anwụ."
+      },
+      "antislop-copy": {
+        "label": "Nzacha Antislop maka ederede na mmadụ",
+        "description": "Ederede eziokwu na iwu maka ndị mmadụ: enweghị akara AI, ọdịiche WCAG AA, ahụigodo, ọnọdụ, nhazigharị ekwentị."
       }
     },
     "resilienceWaitForCooldown": "Chere ka oge nkwụsị gafee",

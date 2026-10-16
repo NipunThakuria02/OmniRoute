@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Tömör CJK (文言)",
         "description": "Klasszikus kínai ultratömör stílus (csak kínai nyelven érhető el)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI-szűrő",
+        "description": "Céltesztelt vizuális elemek: nincsenek általános színátmenetek, sablonelrendezések vagy halott vezérlők."
+      },
+      "antislop-copy": {
+        "label": "Antislop szöveg- és emberszűrő",
+        "description": "Őszinte szöveg és szabályok az emberekért: nincsenek MI-jelek, WCAG AA kontraszt, billentyűzet, állapotok, mobil újrarendezés."
       }
     },
     "resilienceWaitForCooldown": "Várja meg a lehűlést",

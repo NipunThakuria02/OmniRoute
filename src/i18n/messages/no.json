@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Kortfattet CJK (文言)",
         "description": "Klassisk-kinesisk ultrakortfattet stil (kun tilgjengelig for kinesisk)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI-filter",
+        "description": "Formålstestede visuelle elementer: ingen generiske gradienter, malbaserte oppsett eller døde kontroller."
+      },
+      "antislop-copy": {
+        "label": "Antislop tekst- og menneskefilter",
+        "description": "Ærlig tekst og regler for mennesker: ingen KI-tegn, WCAG AA-kontrast, tastatur, tilstander, mobil omflyt."
       }
     },
     "resilienceWaitForCooldown": "Vent på nedkjøling",

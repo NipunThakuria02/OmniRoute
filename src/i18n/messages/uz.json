@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Ixcham CJK (文言)",
         "description": "Klassik xitoycha oʻta ixcham uslub (faqat xitoy tili uchun mavjud)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI filtri",
+        "description": "Maqsadi tekshirilgan vizuallar: umumiy gradiyentlar, shablon maketlar yoki ishlamaydigan boshqaruv elementlari yo'q."
+      },
+      "antislop-copy": {
+        "label": "Antislop matn va inson filtri",
+        "description": "Halol matn va odamlar uchun qoidalar: SI izlari yo'q, WCAG AA kontrasti, klaviatura, holatlar, mobil qayta joylashuv."
       }
     },
     "resilienceWaitForCooldown": "Sovish davri tugashini kutish",

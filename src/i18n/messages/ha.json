@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Taƙaitaccen CJK (文言)",
         "description": "Salon Sinanci na gargajiya mai matuƙar taƙaitawa (yana samuwa ga Sinanci kawai)."
+      },
+      "antislop-ui": {
+        "label": "Matatar Antislop ta UI",
+        "description": "Hotuna da aka gwada manufarsu: babu gradient na gama-gari, tsarin samfuri ko maɓallan da ba sa aiki."
+      },
+      "antislop-copy": {
+        "label": "Matatar Antislop ta rubutu da mutane",
+        "description": "Rubutu na gaskiya da ƙa'idoji don mutane: babu alamun AI, bambancin launi na WCAG AA, madannai, yanayi, sake tsarawa a wayar hannu."
       }
     },
     "resilienceWaitForCooldown": "Jira Lokacin Hucewa",

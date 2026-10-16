@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK ṣókí (文言)",
         "description": "Àṣà èdè Ṣáínà àtijọ́ tó ṣókí gan-an (ó wà fún èdè Ṣáínà nìkan)."
+      },
+      "antislop-ui": {
+        "label": "Àlẹ̀mọ́ UI Antislop",
+        "description": "Àwọn àwòrán tí a ti dán ète wọn wò: kò sí gradient gbogbogbò, ìfilélẹ̀ àwòṣe tàbí àwọn ìdarí tí kò ṣiṣẹ́."
+      },
+      "antislop-copy": {
+        "label": "Àlẹ̀mọ́ ọ̀rọ̀ àti ènìyàn Antislop",
+        "description": "Ọ̀rọ̀ òtítọ́ pẹ̀lú àwọn òfin fún ènìyàn: kò sí àmì AI, ìyàtọ̀ àwọ̀ WCAG AA, kọ́bọ́ọ̀dù, àwọn ipò, àtúntò fún fóònù."
       }
     },
     "resilienceWaitForCooldown": "Dúró de ìparí àkókò ìtura",

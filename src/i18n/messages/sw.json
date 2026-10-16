@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "CJK Fupi (文言)",
         "description": "Mtindo mfupi zaidi wa Kichina cha Kale (inapatikana kwa Kichina pekee)."
+      },
+      "antislop-ui": {
+        "label": "Kichujio cha UI cha Antislop",
+        "description": "Picha zilizojaribiwa kwa madhumuni: hakuna gradient za kawaida, mpangilio wa violezo wala vidhibiti visivyofanya kazi."
+      },
+      "antislop-copy": {
+        "label": "Kichujio cha maandishi na binadamu cha Antislop",
+        "description": "Maandishi ya kweli pamoja na kanuni kwa watu: hakuna dalili za AI, utofautishaji wa WCAG AA, kibodi, hali, upangaji upya wa simu."
       }
     },
     "resilienceWaitForCooldown": "Subiri hadi Kupunguza joto",

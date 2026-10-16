@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "Napp CJK (文言)",
         "description": "Ülinapp klassikalise hiina keele stiil (saadaval ainult hiina keele jaoks)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI-filter",
+        "description": "Eesmärgipõhiselt kontrollitud visuaalid: ei mingeid üldisi gradiente, mallipaigutusi ega surnud juhtelemente."
+      },
+      "antislop-copy": {
+        "label": "Antislop teksti- ja inimfilter",
+        "description": "Aus tekst ja reeglid inimeste jaoks: ilma tehisintellekti jälgedeta, WCAG AA kontrast, klaviatuur, olekud, mobiilne ümberpaigutus."
       }
     },
     "resilienceWaitForCooldown": "Oota jahtumisaja lõppu",

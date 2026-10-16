@@ -8240,6 +8240,14 @@
       "terse-cjk": {
         "label": "간결한 CJK (文言)",
         "description": "한문 초간결 스타일 (중국어만 지원)."
+      },
+      "antislop-ui": {
+        "label": "안티슬롭 UI 필터",
+        "description": "목적을 검증한 시각 요소: 뻔한 그라데이션, 템플릿 레이아웃, 작동하지 않는 컨트롤 없음."
+      },
+      "antislop-copy": {
+        "label": "안티슬롭 문구 및 사용자 필터",
+        "description": "정직한 문구와 사람을 위한 규칙: AI 티 없음, WCAG AA 대비, 키보드, 상태 표시, 모바일 리플로."
       }
     },
     "resilienceWaitForCooldown": "쿨다운 대기",
