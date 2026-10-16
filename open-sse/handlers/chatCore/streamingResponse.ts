@@ -102,8 +102,7 @@ import {
   isModelUnavailableError,
   getNextEligibleFamilyFallback,
   isContextOverflowError,
-  findLargerContextModel,
-  getEligibleModelFamily,
+  getContextFamilyFallback,
 } from "../../services/modelFamilyFallback.ts";
 
 import { isLocalStreamLifecycleError } from "@/shared/utils/circuitBreaker";
@@ -1132,15 +1131,8 @@ export async function runStreamingResponse(deps: StreamingDeps) {
         };
       }
     } else if (isContextOverflowError(statusCode, message)) {
-      const currentConnectionId = String(getCurrentConnectionId() || connectionId || "");
-      const familyCandidates = getEligibleModelFamily(
-        currentModel,
-        provider,
-        currentConnectionId
-      ).filter((m) => m !== currentModel && !triedModels.has(m));
-      const nextModel =
-        findLargerContextModel(currentModel, familyCandidates, provider) ??
-        getNextEligibleFamilyFallback(currentModel, triedModels, provider, currentConnectionId);
+      const connection = String(getCurrentConnectionId() || connectionId || "");
+      const nextModel = getContextFamilyFallback(currentModel, triedModels, provider, connection);
       if (nextModel) {
         triedModels.add(nextModel);
         currentModel = nextModel;

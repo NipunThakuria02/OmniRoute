@@ -31,8 +31,7 @@ import {
   isModelUnavailableError,
   getNextEligibleFamilyFallback,
   isContextOverflowError,
-  findLargerContextModel,
-  getEligibleModelFamily,
+  getContextFamilyFallback,
 } from "../../services/modelFamilyFallback.ts";
 import { isEmptyContentResponse } from "../../services/errorClassifier.ts";
 import { hasTrustedEmptyTurn } from "../../utils/emptyTurnPolicy.ts";
@@ -676,15 +675,8 @@ export async function runNonStreamingProviderLeg(
     // -- Context overflow -> family fallback (initial only) ---------------------
     if (allowModelFallback && isContextOverflowError(statusCode, message)) {
       const triedModels = new Set<string>([currentModel]);
-      const currentConnectionId = input.getCurrentConnectionId?.() ?? connectionId;
-      const familyCandidates = getEligibleModelFamily(
-        currentModel,
-        provider,
-        currentConnectionId
-      ).filter((m) => m !== currentModel && !triedModels.has(m));
-      const nextModel =
-        findLargerContextModel(currentModel, familyCandidates, provider) ??
-        getNextEligibleFamilyFallback(currentModel, triedModels, provider, currentConnectionId);
+      const connection = input.getCurrentConnectionId?.() ?? connectionId;
+      const nextModel = getContextFamilyFallback(currentModel, triedModels, provider, connection);
       if (nextModel) {
         triedModels.add(nextModel);
         input.setRequestWireState({
