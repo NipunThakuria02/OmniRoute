@@ -46,11 +46,13 @@ test.after(() => {
 });
 
 async function createKeyedConnection(extra: Record<string, unknown> = {}) {
+  const suffix = Math.random().toString(16).slice(2);
   const created = (await createProviderConnection({
     provider: "openai",
     authType: "apikey",
-    name: `pool-${Math.random().toString(16).slice(2)}`,
-    apiKey: PRIMARY_KEY,
+    name: `pool-${suffix}`,
+    // Unique per connection: the apikey create path dedups by key value (#3023).
+    apiKey: `${PRIMARY_KEY}-${suffix}`,
     isActive: true,
     providerSpecificData: {
       extraApiKeys: [EXTRA_ONE, EXTRA_TWO],
@@ -59,7 +61,8 @@ async function createKeyedConnection(extra: Record<string, unknown> = {}) {
     },
   })) as Record<string, unknown>;
   assert.ok(typeof created.id === "string" && created.id.length > 0);
-  return created as Record<string, unknown> & { id: string };
+  assert.equal(created.apiKey, `${PRIMARY_KEY}-${suffix}`);
+  return created as Record<string, unknown> & { id: string; apiKey: string };
 }
 
 async function getList(): Promise<Array<Record<string, unknown>>> {
@@ -109,7 +112,7 @@ test("GET /api/providers masks every extraApiKeys entry with the apiKey mask", a
   const serialized = JSON.stringify(listed);
   assert.ok(!serialized.includes(EXTRA_ONE), "list response must not carry the first extra key");
   assert.ok(!serialized.includes(EXTRA_TWO), "list response must not carry the second extra key");
-  assert.equal(listed.apiKey, maskStoredApiKey(PRIMARY_KEY), "control: apiKey is masked as before");
+  assert.equal(listed.apiKey, maskStoredApiKey(created.apiKey), "control: apiKey masked as before");
   assert.deepEqual(psdOf(listed).extraApiKeys, [
     maskStoredApiKey(EXTRA_ONE),
     maskStoredApiKey(EXTRA_TWO),
@@ -186,7 +189,7 @@ test("PUT echoing the masked extraApiKeys list leaves the stored tokens unchange
     [EXTRA_ONE, EXTRA_TWO],
     "masked placeholders must never replace the stored tokens"
   );
-  assert.equal(stored.apiKey, PRIMARY_KEY, "control: primary key untouched");
+  assert.equal(stored.apiKey, created.apiKey, "control: primary key untouched");
 });
 
 test("PUT with masked + new + removed entries keeps the matching stored tokens", async () => {

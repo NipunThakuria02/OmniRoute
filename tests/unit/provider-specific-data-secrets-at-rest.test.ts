@@ -26,6 +26,8 @@ const { invalidateDbCache } = await import("../../src/lib/db/readCache.ts");
 
 const ENC_PREFIX = "enc:v1:";
 const PRIMARY_KEY = "sk-primary-0123456789abcdefghij";
+// The apikey create path dedups by key value (#3023): every created fixture gets its own key.
+const uniqueKey = (label: string) => `${PRIMARY_KEY}-${label}`;
 const EXTRA_ONE = "sk-extra-one-0123456789abcdefgh";
 const EXTRA_TWO = "sk-extra-two-0123456789abcdefgh";
 const COPILOT_TOKEN = "ghu_copilotbearer_0123456789abcdef";
@@ -83,7 +85,7 @@ test("createProviderConnection encrypts extraApiKeys and other credential fields
     provider: "openai",
     authType: "apikey",
     name: "pool",
-    apiKey: PRIMARY_KEY,
+    apiKey: uniqueKey("pool"),
     providerSpecificData: {
       extraApiKeys: [EXTRA_ONE, EXTRA_TWO],
       copilotToken: COPILOT_TOKEN,
@@ -147,7 +149,7 @@ test("updateProviderConnection re-encrypts and never double-encrypts", async () 
     provider: "openai",
     authType: "apikey",
     name: "pool-update",
-    apiKey: PRIMARY_KEY,
+    apiKey: uniqueKey("pool-update"),
     providerSpecificData: { extraApiKeys: [EXTRA_ONE] },
   })) as Record<string, unknown> & { id: string };
 
@@ -200,12 +202,11 @@ test("first use of the providers module sweeps still-plaintext secret fields (id
   core.getDbInstance();
   const id = "legacy-sweep-row";
   insertLegacyPlaintextRow(id, { extraApiKeys: [EXTRA_ONE, EXTRA_TWO], tags: ["keep"] });
-  const untouchedId = "already-encrypted-row";
   await providers.createProviderConnection({
     provider: "openai",
     authType: "apikey",
     name: "already",
-    apiKey: PRIMARY_KEY,
+    apiKey: uniqueKey("already"),
     providerSpecificData: { extraApiKeys: [EXTRA_ONE] },
   });
 
@@ -237,7 +238,6 @@ test("first use of the providers module sweeps still-plaintext secret fields (id
   const before = alreadyRows[0].provider_specific_data;
   await providers.getProviderConnections({ provider: "openai" });
   assert.equal(rawRow(alreadyRows[0].id).provider_specific_data, before);
-  void untouchedId;
 });
 
 test("JSON export → import round-trip restores usable tokens and stores them encrypted", async () => {
@@ -245,7 +245,7 @@ test("JSON export → import round-trip restores usable tokens and stores them e
     provider: "openai",
     authType: "apikey",
     name: "roundtrip",
-    apiKey: PRIMARY_KEY,
+    apiKey: uniqueKey("roundtrip"),
     providerSpecificData: { extraApiKeys: [EXTRA_ONE, EXTRA_TWO], copilotToken: COPILOT_TOKEN },
   })) as Record<string, unknown> & { id: string };
 
@@ -282,7 +282,7 @@ test("JSON export → import round-trip restores usable tokens and stores them e
     (restored.providerSpecificData as Record<string, unknown>).copilotToken,
     COPILOT_TOKEN
   );
-  assert.equal(restored.apiKey, PRIMARY_KEY);
+  assert.equal(restored.apiKey, uniqueKey("roundtrip"));
 });
 
 test("web-session cookie dedup still matches the stored (now encrypted) credential", async () => {
@@ -314,11 +314,11 @@ test("without STORAGE_ENCRYPTION_KEY the column stays plaintext, like api_key", 
       provider: "openai",
       authType: "apikey",
       name: "plain-mode",
-      apiKey: PRIMARY_KEY,
+      apiKey: uniqueKey("plain-mode"),
       providerSpecificData: { extraApiKeys: [EXTRA_ONE] },
     })) as Record<string, unknown> & { id: string };
     const row = rawRow(created.id);
-    assert.equal(row.api_key, PRIMARY_KEY, "control: api_key passthrough");
+    assert.equal(row.api_key, uniqueKey("plain-mode"), "control: api_key passthrough");
     assert.deepEqual(rawPsd(created.id).extraApiKeys, [EXTRA_ONE]);
   } finally {
     process.env.STORAGE_ENCRYPTION_KEY = saved;

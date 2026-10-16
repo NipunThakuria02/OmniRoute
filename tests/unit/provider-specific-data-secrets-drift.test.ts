@@ -156,11 +156,11 @@ test("the encryptor envelopes every string-valued key in the constant and the de
   }
 });
 
-test("non-string secret values pass through both sides unchanged", () => {
+test("object secret values pass through; a lone string under a list key is still enveloped", () => {
   const input = { codexClientIdentity: { a: 1 }, extraApiKeys: "not-a-list", count: 1 };
   const encrypted = encryptProviderSpecificDataSecrets(input) as Record<string, unknown>;
   assert.deepEqual(encrypted.codexClientIdentity, { a: 1 });
-  assert.equal(encrypted.extraApiKeys, "not-a-list");
+  assert.ok(looksEncrypted(encrypted.extraApiKeys), "a string under a secret key is enveloped");
   const sanitized = sanitizeProviderSpecificDataForResponse(input) as Record<string, unknown>;
   assert.ok(!("codexClientIdentity" in sanitized));
   assert.ok(!("extraApiKeys" in sanitized), "a malformed list is dropped rather than echoed");
