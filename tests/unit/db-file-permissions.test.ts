@@ -9,9 +9,6 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const isWindows = process.platform === "win32";
-const posixOnly = { skip: isWindows ? "POSIX mode bits only" : false, concurrency: false };
-
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-db-perms-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
 // Force the permissive umask most hosts run with, so a missing explicit mode is observable.
@@ -22,7 +19,12 @@ const backupDb = await import("../../src/lib/db/backup.ts");
 const { createManagedDbBackup } = await import("../../src/lib/db/managedBackup.ts");
 const { createPreMigrationBackup } =
   await import("../../src/lib/db/migrationRunner/preMigrationBackup.ts");
-const { chmodQuiet, hardenDbFilePermissions } = await import("../../src/lib/db/filePermissions.ts");
+const { chmodQuiet, hardenDbFilePermissions, POSIX_FILE_MODES_SUPPORTED } =
+  await import("../../src/lib/db/filePermissions.ts");
+const posixOnly = {
+  skip: POSIX_FILE_MODES_SUPPORTED ? false : "POSIX mode bits only",
+  concurrency: false,
+};
 
 const sqliteFile = path.join(TEST_DATA_DIR, "storage.sqlite");
 const modeOf = (target: string) => fs.statSync(target).mode & 0o777;

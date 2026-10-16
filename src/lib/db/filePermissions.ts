@@ -15,9 +15,12 @@ import fs from "fs";
 export const DB_SECRET_DIR_MODE = 0o700;
 export const DB_SECRET_FILE_MODE = 0o600;
 
+/** chmod is ACL-based on Windows: only the read-only bit maps through. */
+export const POSIX_FILE_MODES_SUPPORTED = process.platform !== "win32";
+
 /** chmod `target` to `mode`; returns false (never throws) when it could not be applied. */
 export function chmodQuiet(target: string, mode: number): boolean {
-  if (process.platform === "win32") return false;
+  if (!POSIX_FILE_MODES_SUPPORTED) return false;
   try {
     fs.chmodSync(target, mode);
     return true;
