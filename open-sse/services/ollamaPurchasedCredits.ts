@@ -1,10 +1,8 @@
 /** Included allowance alone cannot establish account headroom while purchased credits remain. */
-export function hasOllamaPurchasedCredits(
-  usage: Record<string, unknown>,
-  provider?: string | null
-): boolean {
+export function hasOllamaPurchasedCredits(usage: unknown, provider?: string | null): boolean {
   if (provider !== "ollama-cloud") return false;
-  const quotas = usage.quotas;
+  if (!usage || typeof usage !== "object") return false;
+  const quotas = (usage as Record<string, unknown>).quotas;
   if (!quotas || typeof quotas !== "object") return false;
   const credits = (quotas as Record<string, unknown>).credits;
   if (!credits || typeof credits !== "object") return false;
