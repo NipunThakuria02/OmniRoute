@@ -51,7 +51,7 @@ import { recordStickyBinding } from "./sessionStickiness.ts";
 import { recordStickyWeightedSuccess } from "./rrState.ts";
 import { resolveReasoningBufferedMaxTokens, toPositiveInteger } from "../reasoningTokenBuffer.ts";
 import { parseModel } from "../model.ts";
-import { getNextRequestFamilyFallback } from "../modelFamilyFallbackPolicy.ts";
+import { getNextComboFamilyFallback } from "../modelFamilyFallbackPolicy.ts";
 import type { ProviderProfile } from "../accountFallback.ts";
 import {
   MAX_FALLBACK_WAIT_MS,
@@ -437,14 +437,14 @@ export async function executeTargetAttempt(
         state.observeFailure(false, target.executionKey);
         if (handlePreContentStreamRetry(quality, retry, deps, modelStr)) continue;
         familyTried.add(modelStr);
-        // Request-scoped refusals cannot be repaired by an effort sibling.
-        // Continue to the next configured combo target instead.
-        const familyNext =
-          provider && provider !== "unknown" && !quality.upstreamFailure?.requestScoped
-            ? await getNextRequestFamilyFallback(modelStr, familyTried, provider, {
-                connectionId: effectiveConnectionId,
-              })
-            : null;
+        const familyNext = await getNextComboFamilyFallback({
+          model: modelStr,
+          tried: familyTried,
+          provider,
+          connectionId: effectiveConnectionId,
+          headers: deps.requestHeaders,
+          requestScoped: quality.upstreamFailure?.requestScoped,
+        });
         if (familyNext && familyNext !== modelStr) {
           deps.log.info("COMBO", `Quality fail ${modelStr} -> family sibling ${familyNext}`);
           modelStr = familyNext;

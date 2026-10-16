@@ -58,7 +58,12 @@ function anthropicSuccess(model: string, stream: boolean): Response {
   );
 }
 
-async function request(stream: boolean, optIn: boolean, key?: { key: string; id: string }) {
+async function request(
+  stream: boolean,
+  optIn: boolean,
+  key?: { key: string; id: string },
+  identity?: { bearer: string; scopeId?: string }
+) {
   const sent: string[] = [];
   globalThis.fetch = async (_url, init) => {
     const outbound = JSON.parse(String(init?.body)) as { model: string; stream?: boolean };
@@ -85,6 +90,8 @@ async function request(stream: boolean, optIn: boolean, key?: { key: string; id:
   const headers = new Headers({ accept: stream ? "text/event-stream" : "application/json" });
   if (optIn) headers.set("x-omniroute-allow-cross-version-fallback", "true");
   if (key) headers.set("authorization", `Bearer ${key.key}`);
+  if (identity) headers.set("authorization", `Bearer ${identity.bearer}`);
+  if (identity?.scopeId) headers.set("x-omniroute-self-loop-key-id", identity.scopeId);
   const result = await handleChatCore({
     apiKeyInfo: key ? { id: key.id } : undefined,
     body,
@@ -203,4 +210,55 @@ test("opt-in composes API-key grants with hidden models and active-connection lo
     setModelIsHidden("anthropic", "claude-opus-5", false, "chat");
     clearAllModelLockouts();
   }
+});
+
+for (const stream of [false, true]) {
+  test(`stream=${stream}: scoped self-loop fallback uses the original restricted key`, async () => {
+    const { createApiKey } = await import("../../src/lib/db/apiKeys.ts");
+    const { resolveSelfLoopBearer } =
+      await import("../../src/shared/middleware/chatAdmissionIdentity.ts");
+    const key = await createApiKey("scoped fallback fixture", "fixture-machine", [], {
+      modelAccessMode: "restricted",
+      allowedModels: [`anthropic/${requested}`],
+    });
+    const { result, sent } = await request(stream, true, key, {
+      bearer: resolveSelfLoopBearer(),
+      scopeId: key.id,
+    });
+    assert.equal(result.success, false);
+    assert.ok(sent.every((model) => model === requested));
+  });
+}
+
+test("an unknown self-loop scope fails closed instead of using the internal bearer", async () => {
+  const { resolveSelfLoopBearer } =
+    await import("../../src/shared/middleware/chatAdmissionIdentity.ts");
+  const { getNextRequestFamilyFallback } =
+    await import("../../open-sse/services/modelFamilyFallbackPolicy.ts");
+  const next = await getNextRequestFamilyFallback(requested, new Set([requested]), "anthropic", {
+    hasApiKeyMetadata: true,
+    headers: {
+      authorization: `Bearer ${resolveSelfLoopBearer()}`,
+      "x-omniroute-self-loop-key-id": "missing-fixture-key",
+      "x-omniroute-allow-cross-version-fallback": "true",
+    },
+  });
+  assert.equal(next, null);
+});
+
+test("a valid unscoped self-loop retains its permitted opt-in fallback", async () => {
+  const { resolveSelfLoopBearer } =
+    await import("../../src/shared/middleware/chatAdmissionIdentity.ts");
+  const { getNextRequestFamilyFallback } =
+    await import("../../open-sse/services/modelFamilyFallbackPolicy.ts");
+  assert.equal(
+    await getNextRequestFamilyFallback(requested, new Set([requested]), "anthropic", {
+      hasApiKeyMetadata: true,
+      headers: {
+        authorization: `Bearer ${resolveSelfLoopBearer()}`,
+        "x-omniroute-allow-cross-version-fallback": "true",
+      },
+    }),
+    "claude-opus-5"
+  );
 });
