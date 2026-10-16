@@ -16,6 +16,7 @@
  * @module domain/quotaCache
  */
 
+import { hasOllamaPurchasedCredits } from "@omniroute/open-sse/services/ollamaPurchasedCredits.ts";
 import { getUsageForProvider } from "@omniroute/open-sse/services/usage.ts";
 import { getCachedProviderConnectionById } from "@/lib/db/readCache";
 import { resolveProxyForConnection } from "@/lib/db/settings";
@@ -281,6 +282,15 @@ function normalizeQuotas(rawQuotas: Record<string, unknown>): Record<string, Quo
     }
   }
   return result;
+}
+
+function normalizeConnectionQuotas(rawQuotas: Record<string, unknown>, provider: string) {
+  const quotas = normalizeQuotas(rawQuotas);
+  // Preserve unknown aggregate headroom through snapshots; raw usage retains the plan fraction.
+  if (hasOllamaPurchasedCredits({ quotas: rawQuotas }, provider)) {
+    for (const quota of Object.values(quotas)) quota.fractionReported = false;
+  }
+  return quotas;
 }
 
 // ─── Public API ─────────────────────────────────────────────────────────────
@@ -705,7 +715,7 @@ export function setQuotaCache(
   rawQuotas: Record<string, unknown>,
   rawModelQuotas: Record<string, unknown> = {}
 ) {
-  const quotas = normalizeQuotas(rawQuotas);
+  const quotas = normalizeConnectionQuotas(rawQuotas, provider);
   const modelQuotas = normalizeQuotas(rawModelQuotas);
   const exhausted = isExhausted(quotas);
   // #4438 — capture the prior entry BEFORE overwriting the cache so we can skip

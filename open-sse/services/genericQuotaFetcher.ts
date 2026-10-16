@@ -16,6 +16,7 @@
  * tests) can discover which windows that provider exposes.
  */
 
+import { hasOllamaPurchasedCredits } from "./ollamaPurchasedCredits.ts";
 import { getUsageForProvider, USAGE_FETCHER_PROVIDERS } from "./usage.ts";
 import {
   getQuotaFetcher,
@@ -233,12 +234,21 @@ function aggregateGroupedQuotaValues(
   return { percentUsed, resetAt };
 }
 
+function quotaUsageRecord(
+  usage: unknown,
+  provider?: string | null
+): Record<string, unknown> | null {
+  if (!usage || typeof usage !== "object") return null;
+  const record = usage as Record<string, unknown>;
+  return hasOllamaPurchasedCredits(record, provider) ? null : record;
+}
+
 export function convertUsageToQuotaInfo(
   usage: unknown,
   context: UsageToQuotaContext = {}
 ): QuotaInfo | null {
-  if (!usage || typeof usage !== "object") return null;
-  const usageRecord = usage as Record<string, unknown>;
+  const usageRecord = quotaUsageRecord(usage, context.provider);
+  if (!usageRecord) return null;
   if (
     typeof usageRecord.message === "string" &&
     (!usageRecord.quotas || typeof usageRecord.quotas !== "object")

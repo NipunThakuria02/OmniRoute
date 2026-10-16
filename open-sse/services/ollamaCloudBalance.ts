@@ -18,6 +18,7 @@ export type OllamaCloudQuota = {
   unlimited: boolean;
   displayName?: string;
   currency?: string;
+  ollamaApiBalance?: true;
 };
 
 export type OllamaCloudBalanceResult =
@@ -60,7 +61,15 @@ function percentQuota(
     resetAt: typeof resetAt === "string" && resetAt ? resetAt : null,
     unlimited: false,
     displayName,
+    ollamaApiBalance: true,
   };
+}
+
+function monthlyQuota(included: JsonRecord): OllamaCloudQuota | null {
+  const allowance = finiteNumber(included.allowance_usd);
+  const balance = finiteNumber(included.balance_usd);
+  if (allowance === null || allowance <= 0 || balance === null) return null;
+  return percentQuota((balance / allowance) * 100, asRecord(included.period).until, "Monthly");
 }
 
 /** Maps an `/api/balance` payload to usage quota rows. Returns `{}` for an unknown shape. */
@@ -69,12 +78,8 @@ export function parseOllamaCloudBalance(data: unknown): Record<string, OllamaClo
   const included = asRecord(root.included);
   const quotas: Record<string, OllamaCloudQuota> = {};
 
-  const allowance = finiteNumber(included.allowance_usd);
-  if (allowance !== null && allowance > 0) {
-    const balance = finiteNumber(included.balance_usd) ?? 0;
-    const period = asRecord(included.period);
-    quotas.monthly = percentQuota((balance / allowance) * 100, period.until, "Monthly");
-  }
+  const monthly = monthlyQuota(included);
+  if (monthly) quotas.monthly = monthly;
 
   for (const [key, label] of LEGACY_WINDOWS) {
     const window = asRecord(included[key]);
@@ -92,6 +97,7 @@ export function parseOllamaCloudBalance(data: unknown): Record<string, OllamaClo
       resetAt: null,
       unlimited: false,
       currency: "USD",
+      ollamaApiBalance: true,
     };
   }
 

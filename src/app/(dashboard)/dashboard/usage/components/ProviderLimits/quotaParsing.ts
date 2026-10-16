@@ -339,9 +339,15 @@ function parseAgentrouter(data: any) {
 // Ollama Cloud `/api/balance` (open-sse/services/ollamaCloudBalance.ts) reports purchased
 // credits as a `credits` USD balance next to the monthly/session/weekly percent windows. Route
 // that row through buildCreditsQuota() so it renders as "$X.XX", not as a percentage bar.
+function normalizeOllamaWindow(name: string, quota: any) {
+  if (quota?.ollamaApiBalance !== true) return normalizeQuotaEntry(name, quota);
+  // A fresh API balance is authoritative even when the reported period end is in the past.
+  return normalizeQuotaEntry(name, { ...quota, resetAt: null }, { resetAt: quota.resetAt });
+}
+
 function parseOllamaCloud(data: any) {
   return quotaEntries(data).map(([quotaKey, quota]) => {
-    if (quotaKey !== "credits") return normalizeQuotaEntry(quotaKey, quota);
+    if (quotaKey !== "credits") return normalizeOllamaWindow(quotaKey, quota);
     const remaining = Math.max(0, Number(quota?.remaining ?? 0) || 0);
     const currency = quota?.currency || "USD";
     return buildCreditsQuota("credits", remaining, remaining > 0 ? 100 : 0, { currency });

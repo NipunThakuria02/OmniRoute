@@ -27,8 +27,7 @@ type Quota = {
 type UsageResult = { plan?: string; message?: string; quotas?: Record<string, Quota> };
 type Call = { url: string; headers: Headers };
 
-// https://docs.ollama.com/api/balance — standard (monthly credit) plan example; `until` is moved
-// into the future so the dashboard parser does not treat the window as stale-after-reset.
+// https://docs.ollama.com/api/balance — standard (monthly credit) plan example.
 const MONTHLY_BALANCE = {
   included: {
     balance_usd: 72.5,
@@ -205,11 +204,9 @@ test("dashboard parser renders the purchased credits row as USD credits", async 
   assert.equal(monthly.displayName, "Monthly");
 });
 
-test("preflight ignores the purchased credits row and reads the monthly window", async () => {
+test("preflight keeps total headroom unknown while purchased credits remain", async () => {
   const { result } = await run({ apiKey: "ok-key" }, () => json(MONTHLY_BALANCE));
   const info = convertUsageToQuotaInfo(result, { provider: "ollama-cloud" });
 
-  assert.ok(info, "expected quota info");
-  assert.deepEqual(Object.keys(info.windows ?? {}), ["monthly"]);
-  assert.equal(info.limitReached, false);
+  assert.equal(info, null);
 });
