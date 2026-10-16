@@ -442,12 +442,7 @@ export async function executeTargetAttempt(
         // same model just repeats the refusal, so let the combo advance instead.
         const familyNext =
           provider && provider !== "unknown" && !quality.upstreamFailure?.requestScoped
-            ? getNextEligibleFamilyFallback(
-                modelStr,
-                familyTried,
-                provider,
-                targetForAttempt.connectionId || ""
-              )
+            ? getNextEligibleFamilyFallback(modelStr, familyTried, provider, effectiveConnectionId)
             : null;
         if (familyNext && familyNext !== modelStr) {
           deps.log.info("COMBO", `Quality fail ${modelStr} -> family sibling ${familyNext}`);
