@@ -89,7 +89,12 @@ async function request(stream: boolean, optIn: boolean, key?: { key: string; id:
     apiKeyInfo: key ? { id: key.id } : undefined,
     body,
     modelInfo: { provider: "anthropic", model: requested },
-    credentials: { apiKey: "fixture-key", providerSpecificData: {} },
+    credentials: {
+      apiKey: "fixture-key",
+      connectionId: "policy-fixture",
+      providerSpecificData: {},
+    },
+    connectionId: "policy-fixture",
     log: { debug() {}, info() {}, warn() {}, error() {} },
     clientRawRequest: { endpoint: "/v1/chat/completions", body, headers },
     userAgent: "unit-test",
@@ -169,5 +174,33 @@ test("the opt-in header is allowed by both browser preflight surfaces", async ()
         .toLowerCase()
         .includes("x-omniroute-allow-cross-version-fallback")
     );
+  }
+});
+
+test("opt-in composes API-key grants with hidden models and active-connection lockouts", async () => {
+  const { createApiKey } = await import("../../src/lib/db/apiKeys.ts");
+  const { setModelIsHidden } = await import("../../src/lib/db/models.ts");
+  const { lockExactModel, clearAllModelLockouts } =
+    await import("../../open-sse/services/accountFallback.ts");
+  const key = await createApiKey("combined fallback eligibility fixture", "fixture-machine", [], {
+    modelAccessMode: "restricted",
+    allowedModels: [
+      `anthropic/${requested}`,
+      "anthropic/claude-opus-5",
+      "anthropic/claude-opus-4.8",
+    ],
+  });
+  setModelIsHidden("anthropic", "claude-opus-5", true, "chat");
+  lockExactModel("anthropic", "policy-fixture", "claude-opus-4.8", "rate_limit", 60_000);
+  try {
+    const restricted = await request(false, true, key);
+    assert.equal(restricted.result.success, false);
+    assert.ok(restricted.sent.every((model) => model === requested));
+    const unrestricted = await request(false, true);
+    assert.equal(unrestricted.result.success, true);
+    assert.equal(unrestricted.sent.at(-1), "claude-sonnet-5");
+  } finally {
+    setModelIsHidden("anthropic", "claude-opus-5", false, "chat");
+    clearAllModelLockouts();
   }
 });

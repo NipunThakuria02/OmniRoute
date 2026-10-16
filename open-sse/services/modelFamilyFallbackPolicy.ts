@@ -9,13 +9,18 @@ import { getRegistryEntry } from "../config/providerRegistry.ts";
 import { getHeader, normalizeHeaders } from "../utils/headers.ts";
 import { getRegisteredProviderEffortBaseModelId } from "../utils/registeredEffortVariants.ts";
 import { parseModel, splitSyncedEffortSuffix } from "./model.ts";
-import { getModelFamily, getNextFamilyFallback } from "./modelFamilyFallback.ts";
+import {
+  findLargerContextModel,
+  getEligibleModelFamily,
+  getNextEligibleFamilyFallback,
+} from "./modelFamilyFallback.ts";
 
 export const CROSS_VERSION_FALLBACK_HEADER = "x-omniroute-allow-cross-version-fallback";
 
 type RequestFamilyPolicy = {
   headers?: unknown;
   hasApiKeyMetadata?: boolean;
+  connectionId?: string | (() => string);
 };
 
 /** Only registry-backed effort/mode aliases collapse; snapshots and versions stay distinct. */
@@ -46,7 +51,9 @@ export async function getRequestModelFamily(
 ): Promise<string[]> {
   const allowCrossVersion =
     getHeader(policy.headers, CROSS_VERSION_FALLBACK_HEADER)?.trim().toLowerCase() === "true";
-  const candidates = getModelFamily(current, provider)
+  const connectionId =
+    typeof policy.connectionId === "function" ? policy.connectionId() : policy.connectionId || "";
+  const candidates = getEligibleModelFamily(current, provider, connectionId)
     .slice(1)
     .filter((candidate) => allowCrossVersion || isSameModelVersion(current, candidate, provider));
   if (!policy.hasApiKeyMetadata) return [current, ...candidates];
@@ -85,11 +92,13 @@ export async function getNextRequestFamilyFallback(
 ): Promise<string | null> {
   const permitted = new Set(await getRequestModelFamily(current, provider, policy));
   const excluded = new Set(tried);
-  let candidate = getNextFamilyFallback(current, excluded, provider);
+  const connectionId =
+    typeof policy.connectionId === "function" ? policy.connectionId() : policy.connectionId || "";
+  let candidate = getNextEligibleFamilyFallback(current, excluded, provider, connectionId);
   while (candidate) {
     if (permitted.has(candidate)) return candidate;
     excluded.add(candidate);
-    candidate = getNextFamilyFallback(current, excluded, provider);
+    candidate = getNextEligibleFamilyFallback(current, excluded, provider, connectionId);
   }
   return null;
 }
@@ -105,4 +114,21 @@ export function modelAfterFamilyFallback(
   const wire =
     outbound && typeof outbound === "object" ? (outbound as Record<string, unknown>).model : null;
   return typeof wire === "string" && wire ? wire : current;
+}
+
+/** Bind request policy once while reading the active connection at each recovery. */
+export function createRequestFamilyFallback(provider: string, policy: RequestFamilyPolicy) {
+  return {
+    getNext: (current: string, tried: Set<string>) =>
+      getNextRequestFamilyFallback(current, tried, provider, policy),
+    getForContextOverflow: async (current: string, tried: Set<string>) => {
+      const candidates = (await getRequestModelFamily(current, provider, policy)).filter(
+        (candidate) => candidate !== current && !tried.has(candidate)
+      );
+      return (
+        findLargerContextModel(current, candidates, provider) ??
+        (await getNextRequestFamilyFallback(current, tried, provider, policy))
+      );
+    },
+  };
 }

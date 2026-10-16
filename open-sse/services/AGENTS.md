@@ -40,7 +40,6 @@ Live count: `ls open-sse/services/*.ts | wc -l` (currently 134). More including 
 
 - **`modelDeprecation.ts`** — Deprecated model detection and successor routing.
 - **`modelFamilyFallback.ts`** — T5 intra-family fallback chains.
-- **`modelFamilyFallbackPolicy.ts`** — Request opt-in, API-key permission checks and response identity for model-family fallback.
 - **`emergencyFallback.ts`** — Last-resort fallback to stable free providers.
 
 ### State & Detection

@@ -51,7 +51,7 @@ import { buildNonStreamingResponseHeaders } from "../chatCore/nonStreamingRespon
 import { maybeWrapForcedNonStreamingResponsesJson } from "../chatCore/responsesJsonToSse.ts";
 import { runProviderExecutionPipeline } from "../chatCore/providerExecutionPipeline.ts";
 import {
-  getNextRequestFamilyFallback,
+  createRequestFamilyFallback,
   modelAfterFamilyFallback,
 } from "../../services/modelFamilyFallbackPolicy.ts";
 import { runNonStreamingProviderLeg } from "../chatCore/nonStreamingProviderLeg.ts";
@@ -201,6 +201,11 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
     traceEnabled,
     videoBridgeObserved,
   } = deps;
+  const familyFallback = createRequestFamilyFallback(provider, {
+    headers: clientRawRequest?.headers,
+    hasApiKeyMetadata: Boolean(apiKeyInfo),
+    connectionId: () => String(getCurrentConnectionId() || connectionId || ""),
+  });
 
   let claudePromptCacheLogMeta,
     currentModel,
@@ -232,11 +237,7 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
       currentModel = pipelineModel;
       triedModels.add(pipelineModel);
       return runProviderExecutionPipeline({
-        getNextFamilyFallback: (current, tried) =>
-          getNextRequestFamilyFallback(current, tried, provider, {
-            headers: clientRawRequest?.headers,
-            hasApiKeyMetadata: Boolean(apiKeyInfo),
-          }),
+        getNextFamilyFallback: familyFallback.getNext,
         policy,
         target: {
           provider,

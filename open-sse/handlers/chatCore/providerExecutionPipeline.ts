@@ -14,7 +14,8 @@ import { recoverAnthropicThinkingSignature } from "./thinkingSignatureRecovery.t
 import { isAnthropicThinkingSignatureError } from "./passthroughHelpers.ts";
 import {
   isModelUnavailableError,
-  getNextFamilyFallback as defaultGetNextFamilyFallback,
+  getNextEligibleFamilyFallback,
+  isFamilyFallbackEligible,
 } from "../../services/modelFamilyFallback.ts";
 import { COOLDOWN_MS } from "../../config/errorConfig.ts";
 import { normalizeHeaders } from "../../utils/headers.ts";
@@ -341,7 +342,29 @@ export async function runProviderExecutionPipeline(
   let authRefreshPending = false;
   let authRefreshed = false;
   let modelFallbackPending = false;
-  const resolveFamilyFallback = input.getNextFamilyFallback ?? defaultGetNextFamilyFallback;
+  const resolveFamilyFallback = async (
+    currentModel: string,
+    triedModels: Set<string>,
+    providerHint?: string | null
+  ) => {
+    const connectionId = currentConnectionId(connection);
+    if (!input.getNextFamilyFallback) {
+      return getNextEligibleFamilyFallback(
+        currentModel,
+        triedModels,
+        providerHint ?? target.provider,
+        connectionId
+      );
+    }
+
+    const excluded = new Set(triedModels);
+    while (true) {
+      const candidate = await input.getNextFamilyFallback(currentModel, excluded, providerHint);
+      if (!candidate || excluded.has(candidate)) return null;
+      if (isFamilyFallbackEligible(candidate, target.provider, connectionId)) return candidate;
+      excluded.add(candidate);
+    }
+  };
 
   while (
     attempts < maxAttempts ||
