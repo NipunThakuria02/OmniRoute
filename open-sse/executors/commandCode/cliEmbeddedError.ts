@@ -112,6 +112,35 @@ function replayResponse(
   });
 }
 
+type PeekVerdict = CommandCodeEmbeddedError | "content" | null;
+
+/** First decisive frame among `lines`: an embedded error, "content", or null to keep peeking. */
+function scanPeekLines(lines: string[]): PeekVerdict {
+  for (const line of lines) {
+    const event = parsePeekLine(line);
+    if (event === "done") return "content";
+    if (!event) continue;
+    if (event.type === "error") return parseCommandCodeEmbeddedError(event);
+    if (typeof event.type === "string" && CONTENT_EVENT_TYPES.has(event.type)) return "content";
+  }
+  return null;
+}
+
+async function readPeekChunk(
+  reader: ReadableStreamDefaultReader<Uint8Array>,
+  signal?: AbortSignal | null
+): Promise<ReadableStreamReadResult<Uint8Array> | { error: unknown }> {
+  if (signal?.aborted) {
+    await reader.cancel().catch(() => undefined);
+    throw new DOMException("The operation was aborted", "AbortError");
+  }
+  try {
+    return await reader.read();
+  } catch (error) {
+    return { error };
+  }
+}
+
 /**
  * Peek the leading NDJSON frames of a 200 /alpha/generate response. Returns a
  * synthetic error Response when an `error` event comes before any content, or
@@ -127,31 +156,12 @@ export async function peekCommandCodeCliStream(
   const consumed: Uint8Array[] = [];
   let buffer = "";
 
-  const scan = (lines: string[]): CommandCodeEmbeddedError | "content" | null => {
-    for (const line of lines) {
-      const event = parsePeekLine(line);
-      if (event === "done") return "content";
-      if (!event) continue;
-      if (event.type === "error") return parseCommandCodeEmbeddedError(event);
-      if (typeof event.type === "string" && CONTENT_EVENT_TYPES.has(event.type)) return "content";
-    }
-    return null;
-  };
-
   for (;;) {
-    if (signal?.aborted) {
-      await reader.cancel().catch(() => undefined);
-      throw new DOMException("The operation was aborted", "AbortError");
-    }
-    let chunk: ReadableStreamReadResult<Uint8Array>;
-    try {
-      chunk = await reader.read();
-    } catch (error) {
-      // Keep today's semantics: the converter surfaces the read failure.
-      return replayResponse(upstream, consumed, reader, error, true);
-    }
+    const chunk = await readPeekChunk(reader, signal);
+    // Keep today's semantics: the converter surfaces the read failure.
+    if ("error" in chunk) return replayResponse(upstream, consumed, reader, chunk.error, true);
     if (chunk.done) {
-      const verdict = scan([buffer + decoder.decode()]);
+      const verdict = scanPeekLines([buffer + decoder.decode()]);
       if (verdict && verdict !== "content") return commandCodeEmbeddedErrorResponse(verdict);
       return replayResponse(upstream, consumed, reader, undefined, true);
     }
@@ -159,7 +169,7 @@ export async function peekCommandCodeCliStream(
     buffer += decoder.decode(chunk.value, { stream: true });
     const lines = buffer.split("\n");
     buffer = lines.pop() || "";
-    const verdict = scan(lines);
+    const verdict = scanPeekLines(lines);
     if (verdict === "content") return replayResponse(upstream, consumed, reader, undefined, false);
     if (verdict) {
       await reader.cancel().catch(() => undefined);
