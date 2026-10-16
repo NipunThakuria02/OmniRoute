@@ -9,7 +9,7 @@ import { createHash, createHmac } from "node:crypto";
  * hashing. The inputs are random tokens with ≥128 bits of entropy that no dictionary
  * can guess; a slow KDF (bcrypt/scrypt/argon2) would add ~100 ms to every proxied
  * request for no security gain. Human-chosen passwords are a different thing and go
- * through bcrypt in `src/lib/managementPassword.ts`.
+ * through bcrypt in `src/lib/auth/managementPassword.ts`.
  *
  * Keeping every such derivation on this one function gives CodeQL's
  * `js/insufficient-password-hash` a single sink: the query reports once here, with the
