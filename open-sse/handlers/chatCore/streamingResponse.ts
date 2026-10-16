@@ -100,13 +100,15 @@ import { lockModel, recordCoreOwnedAntigravityQuotaState } from "../../services/
 
 import {
   isModelUnavailableError,
-  getNextFamilyFallback,
   isContextOverflowError,
   findLargerContextModel,
-  getModelFamily,
 } from "../../services/modelFamilyFallback.ts";
 
 import { isLocalStreamLifecycleError } from "@/shared/utils/circuitBreaker";
+import {
+  getNextRequestFamilyFallback,
+  getRequestModelFamily,
+} from "../../services/modelFamilyFallbackPolicy.ts";
 import { shouldIsolateProbeFailures } from "@/shared/utils/probeOrigin";
 import { writeTerminalStatus } from "@/shared/utils/terminalStatus";
 
@@ -214,6 +216,11 @@ export async function runStreamingResponse(deps: StreamingDeps) {
   let upstreamDiagnostic: Record<string, unknown> | undefined;
   try {
     const pipelineOutcome = await runProviderExecutionPipeline({
+      getNextFamilyFallback: (current, tried) =>
+        getNextRequestFamilyFallback(current, tried, provider, {
+          headers: clientRawRequest?.headers,
+          hasApiKeyMetadata: Boolean(apiKeyInfo),
+        }),
       policy: {
         allowAccountRotation: !managedLease && comboStrategy !== "context-relay",
         allowModelFallback: true,
@@ -1004,7 +1011,10 @@ export async function runStreamingResponse(deps: StreamingDeps) {
     // from the same family. This keeps the request alive on the same account
     // instead of failing the entire combo.
     if (!pipelineRecovered && isModelUnavailableError(statusCode, message, provider)) {
-      const nextModel = getNextFamilyFallback(currentModel, triedModels, provider);
+      const nextModel = await getNextRequestFamilyFallback(currentModel, triedModels, provider, {
+        headers: clientRawRequest?.headers,
+        hasApiKeyMetadata: Boolean(apiKeyInfo),
+      });
       if (nextModel) {
         triedModels.add(nextModel);
         currentModel = nextModel;
@@ -1127,12 +1137,18 @@ export async function runStreamingResponse(deps: StreamingDeps) {
         };
       }
     } else if (isContextOverflowError(statusCode, message)) {
-      const familyCandidates = getModelFamily(currentModel, provider).filter(
-        (m) => m !== currentModel && !triedModels.has(m)
-      );
+      const familyCandidates = (
+        await getRequestModelFamily(currentModel, provider, {
+          headers: clientRawRequest?.headers,
+          hasApiKeyMetadata: Boolean(apiKeyInfo),
+        })
+      ).filter((m) => m !== currentModel && !triedModels.has(m));
       const nextModel =
         findLargerContextModel(currentModel, familyCandidates, provider) ??
-        getNextFamilyFallback(currentModel, triedModels, provider);
+        (await getNextRequestFamilyFallback(currentModel, triedModels, provider, {
+          headers: clientRawRequest?.headers,
+          hasApiKeyMetadata: Boolean(apiKeyInfo),
+        }));
       if (nextModel) {
         triedModels.add(nextModel);
         currentModel = nextModel;

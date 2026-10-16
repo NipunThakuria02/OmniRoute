@@ -50,6 +50,10 @@ import { buildPostCallGuardrailContext } from "../chatCore/postCallGuardrailCont
 import { buildNonStreamingResponseHeaders } from "../chatCore/nonStreamingResponseHeaders.ts";
 import { maybeWrapForcedNonStreamingResponsesJson } from "../chatCore/responsesJsonToSse.ts";
 import { runProviderExecutionPipeline } from "../chatCore/providerExecutionPipeline.ts";
+import {
+  getNextRequestFamilyFallback,
+  modelAfterFamilyFallback,
+} from "../../services/modelFamilyFallbackPolicy.ts";
 import { runNonStreamingProviderLeg } from "../chatCore/nonStreamingProviderLeg.ts";
 import type { NonStreamingProviderLegResult } from "@/lib/skills/toolLoopTypes.ts";
 import { finalizeToolLoopError } from "../chatCore/nonStreamingFinalization.ts";
@@ -228,6 +232,11 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
       currentModel = pipelineModel;
       triedModels.add(pipelineModel);
       return runProviderExecutionPipeline({
+        getNextFamilyFallback: (current, tried) =>
+          getNextRequestFamilyFallback(current, tried, provider, {
+            headers: clientRawRequest?.headers,
+            hasApiKeyMetadata: Boolean(apiKeyInfo),
+          }),
         policy,
         target: {
           provider,
@@ -333,6 +342,7 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
         : undefined,
       allowAccountRotation: !managedLease && comboStrategy !== "context-relay",
       allowModelFallback: true,
+      hasApiKeyMetadata: Boolean(apiKeyInfo),
       executeProviderRequest: (modelToCall, allowDedup) =>
         executeProviderRequest(modelToCall, allowDedup),
       runProviderExecution: runNonStreamingPipeline,
@@ -995,9 +1005,10 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
       providerResponse: responseBody,
       clientResponse: translatedResponse,
     });
+    const responseModel = modelAfterFamilyFallback(model, currentModel, effectiveModel, finalBody);
     const responseHeaders = buildNonStreamingResponseHeaders({
       provider,
-      model,
+      model: responseModel,
       startTime,
       responseUsage,
       estimatedCost,
@@ -1012,7 +1023,7 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
     // differs from the resolved backend id we advertised in the header, leaving
     // strict clients unable to reconcile the two. Rewrite body.model to `model`
     // FIRST, then let #1311 echo override it when the opt-in setting is on.
-    if (typeof model === "string" && model) echoModelInObject(translatedResponse, model);
+    if (responseModel) echoModelInObject(translatedResponse, responseModel);
     // #1311: echo the requested alias/combo name in the non-streaming response model.
     if (echoModel) echoModelInObject(translatedResponse, echoModel);
 

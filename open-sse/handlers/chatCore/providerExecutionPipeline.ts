@@ -136,7 +136,7 @@ export interface ProviderExecutionPipelineInput {
     currentModel: string,
     triedModels: Set<string>,
     providerHint?: string | null
-  ) => string | null;
+  ) => string | null | Promise<string | null>;
 }
 
 const LEASE_MISMATCH_STATUS = 409;
@@ -587,13 +587,16 @@ export async function runProviderExecutionPipeline(
         // keep statusText
       }
       if (isModelUnavailableError(status, fallbackMessage, target.provider)) {
-        const nextModel = resolveFamilyFallback(
+        const nextModel = await resolveFamilyFallback(
           wire.currentModel,
           wire.triedModels,
           target.provider
         );
         if (nextModel) {
-          wire.setBodyAndModel({ ...wire.body, model: nextModel }, nextModel);
+          wire.body = { ...wire.body, model: nextModel };
+          wire.currentModel = nextModel;
+          wire.triedModels.add(nextModel);
+          wire.setBodyAndModel(wire.body, nextModel);
           modelFallbackPending = true;
           continue;
         }

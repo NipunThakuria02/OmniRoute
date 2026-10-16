@@ -29,12 +29,14 @@ import { unwrapClinepassEnvelope } from "../../utils/clinepassEnvelope.ts";
 import { unwrapClineNonStreamingEnvelope } from "./clineResponseEnvelope.ts";
 import {
   isModelUnavailableError,
-  getNextFamilyFallback,
   isContextOverflowError,
   findLargerContextModel,
-  getModelFamily,
 } from "../../services/modelFamilyFallback.ts";
 import { isEmptyContentResponse } from "../../services/errorClassifier.ts";
+import {
+  getNextRequestFamilyFallback,
+  getRequestModelFamily,
+} from "../../services/modelFamilyFallbackPolicy.ts";
 import { hasTrustedEmptyTurn } from "../../utils/emptyTurnPolicy.ts";
 import { FORMATS } from "../../translator/formats.ts";
 import { hasActiveClaudeThinking } from "../../utils/thinkingBudget.ts";
@@ -62,6 +64,7 @@ export interface ProviderLegInput {
   expectedConnectionId?: string;
   allowAccountRotation: boolean;
   allowModelFallback: boolean;
+  hasApiKeyMetadata?: boolean;
   executeProviderRequest: (
     model: string,
     allowDedup: boolean,
@@ -596,7 +599,10 @@ export async function runNonStreamingProviderLeg(
     // -- Model-unavailable -> family fallback (initial only) --------------------
     if (allowModelFallback && isModelUnavailableError(statusCode, message, provider)) {
       const triedModels = new Set<string>([currentModel]);
-      const nextModel = getNextFamilyFallback(currentModel, triedModels, provider);
+      const nextModel = await getNextRequestFamilyFallback(currentModel, triedModels, provider, {
+        headers: input.clientHeaders,
+        hasApiKeyMetadata: input.hasApiKeyMetadata,
+      });
       if (nextModel) {
         triedModels.add(nextModel);
         input.setRequestWireState({
@@ -670,12 +676,18 @@ export async function runNonStreamingProviderLeg(
     // -- Context overflow -> family fallback (initial only) ---------------------
     if (allowModelFallback && isContextOverflowError(statusCode, message)) {
       const triedModels = new Set<string>([currentModel]);
-      const familyCandidates = getModelFamily(currentModel, provider).filter(
-        (m) => m !== currentModel && !triedModels.has(m)
-      );
+      const familyCandidates = (
+        await getRequestModelFamily(currentModel, provider, {
+          headers: input.clientHeaders,
+          hasApiKeyMetadata: input.hasApiKeyMetadata,
+        })
+      ).filter((m) => m !== currentModel && !triedModels.has(m));
       const nextModel =
         findLargerContextModel(currentModel, familyCandidates, provider) ??
-        getNextFamilyFallback(currentModel, triedModels, provider);
+        (await getNextRequestFamilyFallback(currentModel, triedModels, provider, {
+          headers: input.clientHeaders,
+          hasApiKeyMetadata: input.hasApiKeyMetadata,
+        }));
       if (nextModel) {
         triedModels.add(nextModel);
         input.setRequestWireState({
@@ -992,7 +1004,10 @@ export async function runNonStreamingProviderLeg(
     const errMsg = "Provider returned empty content";
     if (allowModelFallback) {
       const triedModels = new Set<string>([currentModel]);
-      const nextModel = getNextFamilyFallback(currentModel, triedModels, provider);
+      const nextModel = await getNextRequestFamilyFallback(currentModel, triedModels, provider, {
+        headers: input.clientHeaders,
+        hasApiKeyMetadata: input.hasApiKeyMetadata,
+      });
       if (nextModel) {
         triedModels.add(nextModel);
         input.setRequestWireState({
