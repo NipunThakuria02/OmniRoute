@@ -11,7 +11,7 @@
 // Response carrying the embedded status. Otherwise the bytes read so far are
 // replayed in front of the same reader, so the converters see the full body.
 
-import { sanitizeErrorMessage } from "../../utils/error.ts";
+import { buildErrorBody, sanitizeErrorMessage } from "../../utils/error.ts";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -64,12 +64,11 @@ export function parseCommandCodeEmbeddedError(event: JsonRecord): CommandCodeEmb
 }
 
 export function commandCodeEmbeddedErrorResponse(error: CommandCodeEmbeddedError): Response {
-  return new Response(
-    JSON.stringify({
-      error: { message: error.message, type: error.type, code: error.statusCode },
-    }),
-    { status: error.statusCode, headers: { "Content-Type": "application/json" } }
-  );
+  const body = buildErrorBody(error.statusCode, error.message, undefined, { type: error.type });
+  return new Response(JSON.stringify(body), {
+    status: error.statusCode,
+    headers: { "Content-Type": "application/json" },
+  });
 }
 
 function replayResponse(
