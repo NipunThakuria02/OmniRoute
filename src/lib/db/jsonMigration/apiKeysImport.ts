@@ -13,7 +13,7 @@
  *    rotated credential cannot come back from an older backup.
  */
 
-import { createHash } from "crypto";
+import { opaqueTokenFingerprint } from "@omniroute/open-sse/utils/opaqueTokenFingerprint.ts";
 import type { SqliteAdapter } from "../adapters/types";
 import { parseModelAccessMode } from "../apiKeys/modelAccessMode";
 import { parseAllowedModels, parseIsActive, parseIsBanned } from "../apiKeys/rowParsers";
@@ -62,7 +62,7 @@ function applyNewKeyDefaults(values: ColumnValues, columns: string[]) {
   if (values.created_at == null) values.created_at = new Date().toISOString();
   if (!hasText(values.key)) return;
   if (!hasText(values.key_hash) && columns.includes("key_hash")) {
-    values.key_hash = createHash("sha256").update(values.key).digest("hex");
+    values.key_hash = opaqueTokenFingerprint(values.key);
   }
   if (!hasText(values.key_prefix) && columns.includes("key_prefix")) {
     values.key_prefix = values.key.slice(0, 12);

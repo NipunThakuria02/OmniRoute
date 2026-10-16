@@ -6,7 +6,7 @@ import {
   parseApiKeyCodexServiceMode,
   type ApiKeyCodexServiceMode,
 } from "../../shared/constants/codexServiceMode";
-import { createHash } from "crypto";
+import { opaqueTokenFingerprint } from "@omniroute/open-sse/utils/opaqueTokenFingerprint.ts";
 import { v4 as uuidv4 } from "uuid";
 import { getDbInstance, rowToCamel } from "./core";
 import { backupDbFile } from "./backup";
@@ -682,12 +682,10 @@ export async function getApiKeyById(id: string) {
 
 async function hashKey(key: string): Promise<string> {
   if (!key || typeof key !== "string") return "";
-  // CodeQL: This is intentionally SHA-256, NOT password hashing. API keys are
-  // high-entropy random tokens (not user-chosen passwords) and need fast O(1)
-  // comparison for per-request validation. bcrypt/scrypt would add ~100ms per
-  // request, which is unacceptable for an API proxy.
-  // lgtm[js/insufficient-password-hash]
-  return createHash("sha256").update(key).digest("hex"); // nosemgrep: insufficient-password-hash
+  // Fast SHA-256 fingerprint on purpose, NOT password hashing: API keys are high-entropy
+  // random tokens validated on every request. The rationale and the single CodeQL sink live
+  // in open-sse/utils/opaqueTokenFingerprint.ts.
+  return opaqueTokenFingerprint(key);
 }
 
 export async function createApiKey(

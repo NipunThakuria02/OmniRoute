@@ -5714,6 +5714,8 @@
     "disableConnection": "ግንኙነትን አሰናክል",
     "enableConnection": "ግንኙነትን አንቃ",
     "reauthenticateConnection": "የዚህን ግንኙነት ማንነት እንደገና አረጋግጥ",
+    "verifyAccount": "መለያን አረጋግጥ",
+    "verifyAccountHint": "Google ይህን መለያ እንዲያረጋግጡ ይጠይቃል። አገናኙን ይክፈቱ፣ ማረጋገጫውን ያጠናቅቁ፣ ከዚያ እንደገና ይሞክሩ።",
     "proxyConfig": "የፕሮክሲ ውቅር",
     "aliasExistsAlert": "ተለዋጭ ስም \"{alias}\" አስቀድሞ አለ። እባክዎ ሌላ ሞዴል ይጠቀሙ ወይም ያለውን ተለዋጭ ስም ያርትዑ።",
     "aliasInputPlaceholder": "ተለዋጭ ስም",

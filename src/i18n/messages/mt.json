@@ -5714,6 +5714,8 @@
     "disableConnection": "Iddiżattiva l-konnessjoni",
     "enableConnection": "Attiva l-konnessjoni",
     "reauthenticateConnection": "Awtentika mill-ġdid din il-konnessjoni",
+    "verifyAccount": "Ivverifika l-kont",
+    "verifyAccountHint": "Google jeħtieġ li tivverifika dan il-kont. Iftaħ il-link, lesti l-verifika, imbagħad erġa' pprova.",
     "proxyConfig": "Konfigurazzjoni tal-proxy",
     "aliasExistsAlert": "L-isem alternattiv \"{alias}\" diġà jeżisti. Jekk jogħġbok uża mudell differenti jew editja l-isem alternattiv eżistenti.",
     "aliasInputPlaceholder": "isem alternattiv",

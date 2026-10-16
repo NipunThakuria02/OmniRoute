@@ -5714,6 +5714,8 @@
     "disableConnection": "Անջատել կապը",
     "enableConnection": "Միացնել կապը",
     "reauthenticateConnection": "Կրկին նույնականացնել այս կապը",
+    "verifyAccount": "Հաստատել հաշիվը",
+    "verifyAccountHint": "Google-ը պահանջում է հաստատել այս հաշիվը։ Բացեք հղումը, ավարտեք ստուգումը, ապա նորից փորձեք։",
     "proxyConfig": "Պրոքսիի կազմաձևում",
     "aliasExistsAlert": "«{alias}» կեղծանունն արդեն գոյություն ունի։ Օգտագործեք այլ մոդել կամ խմբագրեք առկա կեղծանունը։",
     "aliasInputPlaceholder": "կեղծանուն",

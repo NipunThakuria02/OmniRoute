@@ -5714,6 +5714,8 @@
     "disableConnection": "Keela ühendus",
     "enableConnection": "Luba ühendus",
     "reauthenticateConnection": "Autendi see ühendus uuesti",
+    "verifyAccount": "Kinnita konto",
+    "verifyAccountHint": "Google nõuab selle konto kinnitamist. Ava link, vii kontroll lõpule ja proovi uuesti.",
     "proxyConfig": "Puhverserveri seadistus",
     "aliasExistsAlert": "Alias „{alias}” on juba olemas. Kasuta teist mudelit või muuda olemasolevat aliast.",
     "aliasInputPlaceholder": "aliase nimi",

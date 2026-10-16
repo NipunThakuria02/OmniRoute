@@ -5714,6 +5714,8 @@
     "disableConnection": "Gbanyụọ njikọ",
     "enableConnection": "Gbanye njikọ",
     "reauthenticateConnection": "Nyochaa njirimara njikọ a ọzọ",
+    "verifyAccount": "Nyochaa akaụntụ",
+    "verifyAccountHint": "Google chọrọ ka i nyochaa akaụntụ a. Mepee njikọ ahụ, mezue nyocha ahụ, wee nwaa ọzọ.",
     "proxyConfig": "Nhazi proksi",
     "aliasExistsAlert": "Aha ọzọ \"{alias}\" adịlarị. Biko jiri ụdịdị ọzọ ma ọ bụ dezie aha ọzọ dị ugbu a.",
     "aliasInputPlaceholder": "aha ọzọ",

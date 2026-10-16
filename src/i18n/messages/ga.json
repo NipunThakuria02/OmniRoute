@@ -5714,6 +5714,8 @@
     "disableConnection": "Díchumasaigh nasc",
     "enableConnection": "Cumasaigh nasc",
     "reauthenticateConnection": "Athfhíordheimhnigh an nasc seo",
+    "verifyAccount": "Fíoraigh an cuntas",
+    "verifyAccountHint": "Éilíonn Google go bhfíorófá an cuntas seo. Oscail an nasc, críochnaigh an seiceáil, agus bain triail eile as.",
     "proxyConfig": "Cumraíocht seachfhreastalaí",
     "aliasExistsAlert": "Tá alias \"{alias}\" ann cheana. Úsáid samhail eile nó cuir alias atá ann cheana in eagar.",
     "aliasInputPlaceholder": "ainm alias",

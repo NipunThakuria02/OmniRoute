@@ -159,6 +159,25 @@ operator responsibilities remain:
 - A `403 LOCAL_ONLY` in OmniRoute's logs for one of these paths is the guard
   working as intended, not an error to suppress.
 
+#### Remote-reachable routes with a call-site probe gate
+
+Some routes must stay reachable from a remote dashboard but run a host-side probe
+(`which <binary>`, `<binary> --version`, `tailscale status --json`) for local callers.
+They are not LOCAL_ONLY for `GET`; instead the handler reads the trusted peer verdict
+with `getRequestPeerLocality()` (`src/shared/utils/apiAuth.ts`) and only runs the probe
+for `loopback` / `lan` callers. A `remote` caller gets the same response shape built from
+non-spawning sources (persisted state, settings, fs checks), flagged `probed: false`.
+
+| Route                                                            | Probe skipped for remote callers                                    |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `POST /api/providers/{id}/test`, `/api/providers/test-batch`     | CLI runtime probe (`allowLocalRuntimeProbe`) and CLI-fallback spawn |
+| `GET /api/headroom/status`                                       | `which headroom` and the python `--version` probes                  |
+| `GET /api/tunnels/tailscale`, `GET /api/tunnels/tailscale/check` | `which tailscale`, `tailscale status/funnel --json`, `which brew`   |
+| `GET /api/tunnels/cloudflared` (GET-exempt from LOCAL_ONLY)      | `which cloudflared` PATH lookup                                     |
+
+A new read route that probes the host follows the same pattern, or is classified
+LOCAL_ONLY outright.
+
 ### Tier 2 — ALWAYS_PROTECTED
 
 **Enforced by:** `isAlwaysProtectedPath(path)` → skip `requireLogin=false` bypass

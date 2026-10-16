@@ -5714,6 +5714,8 @@
     "disableConnection": "Kashe haɗin",
     "enableConnection": "Kunna haɗin",
     "reauthenticateConnection": "Sake tantance wannan haɗin",
+    "verifyAccount": "Tabbatar da asusu",
+    "verifyAccountHint": "Google na buƙatar ka tabbatar da wannan asusu. Buɗe hanyar haɗin, kammala tabbatarwa, sannan sake gwadawa.",
     "proxyConfig": "Tsarin proxy",
     "aliasExistsAlert": "Alias \"{alias}\" ya riga ya wanzu. Da fatan za a yi amfani da wani samfuri daban ko a gyara alias ɗin da ke akwai.",
     "aliasInputPlaceholder": "sunan alias",

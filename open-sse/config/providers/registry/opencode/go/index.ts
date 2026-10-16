@@ -394,6 +394,17 @@ export const opencode_goProvider: RegistryEntry = {
       supportedThinkingEfforts: ["none", "low", "high", "max"],
       targetFormat: "openai-responses",
     },
+    // Experimental vision variant of DeepSeek V4 Flash. Declared explicitly so the
+    // combo vision filter and the Vision Bridge do not rely on the `-vision` id
+    // heuristic. Remove the row if the upstream retires the `-exp` id.
+    {
+      id: "deepseek-v4-flash-vision-exp",
+      name: "DeepSeek V4 Flash Vision (exp)",
+      supportsReasoning: true,
+      supportsVision: true,
+      supportedThinkingEfforts: ["none", "low", "high", "max"],
+      targetFormat: "openai-responses",
+    },
     // #12196: the Go upstream serves this model only on /responses —
     // /chat/completions 500s for it. github already declares the same model
     // id with targetFormat:"openai-responses" (see github/index.ts).

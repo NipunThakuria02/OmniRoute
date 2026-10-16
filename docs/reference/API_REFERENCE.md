@@ -1504,7 +1504,7 @@ Used by the auto-key management subsystem to issue and rotate API keys against a
 | DELETE | `/api/v1/registered-keys/[id]`        | Revoke a registered key                                                                                                                                                                     |
 | POST   | `/api/v1/registered-keys/[id]/revoke` | Explicit revoke endpoint (same effect as DELETE)                                                                                                                                            |
 
-**Auth:** Bearer API key (`isAuthenticated`). See also `/v1/quotas/check` and `/v1/issues/report`.
+**Auth:** management session/API key (`requireManagementAuth`) — the same guard as `/api/keys`: a dashboard session, the local CLI token, or an API key with `manage`/`admin` scope; inference-only API keys get `403`. See also `/v1/quotas/check` and `/v1/issues/report`.
 
 ---
 

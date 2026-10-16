@@ -93,6 +93,7 @@ import {
 } from "@omniroute/open-sse/services/accountFallback.ts";
 import { copilotRejectionFlag, lockCopilotModelNotSupported } from "./copilotModelNotSupportedLock";
 import { isSharedWalletCredits402 } from "@omniroute/open-sse/services/accountFallback/sharedWalletCredits.ts";
+import { isModelScopedAccessDenial } from "@omniroute/open-sse/services/accountFallback/modelScopedAccessDenial.ts";
 import { postOutputFailureReachesLockout } from "@omniroute/open-sse/services/accountFallback/postOutputFailureStreak.ts";
 import { isOpencodeFreeTierRefusalForProvider } from "@omniroute/open-sse/executors/opencodeGeoBlock.ts";
 import { isOpencodeFreeTierSkipped } from "@omniroute/open-sse/services/opencodeFreeTierSkip.ts";
@@ -2765,6 +2766,14 @@ export async function markAccountUnavailable(
         "AUTH",
         `[T-PROBE] ${connectionId.slice(0, 8)} ${provider ?? ""} failure ${status} recorded — connection stays in the pool`
       );
+      return { shouldFallback: true, cooldownMs: 0 };
+    }
+
+    // #16824: a verified ModelScope model-access refusal does not invalidate
+    // the credential. Probe isolation above takes precedence; real requests
+    // lock only the rejected model and leave sibling models routable.
+    if (provider && model && isModelScopedAccessDenial(provider, status, errorText, options.structuredError)) {
+      lockModel(provider, connectionId, model, "model_not_found", COOLDOWN_MS.notFound);
       return { shouldFallback: true, cooldownMs: 0 };
     }
 

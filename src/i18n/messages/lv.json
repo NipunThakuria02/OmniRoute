@@ -5714,6 +5714,8 @@
     "disableConnection": "Atspējot savienojumu",
     "enableConnection": "Iespējot savienojumu",
     "reauthenticateConnection": "Atkārtoti autentificēt šo savienojumu",
+    "verifyAccount": "Verificēt kontu",
+    "verifyAccountHint": "Google pieprasa verificēt šo kontu. Atveriet saiti, pabeidziet pārbaudi un mēģiniet vēlreiz.",
     "proxyConfig": "Proxija konfigurācija",
     "aliasExistsAlert": "Aizstājvārds \"{alias}\" jau pastāv. Lūdzu, izmantojiet citu modeli vai rediģējiet esošo aizstājvārdu.",
     "aliasInputPlaceholder": "aizstājvārda nosaukums",

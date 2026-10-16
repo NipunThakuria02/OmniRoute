@@ -5714,6 +5714,8 @@
     "disableConnection": "Išjungti ryšį",
     "enableConnection": "Įjungti ryšį",
     "reauthenticateConnection": "Pakartotinai autentifikuoti šį ryšį",
+    "verifyAccount": "Patvirtinti paskyrą",
+    "verifyAccountHint": "Google reikalauja patvirtinti šią paskyrą. Atidarykite nuorodą, užbaikite patikrą ir bandykite dar kartą.",
     "proxyConfig": "Tarpinio serverio konfigūracija",
     "aliasExistsAlert": "Alternatyvusis vardas „{alias}“ jau yra. Pasirinkite kitą modelį arba redaguokite esamą alternatyvųjį vardą.",
     "aliasInputPlaceholder": "alternatyvusis vardas",

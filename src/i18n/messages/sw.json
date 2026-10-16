@@ -5714,6 +5714,8 @@
     "disableConnection": "Zima muunganisho",
     "enableConnection": "Washa muunganisho",
     "reauthenticateConnection": "Thibitisha upya muunganisho huu",
+    "verifyAccount": "Thibitisha akaunti",
+    "verifyAccountHint": "Google inahitaji uthibitishe akaunti hii. Fungua kiungo, kamilisha ukaguzi, kisha jaribu tena.",
     "proxyConfig": "Usanidi wa proksi",
     "aliasExistsAlert": "Lakabu \"{alias}\" tayari ipo. Tafadhali tumia modeli tofauti au hariri lakabu iliyopo.",
     "aliasInputPlaceholder": "jina la lakabu",

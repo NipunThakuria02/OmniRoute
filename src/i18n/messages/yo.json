@@ -5714,6 +5714,8 @@
     "disableConnection": "Pa àsopọ̀",
     "enableConnection": "Mú àsopọ̀ ṣiṣẹ́",
     "reauthenticateConnection": "Ṣe ìfàṣẹsí àsopọ̀ yìí lẹ́ẹ̀kan sí i",
+    "verifyAccount": "Ṣe ìjẹ́rìísí àkọọ́lẹ̀",
+    "verifyAccountHint": "Google nílò kí o ṣe ìjẹ́rìísí àkọọ́lẹ̀ yìí. Ṣí ọ̀nà àsopọ̀ náà, parí àyẹ̀wò náà, lẹ́yìn náà gbìyànjú lẹ́ẹ̀kan sí i.",
     "proxyConfig": "Ìṣètò aṣojú",
     "aliasExistsAlert": "Ìnagijẹ \"{alias}\" ti wà tẹ́lẹ̀. Jọ̀wọ́ lo awoṣe mìíràn tàbí ṣàtúnṣe ìnagijẹ tó wà.",
     "aliasInputPlaceholder": "orúkọ ìnagijẹ",

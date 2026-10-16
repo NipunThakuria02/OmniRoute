@@ -5714,6 +5714,8 @@
     "disableConnection": "Ulanishni oʻchirish",
     "enableConnection": "Ulanishni yoqish",
     "reauthenticateConnection": "Bu ulanishni qayta autentifikatsiya qilish",
+    "verifyAccount": "Hisobni tasdiqlash",
+    "verifyAccountHint": "Google ushbu hisobni tasdiqlashingizni talab qiladi. Havolani oching, tekshiruvni yakunlang va qayta urinib ko'ring.",
     "proxyConfig": "Proksi konfiguratsiyasi",
     "aliasExistsAlert": "\"{alias}\" taxallusi allaqachon mavjud. Boshqa modeldan foydalaning yoki mavjud taxallusni tahrirlang.",
     "aliasInputPlaceholder": "taxallus nomi",

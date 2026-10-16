@@ -5714,6 +5714,8 @@
     "disableConnection": "Онемогући везу",
     "enableConnection": "Омогући везу",
     "reauthenticateConnection": "Поново аутентификуј ову везу",
+    "verifyAccount": "Потврди налог",
+    "verifyAccountHint": "Google захтева да потврдите овај налог. Отворите везу, завршите проверу, па покушајте поново.",
     "proxyConfig": "Подешавање проксија",
     "aliasExistsAlert": "Псеудоним „{alias}“ већ постоји. Користите други модел или измените постојећи псеудоним.",
     "aliasInputPlaceholder": "назив псеудонима",

@@ -5714,6 +5714,8 @@
     "disableConnection": "कनेक्शन अक्षम करा",
     "enableConnection": "कनेक्शन सक्षम करा",
     "reauthenticateConnection": "या कनेक्शनसाठी पुन्हा प्रमाणीकरण करा",
+    "verifyAccount": "खाते सत्यापित करा",
+    "verifyAccountHint": "Google हे खाते सत्यापित करण्यास सांगत आहे. लिंक उघडा, तपासणी पूर्ण करा, नंतर पुन्हा प्रयत्न करा.",
     "proxyConfig": "प्रॉक्सी कॉन्फिगरेशन",
     "aliasExistsAlert": "\"{alias}\" हे उपनाव आधीपासून अस्तित्वात आहे. कृपया वेगळे मॉडेल वापरा किंवा विद्यमान उपनाव संपादित करा.",
     "aliasInputPlaceholder": "उपनावाचे नाव",

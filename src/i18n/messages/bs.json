@@ -5714,6 +5714,8 @@
     "disableConnection": "Onemogući vezu",
     "enableConnection": "Omogući vezu",
     "reauthenticateConnection": "Ponovo autentifikuj ovu vezu",
+    "verifyAccount": "Potvrdi račun",
+    "verifyAccountHint": "Google traži da potvrdite ovaj račun. Otvorite link, završite provjeru, pa pokušajte ponovo.",
     "proxyConfig": "Konfiguracija proxy-ja",
     "aliasExistsAlert": "Alias \"{alias}\" već postoji. Koristite drugi model ili uredite postojeći alias.",
     "aliasInputPlaceholder": "naziv aliasa",

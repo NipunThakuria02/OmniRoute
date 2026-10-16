@@ -5714,6 +5714,8 @@
     "disableConnection": "ਕਨੈਕਸ਼ਨ ਅਸਮਰੱਥ ਕਰੋ",
     "enableConnection": "ਕਨੈਕਸ਼ਨ ਸਮਰੱਥ ਕਰੋ",
     "reauthenticateConnection": "ਇਸ ਕਨੈਕਸ਼ਨ ਨੂੰ ਮੁੜ ਪ੍ਰਮਾਣਿਤ ਕਰੋ",
+    "verifyAccount": "ਖਾਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+    "verifyAccountHint": "Google ਇਸ ਖਾਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਕਹਿੰਦਾ ਹੈ। ਲਿੰਕ ਖੋਲ੍ਹੋ, ਜਾਂਚ ਪੂਰੀ ਕਰੋ, ਫਿਰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
     "proxyConfig": "ਪ੍ਰਾਕਸੀ ਸੰਰਚਨਾ",
     "aliasExistsAlert": "ਉਪਨਾਮ \"{alias}\" ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੋਈ ਵੱਖਰਾ ਮਾਡਲ ਵਰਤੋ ਜਾਂ ਮੌਜੂਦਾ ਉਪਨਾਮ ਸੰਪਾਦਿਤ ਕਰੋ।",
     "aliasInputPlaceholder": "ਉਪਨਾਮ",

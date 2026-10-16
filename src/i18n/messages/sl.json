@@ -5714,6 +5714,8 @@
     "disableConnection": "Onemogoči povezavo",
     "enableConnection": "Omogoči povezavo",
     "reauthenticateConnection": "Znova preveri pristnost te povezave",
+    "verifyAccount": "Preveri račun",
+    "verifyAccountHint": "Google zahteva preverjanje tega računa. Odprite povezavo, dokončajte preverjanje in poskusite znova.",
     "proxyConfig": "Konfiguracija posredniškega strežnika",
     "aliasExistsAlert": "Vzdevek »{alias}« že obstaja. Uporabite drug model ali uredite obstoječi vzdevek.",
     "aliasInputPlaceholder": "ime vzdevka",

@@ -5714,6 +5714,8 @@
     "disableConnection": "کنکشن غیر فعال کریں",
     "enableConnection": "کنکشن فعال کریں",
     "reauthenticateConnection": "اس کنکشن کی دوبارہ توثیق کریں",
+    "verifyAccount": "اکاؤنٹ کی تصدیق کریں",
+    "verifyAccountHint": "Google اس اکاؤنٹ کی تصدیق کا تقاضا کرتا ہے۔ لنک کھولیں، جانچ مکمل کریں، پھر دوبارہ کوشش کریں۔",
     "proxyConfig": "پراکسی کنفیگریشن",
     "aliasExistsAlert": "عرف \"{alias}\" پہلے سے موجود ہے۔ براہِ کرم کوئی مختلف ماڈل استعمال کریں یا موجودہ عرف میں ترمیم کریں۔",
     "aliasInputPlaceholder": "عرف کا نام",

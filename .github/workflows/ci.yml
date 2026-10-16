@@ -141,6 +141,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
       - run: npm run check:cycles:ratchet
+      - run: npm run check:boundary:ratchet
       - run: npm run check:route-validation:t06
       - run: npm run check:any-budget:t11
       - run: npm run check:provider-consistency

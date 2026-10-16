@@ -5714,6 +5714,8 @@
     "disableConnection": "કનેક્શન અક્ષમ કરો",
     "enableConnection": "કનેક્શન સક્ષમ કરો",
     "reauthenticateConnection": "આ કનેક્શનનું ફરી પ્રમાણીકરણ કરો",
+    "verifyAccount": "એકાઉન્ટ ચકાસો",
+    "verifyAccountHint": "Google આ એકાઉન્ટ ચકાસવા માટે કહે છે. લિંક ખોલો, ચકાસણી પૂર્ણ કરો, પછી ફરી પ્રયાસ કરો.",
     "proxyConfig": "પ્રોક્સી રૂપરેખાંકન",
     "aliasExistsAlert": "ઉપનામ \"{alias}\" પહેલેથી અસ્તિત્વમાં છે. કૃપા કરીને અલગ મોડેલનો ઉપયોગ કરો અથવા હાલના ઉપનામમાં ફેરફાર કરો.",
     "aliasInputPlaceholder": "ઉપનામનું નામ",

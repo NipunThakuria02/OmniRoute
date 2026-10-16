@@ -5714,6 +5714,8 @@
     "disableConnection": "غیرفعال کردن اتصال",
     "enableConnection": "فعال کردن اتصال",
     "reauthenticateConnection": "احراز هویت مجدد برای این اتصال",
+    "verifyAccount": "تأیید حساب",
+    "verifyAccountHint": "Google از شما می‌خواهد این حساب را تأیید کنید. پیوند را باز کنید، بررسی را کامل کنید و دوباره تلاش کنید.",
     "proxyConfig": "پیکربندی پروکسی",
     "aliasExistsAlert": "نام مستعار «{alias}» از قبل وجود دارد. لطفاً از مدل دیگری استفاده کنید یا نام مستعار موجود را ویرایش کنید.",
     "aliasInputPlaceholder": "نام مستعار",

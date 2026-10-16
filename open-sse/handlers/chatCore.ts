@@ -12,6 +12,7 @@ import {
   normalizeOpenAICompatibleTools,
   shouldNormalizeFunctionToolsOnly,
 } from "./chatCore/openAICompatibleTools.ts";
+import { normalizeToolSchemasForProvider } from "./chatCore/openrouterToolSchemas.ts";
 import {
   buildFailureUsageRecord,
   readCpaAuthIndex,
@@ -178,8 +179,6 @@ import {
 
 import { resolveResilienceSettings } from "@/lib/resilience/settings";
 import { classifyProviderError, PROVIDER_ERROR_TYPES } from "../services/errorClassifier.ts";
-import { isOpencodeFreeTierRefusalForProvider } from "../executors/opencodeGeoBlock.ts";
-import { noteOpencodeFreeTierSkip } from "../services/opencodeFreeTierSkip.ts";
 import { updateProviderConnection, getProviderConnectionById } from "@/lib/db/providers";
 
 import { connectionHasExtraKeys } from "../services/apiKeyRotator.ts";
@@ -202,6 +201,7 @@ import { attachCompressionUsageReceiptAfterAnalytics as attachCompressionUsageRe
 
 import { getQuotaScopeLabelForProvider } from "../services/antigravityQuotaFamily.ts";
 import { excludeConnectionForCooldown } from "./chatCore/connectionCooldown.ts";
+import { handleProjectRouteFailure } from "./chatCore/projectRouteFailure.ts";
 import { handleRequestRejectedFailure } from "./chatCore/requestRejectedFailure.ts";
 import { projectRetainedProviderFailureMessage } from "./chatCore/providerFailureRetention.ts";
 import { getKimiTemporaryRateLimitResetAt } from "./chatCore/kimiQuotaRecovery.ts";
@@ -1312,6 +1312,14 @@ async function handleChatCoreInner({
   // further down — see #8378 (context limit resolved by the combo was silently
   // discarded because it only existed inside this `if` block).
   let contextLimit = getTokenLimit(provider, effectiveModel);
+  const contextWindowChecksDisabled = areContextWindowChecksDisabled();
+  const effectiveInputCap = contextWindowChecksDisabled
+    ? null
+    : toPositiveInteger(
+        resolveInputTokenCapForGate({ provider, model: effectiveModel }, { isCombo })
+      );
+  const getEffectiveCompactionCeiling = (limit: number) =>
+    effectiveInputCap != null ? Math.min(limit, effectiveInputCap) : limit;
   // Strict model proofs cannot invoke auxiliary compression providers or prewarmers.
   // This trusted in-process fence is never accepted from a client header/body.
   if (!validationExecutorFence && body && Array.isArray(allMessages) && allMessages.length > 0) {
@@ -2009,6 +2017,7 @@ async function handleChatCoreInner({
       }
     }
 
+    const effectiveCompactionCeiling = getEffectiveCompactionCeiling(contextLimit);
     const COMPRESSION_THRESHOLD = (
       await import("@/lib/db/compression")
     ).getProactiveCompressionRatio();
@@ -2018,12 +2027,12 @@ async function handleChatCoreInner({
     }
     const threshold = Math.max(
       1,
-      Math.floor((Math.max(1, contextLimit) - reservedTokens) * COMPRESSION_THRESHOLD)
+      Math.floor((Math.max(1, effectiveCompactionCeiling) - reservedTokens) * COMPRESSION_THRESHOLD)
     );
 
     log?.debug?.(
       "CONTEXT",
-      `Checking compression: ${estimatedTokens} tokens vs ${threshold} threshold (${contextLimit} limit, ${reservedTokens} reserved)`
+      `Checking compression: ${estimatedTokens} tokens vs ${threshold} threshold (${effectiveCompactionCeiling} limit, ${reservedTokens} reserved)`
     );
 
     // Capture pre-compression body so translators can access original message
@@ -2045,7 +2054,7 @@ async function handleChatCoreInner({
         // separately as the threshold's reserve), unlike the full-breakdown
         // number the final guard rejects with — state the basis so the two
         // lines can be read side by side without a decoder ring.
-        `Proactive compression triggered: ${estimatedTokens} message tokens > ${threshold} threshold (${contextLimit} limit, tools reserve ${reservedTokens})`
+        `Proactive compression triggered: ${estimatedTokens} message tokens > ${threshold} threshold (${effectiveCompactionCeiling} limit, tools reserve ${reservedTokens})`
       );
 
       // Adapt Responses `input[]` → messages so compressContext can run, then restore.
@@ -2111,15 +2120,17 @@ async function handleChatCoreInner({
   const finalContextLimit = contextLimit;
   const toolsReserve = Array.isArray(body?.tools) ? estimateTokens(body.tools) : 0;
 
+  const effectiveCompactionCeiling = getEffectiveCompactionCeiling(finalContextLimit);
+
   // Last-resort compaction against the concrete input budget (not the 70% threshold).
   // Covers cases where the proactive pass was skipped or still left the request oversized (#8560).
   if (
     reactiveContextCompactionEnabled &&
     !nativeCodexPassthrough &&
-    finalEstimatedInputTokens >= finalContextLimit &&
+    finalEstimatedInputTokens >= effectiveCompactionCeiling &&
     body
   ) {
-    const lastResortTarget = Math.max(1, finalContextLimit - toolsReserve - 1);
+    const lastResortTarget = Math.max(1, effectiveCompactionCeiling - toolsReserve - 1);
     const lastResortAdapter = adaptBodyForCompression(body as Record<string, unknown>);
     const lastResortResult = compressContext(lastResortAdapter.body, {
       provider,
@@ -2151,18 +2162,13 @@ async function handleChatCoreInner({
   const modelOutputCap = toPositiveInteger(
     getExplicitModelOutputCap({ provider, model: effectiveModel })
   );
-  const contextWindowChecksDisabled = areContextWindowChecksDisabled();
   const outputBudget = enforceOutputTokenBudget(
     body as Record<string, unknown>,
     finalEstimatedInputTokens,
     contextWindowChecksDisabled ? Number.MAX_SAFE_INTEGER : finalContextLimit,
     targetFormat === FORMATS.CLAUDE && sourceFormat !== FORMATS.CLAUDE ? DEFAULT_MAX_TOKENS : 0,
     modelOutputCap,
-    contextWindowChecksDisabled
-      ? null
-      : toPositiveInteger(
-          resolveInputTokenCapForGate({ provider, model: effectiveModel }, { isCombo })
-        )
+    effectiveInputCap
   );
   if (outputBudget.ok === false) {
     const exceededInputCap = outputBudget.maxInputTokens !== undefined;
@@ -2685,6 +2691,12 @@ async function handleChatCoreInner({
   // seam. Capture both before stripping their side channels: a Responses ->
   // Gemini/Antigravity pivot carries both maps, not one recoverable ledger.
   const { requestToolIdentityMap, toolNameAliasMap } = extractRequestToolMetadata(translatedBody);
+
+  // OpenRouter (→ Cohere) 400s the whole request on a malformed `pattern`
+  // regex in any tool schema; drop only those constraints before dispatch.
+  if (Array.isArray(translatedBody?.tools)) {
+    translatedBody.tools = normalizeToolSchemasForProvider(provider, translatedBody.tools, log);
+  }
 
   // Kiro: sanitize tool schemas before dispatch. Kiro returns 400 "Improperly
   // formed request" for unsupported JSON-Schema keywords (anyOf/$ref/if-then,
@@ -3536,22 +3548,15 @@ async function handleChatCoreInner({
             `[provider] Node ${errorConnectionId} OAuth token invalid (${statusCode}) -- token refresh available`
           );
         } else if (errorType === PROVIDER_ERROR_TYPES.PROJECT_ROUTE_ERROR) {
-          await updateProviderConnection(errorConnectionId, {
-            lastErrorType: errorType,
-            lastError: persistentMessage,
-            errorCode: statusCode,
+          await handleProjectRouteFailure({
+            provider,
+            connectionId: errorConnectionId,
+            statusCode,
+            persistentMessage,
+            message,
+            upstreamErrorBody,
+            targetModel,
           });
-          console.warn(
-            `[provider] Node ${errorConnectionId} project routing error (${statusCode}) -- not banning`
-          );
-          // #14313: free-tier refusal on the keyless path — record a short TTL
-          // skip so auto-combo / noauth fallback stop re-picking it immediately.
-          if (
-            errorConnectionId === "noauth" &&
-            isOpencodeFreeTierRefusalForProvider(provider, statusCode, message)
-          ) {
-            noteOpencodeFreeTierSkip(provider, Date.now(), undefined, targetModel);
-          }
         } else if (errorType === PROVIDER_ERROR_TYPES.GEO_BLOCKED) {
           // Google regional refusal: account-independent, non-terminal; park the connection
           // until egress uses a supported region; probes skip the day-long cooldown (#9817).

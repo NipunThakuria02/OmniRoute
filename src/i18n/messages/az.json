@@ -5714,6 +5714,8 @@
     "disableConnection": "Bağlantını deaktiv edin",
     "enableConnection": "Bağlantını aktiv edin",
     "reauthenticateConnection": "Bu bağlantı üçün yenidən autentifikasiya edin",
+    "verifyAccount": "Hesabı təsdiqlə",
+    "verifyAccountHint": "Google bu hesabı təsdiqləməyinizi tələb edir. Linki açın, yoxlamanı tamamlayın, sonra yenidən cəhd edin.",
     "proxyConfig": "Proksi konfiqurasiyası",
     "aliasExistsAlert": "\"{alias}\" ləqəbi artıq mövcuddur. Fərqli modeldən istifadə edin və ya mövcud ləqəbi redaktə edin.",
     "aliasInputPlaceholder": "ləqəb adı",
