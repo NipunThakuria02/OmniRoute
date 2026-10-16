@@ -12,6 +12,7 @@ import {
   normalizeOpenAICompatibleTools,
   shouldNormalizeFunctionToolsOnly,
 } from "./chatCore/openAICompatibleTools.ts";
+import { normalizeToolSchemasForProvider } from "./chatCore/openrouterToolSchemas.ts";
 import {
   buildFailureUsageRecord,
   readCpaAuthIndex,
@@ -2685,6 +2686,12 @@ async function handleChatCoreInner({
   // seam. Capture both before stripping their side channels: a Responses ->
   // Gemini/Antigravity pivot carries both maps, not one recoverable ledger.
   const { requestToolIdentityMap, toolNameAliasMap } = extractRequestToolMetadata(translatedBody);
+
+  // OpenRouter (→ Cohere) 400s the whole request on a malformed `pattern`
+  // regex in any tool schema; drop only those constraints before dispatch.
+  if (Array.isArray(translatedBody?.tools)) {
+    translatedBody.tools = normalizeToolSchemasForProvider(provider, translatedBody.tools, log);
+  }
 
   // Kiro: sanitize tool schemas before dispatch. Kiro returns 400 "Improperly
   // formed request" for unsupported JSON-Schema keywords (anyOf/$ref/if-then,
