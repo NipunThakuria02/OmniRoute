@@ -1,0 +1,1 @@
+- **feat(cli-tools):** applying Codex settings also writes an OmniRoute model catalog (`model_catalog_json`) so Codex's `/model` picker lists routable provider-prefixed models; fails open with a warning when Codex can't be read ([#16910](https://github.com/diegosouzapw/OmniRoute/pull/16910)) — thanks @kalfian
