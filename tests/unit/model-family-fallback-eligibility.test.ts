@@ -13,7 +13,7 @@ process.env.DATA_DIR = TEST_DATA_DIR;
 const core = await import("../../src/lib/db/core.ts");
 const modelsDb = await import("../../src/lib/db/models.ts");
 const accountFallback = await import("../../open-sse/services/accountFallback.ts");
-const { getNextEligibleFamilyFallback } =
+const { getNextEligibleFamilyFallback, getContextFamilyFallback } =
   await import("../../open-sse/services/modelFamilyFallback.ts");
 
 const CONNECTION_ID = "family-fallback-connection";
@@ -145,5 +145,34 @@ test("a hidden sibling on another provider does not remove this provider's candi
   assert.equal(
     getNextEligibleFamilyFallback("claude/claude-opus-5", new Set(), "claude", CONNECTION_ID),
     "claude/claude-opus-4-8"
+  );
+});
+
+test("context fallback retains eligible ordering and skips hidden or locked siblings", () => {
+  modelsDb.setModelIsHidden("claude", "claude-opus-4-8", true, "chat");
+  accountFallback.lockExactModel("claude", CONNECTION_ID, "claude-opus-4-7", "rate_limit", 60_000);
+  assert.equal(
+    getContextFamilyFallback("claude/claude-opus-5", new Set(), "claude", CONNECTION_ID),
+    "claude/claude-sonnet-5"
+  );
+});
+
+test("context fallback cannot escape an empty request allowlist", () => {
+  assert.equal(
+    getContextFamilyFallback("agy/gemini-3.8-flash-high", new Set(), "agy", CONNECTION_ID, []),
+    null
+  );
+});
+
+test("context fallback uses only permitted untried siblings", () => {
+  const current = "agy/gemini-3.8-flash-high";
+  const permitted = "agy/gemini-3.8-flash-low";
+  assert.equal(
+    getContextFamilyFallback(current, new Set(), "agy", CONNECTION_ID, [permitted]),
+    permitted
+  );
+  assert.equal(
+    getContextFamilyFallback(current, new Set([permitted]), "agy", CONNECTION_ID, [permitted]),
+    null
   );
 });

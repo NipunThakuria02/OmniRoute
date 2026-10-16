@@ -10,7 +10,7 @@ import { getHeader, normalizeHeaders } from "../utils/headers.ts";
 import { getRegisteredProviderEffortBaseModelId } from "../utils/registeredEffortVariants.ts";
 import { parseModel, splitSyncedEffortSuffix } from "./model.ts";
 import {
-  findLargerContextModel,
+  getContextFamilyFallback,
   getEligibleModelFamily,
   getNextEligibleFamilyFallback,
 } from "./modelFamilyFallback.ts";
@@ -127,13 +127,12 @@ export function createRequestFamilyFallback(provider: string, policy: RequestFam
     getNext: (current: string, tried: Set<string>) =>
       getNextRequestFamilyFallback(current, tried, provider, policy),
     getForContextOverflow: async (current: string, tried: Set<string>) => {
-      const candidates = (await getRequestModelFamily(current, provider, policy)).filter(
-        (candidate) => candidate !== current && !tried.has(candidate)
-      );
-      return (
-        findLargerContextModel(current, candidates, provider) ??
-        (await getNextRequestFamilyFallback(current, tried, provider, policy))
-      );
+      const permitted = await getRequestModelFamily(current, provider, policy);
+      const connectionId =
+        typeof policy.connectionId === "function"
+          ? policy.connectionId()
+          : policy.connectionId || "";
+      return getContextFamilyFallback(current, tried, provider, connectionId, permitted);
     },
   };
 }

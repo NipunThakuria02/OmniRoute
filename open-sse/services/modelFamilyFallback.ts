@@ -252,7 +252,7 @@ function wasCandidateTried(
   for (const attempted of triedModels) {
     const parsed = parseModel(attempted);
     const attemptedModel = parsed.model || attempted;
-    const attemptedProvider = parsed.provider || parsed.providerAlias || provider;
+    const attemptedProvider = parsed.providerAlias || parsed.provider || provider;
     const registryEntry = getRegistryEntry(attemptedProvider);
     if (
       (registryEntry?.id || attemptedProvider) === provider &&
@@ -412,6 +412,30 @@ export function getEligibleModelFamily(
       )
     );
   return [model, ...candidates];
+}
+
+/** Prefer a larger eligible context, then retain normal family fallback order. */
+export function getContextFamilyFallback(
+  currentModel: string,
+  triedModels: Set<string>,
+  providerHint: string | null | undefined,
+  connectionId: string,
+  allowedCandidates?: readonly string[]
+): string | null {
+  const allowed = allowedCandidates === undefined ? null : new Set(allowedCandidates);
+  const excluded = new Set(triedModels);
+  if (allowed) {
+    for (const candidate of getModelFamily(currentModel, providerHint)) {
+      if (!allowed.has(candidate)) excluded.add(candidate);
+    }
+  }
+  const candidates = getEligibleModelFamily(currentModel, providerHint, connectionId).filter(
+    (candidate) => candidate !== currentModel && !excluded.has(candidate)
+  );
+  return (
+    findLargerContextModel(currentModel, candidates, providerHint) ??
+    getNextEligibleFamilyFallback(currentModel, excluded, providerHint, connectionId)
+  );
 }
 
 /**

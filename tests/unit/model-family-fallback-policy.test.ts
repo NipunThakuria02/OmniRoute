@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  createRequestFamilyFallback,
   getNextRequestFamilyFallback,
   isSameModelVersion,
   modelAfterFamilyFallback,
@@ -96,3 +97,35 @@ for (const failure of ["model-unavailable", "context-overflow", "empty-content"]
     assert.equal(calls, 1);
   });
 }
+
+test("context recovery composes request consent with the shared eligible selector", async () => {
+  const current = "anthropic/claude-opus-5-5";
+  assert.equal(
+    await createRequestFamilyFallback("anthropic", {}).getForContextOverflow(
+      current,
+      new Set([current])
+    ),
+    null
+  );
+  assert.equal(
+    await createRequestFamilyFallback("anthropic", {
+      headers: { "x-omniroute-allow-cross-version-fallback": "true" },
+    }).getForContextOverflow(current, new Set([current])),
+    // Registry Sonnet 5 has 1,048,576 context versus Opus 5.5 at 1,000,000.
+    "anthropic/claude-sonnet-5"
+  );
+});
+
+test("alias-prefixed denied candidates terminate without escaping request policy", async () => {
+  assert.equal(
+    await getNextRequestFamilyFallback(
+      "agy/gemini-3.8-flash-high",
+      new Set(["agy/gemini-3.8-flash-high"]),
+      "agy",
+      {
+        hasApiKeyMetadata: true,
+      }
+    ),
+    null
+  );
+});
