@@ -663,6 +663,20 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
     supportedSizes: ["1024x1024", "1024x1280", "1280x1024"],
   },
 
+  // NaN.Builders (https://nan.builders) — OpenAI-compatible /v1/images/generations.
+  nan: {
+    id: "nan",
+    baseUrl: "https://api.nan.builders/v1/images/generations",
+    authType: "apikey",
+    authHeader: "bearer",
+    format: "openai",
+    models: [
+      { id: "flux-2-klein", name: "FLUX.2 Klein" },
+      { id: "qwen-image-2.1", name: "Qwen Image 2.1" },
+    ],
+    supportedSizes: ["1024x1024"],
+  },
+
   // NVIDIA NIM image generation (FLUX models). Distinct from the NVIDIA *chat* entry
   // (open-sse/config/providers/registry/nvidia/index.ts, host integrate.api.nvidia.com,
   // OpenAI-compatible) — image generation lives on ai.api.nvidia.com/v1/genai/<model>
