@@ -188,14 +188,20 @@ it("uses one second when Retry-After is malformed", async () => {
   expect(fetchMock).toHaveBeenCalledTimes(2);
 });
 
-it("falls back instead of ignoring a server cooldown longer than 30 seconds", async () => {
-  vi.useFakeTimers();
-  const fetchMock = vi.fn(() => Promise.resolve(unavailable("86400")));
-  vi.stubGlobal("fetch", fetchMock);
-  const { element } = await render();
-  await act(async () => {
-    await vi.advanceTimersByTimeAsync(60_000);
-  });
-  expect(fetchMock).toHaveBeenCalledTimes(1);
-  expect(element.querySelector("input")?.value).toBe("saved/custom-model");
-});
+it.each([
+  { label: "one day", retryAfter: "86400" },
+  { label: "numeric overflow", retryAfter: "9".repeat(400) },
+])(
+  "falls back instead of ignoring a server cooldown longer than 30 seconds ($label)",
+  async ({ retryAfter }) => {
+    vi.useFakeTimers();
+    const fetchMock = vi.fn(() => Promise.resolve(unavailable(retryAfter)));
+    vi.stubGlobal("fetch", fetchMock);
+    const { element } = await render();
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(60_000);
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(element.querySelector("input")?.value).toBe("saved/custom-model");
+  }
+);

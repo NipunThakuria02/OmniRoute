@@ -17,7 +17,9 @@ function waitForRetry(delayMs: number, signal: AbortSignal): Promise<void> {
 function retryDelayMs(response: Response): number {
   const hint = response.headers.get("Retry-After")?.trim();
   if (!hint) return 1000;
-  const delay = /^\d+$/.test(hint) ? Number(hint) * 1000 : Date.parse(hint) - Date.now();
+  // Keep overflowing numeric hints above the retry bound, not at the fallback.
+  if (/^\d+$/.test(hint)) return Number(hint) * 1000;
+  const delay = Date.parse(hint) - Date.now();
   return Number.isFinite(delay) ? Math.max(0, delay) : 1000;
 }
 
