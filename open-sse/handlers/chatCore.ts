@@ -1,4 +1,3 @@
-import { learnCopilotModelRejection } from "../services/copilotModelRejections.ts";
 import {
   extractRequestToolMetadata,
   resolveResponseToolNameMap,
@@ -113,6 +112,7 @@ import { FORMATS } from "../translator/formats.ts";
 import { collectCustomToolNamesForSourceFormat } from "../translator/request/openai-responses/additionalTools.ts";
 import { sanitizeKiroTools } from "../utils/kiroSanitizer.ts";
 import { splitMisplacedToolResults } from "../translator/helpers/claudeHelper.ts";
+import { hoistDeferredToolsForTarget } from "../translator/helpers/claudeDeferredTools.ts";
 import { ensureCacheControlOnLastUserMessage } from "../services/claudeCodeConstraints.ts";
 import { THINKING_MARKER_HEADER } from "../utils/thinkCloseMarker.ts";
 import { resolveAgentGoalPolicy } from "../utils/agentGoalPolicy.ts";
@@ -301,6 +301,7 @@ import {
   resolveComboContextLimit,
 } from "../services/contextManager.ts";
 import { resolveBackgroundTaskRedirect } from "./chatCore/backgroundRedirect.ts";
+import { resolveCopilotAuto } from "./chatCore/copilotAutoModel.ts";
 import { emitThinkingSignatureDiagnostics } from "./chatCore/thinkingSignatureDiagnostics.ts";
 import type {
   CompressionConfig,
@@ -325,7 +326,6 @@ import {
 import { setGeminiThoughtSignatureMode } from "../services/geminiThoughtSignatureStore.ts";
 import { classifyModelScope429, isModelScopeProvider } from "../services/modelscopePolicy.ts";
 import { incrementTokenUsage, isTpmExhausted } from "../services/geminiRateLimitTracker.ts";
-import { getProactiveCompressionRatio } from "@/lib/db/compression";
 
 /**
  * #12150 P1b: shape of handleChatCore's optional `videoBridgeLog` param — see
@@ -761,6 +761,9 @@ async function handleChatCoreInner({
     });
   }
 
+  const ca = await resolveCopilotAuto(provider, model, body, credentials, sessionAffinityKey, log);
+  if (ca.errorResult) return ca.errorResult;
+  ({ model, credentials } = ca);
   // Custom aliases remain explicit; lifecycle replacements are advisory and never silently routed.
   let [resolvedModel, effectiveModel, routedLifecycleError] = resolveLifecycle(
     provider,
@@ -874,12 +877,13 @@ async function handleChatCoreInner({
     body = bodyWithWebSearchFallback as typeof body;
     // Server-side web-search execution cannot be injected into an arbitrary
     // client SSE stream (streaming interception is not implemented — #9725), so
-    // a stream:true OpenAI Responses request whose web_search tool was converted
-    // to the fallback is executed non-streaming: the assembled response then
-    // carries the executed results (function_call_output + web_search_call) and
-    // JSON-tolerating Responses clients (pi-web-access) consume it directly.
+    // Responses clients and Claude clients on Cursor must execute the internal
+    // search loop non-streaming, then replay the final response as client-native
+    // SSE. Otherwise the client receives an undeclared omniroute_web_search call
+    // instead of the search result and final answer.
     if (
-      sourceFormat === FORMATS.OPENAI_RESPONSES &&
+      (sourceFormat === FORMATS.OPENAI_RESPONSES ||
+        (provider === "cursor" && sourceFormat === FORMATS.CLAUDE)) &&
       (body as Record<string, unknown>).stream === true
     ) {
       clientRequestedResponsesStream = true;
@@ -2005,7 +2009,9 @@ async function handleChatCoreInner({
       }
     }
 
-    const COMPRESSION_THRESHOLD = getProactiveCompressionRatio();
+    const COMPRESSION_THRESHOLD = (
+      await import("@/lib/db/compression")
+    ).getProactiveCompressionRatio();
     let reservedTokens = 0;
     if (Array.isArray(body.tools)) {
       reservedTokens = estimateTokens(body.tools);
@@ -2377,7 +2383,16 @@ async function handleChatCoreInner({
       // payloads at high context (150+ msgs, 100+ tools). Fix: #1359.
       // Claude Code sends well-formed Messages API payloads — trust them
       // regardless of combo strategy or cache_control settings.
-      translatedBody = applyReasoningRuleDirective({ ...body }, "claude");
+      // applyReasoningRuleDirective returns unknown; the hoist helper requires a record.
+      const claudePassthroughBody = applyReasoningRuleDirective({ ...body }, "claude");
+      translatedBody = hoistDeferredToolsForTarget(
+        claudePassthroughBody !== null &&
+          typeof claudePassthroughBody === "object" &&
+          !Array.isArray(claudePassthroughBody)
+          ? (claudePassthroughBody as Record<string, unknown>)
+          : { ...(body as Record<string, unknown>) },
+        provider
+      );
       translatedBody._disableToolPrefix = true;
 
       // Sanitize historical thinking-block signatures for Anthropic-native Claude OAuth.
@@ -3573,6 +3588,9 @@ async function handleChatCoreInner({
           const notFoundCooldownMs = COOLDOWN_MS.notFound;
           if (!(await shouldIsolateProbeFailures())) {
             const modelToLock = targetModel || model;
+            const { learnCopilotModelRejection } = await import(
+              "../services/copilotModelRejections.ts"
+            );
             if (!learnCopilotModelRejection(statusCode, provider, errorConnectionId, modelToLock, upstreamErrorBody)) {
               lockModel(provider, errorConnectionId, modelToLock, "model_not_found", notFoundCooldownMs);
               console.warn(
@@ -3922,8 +3940,4 @@ async function handleChatCoreInner({
     }
   }
 }
-export function isTokenExpiringSoon(expiresAt, bufferMs = 5 * 60 * 1000) {
-  if (!expiresAt) return false;
-  const expiresAtMs = new Date(expiresAt).getTime();
-  return expiresAtMs - Date.now() < bufferMs;
-}
+export { isTokenExpiringSoon } from "./chatCore/tokenExpiry.ts";

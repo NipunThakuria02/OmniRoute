@@ -485,11 +485,11 @@ export class OpencodeExecutor extends BaseExecutor {
               const normalized = normalizer(line);
               controller.enqueue(encoder.encode(normalized + "\n"));
               if (isResponsesTerminalLine(line)) {
-                // OpenCode Zen sends a ping after response.completed and may keep
-                // the HTTP connection alive. The Responses terminal event is
-                // authoritative; do not let those post-completion pings hold Chat Completions open.
+                // OpenCode Zen may ping after response.completed and hold the socket.
+                // Close on that terminal event so Chat Completions is not held open.
                 closed = true;
                 void reader.cancel().catch(() => undefined);
+                controller.enqueue(encoder.encode("\n"));
                 controller.close();
                 return;
               }
@@ -919,7 +919,7 @@ export class OpencodeExecutor extends BaseExecutor {
               stalled: headersWait.spent,
               cooldown: markCooldown,
               markDirect: () => (directTried = true),
-              slow: { account, enabled: skipRecentlyFailed, read: readAppliedKey },
+              slow: { account, enabled: skipRecentlyFailed, egress: appliedEgress },
             }); // same settle as the stall arm
             log?.warn?.(
               "OPENCODE",
@@ -927,7 +927,7 @@ export class OpencodeExecutor extends BaseExecutor {
             );
             continue;
           }
-          result = outcome.result;
+          result = appliedEgress.noteServed(account, outcome.result, waitMs, skipRecentlyFailed);
         } catch (err) {
           if (headersWait.policy.windowMs > 0 && input.signal?.aborted)
             egressPacing.throwPacedError(egressRelease, err); // client abort never rotates, slot released
