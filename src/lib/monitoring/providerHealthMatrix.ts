@@ -18,6 +18,7 @@ export interface ProviderHealthMatrixOptions {
   provider?: string | null;
   range?: ProviderHealthMatrixRange | string | null;
   includeHealthy?: boolean;
+  includeIdleModels?: boolean;
 }
 
 export interface ProviderHealthMatrixModel {
@@ -49,6 +50,7 @@ export interface ProviderHealthMatrixAccount {
   errorCode: string | null;
   backoffLevel: number;
   modelCount: number;
+  omittedIdleModelCount: number;
   issueCount: number;
   models: ProviderHealthMatrixModel[];
 }
@@ -492,7 +494,11 @@ export async function buildProviderHealthMatrix(
         if (model) modelIds.add(model);
       }
 
-      const models = [...modelIds].sort().map((model): ProviderHealthMatrixModel => {
+      // Idle lines (no traffic in the window and no live lockout) stay out of the
+      // default payload but remain counted, so large catalogs transfer only
+      // the models with activity.
+      const includeIdleModels = options.includeIdleModels === true;
+      const builtModels = [...modelIds].sort().map((model): ProviderHealthMatrixModel => {
         const stat = statsByTarget.get(statsKey(provider, connectionId, model)) ?? null;
         const lockout = lockoutsByTarget.get(modelLockKey(provider, connectionId, model)) ?? null;
         const isLockedOut = Boolean(lockout);
@@ -513,6 +519,10 @@ export async function buildProviderHealthMatrix(
           lastErrorAt: stat?.lastErrorAt ?? null,
         };
       });
+      const models = includeIdleModels
+        ? builtModels
+        : builtModels.filter((model) => model.status !== "idle");
+      const omittedIdleModelCount = includeIdleModels ? 0 : modelIds.size - models.length;
 
       const cooldownUntil = connection ? parseTimeMs(connection.rateLimitedUntil) : null;
       const cooldownRemainingMs = cooldownUntil ? Math.max(0, cooldownUntil - now) : 0;
@@ -534,7 +544,8 @@ export async function buildProviderHealthMatrix(
         lastErrorType: connection ? toString(connection.lastErrorType) : null,
         errorCode: connection ? toString(connection.errorCode) : null,
         backoffLevel: connection ? toNumber(connection.backoffLevel) : 0,
-        modelCount: models.length,
+        modelCount: modelIds.size,
+        omittedIdleModelCount,
         issueCount,
         models,
       });
