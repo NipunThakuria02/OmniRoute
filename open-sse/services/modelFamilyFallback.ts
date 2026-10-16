@@ -317,9 +317,15 @@ function isFamilyFallbackCandidateEligible(
   connectionId: string,
   hiddenModelsByProvider: ReturnType<typeof getHiddenModelsByProvider>
 ): boolean {
-  const candidateModel = parseModel(candidate).model || candidate;
+  const parsedCandidate = parseModel(candidate);
+  const candidateModel = parsedCandidate.model || candidate;
+  // A public prefix can select a different runtime identity than its catalog id
+  // (agy/ routes to antigravity). Bare wire ids retain the explicit provider hint.
+  const visibilityProvider = parsedCandidate.providerAlias
+    ? parsedCandidate.provider || provider
+    : provider;
   return (
-    isComboModelVisible(candidate, provider, hiddenModelsByProvider) &&
+    isComboModelVisible(candidate, visibilityProvider, hiddenModelsByProvider) &&
     !isModelLocked(provider, connectionId, candidateModel)
   );
 }

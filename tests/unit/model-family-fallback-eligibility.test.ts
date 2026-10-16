@@ -131,3 +131,19 @@ test("family fallback returns null when every sibling is hidden", async () => {
 test("eligible family fallback keeps the existing preferred model order", () => {
   assert.equal(nextAntigravityFallback(), "agy/gemini-3.8-flash-medium");
 });
+
+test("bare family wire ids retain the explicit provider for visibility", () => {
+  modelsDb.setModelIsHidden("claude", "claude-opus-4-8", true, "chat");
+  assert.equal(
+    getNextEligibleFamilyFallback("claude-opus-5", new Set(), "claude", CONNECTION_ID),
+    "claude-opus-4-7"
+  );
+});
+
+test("a hidden sibling on another provider does not remove this provider's candidate", () => {
+  modelsDb.setModelIsHidden("anthropic", "claude-opus-4.8", true, "chat");
+  assert.equal(
+    getNextEligibleFamilyFallback("claude/claude-opus-5", new Set(), "claude", CONNECTION_ID),
+    "claude/claude-opus-4-8"
+  );
+});
