@@ -10464,6 +10464,12 @@ paths:
       tags:
         - Keys
       summary: "PUT keys › groups › <id>"
+      description: >-
+        Updates the group. Setting isActive to false pauses its allow rules while
+        preserving membership restrictions and deny rules. Other active groups may
+        still grant access unless a deny matches. Keys belonging only to inactive
+        groups have no group grants. Keys without groups remain unrestricted by
+        group policy; per-key restrictions still apply.
       responses:
         "200":
           description: OK
