@@ -17711,7 +17711,7 @@
       }
     },
     "docs/architecture/REPOSITORY_MAP.md": {
-      "source_hash": "5586d877e239aaf38bf703d05d552e684f42939f7bc28619521c05d9bf79aa71",
+      "source_hash": "d8a7d760188172602892ce409f200dbde39958fcbbb7ad5c043ff2688e375d54",
       "locales": {
         "pl": {
           "source_hash": "c4c42eda70dbf3e8bf15dcc95d829980d836a3664f98fd4990d8598e7bf885d0",
@@ -37164,7 +37164,7 @@
       }
     },
     "docs/frameworks/AGENTBRIDGE.md": {
-      "source_hash": "a6952dd2bebef7c169be0ed615ba2a223b7412539e06807560ffa5f3eb8b0196",
+      "source_hash": "f1fd6dee98f295228be450efb164905f3c354c82b2fb568e96d4224c5d0f4117",
       "locales": {
         "pl": {
           "source_hash": "15a5069bf3d7f2d3fc9a91e0b36497102d52c2dccf683dbed5cf74a381b6ac16",
