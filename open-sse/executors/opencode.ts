@@ -919,7 +919,7 @@ export class OpencodeExecutor extends BaseExecutor {
               stalled: headersWait.spent,
               cooldown: markCooldown,
               markDirect: () => (directTried = true),
-              slow: { account, enabled: skipRecentlyFailed, read: readAppliedKey },
+              slow: { account, enabled: skipRecentlyFailed, egress: appliedEgress },
             }); // same settle as the stall arm
             log?.warn?.(
               "OPENCODE",
@@ -927,7 +927,7 @@ export class OpencodeExecutor extends BaseExecutor {
             );
             continue;
           }
-          result = outcome.result;
+          result = appliedEgress.noteServed(account, outcome.result, waitMs, skipRecentlyFailed);
         } catch (err) {
           if (headersWait.policy.windowMs > 0 && input.signal?.aborted)
             egressPacing.throwPacedError(egressRelease, err); // client abort never rotates, slot released
@@ -1412,7 +1412,7 @@ export class OpencodeExecutor extends BaseExecutor {
       "You must respond with valid JSON that strictly follows " +
       "this JSON schema:\\n```json\\n" +
       schemaJson +
-      "\\n```\\nRespond ONLY with the JSON object, no other text.";
+      "\\n```\\nRespond ONLY with the JSON object, no other text and no markdown code fences.";
 
     const messages: Array<Record<string, unknown>> = Array.isArray(record.messages)
       ? (record.messages as Array<Record<string, unknown>>).map((message) => ({ ...message }))

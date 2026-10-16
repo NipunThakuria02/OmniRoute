@@ -20,6 +20,7 @@ import {
   type KiroThinkingState,
 } from "./kiroThinking.ts";
 import { ByteQueue, TEXT_ENCODER, parseEventFrame } from "./kiro/eventstream.ts";
+import { readKiroReasoningText } from "./kiro/reasoning.ts";
 import { kiroRuntimeHost, resolveKiroRuntimeRegion } from "../services/kiroRegion.ts";
 import {
   KIRO_TOOL_CALL_WRAPPER,
@@ -31,6 +32,10 @@ import {
   validateKiroToolUse,
   type PendingKiroWrapperToolCall,
 } from "./kiroToolCallValidation.ts";
+import {
+  createKiroToolCallRepairStream,
+  isKiroToolCallRepairEnabled,
+} from "./kiro/toolCallRepair.ts";
 
 export { validateKiroToolUse } from "./kiroToolCallValidation.ts";
 
@@ -273,6 +278,14 @@ const KIRO_ENDPOINT_FALLBACK_STATUSES = new Set([401, 403, 404]);
 const KIRO_PROFILE_ARN_REQUIRED_MESSAGE = "profileArn is required for this request";
 
 /**
+ * The branded gateway's path-style GenerateAssistantResponse is deprecated: it now answers
+ * valid payloads with 400 {"message":"Improperly formed request.","reason":"REQUEST_BODY_INVALID"}
+ * (#15621). The same body is accepted by the CodeWhisperer host, so this shape also falls back
+ * (only while a next candidate exists; the final host's 400 is returned untouched).
+ */
+const KIRO_IMPROPERLY_FORMED_MESSAGE = "Improperly formed request";
+
+/**
  * Whether `response` is the branded gateway's profileArn-required rejection
  * described above. Reads a clone of the body so the original response stream
  * is left untouched for the caller (the success path, and the final
@@ -282,7 +295,10 @@ async function isBrandedGatewayProfileArnRejection(response: Response): Promise<
   if (response.status !== 400) return false;
   try {
     const text = await response.clone().text();
-    return text.includes(KIRO_PROFILE_ARN_REQUIRED_MESSAGE);
+    return (
+      text.includes(KIRO_PROFILE_ARN_REQUIRED_MESSAGE) ||
+      text.includes(KIRO_IMPROPERLY_FORMED_MESSAGE)
+    );
   } catch {
     return false;
   }
@@ -403,25 +419,30 @@ export class KiroExecutor extends BaseExecutor {
     const headers = this.buildHeaders(credentials, stream);
     mergeUpstreamExtraHeaders(headers, upstreamExtraHeaders);
     const transformedBody = await this.transformRequest(model, body, stream, credentials);
-    const requestBody = JSON.stringify(transformedBody);
 
-    let response!: Response;
-    let url = candidateUrls[0];
-    for (let i = 0; i < candidateUrls.length; i++) {
-      url = candidateUrls[i];
-      response = await fetch(url, {
-        method: "POST",
-        headers,
-        body: requestBody,
-        signal,
-      });
-      const hasFallback = i + 1 < candidateUrls.length;
-      if (response.ok || !hasFallback) break;
-      const shouldFallback =
-        KIRO_ENDPOINT_FALLBACK_STATUSES.has(response.status) ||
-        (await isBrandedGatewayProfileArnRejection(response));
-      if (!shouldFallback) break;
-    }
+    // Branded gateway first, raw CodeWhisperer host on an auth/profile-shaped failure.
+    // Shared with the one-shot tool_call repair retry so it takes the same path.
+    const send = async (payload: unknown, sendSignal: AbortSignal | null | undefined) => {
+      let res!: Response;
+      let target = candidateUrls[0];
+      for (let i = 0; i < candidateUrls.length; i++) {
+        target = candidateUrls[i];
+        res = await fetch(target, {
+          method: "POST",
+          headers,
+          body: JSON.stringify(payload),
+          signal: sendSignal,
+        });
+        const hasFallback = i + 1 < candidateUrls.length;
+        if (res.ok || !hasFallback) break;
+        const shouldFallback =
+          KIRO_ENDPOINT_FALLBACK_STATUSES.has(res.status) ||
+          (await isBrandedGatewayProfileArnRejection(res));
+        if (!shouldFallback) break;
+      }
+      return { res, target };
+    };
+    const { res: response, target: url } = await send(transformedBody, signal);
 
     if (!response.ok) {
       return { response, url, headers, transformedBody };
@@ -447,9 +468,18 @@ export class KiroExecutor extends BaseExecutor {
         )?.userInputMessage as Record<string, unknown>
       )?.content as string) || "";
     const thinkingExpected = userContent.includes("<thinking_mode>enabled</thinking_mode>");
-    const transformedResponse = this.transformEventStreamToSSE(response, model, {
-      thinkingExpected,
-    });
+    const transformedResponse =
+      stream && isKiroToolCallRepairEnabled()
+        ? createKiroToolCallRepairStream({
+            upstream: response,
+            transform: (raw, opts) =>
+              this.transformEventStreamToSSE(raw, model, { thinkingExpected, ...opts }),
+            retry: async (payload, retrySignal) => (await send(payload, retrySignal)).res,
+            transformedBody,
+            signal,
+            log,
+          })
+        : this.transformEventStreamToSSE(response, model, { thinkingExpected });
 
     return { response: transformedResponse, url, headers, transformedBody };
   }
@@ -471,12 +501,17 @@ export class KiroExecutor extends BaseExecutor {
   transformEventStreamToSSE(
     response: Response,
     model: string,
-    opts: { thinkingExpected?: boolean } = {}
+    opts: {
+      thinkingExpected?: boolean;
+      /** Return true to suppress the error frame (the one-shot repair will retry). */
+      onInvalidToolCall?: (message: string) => boolean;
+      responseId?: string;
+    } = {}
   ) {
     const thinkingExpected = !!opts.thinkingExpected;
     const buffer = new ByteQueue();
     let chunkIndex = 0;
-    const responseId = `chatcmpl-${Date.now()}`;
+    const responseId = opts.responseId || `chatcmpl-${Date.now()}`;
     const created = Math.floor(Date.now() / 1000);
     const state: KiroStreamState = {
       endDetected: false,
@@ -570,8 +605,10 @@ export class KiroExecutor extends BaseExecutor {
       };
       state.invalidToolCall = true;
       state.finishEmitted = true;
-      controller.enqueue(encodeSse(`data: ${JSON.stringify(error)}\n\n`));
-      controller.enqueue(encodeSse("data: [DONE]\n\n"));
+      if (!opts.onInvalidToolCall?.(message)) {
+        controller.enqueue(encodeSse(`data: ${JSON.stringify(error)}\n\n`));
+        controller.enqueue(encodeSse("data: [DONE]\n\n"));
+      }
       controller.terminate();
     };
 
@@ -670,22 +707,9 @@ export class KiroExecutor extends BaseExecutor {
               const rp = event.payload as Record<string, unknown> | undefined;
               const rt = rp?.reasoningText;
               if (eventType === "reasoningContentEvent" || rt !== undefined) {
-                let nativeReasoning = "";
-                if (rt && typeof rt === "object") {
-                  const rto = rt as { text?: unknown; Text?: unknown };
-                  nativeReasoning =
-                    typeof rto.text === "string"
-                      ? rto.text
-                      : typeof rto.Text === "string"
-                        ? rto.Text
-                        : "";
-                } else if (typeof rt === "string") {
-                  nativeReasoning = rt;
-                } else if (typeof rp?.text === "string") {
-                  nativeReasoning = rp.text as string;
-                }
-                if (nativeReasoning) {
-                  state.hasReasoningContent = true;
+                const nativeReasoning = readKiroReasoningText(eventType, rp);
+                if (nativeReasoning !== undefined) {
+                  if (nativeReasoning) state.hasReasoningContent = true;
                   const reasoningDelta: JsonRecord =
                     (state.reasoningChunkCount ?? 0) === 0 && chunkIndex === 0
                       ? { role: "assistant", reasoning_content: nativeReasoning }

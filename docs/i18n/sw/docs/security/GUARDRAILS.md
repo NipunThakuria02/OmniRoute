@@ -65,6 +65,10 @@ Mfuatano:
 
 Hali za kulazimishwa hupunguza mzunguko **kabla** ya heuristiki ya kiotomatiki kuendeshwa; tabia ya `auto` inafanana kabisa na guardrail ya kabla ya PR-1.
 
+#### Upeo wa ufunguo wa API (`visionBridgeKeyScope.ts`)
+
+Ufunguo wa API ukizuia miunganisho, makundi ya mgao au modeli (`allowedConnections`, `allowedQuotas`, `allowedModels` / `blockedModels` / `modelAccessMode: "restricted"` / `disableNonPublicModels`), uelekezaji upya na maelezo huchagua tu modeli na miunganisho inayoruhusiwa kwa ufunguo huo. Maelezo hupitia daima mzunguko wa ndani wa OmniRoute pamoja na kichwa `x-omniroute-self-loop-key-id`, ili sera za muunganisho na modeli zitekelezwe tena. `enforceApiKeyPolicy()` hukubali kichwa hicho tu pamoja na tokeni bearer ya mzunguko: kinaweza kupunguza ufikiaji tu, na kitambulisho kisichopatikana hukataliwa. Bila modeli ya kuona inayoruhusiwa, maelezo hurukwa na ombi hupita bila mabadiliko, kama ulinzi ukizimwa (meta `{ skipped: true, reason: "no_permitted_vision_model" }`). Maombi bila ufunguo na funguo zisizo na vizuizi hivi hutenda kama awali.
+
 #### Kidokezo cha kuelezea kinachozingatia kazi (`modalityBridgeVisionTaskAware`)
 
 Chaguo-msingi **kweli**. `composeVisionPrompt()` (`visionBridgeHelpers.ts`) huongeza maandishi ya **ujumbe wa mwisho wa mtumiaji** (yaliyopunguzwa hadi herufi 500) kwenye kidokezo cha msingi cha kuelezea, kuelekeza maelezo kuelekea kile mtumiaji aliuliza kweli (muundo wa codex-vision-proxy) na kuomba mfumo wa maono kunakili maandishi yanayoonekana. Bendera ikiwa imezimwa — au hakuna maandishi ya mtumiaji — kidokezo cha msingi kinatumika bila kubadilika.
@@ -257,6 +261,8 @@ baada ya mfumo-haraka/kukabidhi/sindano ya kumbukumbu kurekebisha safu ya ujumbe
 Mwili uliotumwa juu kwa mfano haujabadilika. Ombi lililozingatiwa pia halijazi
 Kumbukumbu ya kudumu (uchimbaji unaotokana na ombi na majibu hurukwa),
 kwa hivyo jibu la mfano haliwezi kurudia maandishi ya nakala kwenye Kumbukumbu.
+
+**Sehemu ghafi za video (#12430).** Daraja likiwashwa na uwezo wa asili wa video haujulikani au haupo, sehemu zilizofafanuliwa za `transcript`/`audioTranscript` pia huwasha `videoBridgeObserved`, hata maelezo yakishindwa au kikomo cha `maxVideos` kikifikiwa. `null` na mifuatano tupu huhesabiwa; sehemu zisizopo na metadata zisizohusu video hazihesabiwi. Nakala zinazohifadhiwa huficha sehemu hizi au huacha ombi, na cache/Memory hazitumiki. Data inayotumwa kwa mtoa huduma haibadiliki.
 
 Nakala za ziada zilizohifadhiwa hutumia ishara sawa ya ombi lililozingatiwa.
 Picha ya mteja-ombi ya kabla ya ulinzi, ombi linalosubiri kwenye kumbukumbu, na

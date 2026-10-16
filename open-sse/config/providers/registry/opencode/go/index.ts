@@ -110,6 +110,8 @@ export const opencode_goProvider: RegistryEntry = {
     {
       id: "qwen3.7-plus",
       name: "Qwen3.7 Plus",
+      contextLength: 1000000,
+      maxOutputTokens: 65536,
       targetFormat: "claude",
       supportsVision: false,
       supportsReasoning: true,
@@ -335,15 +337,49 @@ export const opencode_goProvider: RegistryEntry = {
       targetFormat: "openai-responses",
     },
     // #8353: Grok 4.5 + effort tiers from the OpenCode Go registry.
+    // The Go endpoint table (opencode.ai/docs/go) serves the Grok family on
+    // /responses only; without targetFormat:"openai-responses" these rows fall
+    // through to /chat/completions, which the upstream rejects ("Model grok-4.6
+    // is not supported for format oa-compat") — same class as #12196. The effort
+    // aliases need the declaration too: resolveOpencodeTargetFormat() looks the
+    // requested id up verbatim.
     {
       id: "grok-4.5",
       name: "Grok 4.5",
       supportsReasoning: true,
       supportedThinkingEfforts: ["low", "medium", "high"],
+      targetFormat: "openai-responses",
     },
-    { id: "grok-4.5-low", name: "Grok 4.5 (low effort)", supportsReasoning: true },
-    { id: "grok-4.5-medium", name: "Grok 4.5 (medium effort)", supportsReasoning: true },
-    { id: "grok-4.5-high", name: "Grok 4.5 (high effort)", supportsReasoning: true },
+    {
+      id: "grok-4.5-low",
+      name: "Grok 4.5 (low effort)",
+      supportsReasoning: true,
+      targetFormat: "openai-responses",
+    },
+    {
+      id: "grok-4.5-medium",
+      name: "Grok 4.5 (medium effort)",
+      supportsReasoning: true,
+      targetFormat: "openai-responses",
+    },
+    {
+      id: "grok-4.5-high",
+      name: "Grok 4.5 (high effort)",
+      supportsReasoning: true,
+      targetFormat: "openai-responses",
+    },
+    // Grok 4.6: effort vocabulary from the models.dev catalog OpenCode reads
+    // (reasoning_options low/medium/high/xhigh), declared on the base row like
+    // gpt-6-luna so sanitizeReasoningEffortForProvider clamps off-vocabulary values.
+    {
+      id: "grok-4.6",
+      name: "Grok 4.6",
+      contextLength: 500000,
+      maxOutputTokens: 500000,
+      supportsReasoning: true,
+      supportedThinkingEfforts: ["low", "medium", "high", "xhigh"],
+      targetFormat: "openai-responses",
+    },
     {
       id: "deepseek-v4-pro",
       name: "DeepSeek V4 Pro",
@@ -385,10 +421,73 @@ export const opencode_goProvider: RegistryEntry = {
     {
       id: "gpt-6-luna",
       name: "GPT-6 Luna",
+      contextLength: 1050000,
+      maxInputTokens: 922000,
       supportsReasoning: true,
       supportedThinkingEfforts: ["none", "low", "medium", "high", "xhigh", "max"],
       targetFormat: "openai-responses",
       maxOutputTokens: 128000,
+    },
+    // #16579: exact Go limits from anomalyco/models.dev at
+    // 26d4dc7b66c93470f4e5337708e794b62a589620, including base_model inheritance.
+    // Keep these provider-scoped so synced data and operator overrides retain precedence.
+    {
+      id: "deepseek-v4.1-flash",
+      name: "DeepSeek V4.1 Flash",
+      contextLength: 1000000,
+      maxOutputTokens: 384000,
+    },
+    {
+      id: "claude-haiku-5-5",
+      name: "Claude Haiku 5.5",
+      contextLength: 1000000,
+      maxOutputTokens: 128000,
+      targetFormat: "claude",
+    },
+    {
+      id: "grok-4.7",
+      name: "Grok 4.7",
+      contextLength: 500000,
+      maxOutputTokens: 500000,
+      targetFormat: "openai-responses",
+    },
+    {
+      id: "hy4-preview",
+      name: "HY4 Preview",
+      contextLength: 1024000,
+      maxOutputTokens: 64000,
+    },
+    {
+      id: "longcat-2.0",
+      name: "LongCat 2.0",
+      contextLength: 1000000,
+      maxOutputTokens: 131072,
+    },
+    {
+      id: "mimo-v2.6-flash",
+      name: "MiMo V2.6 Flash",
+      contextLength: 1048576,
+      maxOutputTokens: 131072,
+    },
+    {
+      id: "mimo-v2.6-pro",
+      name: "MiMo V2.6 Pro",
+      contextLength: 1048576,
+      maxOutputTokens: 131072,
+    },
+    {
+      id: "qwen3.8-flash",
+      name: "Qwen3.8 Flash",
+      contextLength: 1000000,
+      maxOutputTokens: 131072,
+      targetFormat: "claude",
+    },
+    {
+      id: "space-bunny",
+      name: "Space Bunny",
+      contextLength: 1048576,
+      maxInputTokens: 524288,
+      maxOutputTokens: 524288,
     },
     // Console Go free GLM-tier model (live-verified 2026-08-23): the upstream
     // rejects every reasoning_effort outside {low, high, max} whenever tools

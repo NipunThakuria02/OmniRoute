@@ -13,6 +13,7 @@ import {
   DB_BACKUPS_DIR,
   DATA_DIR,
 } from "./core";
+import { listBackupIds, resolveBackupFile } from "./backupPaths";
 import { resetAllDbModuleState } from "./stateReset";
 import {
   DB_BACKUP_SETTINGS_NAMESPACE,
@@ -64,12 +65,10 @@ function getBackupDir() {
 }
 
 function listBackupFilesNewestFirst(backupDir: string) {
-  return fs
-    .readdirSync(backupDir)
-    .filter((filename) => filename.startsWith("db_") && filename.endsWith(".sqlite"))
+  return listBackupIds(backupDir)
     .flatMap((filename) => {
       try {
-        return [{ filename, stat: fs.statSync(path.join(backupDir, filename)) }];
+        return [{ filename, stat: fs.statSync(resolveBackupFile(backupDir, filename)) }];
       } catch {
         // A concurrent retention pass may remove an entry after readdir.
         return [];
@@ -435,7 +434,7 @@ export async function listDbBackups() {
 
     const { tryOpenSync } = await import("@/lib/db/adapters/driverFactory");
     return entries.map(({ filename, stat }) => {
-      const filePath = path.join(backupDir, filename);
+      const filePath = resolveBackupFile(backupDir, filename);
       const match = filename.match(/^db_(.+?)_([^.]+)\.sqlite$/);
       const reason = match ? match[2] : "unknown";
 
@@ -485,7 +484,7 @@ export async function restoreDbBackup(backupId: string) {
     throw new Error("Invalid backup ID");
   }
 
-  const backupPath = path.resolve(backupDir, backupId);
+  const backupPath = path.resolve(resolveBackupFile(backupDir, backupId));
   // Prevent path traversal: resolved path must stay within backupDir
   if (
     !backupPath.startsWith(path.resolve(backupDir) + path.sep) &&
@@ -715,4 +714,46 @@ export function countImportedRows(): {
   const comboCount = (db.prepare("SELECT COUNT(*) as cnt FROM combos").get() as any)?.cnt || 0;
   const keyCount = (db.prepare("SELECT COUNT(*) as cnt FROM api_keys").get() as any)?.cnt || 0;
   return { connCount, nodeCount, comboCount, keyCount };
+}
+
+type ReadonlyAdapterLike = {
+  prepare: (sql: string) => { get: () => unknown };
+};
+
+function countTableFromAdapter(adapter: ReadonlyAdapterLike, table: string): number {
+  return (adapter.prepare(`SELECT COUNT(*) as cnt FROM ${table}`).get() as CountRow)?.cnt || 0;
+}
+
+/**
+ * Summarizes an **already-opened** candidate database (not the live one) for the import
+ * dry run: the row counts a real import would load, plus the newest applied migration
+ * version (`null` when the backup predates migration tracking). Callers must have
+ * validated that the four required tables exist first.
+ */
+export function summarizeImportCandidate(
+  adapter: ReadonlyAdapterLike,
+  tableNames: string[]
+): {
+  connCount: number;
+  nodeCount: number;
+  comboCount: number;
+  keyCount: number;
+  schemaVersion: string | null;
+} {
+  let schemaVersion: string | null = null;
+  if (tableNames.includes("_omniroute_migrations")) {
+    const row = adapter
+      .prepare(
+        "SELECT version FROM _omniroute_migrations ORDER BY CAST(version AS INTEGER) DESC, version DESC LIMIT 1"
+      )
+      .get() as { version?: string } | undefined;
+    schemaVersion = row?.version ?? null;
+  }
+  return {
+    connCount: countTableFromAdapter(adapter, "provider_connections"),
+    nodeCount: countTableFromAdapter(adapter, "provider_nodes"),
+    comboCount: countTableFromAdapter(adapter, "combos"),
+    keyCount: countTableFromAdapter(adapter, "api_keys"),
+    schemaVersion,
+  };
 }

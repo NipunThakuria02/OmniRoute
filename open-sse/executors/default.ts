@@ -62,6 +62,7 @@ import { forwardOpencodeClientHeaders } from "../utils/opencodeHeaders.ts";
 import { resolveZaiUrl } from "./default/zaiFormatOverride.ts";
 import { normalizePoolConfig, rejectStrictPool } from "./default/poolConfig.ts";
 import { acquireNvidiaConcurrencySlot } from "./default/nvidiaConcurrencyGate.ts";
+import { normalizeOpenAIToolCallIds } from "./default/openaiToolCallIds.ts";
 import { resolveAlibabaProviderBaseUrl } from "@/shared/constants/alibabaProviderRegions";
 import { xiaomiAlternateUrl, xiaomiMimoChatUrl } from "./default/xiaomiTokenPlan.ts";
 import { usesCcWireImage } from "../services/ccWireImageBuiltins.ts";
@@ -746,8 +747,8 @@ export class DefaultExecutor extends BaseExecutor {
     const schemaJson = schema ? JSON.stringify(schema, null, 2) : null;
     const prompt =
       schemaJson !== null
-        ? `You must respond with valid JSON that strictly follows this JSON schema:\n\`\`\`json\n${schemaJson}\n\`\`\`\nRespond ONLY with the JSON object, no other text.`
-        : "You must respond with valid JSON only (a single JSON object), no other text.";
+        ? `You must respond with valid JSON that strictly follows this JSON schema:\n\`\`\`json\n${schemaJson}\n\`\`\`\nRespond ONLY with the JSON object, no other text and no markdown code fences.`
+        : "You must respond with valid JSON only (a single JSON object), no other text and no markdown code fences.";
 
     const messages: Array<Record<string, unknown>> = Array.isArray(record.messages)
       ? (record.messages as Array<Record<string, unknown>>).map((m) => ({ ...m }))
@@ -821,9 +822,8 @@ export class DefaultExecutor extends BaseExecutor {
       withDefaults = defaultPerplexityAgentMaxOutputTokens(withDefaults);
     }
 
-    if (this.provider === "nvidia") {
-      normalizeNvidiaToolCallIds(withDefaults);
-    }
+    if (this.provider === "nvidia") normalizeNvidiaToolCallIds(withDefaults);
+    if (this.provider === "openai") withDefaults = normalizeOpenAIToolCallIds(withDefaults);
 
     // Port of decolua/9router commit d652300e:
     // Cerebras returns 400 (wrong_api_format), Mistral returns 422
@@ -1099,11 +1099,11 @@ export class DefaultExecutor extends BaseExecutor {
     if (!reasoningEnabled) return body;
 
     const MIN_TOKENS = 4096;
-    const maxOutput =
-      typeof modelEntry.maxOutputTokens === "number" && modelEntry.maxOutputTokens > 0
-        ? modelEntry.maxOutputTokens
-        : MIN_TOKENS;
-    const target = Math.min(MIN_TOKENS, maxOutput);
+    // #14888: unknown real limit (no maxOutputTokens) -> don't fabricate a 4096 ceiling.
+    if (typeof modelEntry.maxOutputTokens !== "number" || modelEntry.maxOutputTokens <= 0) {
+      return body;
+    }
+    const target = Math.min(MIN_TOKENS, modelEntry.maxOutputTokens);
     const current = body.max_tokens ?? body.max_completion_tokens;
 
     // #6912: keep whichever token key transformRequest already set (o1/o3/o4/gpt-5 use

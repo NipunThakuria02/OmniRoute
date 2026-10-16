@@ -84,6 +84,10 @@ Flow:
 Tvungne tilstande kortslutter **før** auto-heuristikken kører; `auto`-adfærden
 er byte-identisk med pre-PR-1 guardrailen.
 
+#### API-nøglens omfang (`visionBridgeKeyScope.ts`)
+
+Hvis API-nøglen begrænser forbindelser, kvotepuljer eller modeller (`allowedConnections`, `allowedQuotas`, `allowedModels` / `blockedModels` / `modelAccessMode: "restricted"` / `disableNonPublicModels`), vælger omdirigering og beskrivelse kun modeller og forbindelser, som nøglen må bruge. Beskrivelsen går altid gennem OmniRoutes eget loop med headeren `x-omniroute-self-loop-key-id`, så forbindelses- og modelpolitikken håndhæves igen. `enforceApiKeyPolicy()` accepterer kun headeren sammen med loopets bearer-token: den kan kun indsnævre adgang, og et ukendt id afvises. Hvis ingen synsmodel er tilladt, springes beskrivelsen over, og anmodningen forbliver uændret som ved deaktiveret beskyttelse (meta `{ skipped: true, reason: "no_permitted_vision_model" }`). Anmodninger uden nøgle og nøgler uden disse begrænsninger fungerer som før.
+
 #### Opgavebevidst beskrivelsesprompt (`modalityBridgeVisionTaskAware`)
 
 Standard **true**. `composeVisionPrompt()` (`visionBridgeHelpers.ts`) tilføjer
@@ -352,6 +356,8 @@ efter system-prompt/handoff/hukommelses-injektion omformer meddelelsesarrayet.
 Kroppen, der sendes opstrøms til modellen, er uændret. En observeret anmodning udfylder heller
 ikke holdbar hukommelse (både anmodnings- og svar-afledt ekstraktion springes over),
 så modellens eget svar kan ikke gentage transskriptionstekst i hukommelsen.
+
+**Rå videofelter (#12430).** Når broen er aktiveret, og indbygget videounderstøttelse er ukendt eller mangler, aktiverer definerede `transcript`/`audioTranscript`-felter også `videoBridgeObserved`, selv hvis beskrivelsen fejler, eller grænsen `maxVideos` nås. `null` og tomme strenge tæller med; manglende felter og metadata uden relation til video gør ikke. Gemte kopier skjuler disse felter eller udelader anmodningen, og caches/Memory springes over. Data til udbyderen forbliver uændrede.
 
 Yderligere bevarede kopier bruger det samme observerede-anmodningssignal. Det rå
 pre-guardrail klient-anmodningssnapshot, in-memory afventende anmodning og tidligt

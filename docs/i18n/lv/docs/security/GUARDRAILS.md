@@ -55,6 +55,10 @@ Plūsma:
 
 Piespiedu režīmi īssavienojas **pirms** automātiskās heuristikas izpildes; `auto` uzvedība ir baitu ziņā identiska pirms-PR-1 aizsardzības barjerai.
 
+#### API atslēgas tvērums (`visionBridgeKeyScope.ts`)
+
+Ja API atslēga ierobežo savienojumus, kvotu kopas vai modeļus (`allowedConnections`, `allowedQuotas`, `allowedModels` / `blockedModels` / `modelAccessMode: "restricted"` / `disableNonPublicModels`), pārmaršrutēšana un aprakstīšana izvēlas tikai šai atslēgai atļautos modeļus un savienojumus. Apraksts vienmēr iet caur OmniRoute iekšējo cilpu ar galveni `x-omniroute-self-loop-key-id`, atkārtoti piemērojot savienojumu un modeļu politiku. `enforceApiKeyPolicy()` atzīst galveni tikai kopā ar cilpas bearer pilnvaru: tā var vienīgi sašaurināt piekļuvi, un nezināms ID tiek noraidīts. Ja nav atļauta redzes modeļa, apraksts tiek izlaists un pieprasījums paliek nemainīts kā ar izslēgtu aizsardzību (meta `{ skipped: true, reason: "no_permitted_vision_model" }`). Pieprasījumi bez atslēgas un atslēgas bez šiem ierobežojumiem darbojas kā iepriekš.
+
 #### Uzdevumam atbilstoša apraksta uzvedne (`modalityBridgeVisionTaskAware`)
 
 Noklusējums **true**. `composeVisionPrompt()` (`visionBridgeHelpers.ts`) pievieno **pēdējās lietotāja ziņas** tekstu (saīsinātu līdz 500 rakstzīmēm) pamata apraksta uzvednei, virzot aprakstu uz to, ko lietotājs faktiski jautāja (codex-vision-proxy modelis) un lūdzot vizuālajam modelim pārrakstīt redzamo tekstu. Ja karodziņš ir izslēgts — vai nav lietotāja teksta — pamata uzvedne tiek izmantota nemainīga.
@@ -328,6 +332,8 @@ pēc sistēmas uzvednes/nodošanas/atmiņas injekcijas ziņojumu masīva pārvei
 Modelim nosūtītais saturs paliek nemainīgs. Novērots pieprasījums arī neaizpilda
 nekādu ilgstošu atmiņu (tiek izlaista gan pieprasījuma, gan atbildes atvasināta ekstrakcija),
 tāpēc modeļa paša atbilde nevar atspoguļot transkripta tekstu atmiņā.
+
+**Neapstrādāti video lauki (#12430).** Ja tilts ir ieslēgts un iebūvētais video atbalsts nav zināms vai nav pieejams, definētie `transcript`/`audioTranscript` lauki arī aktivizē `videoBridgeObserved`, pat ja apraksts neizdodas vai sasniegts `maxVideos` ierobežojums. `null` un tukšas virknes tiek ieskaitītas; neesoši lauki un ar video nesaistīti metadati netiek. Saglabātajās kopijās šie lauki tiek aizklāti vai pieprasījums izlaists, un kešatmiņas/Memory netiek izmantotas. Pakalpojuma sniedzējam nosūtītie dati nemainās.
 
 Papildu saglabātās kopijas izmanto to pašu novērotā pieprasījuma signālu. Neapstrādāts
 pirmsaizsardzības klienta pieprasījuma momentuzņēmums, atmiņā esošais gaidošais pieprasījums un agrīns

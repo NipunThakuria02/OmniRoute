@@ -3384,6 +3384,10 @@
     "comboRefMember": "Combo → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "Isama sa auto ang mga provider na may markang ToS: avoid",
+    "autoTosDescription": "Naka-off bilang default. Para ito sa lahat ng auto combo, hindi lang sa isang account. Hindi pinapagana ang opsyong ito kapag kumonekta ka sa provider.",
+    "autoTosSaveError": "Hindi ma-save ang patakaran sa ToS. Nakikita pa rin ang dating setting. Subukan muli.",
+    "autoTosLoadError": "Hindi ma-load ang patakaran sa ToS. Subukan muli bago ito baguhin.",
     "title": "Mga combo",
     "description": "Gumawa ng mga combo ng modelo na may weighted routing at fallback support",
     "autoCatalogTitle": "Catalog ng auto-routing",
@@ -4090,6 +4094,9 @@
     "showingTopCostRows": "Ipinapakita ang {shown} sa {total} tumutugmang mga row (nangungunang 50)."
   },
   "endpoint": {
+    "cloudUploadDestination": "Destinasyon ng pag-sync sa cloud (hindi ng mga lokal na backup):",
+    "cloudUploadWarning": "Naka-off bilang default ang pag-sync sa cloud sa mga bagong pag-install. Kapag pinagana ito, ia-upload ang mga API key ng provider, mga access at refresh token ng OAuth, mga API key ng OmniRoute, at configuration sa destinasyon sa itaas, ngayon at sa mga susunod na pag-sync. Hiwalay ito sa mga lokal na backup sa Imbakan. Paganahin lamang ito kung pinagkakatiwalaan mo ang server na iyon.",
+    "cloudUploadConsent": "Nauunawaan ko ito at pinahihintulutan kong i-upload ang aking mga kredensyal sa destinasyong ito.",
     "title": "Endpoint ng API",
     "subtitle": "Gamitin ang endpoint na compatible sa OpenAI sa karamihan ng mga SDK at tool.",
     "testEndpoint": "Subukan ang endpoint →",
@@ -5268,6 +5275,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Hindi kasama sa auto ang provider na ito bilang default",
+    "tosAvoidNoticeDescription": "May markang avoid ang ToS status nito. Hindi nagbabago ang patakarang ito kapag nagkonekta ng account. Basahin ang mga tuntunin ng provider bago paganahin ang global na opsyon para sa lahat ng auto combo.",
+    "tosAvoidNoticeAction": "Tingnan ang patakaran ng auto",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -6733,13 +6743,13 @@
     "rateLimitOverridesModelConcurrencyPlaceholder": "glm-5=1\nglm-4.7=3",
     "rateLimitOverridesModelConcurrencyHint": "Optional: one model=cap per line, matched against the exact upstream model id. Queues excess requests locally; blank means no per-model cap.",
     "rateLimitOverridesModelConcurrencyInvalid": "Invalid per-model concurrency entry \"{entry}\" — use model=cap with a whole number from 1 to {max}.",
-    "codexPaidCreditsShort": "Extra credits",
-    "codexPaidCreditsToggleTitle": "Allow paid Codex credits after subscription quota runs out (additional charges may apply)",
-    "codexPaidCreditsEnabled": "Codex paid credits enabled (additional charges may apply)",
-    "codexPaidCreditsDisabled": "Codex paid credits disabled",
-    "failedUpdateCodexPaidCredits": "Failed to update Codex paid-credit policy",
-    "allowCodexPaidCreditsLabel": "Allow paid Codex credits",
-    "allowCodexPaidCreditsDescription": "Allow this account to use paid credits after its subscription quota reaches the cutoff. Requires available credits reported by OpenAI; may incur charges. Spark limits and upstream cooldowns still apply. Credit availability is checked even if quota preflight is disabled."
+    "codexPaidCreditsShort": "Mga dagdag na kredito",
+    "codexPaidCreditsToggleTitle": "Payagan ang mga bayad na kredito sa Codex kapag naubos ang quota ng subscription (maaaring may dagdag na singil)",
+    "codexPaidCreditsEnabled": "Pinagana ang mga bayad na kredito sa Codex (maaaring may dagdag na singil)",
+    "codexPaidCreditsDisabled": "Hindi pinagana ang mga bayad na kredito sa Codex",
+    "failedUpdateCodexPaidCredits": "Hindi ma-update ang patakaran sa mga bayad na kredito sa Codex",
+    "allowCodexPaidCreditsLabel": "Payagan ang mga bayad na kredito sa Codex",
+    "allowCodexPaidCreditsDescription": "Payagan ang account na ito na gumamit ng mga bayad na kredito kapag umabot na sa itinakdang cutoff ang quota ng subscription nito. Kailangan ng mga magagamit na kredito ayon sa ulat ng OpenAI; maaaring may singil. Nalalapat pa rin ang mga limitasyon ng Spark at ang mga cooldown ng upstream. Sinusuri ang pagkakaroon ng mga kredito kahit hindi pinagana ang paunang pagsusuri ng quota, maliban kung ganap na naka-off ang lokal na pag-filter ng quota (parehong hindi pinagana ang paunang pagsusuri ng quota at ang patakaran sa limitasyon)."
   },
   "settings": {
     "title": "Mga setting",
@@ -8683,6 +8693,7 @@
     "cliproxyapiPort": "Port",
     "qdrantHost": "Host",
     "qdrantCollection": "Koleksyon",
+    "catalogVisibilityHint": "Maaari pa ring tawagin ang mga nakatagong model ID gamit ang parehong mga pahintulot sa pag-access.",
     "catalogScopeTitle": "Listahan ng Models API",
     "catalogScopeDesc": "Kung ano ang inilalabas ng GET /v1/models para sa key na ito. Ang pagpapaliit ng listahan ay hindi kailanman nagbabago sa kung ano ang maaaring tawagin ng key.",
     "catalogScopeAll": "Pareho",
@@ -10123,10 +10134,10 @@
     "lastRefreshed": "Huling na-refresh",
     "providerQuota": "Quota ng Provider",
     "providerQuotaHomeHint": "Live na status sa lahat ng nakakonektang account",
-    "codexPaidCreditsLabel": "Paid Codex credits",
-    "codexPaidCreditsAvailable": "Available (balance not reported)",
-    "codexPaidCreditsUnavailable": "Unavailable or spending limit reached",
-    "codexPaidCreditsUnlimited": "Unlimited"
+    "codexPaidCreditsLabel": "Mga bayad na kredito sa Codex",
+    "codexPaidCreditsAvailable": "Magagamit (hindi iniulat ang balanse)",
+    "codexPaidCreditsUnavailable": "Hindi magagamit o naabot na ang limitasyon sa paggastos",
+    "codexPaidCreditsUnlimited": "Walang limitasyon"
   },
   "modals": {
     "waitingAuth": "Naghihintay ng Awtorisasyon",

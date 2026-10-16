@@ -84,6 +84,10 @@ Fluss:
 Modi sfurzati short-circuit **qabel** ma taħdem l-ewristika awtomatika; l-imġieba `auto`
 hija identika byte b'byte għall-guardrail ta' qabel PR-1.
 
+#### Ambitu taċ-ċavetta API (`visionBridgeKeyScope.ts`)
+
+Jekk iċ-ċavetta API tillimita konnessjonijiet, gruppi ta' kwoti jew mudelli (`allowedConnections`, `allowedQuotas`, `allowedModels` / `blockedModels` / `modelAccessMode: "restricted"` / `disableNonPublicModels`), id-direzzjoni mill-ġdid u d-deskrizzjoni jagħżlu biss mudelli u konnessjonijiet permessi għal dik iċ-ċavetta. Id-deskrizzjoni dejjem tgħaddi mil-loop intern ta' OmniRoute bil-header `x-omniroute-self-loop-key-id`, biex il-politika tal-konnessjonijiet u l-mudelli tiġi infurzata mill-ġdid. `enforceApiKeyPolicy()` taċċetta l-header biss mat-token bearer tal-loop: jista' biss inaqqas l-aċċess, u ID mhux magħruf jiġi miċħud. Jekk ma hemm ebda mudell viżiv permess, id-deskrizzjoni tinqabeż u t-talba tibqa' l-istess, bħal meta l-protezzjoni tkun mitfija (meta `{ skipped: true, reason: "no_permitted_vision_model" }`). Talbiet mingħajr ċavetta u ċwievet mingħajr dawn ir-restrizzjonijiet jaħdmu bħal qabel.
+
 #### Prompt ta' deskrizzjoni konxju mill-kompitu (`modalityBridgeVisionTaskAware`)
 
 Default **true**. `composeVisionPrompt()` (`visionBridgeHelpers.ts`) iżżid
@@ -319,6 +323,8 @@ rendering identiku li fih il-korp ta' test liberu ta' kull cue huwa sostitwit mi
 qabel ma l-string tiġi assemblata (qatt billi jiġi analizzat it-test ċatt, għalhekk l-ebda kontenut tal-cue — avversarju jew ordinarju, inklużi korpi li fihom `]` bħal
 `[inaudible]`/`[music]` — ma jista' jgħix). Il-korp tat-talba tal-call-log persistenti jiskambja
 kull parti tat-test derivata mill-vidjo għal dak id-dell imnaqqas, imqabbel bl-ugwaljanza tal-kontenut; l-ankra `fullText` terġa' tinqara mill-payload tal-guardrail ta' qabel is-sejħa lest, għalhekk il-match xorta jirnexxi wara guardrails tal-katina aktar tard (il-maskers tal-PII u tal-kredenzjali, prijoritajiet 10/95) jerġgħu jiktbu t-test tad-deskrizzjoni fil-post u wara li l-injezzjoni tas-sistema-prompt/handoff/memory tifforma mill-ġdid l-array tal-messaġġ. Il-korp mibgħut 'il fuq lill-mudell jibqa' mhux mibdul. Talba osservata wkoll ma timlax l-ebda Memorja durabbli (kemm l-estrazzjoni derivata mit-talba kif ukoll mir-rispons huma injorati), għalhekk ir-rispons tal-mudell stess ma jistax jirrifletti t-test tat-traskrizzjoni fil-Memorja.
+
+**Oqsma tal-vidjo mhux ipproċessati (#12430).** Meta l-pont ikun attivat u l-appoġġ nattiv għall-vidjo ma jkunx magħruf jew ma jkunx hemm, l-oqsma definiti `transcript`/`audioTranscript` jattivaw ukoll `videoBridgeObserved`, anki jekk id-deskrizzjoni tfalli jew jintlaħaq il-limitu `maxVideos`. `null` u sekwenzi vojta jgħoddu; oqsma neqsin u metadata mhux tal-vidjo ma jgħoddux. Il-kopji miżmuma jaħbu dawn l-oqsma jew iħallu barra t-talba, u l-caches/Memory jinqabżu. Id-data mibgħuta lill-fornitur tibqa’ l-istess.
 
 Kopji miżmuma addizzjonali jużaw l-istess sinjal ta' talba osservata. Il-snapshot mhux ipproċessat tat-talba tal-klijent ta' qabel il-guardrail, it-talba pendenti fil-memorja, u l-log bikri tat-talba miċħuda jissostitwixxu strutturalment il-kampijiet tat-traskrizzjoni fil-partijiet tal-vidjo; prompts ta' string sintetizzati minn stadji tal-pipeline u handoff tal-kuntest huma mnaqqsa fis-sink tal-korp tat-talba persistenti. Il-marker persistenti `video_content_removed` jagħmel il-kontinwazzjoni `previous_response_id` tfalli magħluqa minflok ma terġa' tibni test li kien intenzjonalment mormi. Jekk talba osservata titlef id-dell ta' tnaqqis għal kull parti qabel il-logging, jew anke wieħed minn diversi dellijiet tal-vidjo jonqos milli jaqbel wara mutazzjonijiet tat-talba aktar tard, il-korp tat-talba miżmum jitħalla barra kompletament minflok ma tinżamm traskrizzjoni parzjalment imnaqqsa.
 

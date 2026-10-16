@@ -64,6 +64,7 @@ import {
   toAntigravityDiagnosticPayload,
 } from "../../executors/antigravityUpstreamError.ts";
 import { routingFinishReason } from "../chatCore/routingFinishReason.ts";
+import { hasTrustedEmptyTurn, inheritEmptyTurnPolicy } from "../../utils/emptyTurnPolicy.ts";
 import { getProviderCredentials } from "@/sse/services/auth";
 import { extractFacts } from "@/lib/memory/extraction";
 // The leaf body is unchanged from the barrel, so its closed-over values keep
@@ -386,7 +387,7 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
         reqLogger.logTargetRequest(captured.url, captured.headers, captured.body);
       }
       reqLogger.logError(new Error(err.error || "Provider request failed"), finalBody);
-      const isNetworkThrow = Boolean(err.originalError);
+      const isNetworkThrow = Boolean(err.originalError) && errUpstreamBody == null;
       // #3229: Antigravity terminal failures are diagnosed from the bounded projection, never
       // from the upstream payload — see isAntigravityProvider in antigravityUpstreamError.ts.
       const isAgyProvider = isAntigravityProvider(provider);
@@ -395,7 +396,7 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
         ? agyDiagnostic
         : isNetworkThrow
           ? undefined
-          : err.response;
+          : errUpstreamBody;
       if (isAgyProvider) {
         reqLogger.logProviderDiagnostic(agyDiagnostic);
       } else if (err.response && !isNetworkThrow) {
@@ -403,7 +404,7 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
           err.status,
           err.response.statusText || "Error",
           err.response.headers,
-          err.response
+          persistedProviderErrorBody
         );
       }
       appendRequestLog({
@@ -828,7 +829,11 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
     // this check runs after translation + sanitization + tool-call execution to catch
     // cases where a provider returns a structurally valid raw body that translates into
     // choices:[] or output:[] with no usable content (Responses API shape included).
-    const malformedTranslatedReason = detectMalformedNonStream(translatedResponse, provider);
+    const malformedTranslatedReason = detectMalformedNonStream(
+      translatedResponse,
+      provider,
+      hasTrustedEmptyTurn(providerResponse)
+    );
     if (malformedTranslatedReason) {
       const malformedDiagnostic = buildMalformedResponseDiagnostic(
         malformedTranslatedReason,
@@ -1065,11 +1070,14 @@ export async function runNonStreamingResponse(deps: NonStreamingDeps) {
     return {
       response: {
         success: true,
-        response: maybeWrapForcedNonStreamingResponsesJson({
-          clientRequestedResponsesStream,
-          body: translatedResponse,
-          headers: responseHeaders,
-        }),
+        response: inheritEmptyTurnPolicy(
+          providerResponse,
+          maybeWrapForcedNonStreamingResponsesJson({
+            clientRequestedResponsesStream,
+            body: translatedResponse,
+            headers: responseHeaders,
+          })
+        ),
       },
       carry: {
         translatedBody,

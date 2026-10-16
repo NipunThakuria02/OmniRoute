@@ -35,6 +35,7 @@ import {
   getEligibleModelFamily,
 } from "../../services/modelFamilyFallback.ts";
 import { isEmptyContentResponse } from "../../services/errorClassifier.ts";
+import { hasTrustedEmptyTurn } from "../../utils/emptyTurnPolicy.ts";
 import { FORMATS } from "../../translator/formats.ts";
 import { hasActiveClaudeThinking } from "../../utils/thinkingBudget.ts";
 
@@ -291,6 +292,7 @@ function finishOk(
     provider: params.provider,
     model: params.model,
     requestBody: params.requestBody,
+    clientRequestBody: input.sourceBody ?? null,
     historyMessages:
       (input.translatedBody as { messages?: unknown[] } | null | undefined)?.messages ??
       input.reasoningReplayHistory ??
@@ -990,7 +992,12 @@ export async function runNonStreamingProviderLeg(
   // #14160: pass the provider so first-party APIs (antigravity) keep empty
   // completions with a normal stop reason as valid 200s instead of synthetic
   // 502s feeding model lockout.
-  if (isEmptyContentResponse(responseBody, { provider })) {
+  if (
+    isEmptyContentResponse(responseBody, {
+      provider,
+      trustedEmptyTurn: hasTrustedEmptyTurn(executorResult.response),
+    })
+  ) {
     const errMsg = "Provider returned empty content";
     if (allowModelFallback) {
       const triedModels = new Set<string>([currentModel]);
