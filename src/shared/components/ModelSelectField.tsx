@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import Select from "./Select";
-import Input from "./Input";
 import { cn } from "@/shared/utils/cn";
 import { isVisionModelId } from "@/shared/constants/visionModels";
 import { fetchModelSelection } from "@/shared/utils/fetchModelSelection";
+import Select from "./Select";
+import Input from "./Input";
 
 export interface ApiModel {
   provider: string;
