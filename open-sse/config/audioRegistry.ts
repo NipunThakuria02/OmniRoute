@@ -442,6 +442,20 @@ export const AUDIO_SPEECH_PROVIDERS: Record<string, AudioProvider> = {
     models: [{ id: "qwen3-tts", name: "Qwen3 TTS" }],
   },
 
+  // Qwen Cloud Token Plan — DashScope SpeechSynthesizer (JSON → inline base64 or an
+  // expiring audio URL). The host follows the connection's region (Singapore/Beijing).
+  "qwen-cloud-token-plan": {
+    id: "qwen-cloud-token-plan",
+    alias: "qct",
+    baseUrl:
+      "https://token-plan.ap-southeast-1.maas.aliyuncs.com/api/v1/services/audio/tts/SpeechSynthesizer",
+    authType: "apikey",
+    authHeader: "bearer",
+    format: "dashscope-tts",
+    supportedFormats: ["mp3"],
+    models: [{ id: "qwen-audio-3.0-tts-plus", name: "Qwen Audio 3.0 TTS Plus" }],
+  },
+
   // ── Cloud TTS Providers (#248) ────────────────────────────────────────────
 
   inworld: {

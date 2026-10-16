@@ -25,6 +25,7 @@ import { handleGeminiTtsSpeech } from "../executors/geminiTts.ts";
 import { handleAwsPollySpeech } from "../executors/awsPollyTts.ts";
 import { GttsUpstreamError, normalizeGttsLang, synthesizeGtts } from "../executors/gtts.ts";
 import { handleFishAudioSpeech } from "../executors/fishAudioTts.ts";
+import { handleDashscopeTtsSpeech } from "../executors/dashscopeTts.ts";
 import { errorResponse } from "../utils/error.ts";
 import { resolveElevenLabsVoiceId } from "./elevenLabsVoiceMap.ts";
 import { audioStreamResponse, upstreamErrorResponse } from "../utils/audioResponse.ts";
@@ -1006,6 +1007,10 @@ export async function handleAudioSpeech({
 
     if (providerConfig.format === "xiaomi-mimo-tts") {
       return handleXiaomiMimoSpeech(providerConfig, body, modelId, token, credentials);
+    }
+
+    if (providerConfig.format === "dashscope-tts") {
+      return handleDashscopeTtsSpeech(providerConfig, body, modelId, token, credentials);
     }
 
     if (providerConfig.format === "minimax-tts") {
