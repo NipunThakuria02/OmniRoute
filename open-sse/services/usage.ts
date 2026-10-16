@@ -93,6 +93,7 @@ import { getSyntxUsage } from "./usage/syntx.ts";
 import { getAgentrouterUsage } from "./usage/agentrouter.ts";
 import { getKilocodeUsage } from "./usage/kilocode.ts";
 import { getChatPlaygroundUsage } from "./usage/chatplayground.ts";
+import { getCloudflareAiUsage } from "./usage/cloudflareAi.ts";
 
 type JsonRecord = Record<string, unknown>;
 type UsageProviderConnection = JsonRecord & {
@@ -289,6 +290,9 @@ export async function getUsageForProvider(
     case "chatplayground":
     case "cpl":
       return await getChatPlaygroundUsage(apiKey || accessToken, providerSpecificData, id || "");
+    case "cloudflare-ai":
+      // Daily neurons from GraphQL Analytics (needs Account Analytics: Read on the token).
+      return await getCloudflareAiUsage(apiKey || "", providerSpecificData);
     default:
       return { message: `Usage API not implemented for ${provider}` };
   }
