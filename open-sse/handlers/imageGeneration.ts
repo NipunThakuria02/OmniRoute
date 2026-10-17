@@ -546,7 +546,20 @@ export async function handleImageGeneration({
   }
 
   if (providerConfig.format === "muse-image") {
-    return handleMuseImageGeneration({ model, provider, body, credentials, log, signal });
+    return handleMuseImageGeneration({
+      model,
+      provider,
+      body,
+      credentials,
+      log,
+      signal,
+      deps: {
+        saveCallLog,
+        fetchRemoteImage: fetchUntrustedRemoteImage,
+        fetchWithTimeout,
+        isTimeoutError: (err) => err instanceof FetchTimeoutError,
+      },
+    });
   }
 
   if (providerConfig.format === "aihorde") {

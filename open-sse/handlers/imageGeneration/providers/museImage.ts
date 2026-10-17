@@ -1,6 +1,3 @@
-import { saveCallLog } from "@/lib/usageDb";
-import { fetchUntrustedRemoteImage } from "@/shared/network/remoteImageFetch";
-import { FetchTimeoutError, fetchWithTimeout } from "@/shared/utils/fetchTimeout";
 import { MUSE_CODE_INFERENCE_USER_AGENT, normalizeMuseBaseUrl } from "../../../config/museCode.ts";
 import { sanitizeErrorMessage } from "../../../utils/error.ts";
 import { toBlobBytes } from "../../imageUpscale/shared.ts";
@@ -13,6 +10,21 @@ import { toBlobBytes } from "../../imageUpscale/shared.ts";
  * or a signed URL; a signed URL is downloaded when the caller asked for `b64_json`.
  */
 
+/**
+ * App-side helpers (call log, SSRF-guarded image fetch, timed fetch) injected by the image
+ * dispatcher (`open-sse/handlers/imageGeneration.ts`), so this provider adds no
+ * open-sse → src imports (boundary ratchet).
+ */
+export interface MuseImageDeps {
+  saveCallLog: (entry: Record<string, unknown>) => Promise<unknown>;
+  fetchRemoteImage: (
+    url: string,
+    opts: { signal?: AbortSignal }
+  ) => Promise<{ buffer: Buffer; contentType?: string | null }>;
+  fetchWithTimeout: (url: string, init: RequestInit) => Promise<Response>;
+  isTimeoutError: (err: unknown) => boolean;
+}
+
 interface MuseImageArgs {
   model: string;
   provider: string;
@@ -24,6 +36,7 @@ interface MuseImageArgs {
   } | null;
   signal?: AbortSignal | null;
   log?: { error?: (tag: string, message: string) => void } | null;
+  deps: MuseImageDeps;
 }
 
 interface ImagePart {
@@ -48,7 +61,11 @@ function resolveMuseImagesBase(credentials: MuseImageArgs["credentials"]): strin
   return base.replace(/\/(?:responses|chat\/completions)$/, "");
 }
 
-async function toImagePart(value: unknown, signal?: AbortSignal | null): Promise<ImagePart> {
+async function toImagePart(
+  value: unknown,
+  deps: MuseImageDeps,
+  signal?: AbortSignal | null
+): Promise<ImagePart> {
   if (typeof value !== "string" || !value.trim()) {
     throw new ReferenceImageError("Unsupported reference image input");
   }
@@ -57,7 +74,7 @@ async function toImagePart(value: unknown, signal?: AbortSignal | null): Promise
   if (dataUrl) return { mime: dataUrl[1].toLowerCase(), bytes: Buffer.from(dataUrl[2], "base64") };
   if (/^https?:\/\//i.test(trimmed)) {
     try {
-      const remote = await fetchUntrustedRemoteImage(trimmed, { signal: signal ?? undefined });
+      const remote = await deps.fetchRemoteImage(trimmed, { signal: signal ?? undefined });
       return { bytes: remote.buffer, mime: remote.contentType || "image/png" };
     } catch (err) {
       throw new ReferenceImageError(
@@ -70,6 +87,7 @@ async function toImagePart(value: unknown, signal?: AbortSignal | null): Promise
 
 async function collectImageParts(
   body: Record<string, unknown>,
+  deps: MuseImageDeps,
   signal?: AbortSignal | null
 ): Promise<ImagePart[]> {
   const parts: ImagePart[] = [];
@@ -84,7 +102,7 @@ async function collectImageParts(
     ...(Array.isArray(body.images) ? body.images : []),
     ...(body.image !== undefined && body.image !== null ? [body.image] : []),
   ].filter(Boolean);
-  for (const input of inputs) parts.push(await toImagePart(input, signal));
+  for (const input of inputs) parts.push(await toImagePart(input, deps, signal));
   return parts;
 }
 
@@ -200,11 +218,12 @@ function buildMuseRequest(
 /** Download signed URLs into base64 when the caller asked for `b64_json`. */
 async function inlineSignedUrls(
   images: MuseImageEntry[],
+  deps: MuseImageDeps,
   signal?: AbortSignal | null
 ): Promise<void> {
   for (const entry of images) {
     if (entry.b64_json || !entry.url) continue;
-    const remote = await fetchUntrustedRemoteImage(entry.url, { signal: signal ?? undefined });
+    const remote = await deps.fetchRemoteImage(entry.url, { signal: signal ?? undefined });
     entry.b64_json = remote.buffer.toString("base64");
     delete entry.url;
   }
@@ -218,10 +237,11 @@ type MuseFail = (
 async function sendMuseRequest(
   request: MuseRequest,
   options: MuseRequestOptions,
+  deps: MuseImageDeps,
   signal: AbortSignal | null | undefined,
   fail: MuseFail
 ) {
-  const response = await fetchWithTimeout(request.url, {
+  const response = await deps.fetchWithTimeout(request.url, {
     method: "POST",
     headers: request.headers,
     body: request.requestBody,
@@ -239,7 +259,7 @@ async function sendMuseRequest(
 
   const images = normalizeEntries((payload as { data?: unknown } | null)?.data);
   if (!images.length) return fail(502, "No images returned from Muse Image");
-  if (options.responseFormat === "b64_json") await inlineSignedUrls(images, signal);
+  if (options.responseFormat === "b64_json") await inlineSignedUrls(images, deps, signal);
   const created = (payload as { created?: unknown }).created;
   return {
     success: true as const,
@@ -257,18 +277,21 @@ export async function handleMuseImageGeneration({
   credentials,
   signal,
   log,
+  deps,
 }: MuseImageArgs) {
   const startTime = Date.now();
   let path = "/v1/images/generations";
   const logCall = (entry: Record<string, unknown>) => {
-    saveCallLog({
-      method: "POST",
-      path,
-      provider,
-      model: `${provider}/${model}`,
-      duration: Date.now() - startTime,
-      ...entry,
-    }).catch((err: unknown) => log?.error?.("IMAGE", sanitizeErrorMessage(err)));
+    deps
+      .saveCallLog({
+        method: "POST",
+        path,
+        provider,
+        model: `${provider}/${model}`,
+        duration: Date.now() - startTime,
+        ...entry,
+      })
+      .catch((err: unknown) => log?.error?.("IMAGE", sanitizeErrorMessage(err)));
   };
   const fail: MuseFail = (status, message) => {
     const error = sanitizeErrorMessage(message);
@@ -284,7 +307,7 @@ export async function handleMuseImageGeneration({
 
   let parts: ImagePart[];
   try {
-    parts = await collectImageParts(body, signal);
+    parts = await collectImageParts(body, deps, signal);
   } catch (err) {
     return fail(400, err instanceof ReferenceImageError ? err.message : err);
   }
@@ -301,7 +324,7 @@ export async function handleMuseImageGeneration({
   path = request.path;
 
   try {
-    const result = await sendMuseRequest(request, options, signal, fail);
+    const result = await sendMuseRequest(request, options, deps, signal, fail);
     if (result.success) {
       logCall({
         status: 200,
@@ -311,6 +334,6 @@ export async function handleMuseImageGeneration({
     }
     return result;
   } catch (err: unknown) {
-    return fail(err instanceof FetchTimeoutError ? 504 : 502, err);
+    return fail(deps.isTimeoutError(err) ? 504 : 502, err);
   }
 }
