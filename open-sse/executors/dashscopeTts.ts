@@ -8,9 +8,8 @@
  * The result URL is upstream-supplied, so it is downloaded through the SSRF-hardened
  * `fetchRemoteMedia` (public-only guard + DNS pinning), never a bare `fetch`.
  */
-import { resolveAlibabaProviderMediaBaseUrl } from "@/shared/constants/alibabaProviderRegions";
-import { fetchRemoteMedia } from "@/shared/network/remoteImageFetch";
-
+import { resolveAlibabaProviderMediaBaseUrl } from "../handlers/videoGeneration/dashscopeHandler.ts";
+import { fetchRemoteMedia } from "../utils/chatgptWebAttachments.ts";
 import { CORS_HEADERS } from "../utils/cors.ts";
 import { errorResponse } from "../utils/error.ts";
 import { upstreamErrorResponse } from "../utils/audioResponse.ts";
