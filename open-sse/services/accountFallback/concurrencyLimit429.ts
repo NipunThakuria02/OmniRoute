@@ -10,7 +10,7 @@
  * So the verdict is: fail over now, short fixed cooldown (or the upstream's own
  * retry hint), backoff level untouched, no provider-breaker failure.
  */
-import { looksLikeConcurrencyLimit } from "../../../src/shared/utils/classify429";
+import { looksLikeConcurrencyLimit } from "../quotaResetParsing.ts";
 
 /** Short fixed cooldown applied when the upstream gives no retry hint. */
 export const CONCURRENCY_LIMIT_COOLDOWN_MS = 1_000;
