@@ -54,7 +54,9 @@ const EXPECTED: Record<InventoryKind, Record<string, number>> = {
     // #15513: added Antigravity/Gemini image edits support branch, 6->7.
     // #14269: SYNTX.ai image edits branch, same quota-preflight credential lookup
     // shape as the sibling provider branches, 7->8.
-    "src/app/api/v1/images/edits/route.ts": 8,
+    // #14619 extracted Firefly's credential lookup into adobeFireflyEdit.ts;
+    // the same class-B site moves with it, 8->7 here and 0->1 in the helper.
+    "src/app/api/v1/images/edits/route.ts": 7,
     "src/app/api/v1/images/generations/route.ts": 3,
     "src/app/api/v1/images/upscale/route.ts": 1,
     "src/app/api/v1/messages/count_tokens/route.ts": 1,
@@ -81,6 +83,7 @@ const EXPECTED: Record<InventoryKind, Record<string, number>> = {
     // #15761: local embeddings resolve credentials through the serving-connection allowlist
     // (getProviderCredentials(provider, null, servingIds)) — one more site (3 -> 4).
     "src/lib/embeddings/service.ts": 4,
+    "src/lib/images/adobeFireflyEdit.ts": 1,
     // PR #11390: second site is the generic derived-provider listing fallback —
     // read-only key presence probe used to decide whether a configured chat
     // provider may appear in the memory embedding-source dropdown.
