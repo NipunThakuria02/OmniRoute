@@ -1,3 +1,8 @@
+import {
+  PROVIDER_SPECIFIC_RESPONSE_ONLY_FIELDS,
+  PROVIDER_SPECIFIC_SECRET_FIELDS,
+} from "@/lib/db/providers/providerSpecificDataSecrets";
+
 type JsonRecord = Record<string, unknown>;
 const WARNING_PATTERNS = [
   /\[sanitizer\]/i,
@@ -12,41 +17,14 @@ const MAX_WARNING_DEPTH = 6;
 const MAX_WARNING_LENGTH = 400;
 
 /**
- * Audit records can outlive management responses. Match the dashboard's
- * sensitive providerSpecificData inventory so console/session credentials
- * never get written to audit details, even on legacy plaintext connections.
- * Keep this list aligned with sanitizeProviderSpecificDataForResponse.
+ * Audit records can outlive management responses. The redaction set is derived from the
+ * same inventories the dashboard sanitizer uses — the at-rest allowlist plus its
+ * response-only strips — so console/session credentials never get written to audit
+ * details, even on legacy plaintext connections, and the two cannot drift.
  */
-const AUDIT_SENSITIVE_METADATA_FIELDS = new Set([
-  "accessToken",
-  "refreshToken",
-  "idToken",
-  "apiKey",
-  "consoleApiKey",
-  "secretAccessKey",
-  "awsSecretAccessKey",
-  "sessionToken",
-  "awsSessionToken",
-  "openCodeGoAuthCookie",
-  "opencodeGoAuthCookie",
-  "authCookie",
-  "ollamaUsageCookie",
-  "ollamaCloudUsageCookie",
-  "ollamaCloudCookie",
-  "usageCookie",
-  "qwenCloudCookie",
-  "qwenCloudSecToken",
-  "alibabaConsoleCookie",
-  "alibabaConsoleSecToken",
-  "xiaomiMimoConsoleCookie",
-  "runtimeKey",
-  "validationId",
-  "volcConsoleCookie",
-  "volcCsrfToken",
-  "codexFingerprintSeed",
-  "codexClientIdentity",
-  "codexOriginalIdentityHeaders",
-  "codexTurnStateEcho",
+const AUDIT_SENSITIVE_METADATA_FIELDS: ReadonlySet<string> = new Set<string>([
+  ...PROVIDER_SPECIFIC_SECRET_FIELDS,
+  ...PROVIDER_SPECIFIC_RESPONSE_ONLY_FIELDS,
 ]);
 
 function toRecord(value: unknown): JsonRecord {
