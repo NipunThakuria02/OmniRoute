@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI uyumlu sağlayıcı desteğine sahip, kendini geliştiren RLM kodlama altyapısı",
       "warp": "Özel sağlayıcı desteğine sahip Warp AI terminali",
       "agent-deck": "Agent Deck çoklu aracı orkestratörü",
-      "5dive": "5dive — kendi sunucunuzda çalışan kodlama aracıları filosu; tek bir auth profili hepsini OmniRoute'a yönlendirir"
+      "5dive": "5dive — kendi sunucunuzda çalışan kodlama aracıları filosu; tek bir auth profili hepsini OmniRoute'a yönlendirir",
+      "zed": "Zed kod düzenleyicisi — OpenAI uyumlu bir sağlayıcı üzerinden yerleşik ajan"
     },
     "guides": {
       "cursor": {
@@ -9860,6 +9861,9 @@
     "hideQuotaRow": "Bu kota satırını gizle",
     "showQuotaRow": "Bu kota satırını göster",
     "hiddenQuotaRowsLabel": "Gizli:",
+    "quotaSpeedTitle": "Bu hesaptaki son kod çözme hızı (son {count} başarılı istek)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ort. · son {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ort. · son {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kota görünürlüğü güncellenemedi",
     "account": "Hesap",
     "modelQuotas": "Model Kotaları",

@@ -94,6 +94,7 @@ import {
 import { copilotRejectionFlag, lockCopilotModelNotSupported } from "./copilotModelNotSupportedLock";
 import { isSharedWalletCredits402 } from "@omniroute/open-sse/services/accountFallback/sharedWalletCredits.ts";
 import { isModelScopedAccessDenial } from "@omniroute/open-sse/services/accountFallback/modelScopedAccessDenial.ts";
+import { isModelUnsupported401 } from "@omniroute/open-sse/services/accountFallback/perModelFailureScope.ts";
 import { postOutputFailureReachesLockout } from "@omniroute/open-sse/services/accountFallback/postOutputFailureStreak.ts";
 import { isOpencodeFreeTierRefusalForProvider } from "@omniroute/open-sse/executors/opencodeGeoBlock.ts";
 import { isOpencodeFreeTierSkipped } from "@omniroute/open-sse/services/opencodeFreeTierSkip.ts";
@@ -148,17 +149,12 @@ import {
   resolveProviderId,
   NOAUTH_PROVIDERS,
   WEB_COOKIE_PROVIDERS,
-  isSelfHostedChatProvider,
 } from "@/shared/constants/providers";
+import { isModelExcludedByConnection } from "@/domain/connectionModelRules";
 import {
-  isModelExcludedByConnection,
-  isModelAdvertisedByConnection,
-} from "@/domain/connectionModelRules";
-import {
-  getSyncedAvailableModelsByConnection,
-  SYNCED_AVAILABLE_MODELS_MALFORMED,
-  type SyncedAvailableModelsByConnection,
-} from "@/lib/db/models";
+  isRequestedModelAdvertised,
+  loadAdvertisedModelsForConnections,
+} from "./connectionModelInventory";
 import { isCatalogFreeModel } from "@/shared/utils/freeModels";
 import {
   applySessionAffinityPin,
@@ -1003,54 +999,6 @@ async function materializeConnection(
 }
 
 /**
- * #11089: load the per-connection synced model inventory for self-hosted chat
- * providers so connection selection can drop hosts that never advertised the
- * requested model.
- *
- * Scoped to SELF_HOSTED_CHAT_PROVIDER_IDS: those are the providers where one
- * provider id fans out to several independent hosts with genuinely different
- * inventories. Hosted providers share one catalog per provider, so filtering
- * there would only add a DB read.
- *
- * Returns an empty map (= no filtering) when there is no model to match, when
- * no candidate is self-hosted, or when the persisted rows are malformed — a
- * partial read must never silently shrink the pool.
- */
-async function loadAdvertisedModelsForSelfHostedConnections(
-  connections: ProviderConnectionView[],
-  requestedModel: string | null
-): Promise<Map<string, Set<string>>> {
-  const advertised = new Map<string, Set<string>>();
-  if (!requestedModel) return advertised;
-
-  const selfHostedProviders = new Set(
-    connections
-      .map((c) => c.provider)
-      .filter((p): p is string => typeof p === "string" && isSelfHostedChatProvider(p))
-  );
-  if (selfHostedProviders.size === 0) return advertised;
-
-  await Promise.all(
-    [...selfHostedProviders].map(async (providerId) => {
-      let byConnection: SyncedAvailableModelsByConnection;
-      try {
-        byConnection = await getSyncedAvailableModelsByConnection(providerId);
-      } catch {
-        return;
-      }
-      // Malformed persisted rows: fail open for the whole provider.
-      if (byConnection[SYNCED_AVAILABLE_MODELS_MALFORMED]) return;
-      for (const [connectionId, models] of Object.entries(byConnection)) {
-        if (!Array.isArray(models) || models.length === 0) continue;
-        advertised.set(connectionId, new Set(models.map((m) => m.id)));
-      }
-    })
-  );
-
-  return advertised;
-}
-
-/**
  * Get provider credentials from localDb
  * Filters out unavailable accounts and returns the selected account based on strategy
  * @param {string} provider - Provider name
@@ -1444,7 +1392,7 @@ export async function getProviderCredentials(
     // inventory. Without it, a request can be routed to a host that never had
     // the model, producing a spurious model-not-found instead of pinning to
     // the host that does. Empty map = no inventory known = no filtering.
-    const advertisedModelsByConnection = await loadAdvertisedModelsForSelfHostedConnections(
+    const advertisedModelsByConnection = await loadAdvertisedModelsForConnections(
       connections,
       requestedModel
     );
@@ -1460,7 +1408,12 @@ export async function getProviderCredentials(
       }
       if (
         requestedModel &&
-        !isModelAdvertisedByConnection(requestedModel, advertisedModelsByConnection.get(c.id))
+        ((c.provider === "codex" && advertisedModelsByConnection.get(c.id)?.size === 0) ||
+          !isRequestedModelAdvertised(
+            c.provider,
+            requestedModel,
+            advertisedModelsByConnection.get(c.id)
+          ))
       ) {
         connectionFilterStatus.set(c.id, "modelNotAdvertised");
         return false;
@@ -2977,7 +2930,7 @@ export async function markAccountUnavailable(
       isModelScopedFailure(status, isNvidiaModelGone, fallbackResult, errorText, model)
     ) {
       const reason =
-        status === 404 || isNvidiaModelGone
+        status === 404 || isNvidiaModelGone || isModelUnsupported401(status, errorText)
           ? "not_found"
           : isQuotaExhaustedSignal(fallbackResult)
             ? "quota_exhausted"
@@ -3030,7 +2983,7 @@ export async function markAccountUnavailable(
         model,
         reason,
         status,
-        status === 404 || isNvidiaModelGone
+        status === 404 || isNvidiaModelGone || isModelUnsupported401(status, errorText)
           ? (effectiveProviderProfile?.baseCooldownMs ?? COOLDOWN_MS.notFoundLocal)
           : (claudeQuotaScope.cooldownMs ??
               antigravityFamilyInferredBaseCooldownMs ??
