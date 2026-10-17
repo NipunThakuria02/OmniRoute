@@ -535,6 +535,7 @@ override.
 | ---------------------------------------- | ------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | `OMNIROUTE_CONTAINER`                    | _(auto)_ | `src/shared/utils/containerEnv.ts`  | Force container detection on (`1`/`true`) or off (`0`/`false`). Only needed on runtimes the auto-detection misses.                             |
 | `OMNIROUTE_ALLOW_CONTAINER_CONFIG_WRITE` | `false` | `src/shared/services/cliRuntime.ts`  | Allow CLI-tool config writes into an unmounted container path anyway. The CLI equivalent is `--allow-container-write`.                         |
+| `DOCKER_UPDATE_TRIGGER_FILE`             | unset   | `src/lib/system/autoUpdate.ts`       | Docker image only: dashboard **Update Now** writes a JSON request to this file (must be inside `DATA_DIR`) for a host-side watcher to pull and recreate the container. See the [Docker Guide](../guides/DOCKER_GUIDE.md#dashboard-updates-in-docker). |
 
 ### CLI Binary (`omniroute`) helpers
 
