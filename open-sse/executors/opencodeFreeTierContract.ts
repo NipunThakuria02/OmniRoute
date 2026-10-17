@@ -268,7 +268,7 @@ export function requiresFreeTierRequestContract(
 }
 
 /** The placeholder tool name the official client uses for the same purpose. */
-const PLACEHOLDER_TOOL_NAME = "_noop";
+const PLACEHOLDER_TOOL_NAME = "read";
 export const DEFAULT_PLACEHOLDER_TOOL_NAME = PLACEHOLDER_TOOL_NAME;
 
 /**

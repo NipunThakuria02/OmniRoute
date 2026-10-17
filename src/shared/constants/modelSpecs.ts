@@ -115,6 +115,13 @@ const AUTHORITATIVE_PROVIDER_CONTEXT_WINDOWS = new Map<string, number>([
   ["opencode/mimo-v2.6-flash-free", 1048576],
   ["opencode-zen/mimo-v2.6-flash-free", 1048576],
   ["opencode-go/mimo-v2.6-flash-free", 1048576],
+  // #16579: imported Go rows may already contain the provider's 200K
+  // placeholder when the catalog enricher runs. Only authoritative windows
+  // replace a non-empty context_length there. These exact Go routes have
+  // upstream-confirmed limits; keep manual operator overrides highest priority.
+  ["opencode-go/deepseek-v4.1-flash", 1000000],
+  ["opencode-go/deepseek-flash", 1000000],
+  ["opencode-go/minimax-m2.5", 204800],
 ]);
 
 const GPT_5_6_MODEL_SPEC = {
@@ -883,7 +890,7 @@ export const MODEL_SPECS: Record<string, ModelSpec> = {
   },
   "minimax-m2.5": {
     maxOutputTokens: 131072,
-    contextWindow: 200000,
+    contextWindow: 204800,
     thinkingBudgetCap: 32768,
     supportsThinking: true,
     supportsTools: true,
