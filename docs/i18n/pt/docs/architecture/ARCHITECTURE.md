@@ -10,77 +10,77 @@ _Última atualização: 2026-06-28_
 
 ## Resumo Executivo
 
-O OmniRoute é um gateway local de encaminhamento de IA e um painel de controlo desenvolvido com Next.js.
-Disponibiliza um único endpoint compatível com OpenAI (`/v1/*`) e encaminha o tráfego entre vários fornecedores upstream, com tradução, fallback, renovação de tokens e monitorização da utilização.
+O OmniRoute é um gateway local de encaminhamento de IA e um dashboard desenvolvido com Next.js.
+Disponibiliza um único endpoint compatível com OpenAI (`/v1/*`) e encaminha o tráfego entre vários fornecedores upstream, com tradução, fallback, renovação de tokens e monitorização de utilização.
 
 Principais capacidades:
 
-- Superfície de API compatível com OpenAI para CLI/ferramentas (372 fornecedores, 148 executores)
+- Superfície de API compatível com OpenAI para CLI/ferramentas (372 fornecedores, 150 módulos de execução)
 - Tradução de pedidos/respostas entre formatos de fornecedores
-- Fallback de combinações de modelos (sequência de vários modelos)
+- Fallback de combinações de modelos (sequência multimodelo)
 - Passos de combinação estruturados (`provider + model + connection`) com ordenação em tempo de execução por `compositeTiers`
 - Fallback ao nível da conta (várias contas por fornecedor)
-- Verificação prévia de quotas e seleção de contas P2C com reconhecimento de quotas no fluxo principal de chat
+- Pré-verificação de quotas e seleção de contas P2C com consideração de quotas no fluxo principal de chat
 - Gestão de ligações a fornecedores através de OAuth + chave de API (27 módulos de fornecedores OAuth)
 - Geração de embeddings através de `/v1/embeddings` (18 fornecedores)
 - Geração de imagens através de `/v1/images/generations` (mais de 10 fornecedores, mais de 20 modelos)
 - Transcrição de áudio através de `/v1/audio/transcriptions` (18 fornecedores)
-- Conversão de texto em voz através de `/v1/audio/speech` (24 fornecedores integrados)
+- Conversão de texto em voz através de `/v1/audio/speech` (24 fornecedores incorporados)
 - Geração de vídeo através de `/v1/videos/generations` (ComfyUI + SD WebUI)
 - Geração de música através de `/v1/music/generations` (ComfyUI)
 - Pesquisa na Web através de `/v1/search` (20 fornecedores)
-- Moderação através de `/v1/moderations`
-- Reordenação através de `/v1/rerank`
+- Moderações através de `/v1/moderations`
+- Reordenação por relevância através de `/v1/rerank`
 - Análise de etiquetas de raciocínio (``) para modelos de raciocínio
-- Sanitização de respostas para compatibilidade rigorosa com o SDK OpenAI
+- Sanitização de respostas para compatibilidade estrita com o SDK da OpenAI
 - Normalização de funções (developer→system, system→user) para compatibilidade entre fornecedores
-- Conversão de resultados estruturados (json_schema → Gemini responseSchema)
+- Conversão de saída estruturada (json_schema → Gemini responseSchema)
 - Persistência local de fornecedores, chaves, aliases, combinações, definições e preços (122 módulos de BD)
-- Monitorização da utilização/dos custos e registo de pedidos
-- Sincronização opcional na cloud para sincronização entre vários dispositivos/do estado
+- Monitorização de utilização/custos e registo de pedidos
+- Sincronização opcional na cloud para sincronização de estado entre vários dispositivos
 - Lista de permissões/lista de bloqueios de IP para controlo de acesso à API
 - Gestão do orçamento de raciocínio (passagem direta/automático/personalizado/adaptativo)
-- Injeção global de instruções do sistema
-- Monitorização e impressão digital de sessões
-- Limitação de frequência melhorada por conta, com perfis específicos por fornecedor
+- Injeção global de prompts de sistema
+- Monitorização e criação de impressões digitais de sessões
+- Limitação de taxa avançada por conta, com perfis específicos por fornecedor
 - Padrão de disjuntor para resiliência dos fornecedores
-- Proteção contra efeito de manada com bloqueio por mutex
-- Cache de desduplicação de pedidos baseado em assinaturas
+- Proteção contra sobrecarga simultânea com bloqueio por mutex
+- Cache de eliminação de pedidos duplicados baseado em assinaturas
 - Camada de domínio: regras de custos, política de fallback, política de bloqueio
-- Context Relay: resumos de transferência de sessão para continuidade durante a rotação de contas
-- Persistência do estado do domínio (cache write-through SQLite para fallbacks, orçamentos, bloqueios e disjuntores)
+- Context Relay: resumos de transferência de sessões para assegurar a continuidade durante a rotação de contas
+- Persistência do estado do domínio (cache de escrita imediata em SQLite para fallbacks, orçamentos, bloqueios e disjuntores)
 - Motor de políticas para avaliação centralizada de pedidos (bloqueio → orçamento → fallback)
 - Telemetria de pedidos com agregação de latência p50/p95/p99
 - Telemetria de destinos de combinações e estado histórico dos destinos através de `combo_execution_key` / `combo_step_id`
-- ID de correlação (X-Request-Id) para rastreio ponto a ponto
-- Registo de auditoria de conformidade com possibilidade de exclusão por chave de API
-- Framework de avaliação para garantia da qualidade de LLM
-- Painel de estado com o estado dos disjuntores dos fornecedores em tempo real
-- Servidor MCP (110 ferramentas) com 3 transportes (stdio/SSE/HTTP Transmissível)
+- ID de correlação (X-Request-Id) para rastreio de extremo a extremo
+- Registo de auditoria de conformidade com opção de exclusão por chave de API
+- Framework de avaliação para garantia de qualidade de LLM
+- Dashboard de estado com informação em tempo real sobre os disjuntores dos fornecedores
+- Servidor MCP (110 ferramentas) com 3 transportes (stdio/SSE/HTTP com transmissão)
 - Servidor A2A (JSON-RPC 2.0 + SSE) com competências e ciclo de vida de tarefas
-- Sistema de memória (extração, injeção, recuperação, resumo)
-- Sistema de competências (registo, executor, sandbox, competências integradas)
+- Sistema de memória (extração, injeção, recuperação, sumarização)
+- Sistema de competências (registo, executor, sandbox, competências incorporadas)
 - Proxy MITM com gestão de certificados e processamento de DNS
-- Middleware de proteção contra injeção de instruções
-- Pipeline de compressão de instruções com Caveman, RTK, pipelines empilhados, combinações de compressão, pacotes de idiomas e análise
+- Middleware de proteção contra injeção de prompts
+- Pipeline de compressão de prompts com Caveman, RTK, pipelines empilhados, combinações de compressão, pacotes de idiomas e análise
 - Registo ACP (Agent Communication Protocol)
 - Fornecedores OAuth modulares (22 módulos individuais em `src/lib/oauth/providers/`)
 - Scripts de desinstalação/desinstalação completa
 - Ação de reparação do ambiente OAuth
 - Ponte WebSocket para clientes WS compatíveis com OpenAI (`/v1/ws`)
-- Gestão de tokens de sincronização (emissão/revogação, transferência de pacotes de configuração versionados por ETag)
-- GLM Thinking (`glmt`) como predefinição de fornecedor de primeira classe
-- Contagem híbrida de tokens (`/messages/count_tokens` do lado do fornecedor, com fallback para estimativa)
-- Preenchimento automático de aliases de modelos (mais de 30 normalizações entre dialetos de proxies durante o arranque)
-- Fetch de saída seguro com proteção SSRF, bloqueio de URLs privadas e novas tentativas configuráveis
-- Novas tentativas de chat com reconhecimento do período de espera, através de `requestRetry` e `maxRetryIntervalSec` configuráveis
-- Validação do ambiente de execução com Zod durante o arranque
+- Gestão de tokens de sincronização (emissão/revogação, transferência de pacotes de configuração versionados com ETag)
+- Predefinição de fornecedor de primeira classe para GLM Thinking (`glmt`)
+- Contagem híbrida de tokens (`/messages/count_tokens` do fornecedor, com fallback para estimativa)
+- Preenchimento automático de aliases de modelos (mais de 30 normalizações de dialetos entre proxies no arranque)
+- Obtenção externa segura com proteção contra SSRF, bloqueio de URLs privadas e repetição configurável
+- Repetições de chat com consideração do período de espera e `requestRetry` e `maxRetryIntervalSec` configuráveis
+- Validação do ambiente de execução com Zod no arranque
 - Auditoria de conformidade v2 com paginação, eventos CRUD de fornecedores e registo de validações bloqueadas por SSRF
 
 Modelo principal de execução:
 
-- As rotas da aplicação Next.js em `src/app/api/*` implementam tanto as APIs do painel de controlo como as APIs de compatibilidade
-- Um núcleo partilhado de SSE/encaminhamento em `src/sse/*` + `open-sse/*` processa a execução nos fornecedores, a tradução, a transmissão, o fallback e a utilização
+- As rotas da aplicação Next.js em `src/app/api/*` implementam tanto as APIs do dashboard como as APIs de compatibilidade
+- Um núcleo partilhado de SSE/encaminhamento em `src/sse/*` + `open-sse/*` gere a execução dos fornecedores, a tradução, o streaming, o fallback e a utilização
 
 ## Diagramas de Referência
 

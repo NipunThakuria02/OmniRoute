@@ -8,19 +8,19 @@
 
 _Naposledy aktualizované: 2026-06-28_
 
-## Súhrn
+## Zhrnutie
 
 OmniRoute je lokálna smerovacia brána a ovládací panel pre AI, vytvorené pomocou Next.js.
-Poskytuje jeden koncový bod kompatibilný s OpenAI (`/v1/*`) a smeruje prevádzku medzi viacerými nadradenými poskytovateľmi s podporou prekladu, záložných možností, obnovovania tokenov a sledovania používania.
+Poskytuje jeden koncový bod kompatibilný s OpenAI (`/v1/*`) a smeruje prevádzku medzi viacerých nadradených poskytovateľov s podporou prekladu, záložných možností, obnovovania tokenov a sledovania používania.
 
-Kľúčové funkcie:
+Kľúčové možnosti:
 
-- Rozhranie API kompatibilné s OpenAI pre CLI/nástroje (372 poskytovateľov, 148 exekútorov)
+- Rozhranie API kompatibilné s OpenAI pre CLI/nástroje (372 poskytovateľov, 150 vykonávacích modulov)
 - Preklad požiadaviek/odpovedí medzi formátmi poskytovateľov
-- Záložné modelové kombinácie (sekvencie viacerých modelov)
-- Štruktúrované kroky kombinácií (`provider + model + connection`) s poradím za behu podľa `compositeTiers`
-- Záložné účty na úrovni účtu (viacero účtov na jedného poskytovateľa)
-- Predbežná kontrola kvóty a výber účtu P2C zohľadňujúci kvótu v hlavnom toku chatu
+- Záložné modelové kombinácie (sekvencia viacerých modelov)
+- Štruktúrované kroky kombinácií (`provider + model + connection`) s poradím počas behu podľa `compositeTiers`
+- Záložné možnosti na úrovni účtu (viacero účtov na poskytovateľa)
+- Predbežná kontrola kvót a výber účtu P2C zohľadňujúci kvóty v hlavnej ceste chatu
 - Správa pripojení k poskytovateľom prostredníctvom OAuth a kľúčov API (27 modulov poskytovateľov OAuth)
 - Generovanie embeddingov prostredníctvom `/v1/embeddings` (18 poskytovateľov)
 - Generovanie obrázkov prostredníctvom `/v1/images/generations` (10+ poskytovateľov, 20+ modelov)
@@ -31,56 +31,56 @@ Kľúčové funkcie:
 - Vyhľadávanie na webe prostredníctvom `/v1/search` (20 poskytovateľov)
 - Moderovanie prostredníctvom `/v1/moderations`
 - Zmena poradia výsledkov prostredníctvom `/v1/rerank`
-- Spracovanie značiek premýšľania (``) pre modely s uvažovaním
+- Parsovanie značiek uvažovania (``) pre modely s uvažovaním
 - Sanitizácia odpovedí na zabezpečenie striktnej kompatibility s OpenAI SDK
-- Normalizácia rolí (developer→system, system→user) na zabezpečenie kompatibility medzi poskytovateľmi
+- Normalizácia rolí (developer→system, system→user) pre kompatibilitu medzi poskytovateľmi
 - Konverzia štruktúrovaného výstupu (json_schema → Gemini responseSchema)
-- Lokálne ukladanie poskytovateľov, kľúčov, aliasov, kombinácií, nastavení a cien (122 databázových modulov)
+- Lokálne uchovávanie poskytovateľov, kľúčov, aliasov, kombinácií, nastavení a cien (122 databázových modulov)
 - Sledovanie používania/nákladov a zaznamenávanie požiadaviek
-- Voliteľná synchronizácia s cloudom na synchronizáciu stavu medzi viacerými zariadeniami
+- Voliteľná cloudová synchronizácia na synchronizáciu medzi zariadeniami/synchronizáciu stavu
 - Zoznam povolených/blokovaných IP adries na riadenie prístupu k API
-- Správa rozpočtu na premýšľanie (priame odovzdanie/automatický/vlastný/adaptívny)
+- Správa rozpočtu na uvažovanie (priame odovzdanie/automatický/vlastný/adaptívny)
 - Vkladanie globálnej systémovej výzvy
 - Sledovanie relácií a vytváranie odtlačkov
 - Rozšírené obmedzovanie frekvencie požiadaviek pre jednotlivé účty s profilmi špecifickými pre poskytovateľov
 - Vzor ističa na zvýšenie odolnosti voči zlyhaniam poskytovateľov
-- Ochrana pred náporom súbežných požiadaviek pomocou mutexového zamykania
+- Ochrana pred lavínovým efektom požiadaviek pomocou zámkov mutex
 - Vyrovnávacia pamäť na deduplikáciu požiadaviek založená na podpisoch
 - Doménová vrstva: pravidlá nákladov, politika záložných možností, politika blokovania
 - Context Relay: súhrny odovzdania relácie na zachovanie kontinuity pri rotácii účtov
-- Perzistencia doménového stavu (priebežne zapisovaná vyrovnávacia pamäť SQLite pre záložné možnosti, rozpočty, blokovania a ističe)
-- Mechanizmus politík na centralizované vyhodnocovanie požiadaviek (blokovanie → rozpočet → záložná možnosť)
+- Uchovávanie stavu domény (vyrovnávacia pamäť SQLite s priebežným zápisom pre záložné možnosti, rozpočty, blokovania a ističe)
+- Nástroj politík na centralizované vyhodnocovanie požiadaviek (blokovanie → rozpočet → záložná možnosť)
 - Telemetria požiadaviek s agregáciou latencie p50/p95/p99
-- Telemetria cieľov kombinácií a historický stav cieľov kombinácií prostredníctvom `combo_execution_key` / `combo_step_id`
-- Korelačné ID (X-Request-Id) na komplexné sledovanie
-- Protokolovanie auditu súladu s možnosťou vypnutia pre jednotlivé kľúče API
-- Evaluačný framework na zabezpečenie kvality LLM
-- Ovládací panel stavu so stavom ističov poskytovateľov v reálnom čase
+- Telemetria cieľov kombinácií a historické informácie o stave cieľov kombinácií prostredníctvom `combo_execution_key` / `combo_step_id`
+- ID korelácie (X-Request-Id) na komplexné sledovanie
+- Protokolovanie auditu súladu s možnosťou odhlásenia pre jednotlivé kľúče API
+- Evaluačný rámec na zabezpečenie kvality LLM
+- Panel stavu so stavom ističov poskytovateľov v reálnom čase
 - Server MCP (110 nástrojov) s 3 transportmi (stdio/SSE/Streamable HTTP)
-- Server A2A (JSON-RPC 2.0 + SSE) so schopnosťami a životným cyklom úloh
+- Server A2A (JSON-RPC 2.0 + SSE) so zručnosťami a životným cyklom úloh
 - Pamäťový systém (extrakcia, vkladanie, získavanie, sumarizácia)
-- Systém schopností (register, exekútor, sandbox, vstavané schopnosti)
+- Systém zručností (register, vykonávací modul, izolované prostredie, vstavané zručnosti)
 - Proxy MITM so správou certifikátov a obsluhou DNS
 - Middleware na ochranu pred vkladaním škodlivých výziev
-- Pipeline kompresie výziev s Caveman, RTK, vrstvenými pipeline, kombináciami kompresie, jazykovými balíkmi a analytikou
+- Kanál kompresie výziev s Caveman, RTK, zreťazenými kanálmi, kompresnými kombináciami, jazykovými balíkmi a analytikou
 - Register ACP (Agent Communication Protocol)
 - Modulárni poskytovatelia OAuth (22 samostatných modulov v `src/lib/oauth/providers/`)
 - Skripty na odinštalovanie/úplné odinštalovanie
 - Akcia na opravu prostredia OAuth
 - Most WebSocket pre klientov WS kompatibilných s OpenAI (`/v1/ws`)
-- Správa synchronizačných tokenov (vydanie/zrušenie, stiahnutie konfiguračného balíka s verziami ETag)
+- Správa synchronizačných tokenov (vydávanie/odvolávanie, sťahovanie konfiguračného balíka s verziami ETag)
 - GLM Thinking (`glmt`) ako plnohodnotná predvoľba poskytovateľa
-- Hybridné počítanie tokenov (`/messages/count_tokens` na strane poskytovateľa so záložným odhadom)
-- Automatické počiatočné vytvorenie aliasov modelov (30+ normalizácií dialektov medzi proxy servermi pri spustení)
-- Bezpečné odchádzajúce načítanie s ochranou proti SSRF, blokovaním súkromných URL a konfigurovateľným opakovaním
-- Opakovanie požiadaviek chatu zohľadňujúce dobu čakania s konfigurovateľnými `requestRetry` a `maxRetryIntervalSec`
-- Overovanie prostredia za behu pomocou Zod pri spustení
-- Audit súladu v2 so stránkovaním, udalosťami CRUD poskytovateľov a zaznamenávaním validácií zablokovaných ochranou SSRF
+- Hybridné počítanie tokenov (prostredníctvom `/messages/count_tokens` na strane poskytovateľa so záložným odhadom)
+- Automatické počiatočné naplnenie aliasov modelov (30+ normalizácií dialektov medzi proxy servermi pri spustení)
+- Bezpečné odchádzajúce načítavanie s ochranou proti SSRF, blokovaním súkromných URL adries a konfigurovateľným opakovaním
+- Opakované pokusy chatu zohľadňujúce interval čakania s konfigurovateľnými nastaveniami `requestRetry` a `maxRetryIntervalSec`
+- Overovanie prostredia počas behu pomocou Zod pri spustení
+- Audit súladu v2 so stránkovaním, udalosťami CRUD poskytovateľov a protokolovaním overenia zablokovaného mechanizmom SSRF
 
 Primárny model behu:
 
-- Trasy aplikácie Next.js v `src/app/api/*` implementujú API ovládacieho panela aj API kompatibility
-- Zdieľané jadro SSE/smerovania v `src/sse/*` + `open-sse/*` zabezpečuje vykonávanie poskytovateľov, preklad, streamovanie, záložné možnosti a používanie
+- Trasy aplikácie Next.js v `src/app/api/*` implementujú rozhrania API ovládacieho panela aj rozhrania API na zabezpečenie kompatibility
+- Zdieľané jadro SSE/smerovania v `src/sse/*` + `open-sse/*` zabezpečuje vykonávanie požiadaviek u poskytovateľov, preklad, streamovanie, záložné možnosti a sledovanie používania
 
 ## Referenčné diagramy
 

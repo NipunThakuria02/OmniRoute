@@ -10,18 +10,18 @@ _Senest opdateret: 2026-06-28_
 
 ## Resumé
 
-OmniRoute er en lokal AI-routinggateway og et dashboard bygget på Next.js.
-Den leverer et enkelt OpenAI-kompatibelt slutpunkt (`/v1/*`) og dirigerer trafik på tværs af flere upstream-udbydere med oversættelse, fallback, tokenfornyelse og brugsregistrering.
+OmniRoute er en lokal AI-routinggateway og et dashboard bygget med Next.js.
+Den leverer et enkelt OpenAI-kompatibelt slutpunkt (`/v1/*`) og router trafik på tværs af flere upstream-udbydere med oversættelse, fallback, tokenfornyelse og brugsregistrering.
 
 Kernefunktioner:
 
-- OpenAI-kompatibel API-grænseflade til CLI/værktøjer (372 udbydere, 148 eksekveringskomponenter)
+- OpenAI-kompatibel API-grænseflade til CLI/værktøjer (372 udbydere, 150 eksekveringsmoduler)
 - Oversættelse af anmodninger/svar på tværs af udbyderformater
-- Fallback med modelkombinationer (sekvens med flere modeller)
-- Strukturerede kombinationstrin (`provider + model + connection`) med kørselstidsrækkefølge baseret på `compositeTiers`
+- Fallback med modelkombinationer (sekvenser med flere modeller)
+- Strukturerede kombinationstrin (`provider + model + connection`) med rækkefølge under kørsel baseret på `compositeTiers`
 - Fallback på kontoniveau (flere konti pr. udbyder)
 - Forhåndskontrol af kvoter og kvotebevidst P2C-kontovalg i den primære chatsti
-- Administration af udbyderforbindelser med OAuth + API-nøgle (27 OAuth-udbydermoduler)
+- Administration af OAuth- og API-nøglebaserede udbyderforbindelser (27 OAuth-udbydermoduler)
 - Generering af embeddings via `/v1/embeddings` (18 udbydere)
 - Billedgenerering via `/v1/images/generations` (10+ udbydere, 20+ modeller)
 - Lydtransskribering via `/v1/audio/transcriptions` (18 udbydere)
@@ -30,57 +30,57 @@ Kernefunktioner:
 - Musikgenerering via `/v1/music/generations` (ComfyUI)
 - Websøgning via `/v1/search` (20 udbydere)
 - Moderering via `/v1/moderations`
-- Omrangering via `/v1/rerank`
-- Fortolkning af tænkningstags (``) til ræsonneringsmodeller
-- Rensning af svar for streng kompatibilitet med OpenAI SDK
-- Rollenormalisering (developer→system, system→user) for kompatibilitet på tværs af udbydere
+- Genrangering via `/v1/rerank`
+- Fortolkning af think-tags (``) til ræsonneringsmodeller
+- Rensning af svar med henblik på streng kompatibilitet med OpenAI SDK
+- Normalisering af roller (developer→system, system→user) for kompatibilitet på tværs af udbydere
 - Konvertering af struktureret output (json_schema → Gemini responseSchema)
 - Lokal persistens for udbydere, nøgler, aliasser, kombinationer, indstillinger og priser (122 DB-moduler)
-- Registrering af forbrug/omkostninger og logning af anmodninger
+- Registrering af forbrug/omkostninger og logføring af anmodninger
 - Valgfri cloudsynkronisering til synkronisering af tilstand på tværs af flere enheder
 - IP-tilladelsesliste/blokeringsliste til adgangskontrol for API'et
-- Administration af tænkningsbudget (passthrough/automatisk/brugerdefineret/adaptivt)
+- Administration af tænkningsbudget (videresendelse/automatisk/brugerdefineret/adaptiv)
 - Global injektion af systemprompt
-- Sessionssporing og fingerprinting
-- Forbedret hastighedsbegrænsning pr. konto med udbyderspecifikke profiler
-- Circuit breaker-mønster for robusthed over for udbyderfejl
-- Beskyttelse mod overbelastning fra samtidige anmodninger med mutex-låsning
+- Sessionssporing og fingeraftryk
+- Udvidet hastighedsbegrænsning pr. konto med udbyderspecifikke profiler
+- Circuit breaker-mønster til robusthed over for udbyderfejl
+- Beskyttelse mod thundering herd-problemet med mutex-låsning
 - Signaturbaseret cache til deduplikering af anmodninger
-- Domænelag: omkostningsregler, fallback-politik og lockout-politik
-- Context Relay: overdragelsesresuméer for sessioner for at bevare kontinuitet ved kontorotation
-- Persistens af domænetilstand (SQLite-write-through-cache til fallbacks, budgetter, lockouts og circuit breakers)
+- Domænelag: omkostningsregler, fallback-politik, lockout-politik
+- Context Relay: oversigter over sessionsoverdragelse for kontinuitet ved kontorotation
+- Persistens af domænetilstand (SQLite write-through-cache til fallbacks, budgetter, lockouts og circuit breakers)
 - Politikmotor til centraliseret evaluering af anmodninger (lockout → budget → fallback)
 - Anmodningstelemetri med aggregering af p50/p95/p99-latenstid
 - Telemetri for kombinationsmål og historisk tilstand for kombinationsmål via `combo_execution_key` / `combo_step_id`
 - Korrelations-id (X-Request-Id) til end-to-end-sporing
-- Logning af compliance-revision med mulighed for fravalg pr. API-nøgle
+- Logføring af compliance-revision med mulighed for fravalg pr. API-nøgle
 - Evalueringsframework til kvalitetssikring af LLM'er
 - Tilstandsdashboard med status i realtid for udbydernes circuit breakers
 - MCP-server (110 værktøjer) med 3 transporter (stdio/SSE/Streamable HTTP)
 - A2A-server (JSON-RPC 2.0 + SSE) med færdigheder og opgavelivscyklus
-- Hukommelsessystem (udtrækning, injektion, hentning og opsummering)
-- Færdighedssystem (register, eksekveringskomponent, sandbox og indbyggede færdigheder)
+- Hukommelsessystem (udtrækning, injektion, hentning, opsummering)
+- Færdighedssystem (register, eksekveringskomponent, sandkasse, indbyggede færdigheder)
 - MITM-proxy med certifikatadministration og DNS-håndtering
 - Middleware til beskyttelse mod promptinjektion
 - Pipeline til promptkomprimering med Caveman, RTK, stablede pipelines, komprimeringskombinationer, sprogpakker og analyse
 - ACP-register (Agent Communication Protocol)
 - Modulære OAuth-udbydere (22 individuelle moduler under `src/lib/oauth/providers/`)
-- Scripts til afinstallation/fuldstændig afinstallation
+- Scripts til afinstallation/fuld afinstallation
 - Handling til reparation af OAuth-miljøet
 - WebSocket-bro til OpenAI-kompatible WS-klienter (`/v1/ws`)
-- Administration af synkroniseringstokens (udstedelse/tilbagekaldelse og download af ETag-versionsstyret konfigurationspakke)
+- Administration af synkroniseringstokens (udstedelse/tilbagekaldelse, download af ETag-versioneret konfigurationspakke)
 - GLM Thinking (`glmt`) som førsteklasses udbyderforudindstilling
 - Hybrid tokenoptælling (udbyderspecifik `/messages/count_tokens` med estimering som fallback)
-- Automatisk initialisering af modelaliasser (30+ normaliseringer på tværs af proxy-dialekter ved opstart)
+- Automatisk oprettelse af modelaliasser (30+ normaliseringer af dialekter på tværs af proxyer ved opstart)
 - Sikker udgående hentning med SSRF-beskyttelse, blokering af private URL'er og konfigurerbare genforsøg
-- Cooldown-bevidste genforsøg af chat med konfigurerbare `requestRetry` og `maxRetryIntervalSec`
-- Validering af kørselsmiljøet med Zod ved opstart
-- Compliance-revision v2 med paginering, CRUD-hændelser for udbydere og logning af validering ved SSRF-blokering
+- Cooldown-bevidste chatgenforsøg med konfigurerbare `requestRetry` og `maxRetryIntervalSec`
+- Validering af runtime-miljøet med Zod ved opstart
+- Compliance-revision v2 med sideinddeling, CRUD-hændelser for udbydere og logføring af SSRF-blokeret validering
 
-Primær kørselsmodel:
+Primær runtime-model:
 
 - Next.js-app-ruter under `src/app/api/*` implementerer både dashboard-API'er og kompatibilitets-API'er
-- En delt SSE-/routingkerne i `src/sse/*` + `open-sse/*` håndterer udbyderkørsel, oversættelse, streaming, fallback og forbrug
+- En delt SSE-/routingkerne i `src/sse/*` + `open-sse/*` håndterer udbydereksekvering, oversættelse, streaming, fallback og forbrug
 
 ## Referencediagrammer
 

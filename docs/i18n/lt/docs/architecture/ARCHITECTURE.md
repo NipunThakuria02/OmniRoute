@@ -8,79 +8,79 @@
 
 _Paskutinį kartą atnaujinta: 2026-06-28_
 
-## Vykdomoji santrauka
+## Santrauka vadovams
 
-„OmniRoute“ yra vietinis DI užklausų nukreipimo šliuzas ir valdymo skydelis, sukurtas naudojant Next.js.
-Jis suteikia vieną su „OpenAI“ suderinamą galinį tašką (`/v1/*`) ir nukreipia srautą keliems išoriniams teikėjams, užtikrindamas formatų konvertavimą, atsarginį perjungimą, prieigos raktų atnaujinimą ir naudojimo stebėjimą.
+„OmniRoute“ yra vietinis DI užklausų maršruto parinkimo šliuzas ir valdymo skydelis, sukurtas naudojant Next.js.
+Jis suteikia vieną su „OpenAI“ suderinamą galinį tašką (`/v1/*`) ir nukreipia srautą keliems pirminiams paslaugų teikėjams, palaikydamas konvertavimą, atsarginį perjungimą, prieigos raktų atnaujinimą ir naudojimo stebėjimą.
 
 Pagrindinės galimybės:
 
-- Su „OpenAI“ suderinama API sąsaja, skirta CLI ir įrankiams (372 teikėjai, 148 vykdytojai)
-- Užklausų ir atsakymų konvertavimas tarp teikėjų formatų
-- Modelių derinio atsarginis perjungimas (kelių modelių seka)
-- Struktūrizuoti derinio veiksmai (`provider + model + connection`), vykdymo metu rikiuojami pagal `compositeTiers`
-- Paskyros lygmens atsarginis perjungimas (kelios paskyros vienam teikėjui)
-- Išankstinis kvotos tikrinimas ir į kvotą atsižvelgiantis P2C paskyros parinkimas pagrindiniame pokalbių vykdymo kelyje
-- Teikėjų ryšių valdymas naudojant OAuth ir API raktus (27 OAuth teikėjų moduliai)
-- Vektorių generavimas per `/v1/embeddings` (18 teikėjų)
-- Vaizdų generavimas per `/v1/images/generations` (10+ teikėjų, 20+ modelių)
-- Garso transkribavimas per `/v1/audio/transcriptions` (18 teikėjų)
-- Teksto vertimas į kalbą per `/v1/audio/speech` (24 integruoti teikėjai)
+- Su „OpenAI“ suderinama API sąsaja, skirta CLI ir įrankiams (372 paslaugų teikėjai, 150 vykdymo modulių)
+- Užklausų ir atsakymų konvertavimas tarp paslaugų teikėjų formatų
+- Modelių derinių atsarginis perjungimas (kelių modelių seka)
+- Struktūrizuoti derinių veiksmai (`provider + model + connection`) su vykdymo metu pagal `compositeTiers` nustatoma tvarka
+- Paskyrų lygmens atsarginis perjungimas (kelios paskyros vienam paslaugų teikėjui)
+- Išankstinis kvotų tikrinimas ir į kvotas atsižvelgiantis P2C paskyrų parinkimas pagrindiniame pokalbių sraute
+- OAuth ir API raktais pagrįstas ryšių su paslaugų teikėjais valdymas (27 OAuth paslaugų teikėjų moduliai)
+- Įterpinių generavimas per `/v1/embeddings` (18 paslaugų teikėjų)
+- Vaizdų generavimas per `/v1/images/generations` (10+ paslaugų teikėjų, 20+ modelių)
+- Garso transkribavimas per `/v1/audio/transcriptions` (18 paslaugų teikėjų)
+- Teksto vertimas į kalbą per `/v1/audio/speech` (24 integruoti paslaugų teikėjai)
 - Vaizdo įrašų generavimas per `/v1/videos/generations` (ComfyUI + SD WebUI)
 - Muzikos generavimas per `/v1/music/generations` (ComfyUI)
-- Paieška žiniatinklyje per `/v1/search` (20 teikėjų)
+- Paieška žiniatinklyje per `/v1/search` (20 paslaugų teikėjų)
 - Turinio moderavimas per `/v1/moderations`
-- Pakartotinis reitingavimas per `/v1/rerank`
-- Mąstymo žymų (``) analizavimas samprotavimo modeliams
+- Pakartotinis rezultatų reitingavimas per `/v1/rerank`
+- Mąstymo žymų analizavimas (``) samprotavimo modeliams
 - Atsakymų išvalymas siekiant griežto suderinamumo su „OpenAI“ SDK
-- Vaidmenų normalizavimas (developer→system, system→user), užtikrinantis skirtingų teikėjų suderinamumą
+- Vaidmenų normalizavimas (developer→system, system→user), užtikrinantis skirtingų paslaugų teikėjų suderinamumą
 - Struktūrizuotos išvesties konvertavimas (json_schema → Gemini responseSchema)
-- Vietinis teikėjų, raktų, alternatyvių pavadinimų, derinių, nustatymų ir kainodaros saugojimas (122 DB moduliai)
-- Naudojimo ir sąnaudų stebėjimas bei užklausų registravimas
-- Pasirenkamas sinchronizavimas debesyje, skirtas kelių įrenginių ir būsenos sinchronizavimui
+- Vietinis paslaugų teikėjų, raktų, alternatyviųjų pavadinimų, derinių, nustatymų ir kainodaros išsaugojimas (122 DB moduliai)
+- Naudojimo ir išlaidų stebėjimas bei užklausų registravimas
+- Pasirenkamas sinchronizavimas debesijoje, skirtas būsenai sinchronizuoti tarp kelių įrenginių
 - Leidžiamų ir blokuojamų IP adresų sąrašai, skirti prieigai prie API valdyti
 - Mąstymo biudžeto valdymas (tiesioginis perdavimas / automatinis / pasirinktinis / adaptyvus)
-- Visuotinis sistemos raginimo įterpimas
-- Seansų stebėjimas ir skaitmeninių atspaudų nustatymas
-- Patobulintas paskyros lygmens užklausų dažnio ribojimas naudojant konkretiems teikėjams skirtus profilius
-- Grandinės pertraukiklio šablonas, užtikrinantis teikėjų atsparumą
-- Apsauga nuo vienalaikių užklausų antplūdžio naudojant mutex užraktus
-- Parašu pagrįsta pasikartojančių užklausų šalinimo podėlio sistema
-- Domeno sluoksnis: sąnaudų taisyklės, atsarginio perjungimo politika, blokavimo politika
-- „Context Relay“: seanso perdavimo suvestinės, užtikrinančios tęstinumą keičiant paskyras
-- Domeno būsenos išsaugojimas („SQLite“ tiesioginio įrašymo podėlis atsarginiams perjungimams, biudžetams, blokavimams ir grandinės pertraukikliams)
-- Politikos modulis centralizuotam užklausų vertinimui (blokavimas → biudžetas → atsarginis perjungimas)
+- Visuotinio sistemos raginimo įterpimas
+- Seansų stebėjimas ir skaitmeninių atspaudų kūrimas
+- Patobulintas kiekvienos paskyros užklausų dažnio ribojimas naudojant konkretiems paslaugų teikėjams pritaikytus profilius
+- Grandinės pertraukiklio šablonas paslaugų teikėjų atsparumui užtikrinti
+- Apsauga nuo vienalaikių perteklinių užklausų naudojant mutex užraktus
+- Parašais pagrįsta pasikartojančių užklausų šalinimo podėlio sistema
+- Domeno sluoksnis: išlaidų taisyklės, atsarginio perjungimo politika, blokavimo politika
+- „Context Relay“: seansų perdavimo santraukos, užtikrinančios tęstinumą keičiant paskyras
+- Domeno būsenos išsaugojimas (SQLite tiesioginio įrašymo podėlis, skirtas atsarginiams perjungimams, biudžetams, blokavimams ir grandinės pertraukikliams)
+- Politikos variklis, skirtas centralizuotai vertinti užklausas (blokavimas → biudžetas → atsarginis perjungimas)
 - Užklausų telemetrija su p50/p95/p99 delsos agregavimu
-- Derinio paskirties telemetrija ir istorinė derinio paskirties būklė naudojant `combo_execution_key` / `combo_step_id`
-- Koreliacijos ID (X-Request-Id), skirtas ištisiniam sekimui
+- Derinių paskirties vietų telemetrija ir istorinė derinių paskirties vietų būklė naudojant `combo_execution_key` / `combo_step_id`
+- Koreliacijos ID (X-Request-Id), skirtas visos vykdymo grandinės sekimui
 - Atitikties audito registravimas su galimybe jo atsisakyti kiekvienam API raktui
-- Vertinimo sistema LLM kokybei užtikrinti
-- Būklės valdymo skydelis, realiuoju laiku rodantis teikėjų grandinės pertraukiklių būseną
+- Vertinimo sistema, skirta LLM kokybei užtikrinti
+- Būklės valdymo skydelis su realiuoju laiku rodoma paslaugų teikėjų grandinės pertraukiklių būsena
 - MCP serveris (110 įrankių) su 3 perdavimo būdais (stdio/SSE/Streamable HTTP)
 - A2A serveris (JSON-RPC 2.0 + SSE) su įgūdžiais ir užduočių gyvavimo ciklu
-- Atminties sistema (išgavimas, įterpimas, paieška, apibendrinimas)
-- Įgūdžių sistema (registras, vykdytojas, izoliuota aplinka, integruoti įgūdžiai)
+- Atminties sistema (išgavimas, įterpimas, gavimas, apibendrinimas)
+- Įgūdžių sistema (registras, vykdymo priemonė, izoliuota aplinka, integruoti įgūdžiai)
 - MITM tarpinis serveris su sertifikatų valdymu ir DNS apdorojimu
-- Raginimų įterpimo apsaugos tarpinė programinė įranga
+- Raginimų įterpimo atakų apsaugos tarpinė programinė įranga
 - Raginimų glaudinimo konvejeris su Caveman, RTK, sudėtiniais konvejeriais, glaudinimo deriniais, kalbų paketais ir analitika
 - ACP (Agent Communication Protocol) registras
-- Moduliniai OAuth teikėjai (22 atskiri moduliai kataloge `src/lib/oauth/providers/`)
+- Moduliniai OAuth paslaugų teikėjai (22 atskiri moduliai kataloge `src/lib/oauth/providers/`)
 - Pašalinimo ir visiško pašalinimo scenarijai
-- OAuth aplinkos taisymo veiksmas
+- OAuth aplinkos atkūrimo veiksmas
 - WebSocket tiltas, skirtas su „OpenAI“ suderinamiems WS klientams (`/v1/ws`)
 - Sinchronizavimo prieigos raktų valdymas (išdavimas / atšaukimas, pagal ETag versijuojamo konfigūracijos paketo atsisiuntimas)
-- GLM Thinking (`glmt`) kaip visavertis teikėjo išankstinis nustatymas
-- Hibridinis prieigos ženklų skaičiavimas (teikėjo pusės `/messages/count_tokens` su atsarginiu apytiksliu įvertinimu)
-- Automatinis modelių alternatyvių pavadinimų pradinis užpildymas (30+ skirtingų tarpinių serverių dialektų normalizavimų paleidimo metu)
-- Saugios išeinančios užklausos su SSRF apsauga, privačių URL blokavimu ir konfigūruojamais pakartotiniais bandymais
+- GLM Thinking (`glmt`) kaip visavertis paslaugų teikėjo išankstinis nustatymas
+- Hibridinis prieigos žetonų skaičiavimas (paslaugų teikėjo pusės `/messages/count_tokens` su atsarginiu apytiksliu skaičiavimu)
+- Automatinis modelių alternatyviųjų pavadinimų pradinis užpildymas (30+ skirtingų tarpinių serverių dialektų normalizacijų paleidimo metu)
+- Saugus siunčiamų užklausų vykdymas su SSRF apsauga, privačių URL blokavimu ir konfigūruojamais pakartotiniais bandymais
 - Į atvėsimo laikotarpį atsižvelgiantys pakartotiniai pokalbių bandymai su konfigūruojamais `requestRetry` ir `maxRetryIntervalSec`
-- Vykdymo aplinkos tikrinimas naudojant Zod paleidimo metu
-- Atitikties audito v2 su puslapiavimu, teikėjų CRUD įvykiais ir SSRF užblokuotų patikrų registravimu
+- Vykdymo aplinkos tikrinimas paleidimo metu naudojant Zod
+- Atitikties auditas v2 su puslapiavimu, paslaugų teikėjų CRUD įvykiais ir SSRF užblokuotų patikrų registravimu
 
 Pagrindinis vykdymo modelis:
 
-- Next.js programos maršrutai, esantys `src/app/api/*`, įgyvendina ir valdymo skydelio API, ir suderinamumo API
-- Bendras SSE ir maršrutizavimo branduolys, esantis `src/sse/*` + `open-sse/*`, tvarko teikėjų vykdymą, formatų konvertavimą, srautinį perdavimą, atsarginį perjungimą ir naudojimo apskaitą
+- Next.js programos maršrutai kataloge `src/app/api/*` įgyvendina tiek valdymo skydelio API, tiek suderinamumo API
+- Bendras SSE ir maršruto parinkimo branduolys kataloguose `src/sse/*` + `open-sse/*` tvarko paslaugų teikėjų vykdymą, konvertavimą, srautinį perdavimą, atsarginį perjungimą ir naudojimo apskaitą
 
 ## Etaloninės diagramos
 
