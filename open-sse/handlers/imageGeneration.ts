@@ -48,6 +48,7 @@ import { sanitizeErrorMessage, sanitizeUpstreamDetails } from "../utils/error.ts
 import { stringifyImageErrorForLog } from "./imageErrorLog.ts";
 
 import { handleSDWebUIImageGeneration } from "./imageGeneration/providers/sdWebUI.ts";
+import { buildImageEndpointSuccess, type ImageEndpointResult } from "./imageGeneration/result.ts";
 import { handleHyperbolicImageGeneration } from "./imageGeneration/providers/hyperbolic.ts";
 import { handleHuggingFaceImageGeneration } from "./imageGeneration/providers/huggingface.ts";
 import { handleComfyUIImageGeneration } from "./imageGeneration/providers/comfyUI.ts";
@@ -71,6 +72,7 @@ import { handleAlibabaImageGeneration } from "./imageGeneration/providers/alibab
 import { handleAiHordeImageGeneration } from "./imageGeneration/providers/aihorde.ts";
 import * as codexImages from "./imageGeneration/providers/codexImages.ts";
 import { handleZenmuxImageGeneration } from "./imageGeneration/providers/zenmux.ts";
+import { handleMuseImageGeneration } from "./imageGeneration/providers/museImage.ts";
 import { handleBlackForestLabsImageGeneration } from "./imageGeneration/providers/blackForestLabs.ts";
 import {
   fanOutSingleImageCalls,
@@ -540,6 +542,23 @@ export async function handleImageGeneration({
       credentials,
       log,
       signal,
+    });
+  }
+
+  if (providerConfig.format === "muse-image") {
+    return handleMuseImageGeneration({
+      model,
+      provider,
+      body,
+      credentials,
+      log,
+      signal,
+      deps: {
+        saveCallLog,
+        fetchRemoteImage: fetchUntrustedRemoteImage,
+        fetchWithTimeout,
+        isTimeoutError: (err) => err instanceof FetchTimeoutError,
+      },
     });
   }
 
@@ -2773,7 +2792,7 @@ export function saveImageErrorResult({
 /**
  * Fetch a single image endpoint and normalize response
  */
-async function fetchImageEndpoint(url, headers, body, provider, log) {
+async function fetchImageEndpoint(url, headers, body, provider, log): Promise<ImageEndpointResult> {
   try {
     let response;
     try {
@@ -2848,13 +2867,7 @@ async function fetchImageEndpoint(url, headers, body, provider, log) {
       };
     }
 
-    return {
-      success: true,
-      data: {
-        created: data.created || Math.floor(Date.now() / 1000),
-        data: items,
-      },
-    };
+    return buildImageEndpointSuccess(data, items);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     if (log) {

@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "پاک کردن فیلترها",
     "disableNonPublicModels": "غیرفعال کردن مدل‌های غیرعمومی",
     "disableNonPublicModelsDesc": "رد کردن درخواست‌ها برای مدل‌هایی که شناسایی نشده‌اند یا در کاتالوگ ارائه‌دهنده به عنوان عمومی علامت‌گذاری نشده‌اند",
+    "forcedModel": "مدل اجباری",
+    "forcedModelDesc": "هر درخواست چت با این کلید را، صرف‌نظر از مدلی که کلاینت درخواست می‌کند (یا وقتی مدلی ارسال نمی‌کند)، به این مدل یا ترکیب هدایت می‌کند. محدودیت‌های مدل، ترکیب و بودجهٔ کلید همچنان اعمال می‌شوند.",
+    "forcedModelPlaceholder": "اجباری نیست: از مدلی که کلاینت درخواست می‌کند استفاده شود",
     "normalKeysSection": "کلیدهای معمولی",
     "quotaKeysSection": "کلیدهای سهمیه‌ای",
     "bypassProviderQuota": "دور زدن محدودیت‌های سهمیه ارائه‌دهنده",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — بستر کدنویسی خودبهبودگر RLM با پشتیبانی از ارائهدهندهٔ سازگار با OpenAI",
       "warp": "ترمینال هوش مصنوعی Warp با پشتیبانی از ارائه‌دهنده سفارشی",
       "agent-deck": "ارکستراتور چندعاملی Agent Deck",
-      "5dive": "5dive — ناوگان خودمیزبان از عامل‌های کدنویسی؛ یک پروفایل احراز هویت همه را به OmniRoute هدایت می‌کند"
+      "5dive": "5dive — ناوگان خودمیزبان از عامل‌های کدنویسی؛ یک پروفایل احراز هویت همه را به OmniRoute هدایت می‌کند",
+      "zed": "ویرایشگر کد Zed — عامل داخلی از طریق ارائه‌دهنده سازگار با OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3240,6 +3244,9 @@
     "copilotReloadInstruction": "سپس VS Code را مجدداً بارگیری کرده و کلید API را در اعلان ورودی تنظیم کنید.",
     "wireApiChatCompletions": "تکمیل چت (/chat/completions)",
     "wireApiResponses": "API پاسخها (/responses)",
+    "codexModelCatalog": "نمایش مدل‌های OmniRoute در انتخابگر ‎/model در Codex",
+    "codexModelCatalogHint": "فایل ~/.codex/omniroute-models.json را از کاتالوگ مدل خودِ Codex نصب‌شده می‌نویسد (حدود 60 KB برای هر مدل). پس از ارتقای Codex دوباره اعمال کنید.",
+    "codexCatalogWarning": "انتخابگر ‎/model در Codex به‌روزرسانی نشد: OmniRoute نتوانست کاتالوگ مدل Codex نصب‌شده را بخواند.",
     "cliproxyapiActionFailed": "عملیات ناموفق بود",
     "cliproxyapiActionSucceeded": "عملیات با موفقیت انجام شد",
     "cliproxyapiCheckUpdates": "بررسی به‌روزرسانی‌ها",
@@ -5714,6 +5721,8 @@
     "disableConnection": "غیرفعال کردن اتصال",
     "enableConnection": "فعال کردن اتصال",
     "reauthenticateConnection": "احراز هویت مجدد برای این اتصال",
+    "verifyAccount": "تأیید حساب",
+    "verifyAccountHint": "Google از شما می‌خواهد این حساب را تأیید کنید. پیوند را باز کنید، بررسی را کامل کنید و دوباره تلاش کنید.",
     "proxyConfig": "پیکربندی پروکسی",
     "aliasExistsAlert": "نام مستعار «{alias}» از قبل وجود دارد. لطفاً از مدل دیگری استفاده کنید یا نام مستعار موجود را ویرایش کنید.",
     "aliasInputPlaceholder": "نام مستعار",
@@ -8238,6 +8247,14 @@
       "terse-cjk": {
         "label": "CJK موجز (文言)",
         "description": "سبک فوق‌موجز چینی کلاسیک (فقط برای زبان چینی در دسترس است)."
+      },
+      "antislop-ui": {
+        "label": "فیلتر Antislop برای رابط کاربری",
+        "description": "عناصر بصری با هدف آزموده: بدون گرادیان‌های کلیشه‌ای، چیدمان‌های قالبی یا کنترل‌های بی‌کار."
+      },
+      "antislop-copy": {
+        "label": "فیلتر Antislop برای متن و انسان",
+        "description": "متن صادقانه به‌همراه قواعدی برای انسان‌ها: بدون نشانه‌های هوش مصنوعی، کنتراست WCAG AA، صفحه‌کلید، وضعیت‌ها، چیدمان موبایل."
       }
     },
     "resilienceWaitForCooldown": "منتظر Cooldown باشید",
@@ -8800,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "ارائه‌دهنده (همه حساب‌ها یک قطع‌کننده مشترک دارند)",
     "resilienceTokenRefreshScopeConnection": "اتصال (هر حساب کلید قطع کننده خود را دارد)",
     "resilienceTokenRefreshThreshold": "تعداد خطاها قبل از توقف",
-    "resilienceTokenRefreshCooldown": "مکث پس از فعال شدن"
+    "resilienceTokenRefreshCooldown": "مکث پس از فعال شدن",
+    "piiMasking": {
+      "title": "پنهان‌سازی داده‌های شخصی",
+      "description": "انتخاب کنید کدام نوع داده‌های شخصی پنهان شوند و الگوهای خود را اضافه کنید. پنهان‌سازی تا زمانی که پرچم‌های ویژگی نمایش‌داده‌شده در زیر را روشن نکنید خاموش می‌ماند.",
+      "requestFlag": "پنهان‌سازی درخواست‌ها",
+      "responseFlag": "پاک‌سازی پاسخ‌ها",
+      "templates": "قالب‌ها",
+      "template": {
+        "minimal": "حداقلی",
+        "standard": "استاندارد",
+        "financial": "مالی",
+        "brazilian": "برزیلی",
+        "usa": "آمریکا",
+        "full": "کامل"
+      },
+      "builtinTypes": "انواع داخلی",
+      "types": {
+        "email": "نشانی‌های ایمیل",
+        "phone_us": "شماره تلفن‌های آمریکا",
+        "phone_br": "شماره تلفن‌های برزیل",
+        "ssn": "شماره‌های تأمین اجتماعی آمریکا",
+        "credit_card": "شماره‌های کارت اعتباری",
+        "cpf": "CPF (شناسه مالیاتی اشخاص در برزیل)",
+        "cnpj": "CNPJ (شناسه شرکت در برزیل)",
+        "ip_address": "نشانی‌های IPv4",
+        "ipv6_address": "نشانی‌های IPv6",
+        "aws_key": "کلیدهای دسترسی AWS",
+        "api_key_generic": "کلیدهای API و توکن‌ها"
+      },
+      "customPatterns": "الگوهای سفارشی",
+      "customPatternsDesc": "موارد منطبق با [CUSTOM_REDACTED] جایگزین می‌شوند. حداکثر {max} الگو. الگوهایی که خطر عقبگرد فاجعه‌بار دارند رد می‌شوند.",
+      "typeRegex": "عبارت باقاعده",
+      "typeWildcard": "نویسه عام (* و ?)",
+      "pattern": "الگو",
+      "flags": "پرچم‌ها (i, m, s, u)",
+      "sampleText": "متن نمونه برای آزمایش الگو",
+      "test": "آزمایش",
+      "testMatches": "تعداد تطابق: {count}",
+      "testFailed": "الگو رد شد: {message}",
+      "add": "افزودن الگو",
+      "saved": "ذخیره شد",
+      "saveFailed": "ذخیره ناموفق بود: {message}",
+      "statsTitle": "شناسایی‌ها از زمان راه‌اندازی مجدد",
+      "statsEmpty": "هنوز موردی شناسایی نشده است.",
+      "statsRequest": "درخواست‌ها"
+    }
   },
   "contextRtk": {
     "title": "موتور RTK",
@@ -9858,6 +9920,9 @@
     "hideQuotaRow": "پنهان کردن این ردیف سهمیه",
     "showQuotaRow": "نمایش این ردیف سهمیه",
     "hiddenQuotaRowsLabel": "پنهان شده:",
+    "quotaSpeedTitle": "سرعت رمزگشایی اخیر در این حساب (آخرین {count} درخواست موفق)",
+    "quotaSpeedLine": "{model}: {avg} tok/s میانگین · آخرین {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s میانگین · آخرین {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "خطا در به‌روزرسانی وضعیت نمایش سهمیه",
     "account": "حساب",
     "modelQuotas": "سهمیههای مدل",
@@ -14499,7 +14564,10 @@
     "importing": "در حال وارد کردن...",
     "apiKeyPlaceholder": "کلید API {providerLabel} خود را بچسبانید...",
     "apiKeyStoredDescription": "به‌صورت رمزنگاری‌شده به‌عنوان یک اعتبارنامه‌ی بلندمدت ذخیره شده است. جریانی برای تازه‌سازی وجود ندارد.",
-    "apiKeyRegionDescription": "منطقه AWS برای کلید (پیش‌فرض: us-east-1)",
+    "apiKeyRegionAuto": "تشخیص خودکار (توصیه‌شده)",
+    "apiKeyRegionUsEast1": "شرق آمریکا (ویرجینیای شمالی)",
+    "apiKeyRegionEuCentral1": "اروپا (فرانکفورت)",
+    "apiKeyRegionAutoDescription": "تشخیص خودکار ابتدا شرق آمریکا و سپس اروپا (فرانکفورت) را امتحان می‌کند و منطقه‌ای را که کلید در آن کار می‌کند ذخیره می‌کند.",
     "validating": "در حال اعتبارسنجی...",
     "validateAndSaveApiKey": "اعتبارسنجی و ذخیره کلید API",
     "errorAutoDetect": "نمی‌توان توکن را به‌طور خودکار شناسایی کرد",
