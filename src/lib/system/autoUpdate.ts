@@ -541,7 +541,7 @@ export async function launchAutoUpdate({
       channel: config.mode,
       logPath: config.logPath,
       composeCommand: null,
-      ...(written.ok ? {} : { error: written.error }),
+      ...(written.ok === false ? { error: written.error } : {}),
     };
   }
 
