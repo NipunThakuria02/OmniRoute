@@ -215,7 +215,10 @@ test("first use of the providers module sweeps rows still holding plaintext secr
   const before = alreadyRows[0].provider_specific_data;
   await providers.getProviderConnections({ provider: "openai" });
   assert.equal(rawRow(alreadyRows[0].id).provider_specific_data, before);
-  assert.equal(ensureProviderSpecificDataSecretsEncrypted(core.getDbInstance()), 0);
+  const sweepDb = core.getDbInstance() as unknown as Parameters<
+    typeof ensureProviderSpecificDataSecretsEncrypted
+  >[0];
+  assert.equal(ensureProviderSpecificDataSecretsEncrypted(sweepDb), 0);
 });
 
 test("mergeConnectionProviderSpecificData envelopes the secret fields of a patch", async () => {

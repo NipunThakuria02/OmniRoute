@@ -205,7 +205,8 @@ test("decryptConnectionFields drops an undecryptable list entry and raises the r
   const list = psdOf(stored).extraApiKeys as string[];
   const corrupt = list[1];
   list[1] = corrupt.slice(0, -1) + (corrupt.endsWith("0") ? "1" : "0");
-  const restored = decryptConnectionFields(stored);
+  const restored: NonNullable<ReturnType<typeof decryptConnectionFields>> =
+    decryptConnectionFields(stored);
   assert.equal(restored.credentialDecryptFailed, true);
   assert.deepEqual(psdOf(restored).extraApiKeys, ["sk-good-0123456789abcdef"]);
 });
