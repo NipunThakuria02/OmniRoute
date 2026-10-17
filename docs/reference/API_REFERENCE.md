@@ -656,7 +656,12 @@ Web/search provider abstraction (Tavily, Brave, Exa, Serper, etc.).
 ## Web Fetch API
 
 Extract content from a URL via a configured web-fetch provider (Firecrawl, Jina
-Reader, Tavily Extract, TinyFish Fetch, Nimble Extract).
+Reader, Tavily Extract, TinyFish Fetch, Nimble Extract, Parallel Extract).
+
+Parallel Extract (`parallel-search`, same API key as Parallel Search) returns Markdown
+only — any other `format` is a `400` — and caps content at 100,000 characters. When
+the target page itself cannot be extracted, the upstream reports it inside an HTTP 200;
+OmniRoute surfaces that as a `422` with a fixed message.
 
 | Method | Path            | Description                                               |
 | ------ | --------------- | --------------------------------------------------------- |
@@ -665,7 +670,8 @@ Reader, Tavily Extract, TinyFish Fetch, Nimble Extract).
 **Auth:** Bearer API key (`extractApiKey` + `isValidApiKey`). Policy enforced via `enforceApiKeyPolicy`.
 
 **Quota-aware fallback (#8297):** when no explicit `provider` is given, the pool
-(`firecrawl` → `jina-reader` → `tavily-search` → `tinyfish` → `nimble-search`) is
+(`firecrawl` → `jina-reader` → `tavily-search` → `tinyfish` → `nimble-search` →
+`parallel-search`) is
 walked in fixed
 priority order (fill-first) — a rate-limited-but-configured provider is skipped
 instead of short-circuiting the request, and a retryable/quota upstream failure
