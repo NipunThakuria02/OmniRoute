@@ -12748,6 +12748,133 @@ paths:
       responses:
         "200":
           description: OK
+  /api/settings/transfer/catalog:
+    get:
+      tags:
+        - Settings
+      summary: "GET settings › transfer › catalog"
+      description: >-
+        Provider accounts selectable for a selective transfer (id, provider, auth type, name,
+        email, group). Never returns a credential.
+      x-always-protected: true
+      responses:
+        "200":
+          description: OK
+        "403":
+          description: >-
+            Machine credential refused. Selective transfer requires the dashboard session or
+            the local CLI (or login disabled); API keys of any scope and `oma_` access tokens
+            get 403.
+  /api/settings/transfer/export:
+    post:
+      tags:
+        - Settings
+      summary: "POST settings › transfer › export"
+      description: >-
+        Seals the selected provider accounts, plus the custom provider nodes they use, under
+        the caller's passphrase (scrypt + AES-256-GCM) and returns the file as an attachment.
+        Credentials are never written in plaintext; the cleartext header carries counts only.
+      x-always-protected: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [connectionIds, passphrase, acknowledgeCredentialExport]
+              properties:
+                connectionIds:
+                  type: array
+                  minItems: 1
+                  maxItems: 1000
+                  items:
+                    type: string
+                passphrase:
+                  type: string
+                  minLength: 12
+                acknowledgeCredentialExport:
+                  type: boolean
+                  enum: [true]
+      responses:
+        "200":
+          description: Transfer file (`format` omniroute-provider-transfer, `version` 1).
+        "400":
+          description: Invalid body, missing acknowledgment, or an account that no longer exists.
+        "403":
+          description: >-
+            Machine credential refused. Selective transfer requires the dashboard session or
+            the local CLI (or login disabled); API keys of any scope and `oma_` access tokens
+            get 403.
+  /api/settings/transfer/preview:
+    post:
+      tags:
+        - Settings
+      summary: "POST settings › transfer › preview"
+      description: >-
+        Opens a transfer file with its passphrase and reports, per account and provider node,
+        whether it is new, identical, in conflict or unsupported on this install, with the
+        allowed actions (add, skip, replace). Writes nothing and never returns a credential.
+      x-always-protected: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [bundle, passphrase]
+              properties:
+                bundle:
+                  type: object
+                passphrase:
+                  type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid file, or a wrong passphrase / modified file.
+        "403":
+          description: >-
+            Machine credential refused. Selective transfer requires the dashboard session or
+            the local CLI (or login disabled); API keys of any scope and `oma_` access tokens
+            get 403.
+  /api/settings/transfer/import:
+    post:
+      tags:
+        - Settings
+      summary: "POST settings › transfer › import"
+      description: >-
+        Applies a transfer file with per-item decisions keyed `connection:<id>` / `node:<id>`
+        (add, skip, replace; omitted keys use the recommended action). Every decision is
+        validated before the first write, a pre-import database backup is taken, nothing is
+        deleted, and destination priority, active flag and proxy settings are kept.
+      x-always-protected: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [bundle, passphrase]
+              properties:
+                bundle:
+                  type: object
+                passphrase:
+                  type: string
+                decisions:
+                  type: object
+                  additionalProperties:
+                    type: string
+                    enum: [add, skip, replace]
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid file, wrong passphrase, or a decision not allowed for an item.
+        "403":
+          description: >-
+            Machine credential refused. Selective transfer requires the dashboard session or
+            the local CLI (or login disabled); API keys of any scope and `oma_` access tokens
+            get 403.
   /api/skills:
     get:
       tags:

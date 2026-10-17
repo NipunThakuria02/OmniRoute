@@ -15,12 +15,22 @@ const providersDb = await import("../../src/lib/db/providers.ts");
 const modelsDb = await import("../../src/lib/db/models.ts");
 const { updateSettings } = await import("../../src/lib/db/settings.ts");
 const catalog = await import("../../src/app/api/v1/models/catalog.ts");
+const { prepareVirtualAutoComboInputs } =
+  await import("../../open-sse/services/autoCombo/virtualFactory.ts");
 const { filterTosAvoidCandidates } =
   await import("../../open-sse/services/autoCombo/strictZeroCostFilter.ts");
 
 test.after(() => {
   core.resetDbInstance();
   fs.rmSync(testDataDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+});
+
+test("fresh auto pool excludes provider-wide ToS-avoid models missing from the budget catalog", async () => {
+  const prepared = await prepareVirtualAutoComboInputs();
+  assert.equal(
+    prepared.regularCandidates.some((row) => row.provider === "duckduckgo-web"),
+    false
+  );
 });
 
 test("provider ToS verdict covers a newly discovered model absent from the budget catalog", () => {
