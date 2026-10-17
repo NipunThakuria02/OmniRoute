@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Șterge filtrele",
     "disableNonPublicModels": "Dezactivează modelele non-publice",
     "disableNonPublicModelsDesc": "Respinge cererile pentru modelele care nu sunt descoperite sau nu sunt marcate ca publice în catalogul furnizorului",
+    "forcedModel": "Model impus",
+    "forcedModelDesc": "Direcționează fiecare cerere de chat făcută cu această cheie către acest model sau combo, indiferent ce model cere clientul (sau când nu trimite niciunul). Limitele de modele, combo și buget ale cheii se aplică în continuare.",
+    "forcedModelPlaceholder": "Neimpus: folosește modelul cerut de client",
     "normalKeysSection": "Chei normale",
     "quotaKeysSection": "Chei de cotă",
     "bypassProviderQuota": "Ocolește limitele de cotă ale furnizorului",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — sistem RLM de programare cu auto-îmbunătățire și compatibilitate cu furnizori compatibili cu OpenAI",
       "warp": "Terminal Warp AI cu suport pentru furnizori personalizați",
       "agent-deck": "Orchestrator multi-agent Agent Deck",
-      "5dive": "5dive — flotă auto-găzduită de agenți de codare; un profil de autentificare îi îndreaptă pe toți către OmniRoute"
+      "5dive": "5dive — flotă auto-găzduită de agenți de codare; un profil de autentificare îi îndreaptă pe toți către OmniRoute",
+      "zed": "Editorul de cod Zed — agent integrat printr-un furnizor compatibil cu OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3240,6 +3244,9 @@
     "copilotReloadInstruction": "Apoi reîncărcați VS Code și setați cheia API în câmpul de introducere.",
     "wireApiChatCompletions": "Finalizări de chat (/chat/completions)",
     "wireApiResponses": "API-ul Responses (/responses)",
+    "codexModelCatalog": "Afișează modelele OmniRoute în selectorul /model din Codex",
+    "codexModelCatalogHint": "Scrie ~/.codex/omniroute-models.json pe baza catalogului de modele al Codex instalat (aproximativ 60 KB per model). Aplicați din nou după actualizarea Codex.",
+    "codexCatalogWarning": "Selectorul /model din Codex nu a fost actualizat: OmniRoute nu a putut citi catalogul de modele al Codex instalat.",
     "cliproxyapiActionFailed": "Acțiunea a eșuat",
     "cliproxyapiActionSucceeded": "Acțiune reușită",
     "cliproxyapiCheckUpdates": "Verifică actualizările",
@@ -5714,6 +5721,8 @@
     "disableConnection": "Dezactivați conexiunea",
     "enableConnection": "Activați conexiunea",
     "reauthenticateConnection": "Re-autentificați această conexiune",
+    "verifyAccount": "Verifică contul",
+    "verifyAccountHint": "Google solicită verificarea acestui cont. Deschide linkul, finalizează verificarea, apoi încearcă din nou.",
     "proxyConfig": "Configurare proxy",
     "aliasExistsAlert": "Aliasul „{alias}” există deja. Vă rugăm să utilizați un alt model sau să editați alias-ul existent.",
     "aliasInputPlaceholder": "numele aliasului",
@@ -8238,6 +8247,14 @@
       "terse-cjk": {
         "label": "CJK concis (文言)",
         "description": "Stil ultra-concis în chineza clasică (disponibil doar pentru chineză)."
+      },
+      "antislop-ui": {
+        "label": "Filtru Antislop pentru UI",
+        "description": "Elemente vizuale cu scop verificat: fără degradeuri generice, layouturi șablon sau controale moarte."
+      },
+      "antislop-copy": {
+        "label": "Filtru Antislop pentru text și oameni",
+        "description": "Text onest plus reguli pentru oameni: fără urme de AI, contrast WCAG AA, tastatură, stări, rearanjare pe mobil."
       }
     },
     "resilienceWaitForCooldown": "Așteptați răcirea",
@@ -8800,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Furnizor (toate conturile împart un singur întrerupător)",
     "resilienceTokenRefreshScopeConnection": "Conexiune (fiecare cont are propriul său întrerupător)",
     "resilienceTokenRefreshThreshold": "Eșecuri înainte de pauză",
-    "resilienceTokenRefreshCooldown": "Pauză după declanșare"
+    "resilienceTokenRefreshCooldown": "Pauză după declanșare",
+    "piiMasking": {
+      "title": "Mascarea datelor personale",
+      "description": "Alegeți ce tipuri de date personale sunt mascate și adăugați propriile modele. Mascarea rămâne dezactivată până când activați feature flag-urile afișate mai jos.",
+      "requestFlag": "Mascarea cererilor",
+      "responseFlag": "Igienizarea răspunsurilor",
+      "templates": "Șabloane",
+      "template": {
+        "minimal": "Minim",
+        "standard": "Standard",
+        "financial": "Financiar",
+        "brazilian": "Brazilian",
+        "usa": "SUA",
+        "full": "Complet"
+      },
+      "builtinTypes": "Tipuri încorporate",
+      "types": {
+        "email": "Adrese de e-mail",
+        "phone_us": "Numere de telefon din SUA",
+        "phone_br": "Numere de telefon braziliene",
+        "ssn": "Numere de asigurare socială din SUA",
+        "credit_card": "Numere de card de credit",
+        "cpf": "CPF (cod fiscal brazilian)",
+        "cnpj": "CNPJ (cod de firmă brazilian)",
+        "ip_address": "Adrese IPv4",
+        "ipv6_address": "Adrese IPv6",
+        "aws_key": "Chei de acces AWS",
+        "api_key_generic": "Chei API și tokenuri"
+      },
+      "customPatterns": "Modele personalizate",
+      "customPatternsDesc": "Potrivirile sunt înlocuite cu [CUSTOM_REDACTED]. Până la {max} modele. Modelele cu risc de backtracking catastrofal sunt refuzate.",
+      "typeRegex": "Expresie regulată",
+      "typeWildcard": "Caracter wildcard (* și ?)",
+      "pattern": "Model",
+      "flags": "Indicatori (i, m, s, u)",
+      "sampleText": "Text de exemplu pentru testarea modelului",
+      "test": "Testează",
+      "testMatches": "{count} potriviri",
+      "testFailed": "Model refuzat: {message}",
+      "add": "Adaugă model",
+      "saved": "Salvat",
+      "saveFailed": "Salvarea a eșuat: {message}",
+      "statsTitle": "Detecții de la repornire",
+      "statsEmpty": "Nicio detecție încă.",
+      "statsRequest": "Cereri"
+    }
   },
   "contextRtk": {
     "title": "Motor RTK",
@@ -9858,6 +9920,9 @@
     "hideQuotaRow": "Ascunde acest rând de cotă",
     "showQuotaRow": "Afișează acest rând de cotă",
     "hiddenQuotaRowsLabel": "Ascuns:",
+    "quotaSpeedTitle": "Viteza recentă de decodare pe acest cont (ultimele {count} cereri reușite)",
+    "quotaSpeedLine": "{model}: {avg} tok/s medie · ultima {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s medie · ultima {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Nu s-a putut actualiza vizibilitatea cotei",
     "account": "Cont",
     "modelQuotas": "Cote model",
@@ -14499,7 +14564,10 @@
     "importing": "Importare...",
     "apiKeyPlaceholder": "Lipește cheia ta API {providerLabel}...",
     "apiKeyStoredDescription": "Stocat criptat ca un credential de tip bearer cu o durată lungă de viață. Nu există un flux de reîmprospătare.",
-    "apiKeyRegionDescription": "Regiunea AWS pentru cheie (implicit: us-east-1)",
+    "apiKeyRegionAuto": "Detectare automată (recomandat)",
+    "apiKeyRegionUsEast1": "SUA Est (Virginia de Nord)",
+    "apiKeyRegionEuCentral1": "Europa (Frankfurt)",
+    "apiKeyRegionAutoDescription": "Detectarea automată încearcă mai întâi SUA Est, apoi Europa (Frankfurt), și salvează regiunea în care funcționează cheia.",
     "validating": "Validare...",
     "validateAndSaveApiKey": "Validează și Salvează Cheia API",
     "errorAutoDetect": "Nu s-a putut detecta automat tokenul",
@@ -14875,5 +14943,43 @@
     "saveMessage": "Salvează mesajul",
     "defaultModel": "Model de test implicit",
     "defaultModelHint": "Utilizat automat de butoanele Mesaj de test pentru acest cont. Salvat împreună cu conexiunea; nu se trimite niciun mesaj."
+  },
+  "providerTransfer": {
+    "open": "Transfer selectiv",
+    "title": "Transfer selectiv de furnizori",
+    "description": "Mută conturile de furnizor alese (și nodurile de furnizor personalizate pe care le folosesc) într-o altă instalare OmniRoute. Fișierul este sigilat cu o frază de acces, iar importul nu șterge niciodată nimic.",
+    "exportTab": "Exportă",
+    "importTab": "Importă",
+    "searchPlaceholder": "Caută conturi…",
+    "selectAll": "Selectează tot",
+    "clearSelection": "Golește",
+    "selectedCount": "{count} selectate",
+    "noAccounts": "Niciun cont de furnizor nu corespunde.",
+    "loadFailed": "Conturile de furnizor nu au putut fi încărcate.",
+    "passphrase": "Frază de acces",
+    "passphraseConfirm": "Confirmă fraza de acces",
+    "passphraseHint": "Cel puțin {min} caractere. Nu este stocată niciodată; fără ea fișierul nu poate fi deschis.",
+    "passphraseMismatch": "Frazele de acces nu se potrivesc.",
+    "oauthWarning": "Conturile OAuth care rotesc refresh token-ul pot înceta să funcționeze pe o instalare după ce cealaltă îl reîmprospătează.",
+    "acknowledge": "Înțeleg că acest fișier conține cheile API și token-urile conturilor selectate, sigilate cu această frază de acces.",
+    "exportButton": "Exportă selecția",
+    "exportDone": "{count} conturi exportate.",
+    "exportFailed": "Exportul a eșuat.",
+    "chooseFile": "Alege fișierul de transfer",
+    "invalidFile": "Acesta nu este un fișier de transfer de furnizori OmniRoute.",
+    "previewButton": "Previzualizare",
+    "previewFailed": "Fișierul de transfer nu a putut fi citit.",
+    "summary": "{connections} conturi și {nodes} noduri de furnizor în acest fișier. Nimic nu va fi șters.",
+    "statusNew": "Nou",
+    "statusIdentical": "Identic",
+    "statusConflict": "Conflict",
+    "statusUnsupported": "Neacceptat",
+    "actionAdd": "Adaugă",
+    "actionSkip": "Omite",
+    "actionReplace": "Înlocuiește",
+    "providerNode": "Nod de furnizor",
+    "importButton": "Importă",
+    "importFailed": "Importul a eșuat.",
+    "importSuccess": "Au fost importate {connections} conturi și {nodes} noduri de furnizor; {skipped} omise."
   }
 }

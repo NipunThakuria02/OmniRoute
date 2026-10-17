@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "फ़िल्टर साफ़ करें",
     "disableNonPublicModels": "गैर-सार्वजनिक मॉडल अक्षम करें",
     "disableNonPublicModelsDesc": "उन मॉडलों के अनुरोधों को अस्वीकार करें जो प्रदाता कैटलॉग में खोजे नहीं गए हैं या सार्वजनिक के रूप में चिह्नित नहीं हैं",
+    "forcedModel": "लागू मॉडल",
+    "forcedModelDesc": "इस कुंजी से किए गए हर चैट अनुरोध को इस मॉडल या कॉम्बो पर भेजें, क्लाइंट चाहे कोई भी मॉडल माँगे (या कोई न भेजे)। कुंजी की मॉडल, कॉम्बो और बजट सीमाएँ फिर भी लागू रहती हैं।",
+    "forcedModelPlaceholder": "लागू नहीं: क्लाइंट द्वारा माँगा गया मॉडल उपयोग करें",
     "normalKeysSection": "सामान्य कुंजियाँ",
     "quotaKeysSection": "कोटा कुंजियाँ",
     "bypassProviderQuota": "प्रदाता कोटा कटऑफ़ को बायपास करें",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — OpenAI-संगत प्रदाता समर्थन वाला, स्वयं में सुधार करने वाला RLM कोडिंग हार्नेस",
       "warp": "कस्टम प्रदाता समर्थन के साथ Warp AI टर्मिनल",
       "agent-deck": "Agent Deck मल्टी-एजेंट ऑर्केस्ट्रेटर",
-      "5dive": "5dive — स्व-होस्टेड कोडिंग एजेंट्स का बेड़ा; एक auth प्रोफ़ाइल सभी को OmniRoute की ओर इंगित करती है"
+      "5dive": "5dive — स्व-होस्टेड कोडिंग एजेंट्स का बेड़ा; एक auth प्रोफ़ाइल सभी को OmniRoute की ओर इंगित करती है",
+      "zed": "Zed कोड एडिटर — OpenAI-संगत प्रदाता के माध्यम से बिल्ट-इन एजेंट"
     },
     "guides": {
       "cursor": {
@@ -3240,6 +3244,9 @@
     "copilotReloadInstruction": "फिर VS Code को पुनः लोड करें और इनपुट प्रॉम्प्ट में API कुंजी सेट करें।",
     "wireApiChatCompletions": "चैट पूर्णताएँ (/चैट/पूर्णियाँ)",
     "wireApiResponses": "प्रतिक्रियाएँ एपीआई (/प्रतिक्रियाएँ)",
+    "codexModelCatalog": "Codex के /model पिकर में OmniRoute मॉडल दिखाएँ",
+    "codexModelCatalogHint": "इंस्टॉल किए गए Codex के अपने मॉडल कैटलॉग से ~/.codex/omniroute-models.json लिखता है (प्रति मॉडल लगभग 60 KB)। Codex अपग्रेड करने के बाद फिर से लागू करें।",
+    "codexCatalogWarning": "Codex का /model पिकर अपडेट नहीं हुआ: OmniRoute इंस्टॉल किए गए Codex का मॉडल कैटलॉग नहीं पढ़ सका।",
     "cliproxyapiActionFailed": "क्रिया विफल हुई",
     "cliproxyapiActionSucceeded": "कार्य सफल हुआ",
     "cliproxyapiCheckUpdates": "अपडेट्स की जांच करें",
@@ -5714,6 +5721,8 @@
     "disableConnection": "कनेक्शन अक्षम करें",
     "enableConnection": "कनेक्शन सक्षम करें",
     "reauthenticateConnection": "इस कनेक्शन को पुनः प्रमाणित करें",
+    "verifyAccount": "खाता सत्यापित करें",
+    "verifyAccountHint": "Google इस खाते को सत्यापित करने के लिए कहता है। लिंक खोलें, जाँच पूरी करें, फिर दोबारा प्रयास करें।",
     "proxyConfig": "प्रॉक्सी कॉन्फ़िगरेशन",
     "aliasExistsAlert": "उपनाम \"{alias}\" पहले से मौजूद है। कृपया किसी भिन्न मॉडल का उपयोग करें या मौजूदा उपनाम संपादित करें।",
     "aliasInputPlaceholder": "उपनाम का नाम",
@@ -8238,6 +8247,14 @@
       "terse-cjk": {
         "label": "संक्षिप्त CJK (文言)",
         "description": "शास्त्रीय-चीनी अति-संक्षिप्त शैली (केवल चीनी भाषा के लिए उपलब्ध)।"
+      },
+      "antislop-ui": {
+        "label": "Antislop UI फ़िल्टर",
+        "description": "उद्देश्य-परखे विज़ुअल: कोई सामान्य ग्रेडिएंट, टेम्पलेट लेआउट या बेकार कंट्रोल नहीं।"
+      },
+      "antislop-copy": {
+        "label": "Antislop कॉपी और मानव फ़िल्टर",
+        "description": "ईमानदार कॉपी और लोगों के लिए नियम: AI की छाप नहीं, WCAG AA कंट्रास्ट, कीबोर्ड, स्टेट, मोबाइल रीफ़्लो।"
       }
     },
     "resilienceWaitForCooldown": "ठंडा होने की प्रतीक्षा करें",
@@ -8800,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "प्रदाता (सभी खाते एक ही ब्रेकर साझा करते हैं)",
     "resilienceTokenRefreshScopeConnection": "कनेक्शन (प्रत्येक खाते का अपना ब्रेकर है)",
     "resilienceTokenRefreshThreshold": "रोकने से पहले विफलताएँ",
-    "resilienceTokenRefreshCooldown": "ट्रिप होने के बाद विराम"
+    "resilienceTokenRefreshCooldown": "ट्रिप होने के बाद विराम",
+    "piiMasking": {
+      "title": "व्यक्तिगत डेटा मास्किंग",
+      "description": "चुनें कि किस प्रकार का व्यक्तिगत डेटा मास्क किया जाए और अपने पैटर्न जोड़ें। जब तक आप नीचे दिखाए गए फ़ीचर फ़्लैग चालू नहीं करते, मास्किंग बंद रहती है।",
+      "requestFlag": "अनुरोध मास्किंग",
+      "responseFlag": "प्रतिक्रिया सफ़ाई",
+      "templates": "टेम्पलेट",
+      "template": {
+        "minimal": "न्यूनतम",
+        "standard": "मानक",
+        "financial": "वित्तीय",
+        "brazilian": "ब्राज़ीलियाई",
+        "usa": "अमेरिका",
+        "full": "पूर्ण"
+      },
+      "builtinTypes": "अंतर्निहित प्रकार",
+      "types": {
+        "email": "ईमेल पते",
+        "phone_us": "अमेरिकी फ़ोन नंबर",
+        "phone_br": "ब्राज़ीलियाई फ़ोन नंबर",
+        "ssn": "अमेरिकी सामाजिक सुरक्षा नंबर",
+        "credit_card": "क्रेडिट कार्ड नंबर",
+        "cpf": "CPF (ब्राज़ीलियाई करदाता आईडी)",
+        "cnpj": "CNPJ (ब्राज़ीलियाई कंपनी आईडी)",
+        "ip_address": "IPv4 पते",
+        "ipv6_address": "IPv6 पते",
+        "aws_key": "AWS एक्सेस कुंजियाँ",
+        "api_key_generic": "API कुंजियाँ और टोकन"
+      },
+      "customPatterns": "कस्टम पैटर्न",
+      "customPatternsDesc": "मिलान [CUSTOM_REDACTED] से बदल दिए जाते हैं। अधिकतम {max} पैटर्न। विनाशकारी बैकट्रैकिंग के जोखिम वाले पैटर्न अस्वीकार किए जाते हैं।",
+      "typeRegex": "रेगुलर एक्सप्रेशन",
+      "typeWildcard": "वाइल्डकार्ड (* और ?)",
+      "pattern": "पैटर्न",
+      "flags": "फ़्लैग (i, m, s, u)",
+      "sampleText": "पैटर्न जाँचने के लिए नमूना पाठ",
+      "test": "जाँचें",
+      "testMatches": "{count} मिलान",
+      "testFailed": "पैटर्न अस्वीकृत: {message}",
+      "add": "पैटर्न जोड़ें",
+      "saved": "सहेजा गया",
+      "saveFailed": "सहेजा नहीं जा सका: {message}",
+      "statsTitle": "पुनरारंभ के बाद से पहचान",
+      "statsEmpty": "अभी तक कोई पहचान नहीं।",
+      "statsRequest": "अनुरोध"
+    }
   },
   "contextRtk": {
     "title": "RTK इंजन",
@@ -9858,6 +9920,9 @@
     "hideQuotaRow": "इस कोटा पंक्ति को छिपाएं",
     "showQuotaRow": "इस कोटा पंक्ति को दिखाएं",
     "hiddenQuotaRowsLabel": "छिपा हुआ:",
+    "quotaSpeedTitle": "इस खाते पर हाल की डिकोड गति (पिछले {count} सफल अनुरोध)",
+    "quotaSpeedLine": "{model}: {avg} tok/s औसत · अंतिम {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s औसत · अंतिम {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "कोटा दृश्यता अपडेट करने में विफल",
     "account": "खाता",
     "modelQuotas": "मॉडल कोटा",
@@ -14499,7 +14564,10 @@
     "importing": "आयात कर रहा है...",
     "apiKeyPlaceholder": "अपने {providerLabel} एपीआई कुंजी चिपकाएँ...",
     "apiKeyStoredDescription": "लंबे समय तक चलने वाले बियरर क्रेडेंशियल के रूप में संग्रहीत एन्क्रिप्टेड। कोई रिफ्रेश फ्लो नहीं है।",
-    "apiKeyRegionDescription": "कुंजी के लिए AWS क्षेत्र (डिफ़ॉल्ट: us-east-1)",
+    "apiKeyRegionAuto": "स्वतः पता लगाएँ (अनुशंसित)",
+    "apiKeyRegionUsEast1": "यूएस ईस्ट (उत्तरी वर्जीनिया)",
+    "apiKeyRegionEuCentral1": "यूरोप (फ्रैंकफर्ट)",
+    "apiKeyRegionAutoDescription": "स्वतः पहचान पहले यूएस ईस्ट, फिर यूरोप (फ्रैंकफर्ट) आज़माती है और वह क्षेत्र सहेजती है जहाँ कुंजी काम करती है।",
     "validating": "मान्यकरण हो रहा है...",
     "validateAndSaveApiKey": "API कुंजी मान्य करें और सहेजें",
     "errorAutoDetect": "टोकन का स्वचालित पता नहीं लगाया जा सका",
@@ -14875,5 +14943,43 @@
     "saveMessage": "संदेश सहेजें",
     "defaultModel": "डिफ़ॉल्ट परीक्षण मॉडल",
     "defaultModelHint": "इस खाते के लिए संदेश का परीक्षण करें बटनों द्वारा स्वचालित रूप से उपयोग किया जाता है। कनेक्शन के साथ सहेजा जाता है; कोई संदेश नहीं भेजा जाता।"
+  },
+  "providerTransfer": {
+    "open": "चयनात्मक स्थानांतरण",
+    "title": "प्रदाताओं का चयनात्मक स्थानांतरण",
+    "description": "चुने गए प्रदाता खातों (और उनके द्वारा उपयोग किए जाने वाले कस्टम प्रदाता नोड) को किसी दूसरे OmniRoute इंस्टॉल में ले जाएँ। फ़ाइल एक पासफ़्रेज़ से सील की जाती है, और आयात कभी कुछ नहीं हटाता।",
+    "exportTab": "निर्यात",
+    "importTab": "आयात",
+    "searchPlaceholder": "खाते खोजें…",
+    "selectAll": "सभी चुनें",
+    "clearSelection": "साफ़ करें",
+    "selectedCount": "{count} चयनित",
+    "noAccounts": "कोई मेल खाता प्रदाता खाता नहीं।",
+    "loadFailed": "प्रदाता खाते लोड नहीं हो सके।",
+    "passphrase": "पासफ़्रेज़",
+    "passphraseConfirm": "पासफ़्रेज़ की पुष्टि करें",
+    "passphraseHint": "कम से कम {min} वर्ण। इसे कभी संग्रहीत नहीं किया जाता; इसके बिना फ़ाइल नहीं खुल सकती।",
+    "passphraseMismatch": "पासफ़्रेज़ मेल नहीं खाते।",
+    "oauthWarning": "रिफ़्रेश टोकन बदलने वाले OAuth खाते, दूसरे इंस्टॉल के रिफ़्रेश करने पर, एक इंस्टॉल पर काम करना बंद कर सकते हैं।",
+    "acknowledge": "मैं समझता/समझती हूँ कि इस फ़ाइल में चुने गए खातों की API कुंजियाँ और टोकन इस पासफ़्रेज़ से सील होकर मौजूद हैं।",
+    "exportButton": "चयनित निर्यात करें",
+    "exportDone": "{count} खाते निर्यात किए गए।",
+    "exportFailed": "निर्यात विफल रहा।",
+    "chooseFile": "स्थानांतरण फ़ाइल चुनें",
+    "invalidFile": "यह OmniRoute प्रदाता स्थानांतरण फ़ाइल नहीं है।",
+    "previewButton": "पूर्वावलोकन",
+    "previewFailed": "स्थानांतरण फ़ाइल पढ़ी नहीं जा सकी।",
+    "summary": "इस फ़ाइल में {connections} खाते और {nodes} प्रदाता नोड हैं। कुछ भी नहीं हटाया जाएगा।",
+    "statusNew": "नया",
+    "statusIdentical": "समान",
+    "statusConflict": "टकराव",
+    "statusUnsupported": "समर्थित नहीं",
+    "actionAdd": "जोड़ें",
+    "actionSkip": "छोड़ें",
+    "actionReplace": "बदलें",
+    "providerNode": "प्रदाता नोड",
+    "importButton": "आयात करें",
+    "importFailed": "आयात विफल रहा।",
+    "importSuccess": "{connections} खाते और {nodes} प्रदाता नोड आयात किए गए; {skipped} छोड़े गए।"
   }
 }

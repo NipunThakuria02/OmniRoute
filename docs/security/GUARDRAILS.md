@@ -666,6 +666,42 @@ Runs on **both** stages.
 The guardrail never blocks; it only annotates (`meta.detections`,
 `meta.redacted`) or rewrites.
 
+#### Per-type selection, custom patterns and detection counters
+
+**Dashboard → Settings → Security → PII masking** chooses _what_ is masked. It
+does not switch masking on: that is still `PII_REDACTION_ENABLED` (request) and
+`PII_RESPONSE_SANITIZATION` (response + SSE), both off by default.
+
+- **Per-type selection** — the built-in ids are listed in
+  `src/shared/constants/piiTypes.ts` (`PII_BUILTIN_TYPES`). Unset means every
+  type (the behaviour before this setting existed). The request engine's
+  `ssn_us` pattern maps to `ssn`. Templates (Minimal, Standard, Financial,
+  Brazilian, USA, Full) only fill the checkboxes in the UI.
+- **Custom patterns** — up to 20 regex or wildcard patterns (`*` = up to 64
+  non-whitespace characters, `?` = one). Matches become `[CUSTOM_REDACTED]`.
+  Every pattern goes through `compilePiiCustomPattern()`
+  (`src/shared/utils/piiCustomPatterns.ts`): at most 500 characters, flags limited
+  to `g i m s u`, must compile, must pass `safe-regex` (catastrophic
+  backtracking), and must not match an empty string or a redaction placeholder.
+  A pattern that fails is refused when saved and when tested, and a stored row
+  that fails is skipped at runtime instead of being compiled. Custom patterns only
+  run while masking is on.
+- **Detection counters** — per-type counts (never matched values), held in
+  memory and reset on restart (`src/lib/pii/piiDetectionStats.ts`). They only
+  increase while masking is on.
+
+The settings live in the `key_value` table (namespace `pii_settings`,
+`src/lib/db/piiSettings.ts`) and are read through a 1 s cache. API:
+
+| Method | Path                     | Purpose                                                                 |
+| ------ | ------------------------ | ----------------------------------------------------------------------- |
+| `GET`  | `/api/settings/pii`      | Flag state, `enabledTypes`, `customPatterns`, detection counters        |
+| `PUT`  | `/api/settings/pii`      | Replace `enabledTypes` (`null` = all) and/or `customPatterns`           |
+| `POST` | `/api/settings/pii/test` | Dry-run one pattern against a sample of at most 8 KB; nothing is stored |
+
+All three require management auth and validate the body with Zod
+(`src/shared/validation/schemas/piiSettings.ts`).
+
 ### Prompt Injection (`promptInjection.ts`)
 
 Detects adversarial structures in user-supplied content and enforces the

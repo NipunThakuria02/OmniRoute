@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Szűrők törlése",
     "disableNonPublicModels": "Nem nyilvános modellek letiltása",
     "disableNonPublicModelsDesc": "A szolgáltatói katalógusban nem felfedezett vagy nem nyilvánosként megjelölt modellekre irányuló kérések elutasítása",
+    "forcedModel": "Kényszerített modell",
+    "forcedModelDesc": "Az ezzel a kulccsal küldött minden csevegési kérést erre a modellre vagy kombóra irányítja, függetlenül attól, hogy az ügyfél melyik modellt kéri (vagy ha egyet sem küld). A kulcs modell-, kombó- és költségkeret-korlátai továbbra is érvényesek.",
+    "forcedModelPlaceholder": "Nincs kényszerítve: az ügyfél által kért modell használata",
     "normalKeysSection": "Normál kulcsok",
     "quotaKeysSection": "Kvótakulcsok",
     "bypassProviderQuota": "Szolgáltatói kvótakorlátok megkerülése",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — önfejlesztő RLM kódolási keretrendszer OpenAI-kompatibilis szolgáltatók támogatásával",
       "warp": "Warp AI terminál egyéni szolgáltató támogatásával",
       "agent-deck": "Agent Deck többágenses orkesztrátor",
-      "5dive": "5dive — saját üzemeltetésű kódolóügynök-flotta; egyetlen auth profil mindet az OmniRoute-ra irányítja"
+      "5dive": "5dive — saját üzemeltetésű kódolóügynök-flotta; egyetlen auth profil mindet az OmniRoute-ra irányítja",
+      "zed": "Zed kódszerkesztő — beépített ágens OpenAI-kompatibilis szolgáltatón keresztül"
     },
     "guides": {
       "cursor": {
@@ -3240,6 +3244,9 @@
     "copilotReloadInstruction": "Ezután töltse be újra a VS Code-ot, és adja meg az API-kulcsot a beviteli mezőben.",
     "wireApiChatCompletions": "Csevegés befejezése (/chat/completions)",
     "wireApiResponses": "Responses API (/responses)",
+    "codexModelCatalog": "OmniRoute-modellek megjelenítése a Codex /model választójában",
+    "codexModelCatalogHint": "Megírja a(z) ~/.codex/omniroute-models.json fájlt a telepített Codex saját modellkatalógusából (modellenként kb. 60 KB). A Codex frissítése után alkalmazza újra.",
+    "codexCatalogWarning": "A Codex /model választója nem frissült: az OmniRoute nem tudta beolvasni a telepített Codex modellkatalógusát.",
     "cliproxyapiActionFailed": "A művelet meghiúsult",
     "cliproxyapiActionSucceeded": "A művelet sikeres volt",
     "cliproxyapiCheckUpdates": "Frissítések ellenőrzése",
@@ -5714,6 +5721,8 @@
     "disableConnection": "Kapcsolódás letiltása",
     "enableConnection": "Kapcsolat engedélyezése",
     "reauthenticateConnection": "Hitelesítse újra ezt a kapcsolatot",
+    "verifyAccount": "Fiók ellenőrzése",
+    "verifyAccountHint": "A Google kéri a fiók ellenőrzését. Nyisd meg a linket, végezd el az ellenőrzést, majd próbáld újra.",
     "proxyConfig": "Proxy konfig",
     "aliasExistsAlert": "A \"{alias}\" alias már létezik. Kérjük, használjon másik modellt, vagy módosítsa a meglévő álnevet.",
     "aliasInputPlaceholder": "álnév",
@@ -8238,6 +8247,14 @@
       "terse-cjk": {
         "label": "Tömör CJK (文言)",
         "description": "Klasszikus kínai ultratömör stílus (csak kínai nyelven érhető el)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI-szűrő",
+        "description": "Céltesztelt vizuális elemek: nincsenek általános színátmenetek, sablonelrendezések vagy halott vezérlők."
+      },
+      "antislop-copy": {
+        "label": "Antislop szöveg- és emberszűrő",
+        "description": "Őszinte szöveg és szabályok az emberekért: nincsenek MI-jelek, WCAG AA kontraszt, billentyűzet, állapotok, mobil újrarendezés."
       }
     },
     "resilienceWaitForCooldown": "Várja meg a lehűlést",
@@ -8800,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Szolgáltató (minden fiók egyetlen megszakítót oszt meg)",
     "resilienceTokenRefreshScopeConnection": "Kapcsolat (minden fióknak saját megszakítója van)",
     "resilienceTokenRefreshThreshold": "Sikertelen próbálkozások a szüneteltetés előtt",
-    "resilienceTokenRefreshCooldown": "Szünet a kioldás után"
+    "resilienceTokenRefreshCooldown": "Szünet a kioldás után",
+    "piiMasking": {
+      "title": "Személyes adatok maszkolása",
+      "description": "Válassza ki, mely személyesadat-típusokat maszkolja a rendszer, és adjon hozzá saját mintákat. A maszkolás kikapcsolva marad, amíg be nem kapcsolja az alább látható funkciójelzőket.",
+      "requestFlag": "Kérések maszkolása",
+      "responseFlag": "Válaszok tisztítása",
+      "templates": "Sablonok",
+      "template": {
+        "minimal": "Minimális",
+        "standard": "Alapértelmezett",
+        "financial": "Pénzügyi",
+        "brazilian": "Brazil",
+        "usa": "USA",
+        "full": "Teljes"
+      },
+      "builtinTypes": "Beépített típusok",
+      "types": {
+        "email": "E-mail-címek",
+        "phone_us": "Egyesült államokbeli telefonszámok",
+        "phone_br": "Brazil telefonszámok",
+        "ssn": "Egyesült államokbeli társadalombiztosítási számok",
+        "credit_card": "Bankkártyaszámok",
+        "cpf": "CPF (brazil adóazonosító)",
+        "cnpj": "CNPJ (brazil cégazonosító)",
+        "ip_address": "IPv4-címek",
+        "ipv6_address": "IPv6-címek",
+        "aws_key": "AWS hozzáférési kulcsok",
+        "api_key_generic": "API-kulcsok és tokenek"
+      },
+      "customPatterns": "Egyéni minták",
+      "customPatternsDesc": "A találatokat a rendszer [CUSTOM_REDACTED] értékre cseréli. Legfeljebb {max} minta. A katasztrofális visszalépés kockázatával járó mintákat elutasítja.",
+      "typeRegex": "Reguláris kifejezés",
+      "typeWildcard": "Helyettesítő karakter (* és ?)",
+      "pattern": "Minta",
+      "flags": "Jelzők (i, m, s, u)",
+      "sampleText": "Mintaszöveg a minta teszteléséhez",
+      "test": "Tesztelés",
+      "testMatches": "Találatok: {count}",
+      "testFailed": "Minta elutasítva: {message}",
+      "add": "Minta hozzáadása",
+      "saved": "Mentve",
+      "saveFailed": "A mentés nem sikerült: {message}",
+      "statsTitle": "Észlelések az újraindítás óta",
+      "statsEmpty": "Még nincs észlelés.",
+      "statsRequest": "Kérések"
+    }
   },
   "contextRtk": {
     "title": "RTK-motor",
@@ -9858,6 +9920,9 @@
     "hideQuotaRow": "Ezen kvótasor elrejtése",
     "showQuotaRow": "Ezen kvótasor megjelenítése",
     "hiddenQuotaRowsLabel": "Rejtett:",
+    "quotaSpeedTitle": "A fiók legutóbbi dekódolási sebessége (utolsó {count} sikeres kérés)",
+    "quotaSpeedLine": "{model}: {avg} tok/s átl. · utolsó {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s átl. · utolsó {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Nem sikerült frissíteni a kvóta láthatóságát",
     "account": "fiók",
     "modelQuotas": "Modellkvóták",
@@ -14499,7 +14564,10 @@
     "importing": "Importálás...",
     "apiKeyPlaceholder": "Illessze be a {providerLabel} API kulcsát...",
     "apiKeyStoredDescription": "Tartósan titkosítva tárolva, mint egy hosszú élettartamú jogosultsági hitelesítő. Nincs frissítési folyamat.",
-    "apiKeyRegionDescription": "AWS régió a kulcshoz (alapértelmezett: us-east-1)",
+    "apiKeyRegionAuto": "Automatikus felismerés (ajánlott)",
+    "apiKeyRegionUsEast1": "USA Kelet (Észak-Virginia)",
+    "apiKeyRegionEuCentral1": "Európa (Frankfurt)",
+    "apiKeyRegionAutoDescription": "Az automatikus felismerés először az USA Keletet, majd Európát (Frankfurt) próbálja, és elmenti azt a régiót, ahol a kulcs működik.",
     "validating": "Érvényesítés...",
     "validateAndSaveApiKey": "API Kulcs Érvényesítése és Mentése",
     "errorAutoDetect": "Nem sikerült automatikusan észlelni a tokent",
@@ -14875,5 +14943,43 @@
     "saveMessage": "Üzenet mentése",
     "defaultModel": "Alapértelmezett tesztmodell",
     "defaultModelHint": "A rendszer automatikusan ezt használja a fiók Üzenet tesztelése gombjainál. A kapcsolattal együtt kerül mentésre; a rendszer nem küld üzenetet."
+  },
+  "providerTransfer": {
+    "open": "Szelektív átvitel",
+    "title": "Szolgáltatók szelektív átvitele",
+    "description": "A kiválasztott szolgáltatói fiókok (és az általuk használt egyéni szolgáltatói csomópontok) áthelyezése egy másik OmniRoute-telepítésbe. A fájlt jelmondat védi, és az importálás soha nem töröl semmit.",
+    "exportTab": "Exportálás",
+    "importTab": "Importálás",
+    "searchPlaceholder": "Fiókok keresése…",
+    "selectAll": "Összes kijelölése",
+    "clearSelection": "Törlés",
+    "selectedCount": "{count} kijelölve",
+    "noAccounts": "Nincs egyező szolgáltatói fiók.",
+    "loadFailed": "Nem sikerült betölteni a szolgáltatói fiókokat.",
+    "passphrase": "Jelmondat",
+    "passphraseConfirm": "Jelmondat megerősítése",
+    "passphraseHint": "Legalább {min} karakter. Soha nem tároljuk; nélküle a fájl nem nyitható meg.",
+    "passphraseMismatch": "A jelmondatok nem egyeznek.",
+    "oauthWarning": "A refresh tokent forgató OAuth-fiókok leállhatnak az egyik telepítésen, amint a másik megújítja őket.",
+    "acknowledge": "Tudomásul veszem, hogy a fájl a kiválasztott fiókok API-kulcsait és tokenjeit tartalmazza ezzel a jelmondattal lezárva.",
+    "exportButton": "Kijelöltek exportálása",
+    "exportDone": "{count} fiók exportálva.",
+    "exportFailed": "Az exportálás sikertelen.",
+    "chooseFile": "Átviteli fájl kiválasztása",
+    "invalidFile": "Ez nem OmniRoute szolgáltatóátviteli fájl.",
+    "previewButton": "Előnézet",
+    "previewFailed": "Az átviteli fájl nem olvasható.",
+    "summary": "A fájlban {connections} fiók és {nodes} szolgáltatói csomópont van. Semmi sem törlődik.",
+    "statusNew": "Új",
+    "statusIdentical": "Azonos",
+    "statusConflict": "Ütközés",
+    "statusUnsupported": "Nem támogatott",
+    "actionAdd": "Hozzáadás",
+    "actionSkip": "Kihagyás",
+    "actionReplace": "Csere",
+    "providerNode": "Szolgáltatói csomópont",
+    "importButton": "Importálás",
+    "importFailed": "Az importálás sikertelen.",
+    "importSuccess": "{connections} fiók és {nodes} szolgáltatói csomópont importálva; {skipped} kihagyva."
   }
 }

@@ -186,6 +186,10 @@ export const ALWAYS_PROTECTED_API_PATHS: ReadonlyArray<string> = [
   // which is false under requireLogin=false. (GHSA-v7g9-7f55-5g46)
   "/api/settings/export-json",
   "/api/settings/import-json",
+  // Selective provider-account transfer: export hands out the selected accounts'
+  // credentials (passphrase-sealed) and import writes connections. Same tier as
+  // the -json siblings above; the prefix covers catalog/export/preview/import.
+  "/api/settings/transfer",
   // Bulk log export: call_logs carries prompts and responses, proxy_logs carries
   // client/public IPs, and the handler only calls requireManagementAuth() with no
   // alwaysRequireAuth. Found sweeping the GHSA-5926-2w35-7h4q class.
@@ -311,14 +315,19 @@ export function isPrivateLanHost(hostHeader: string | null): boolean {
  * non-loopback clients when the request method is GET, HEAD, or OPTIONS.
  *
  * Rule: a path belongs here only when the read methods perform NO child-process
- * spawn and expose NO privileged mutation — only the write methods do.
+ * spawn for a non-local caller and expose NO privileged mutation — only the write
+ * methods do. A read handler that probes the host for loopback/LAN callers must
+ * gate that probe at its call site on `getRequestPeerLocality()`.
  *
  * Current exemptions:
  *   /api/system/version — GET reads package.json + npm registry; only POST
  *   triggers the auto-update flow (spawns git checkout + npm install + pm2).
  *   Hard Rules #15/#17 still apply to POST.
- *   /api/tunnels/cloudflared — GET reads tunnel status only; only POST
- *   spawns the cloudflared process (#11531).
+ *   /api/tunnels/cloudflared — GET reports tunnel status; only POST starts/stops
+ *   the cloudflared process (#11531). The status read resolves the binary with a
+ *   PATH lookup (`which cloudflared`), which runs only for loopback/LAN callers:
+ *   a remote caller gets the unprobed status (`probed: false`) with no spawn
+ *   (GHSA-35fw-cv32-2373 class, GHSA-jmq6-8j86-8xqj call-site gate).
  */
 export const LOCAL_ONLY_API_GET_EXEMPTIONS: ReadonlySet<string> = new Set([
   "/api/system/version",

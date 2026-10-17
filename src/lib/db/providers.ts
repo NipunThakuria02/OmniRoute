@@ -13,11 +13,6 @@ import { invalidateDbCache, getCachedRawProviderConnections } from "./readCache"
 import { invalidateConnectionUpdate, type UpdateOpts } from "./readCache";
 import { reorderConnections } from "./providers/deletion";
 import { normalizeConnectionProviderSpecificData } from "./providers/providerSpecificData";
-import {
-  decryptProviderSpecificDataSecrets,
-  serializeProviderSpecificDataForStorage,
-} from "./providers/secretFields";
-import { ensureProviderSpecificDataSecretsEncrypted } from "./providers/migrations";
 import { bumpProxyConfigGeneration, getSettings } from "./settings";
 import {
   getStoredManagementPassword,
@@ -53,32 +48,6 @@ import {
 type JsonRecord = Record<string, unknown>;
 
 const CONNECTION_CREDENTIAL_FIELDS = ["apiKey", "accessToken", "refreshToken", "idToken"] as const;
-
-/**
- * rowToCamel + decryption of the credential fields inside providerSpecificData, so every
- * caller of this module sees plaintext while the column holds `enc:v1:` envelopes
- * (./providers/secretFields.ts). The scalar credential columns keep their lazy path.
- */
-function rowToCamelWithPlaintextSecrets(row: unknown): JsonRecord | null {
-  const camelRow = rowToCamel(row);
-  if (!camelRow || !("providerSpecificData" in camelRow)) return camelRow;
-  camelRow.providerSpecificData = decryptProviderSpecificDataSecrets(
-    camelRow.providerSpecificData,
-    {
-      connectionId: toStringOrNull(camelRow.id) || "",
-      provider: toStringOrNull(camelRow.provider) || "unknown",
-    }
-  );
-  return camelRow;
-}
-
-/** Stored providerSpecificData of a raw row, decrypted so dedup can compare credentials. */
-function storedProviderSpecificData(row: JsonRecord): JsonRecord | null {
-  return decryptProviderSpecificDataSecrets(parseProviderSpecificData(row.provider_specific_data), {
-    connectionId: toStringOrNull(row.id) || "",
-    provider: toStringOrNull(row.provider) || "unknown",
-  }) as JsonRecord | null;
-}
 
 /** Thrown when a write would store the dashboard login password as a provider credential. */
 export class ManagementPasswordAsCredentialError extends Error {
@@ -253,7 +222,6 @@ export async function getRawProviderConnections(
   columns?: string[]
 ) {
   const db = getDbInstance() as unknown as DbLike;
-  ensureProviderSpecificDataSecretsEncrypted(db);
   let selectCols = "*";
   if (columns?.length) {
     const invalidColumns = columns.filter((col) => !PROVIDER_CONNECTIONS_COLUMNS.has(col));
@@ -295,7 +263,7 @@ export async function getRawProviderConnections(
 
   const rows = db.prepare(sql).all(params);
   return rows.map((r) => {
-    const camelRow = rowToCamelWithPlaintextSecrets(r);
+    const camelRow = rowToCamel(r);
     return withNullableRateLimitOverrides(
       withNullableQuotaWindowThresholds(
         withNullableMaxConcurrent(cleanNulls(camelRow), camelRow),
@@ -335,11 +303,10 @@ export function getProviderConnectionsCount(filter: JsonRecord = {}): number {
 
 export async function getProviderConnectionById(id: string) {
   const db = getDbInstance() as unknown as DbLike;
-  ensureProviderSpecificDataSecretsEncrypted(db);
   const row = db.prepare("SELECT * FROM provider_connections WHERE id = ?").get(id);
   if (!row) return null;
 
-  const camelRow = rowToCamelWithPlaintextSecrets(row);
+  const camelRow = rowToCamel(row);
   return decryptConnectionFields(
     withNullableRateLimitOverrides(
       withNullableQuotaWindowThresholds(
@@ -393,8 +360,8 @@ export function getProviderConnectionDisplayMetadata(
 // different or blank name must update the existing connection instead of
 // inserting a duplicate, mirroring the apikey dedup (#3023). Extracted from
 // createProviderConnection to keep that function below the complexity baseline.
-// The credential fields inside provider_specific_data are stored encrypted, so the
-// stored record is decrypted (storedProviderSpecificData) before the comparison.
+// provider_specific_data is plaintext JSON, so the value is compared directly
+// without decryption.
 /**
  * #12173 — the API-key-value dedup (#3023) matches purely on `provider +
  * apiKey`, which is correct for hosted providers where the key alone is the
@@ -443,6 +410,21 @@ function normalizeBaseUrlForDedup(value: unknown): string {
  * already overwritten. #3368's actual goal (same cookie under a different name
  * dedupes) is unaffected: that was always the credential loop's job.
  */
+/**
+ * Cookie-session identity checks must use plaintext for both sides.
+ * #16836 encrypts selected providerSpecificData cookies with randomized AES-GCM,
+ * so matching a new plaintext cookie against the raw JSON column would always
+ * miss the same session and create duplicate provider connections.
+ * Preserve the existing fallback behavior for legacy unencrypted metadata.
+ */
+function storedCookieCredentialKey(raw: unknown): string | null {
+  const parsed = parseProviderSpecificData(raw);
+  if (!parsed) return null;
+  return webSessionCredentialKey(
+    decryptConnectionFields({ providerSpecificData: parsed }).providerSpecificData
+  );
+}
+
 function findExistingCookieConnection(
   db: DbLike,
   provider: unknown,
@@ -456,8 +438,7 @@ function findExistingCookieConnection(
       .prepare("SELECT * FROM provider_connections WHERE provider = ? AND auth_type = 'cookie'")
       .all(provider) as JsonRecord[];
     for (const row of cookieRows) {
-      const psd = storedProviderSpecificData(row);
-      if (psd && webSessionCredentialKey(psd) === newCredKey) return row;
+      if (storedCookieCredentialKey(row.provider_specific_data) === newCredKey) return row;
     }
   }
 
@@ -472,7 +453,10 @@ function findExistingCookieConnection(
           "SELECT * FROM provider_connections WHERE provider = ? AND auth_type = 'cookie' AND name = ?"
         )
         .get(provider, name) as JsonRecord | undefined) || null;
-    if (byName && !webSessionCredentialKey(storedProviderSpecificData(byName))) {
+    if (
+      byName &&
+      !storedCookieCredentialKey(byName.provider_specific_data)
+    ) {
       return byName;
     }
   }
@@ -625,7 +609,7 @@ export async function createProviderConnection(data: JsonRecord) {
   if (existing) {
     const existingId = toStringOrNull(existing.id);
     if (!existingId) return null;
-    const rawExisting = toRecord(rowToCamelWithPlaintextSecrets(existing));
+    const rawExisting = toRecord(rowToCamel(existing));
     const decryptedExisting = decryptConnectionFields({ ...rawExisting });
     const merged: JsonRecord = { ...decryptedExisting, ...data, updatedAt: now };
     merged.providerSpecificData = normalizeConnectionProviderSpecificData(
@@ -864,7 +848,9 @@ function _insertConnectionRow(db: DbLike, conn: JsonRecord) {
     lastTested: conn.lastTested || null,
     apiKey: conn.apiKey || null,
     idToken: conn.idToken || null,
-    providerSpecificData: serializeProviderSpecificDataForStorage(conn.providerSpecificData),
+    providerSpecificData: conn.providerSpecificData
+      ? JSON.stringify(conn.providerSpecificData)
+      : null,
     expiresIn: conn.expiresIn || null,
     displayName: conn.displayName || null,
     globalPriority: conn.globalPriority || null,
@@ -917,7 +903,9 @@ function _buildUpdateConnectionRowParams(id: string, data: JsonRecord, now: unkn
     lastTested: data.lastTested || null,
     apiKey: data.apiKey || null,
     idToken: data.idToken || null,
-    providerSpecificData: serializeProviderSpecificDataForStorage(data.providerSpecificData),
+    providerSpecificData: data.providerSpecificData
+      ? JSON.stringify(data.providerSpecificData)
+      : null,
     expiresIn: data.expiresIn || null,
     displayName: data.displayName || null,
     globalPriority: data.globalPriority || null,
@@ -985,7 +973,7 @@ export async function updateProviderConnection(id: string, data: JsonRecord, opt
   // on every unrelated field edit.
   await assertApiKeyIsNotManagementPassword(data.apiKey);
 
-  const existingCamel = toRecord(rowToCamelWithPlaintextSecrets(existing));
+  const existingCamel = toRecord(rowToCamel(existing));
   const merged: JsonRecord = {
     ...existingCamel,
     ...data,
@@ -1048,12 +1036,17 @@ export async function updateProviderConnection(id: string, data: JsonRecord, opt
     return getProviderConnectionById(id);
   }
 
+  // The write path keeps existing ciphertext in merged.providerSpecificData
+  // to avoid re-encrypting unchanged values. Return a decrypted copy instead:
+  // callers of updateProviderConnection must never see enc:v1 metadata as the
+  // usable console credentials (#16836).
+  const returned = decryptConnectionFields({ ...merged });
   const returnedConnection = withNullableRateLimitOverrides(
     withNullableQuotaWindowThresholds(
-      withNullableMaxConcurrent(cleanNulls(merged), merged),
-      merged
+      withNullableMaxConcurrent(cleanNulls(returned), returned),
+      returned
     ),
-    merged
+    returned
   );
 
   if (

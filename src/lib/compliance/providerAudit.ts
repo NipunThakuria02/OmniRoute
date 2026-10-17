@@ -11,6 +11,44 @@ const MAX_WARNING_HITS = 5;
 const MAX_WARNING_DEPTH = 6;
 const MAX_WARNING_LENGTH = 400;
 
+/**
+ * Audit records can outlive management responses. Match the dashboard's
+ * sensitive providerSpecificData inventory so console/session credentials
+ * never get written to audit details, even on legacy plaintext connections.
+ * Keep this list aligned with sanitizeProviderSpecificDataForResponse.
+ */
+const AUDIT_SENSITIVE_METADATA_FIELDS = new Set([
+  "accessToken",
+  "refreshToken",
+  "idToken",
+  "apiKey",
+  "consoleApiKey",
+  "secretAccessKey",
+  "awsSecretAccessKey",
+  "sessionToken",
+  "awsSessionToken",
+  "openCodeGoAuthCookie",
+  "opencodeGoAuthCookie",
+  "authCookie",
+  "ollamaUsageCookie",
+  "ollamaCloudUsageCookie",
+  "ollamaCloudCookie",
+  "usageCookie",
+  "qwenCloudCookie",
+  "qwenCloudSecToken",
+  "alibabaConsoleCookie",
+  "alibabaConsoleSecToken",
+  "xiaomiMimoConsoleCookie",
+  "runtimeKey",
+  "validationId",
+  "volcConsoleCookie",
+  "volcCsrfToken",
+  "codexFingerprintSeed",
+  "codexClientIdentity",
+  "codexOriginalIdentityHeaders",
+  "codexTurnStateEcho",
+]);
+
 function toRecord(value: unknown): JsonRecord {
   return value && typeof value === "object" && !Array.isArray(value) ? (value as JsonRecord) : {};
 }
@@ -75,10 +113,12 @@ export function summarizeProviderConnectionForAudit(connection: unknown) {
   const providerSpecificData = toRecord(record.providerSpecificData);
   if (Object.keys(providerSpecificData).length > 0) {
     const sanitizedProviderSpecificData = { ...providerSpecificData };
-    delete sanitizedProviderSpecificData.consoleApiKey;
-    delete sanitizedProviderSpecificData.alibabaConsoleCookie;
-    delete sanitizedProviderSpecificData.alibabaConsoleSecToken;
-    delete sanitizedProviderSpecificData.xiaomiMimoConsoleCookie;
+    for (const field of AUDIT_SENSITIVE_METADATA_FIELDS) {
+      delete sanitizedProviderSpecificData[field];
+    }
+    if (sanitizedProviderSpecificData.browserCdpEndpoint) {
+      sanitizedProviderSpecificData.browserCdpEndpoint = "configured";
+    }
     sanitized.providerSpecificData = sanitizedProviderSpecificData;
   }
 

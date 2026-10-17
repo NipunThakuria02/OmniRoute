@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Cancella filtri",
     "disableNonPublicModels": "Disabilita modelli non pubblici",
     "disableNonPublicModelsDesc": "Rifiuta le richieste per i modelli non rilevati o non contrassegnati come pubblici nel catalogo del provider",
+    "forcedModel": "Modello imposto",
+    "forcedModelDesc": "Instrada ogni richiesta di chat fatta con questa chiave verso questo modello o combo, qualunque modello chieda il client (o quando non ne invia nessuno). I limiti di modelli, combo e budget della chiave restano validi.",
+    "forcedModelPlaceholder": "Non imposto: usa il modello richiesto dal client",
     "normalKeysSection": "Chiavi normali",
     "quotaKeysSection": "Chiavi di quota",
     "bypassProviderQuota": "Bypassa i limiti di quota del provider",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — framework RLM di programmazione capace di auto-migliorarsi, con supporto per provider compatibili con OpenAI",
       "warp": "Terminale Warp AI con supporto per provider personalizzato",
       "agent-deck": "Orchestratore multi-agente Agent Deck",
-      "5dive": "5dive — flotta self-hosted di agenti di codifica; un profilo di autenticazione li punta tutti su OmniRoute"
+      "5dive": "5dive — flotta self-hosted di agenti di codifica; un profilo di autenticazione li punta tutti su OmniRoute",
+      "zed": "Editor di codice Zed — agente integrato tramite un provider compatibile con OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3240,6 +3244,9 @@
     "copilotReloadInstruction": "Quindi ricarica VS Code e imposta la chiave API nel prompt di input.",
     "wireApiChatCompletions": "Completamenti chat (/chat/completamenti)",
     "wireApiResponses": "API delle risposte (/responses)",
+    "codexModelCatalog": "Mostra i modelli OmniRoute nel selettore /model di Codex",
+    "codexModelCatalogHint": "Scrive ~/.codex/omniroute-models.json a partire dal catalogo modelli del Codex installato (circa 60 KB per modello). Riapplica dopo aver aggiornato Codex.",
+    "codexCatalogWarning": "Il selettore /model di Codex non è stato aggiornato: OmniRoute non è riuscito a leggere il catalogo modelli del Codex installato.",
     "cliproxyapiActionFailed": "Azione non riuscita",
     "cliproxyapiActionSucceeded": "Azione riuscita",
     "cliproxyapiCheckUpdates": "Controlla Aggiornamenti",
@@ -5714,6 +5721,8 @@
     "disableConnection": "Disabilita connessione",
     "enableConnection": "Abilita connessione",
     "reauthenticateConnection": "Autenticare nuovamente questa connessione",
+    "verifyAccount": "Verifica account",
+    "verifyAccountHint": "Google richiede la verifica di questo account. Apri il link, completa il controllo e riprova.",
     "proxyConfig": "Configurazione proxy",
     "aliasExistsAlert": "L'alias \"{alias}\" esiste già. Utilizza un modello diverso o modifica l'alias esistente.",
     "aliasInputPlaceholder": "nome dell'alias",
@@ -8238,6 +8247,14 @@
       "terse-cjk": {
         "label": "CJK conciso (文言)",
         "description": "Stile ultra-conciso in cinese classico (disponibile solo per il cinese)."
+      },
+      "antislop-ui": {
+        "label": "Filtro antislop UI",
+        "description": "Elementi visivi con scopo verificato: niente sfumature generiche, layout da template o controlli morti."
+      },
+      "antislop-copy": {
+        "label": "Filtro antislop testi e persone",
+        "description": "Testi onesti e regole per le persone: niente tic da IA, contrasto WCAG AA, tastiera, stati, adattamento mobile."
       }
     },
     "resilienceWaitForCooldown": "Attendi il raffreddamento",
@@ -8800,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Provider (tutti gli account condividono un unico interruttore)",
     "resilienceTokenRefreshScopeConnection": "Connessione (ogni account ha il proprio circuit breaker)",
     "resilienceTokenRefreshThreshold": "Fallimenti prima della pausa",
-    "resilienceTokenRefreshCooldown": "Pausa dopo l'attivazione"
+    "resilienceTokenRefreshCooldown": "Pausa dopo l'attivazione",
+    "piiMasking": {
+      "title": "Mascheramento PII",
+      "description": "Scegli quali tipi di dati personali mascherare e aggiungi i tuoi pattern. Il mascheramento resta disattivato finché non attivi i feature flag mostrati qui sotto.",
+      "requestFlag": "Mascheramento delle richieste",
+      "responseFlag": "Sanificazione delle risposte",
+      "templates": "Modelli",
+      "template": {
+        "minimal": "Minimo",
+        "standard": "Standard",
+        "financial": "Finanziario",
+        "brazilian": "Brasiliano",
+        "usa": "USA",
+        "full": "Completo"
+      },
+      "builtinTypes": "Tipi integrati",
+      "types": {
+        "email": "Indirizzi email",
+        "phone_us": "Numeri di telefono USA",
+        "phone_br": "Numeri di telefono brasiliani",
+        "ssn": "Numeri di previdenza sociale USA",
+        "credit_card": "Numeri di carta di credito",
+        "cpf": "CPF (codice fiscale brasiliano)",
+        "cnpj": "CNPJ (codice aziendale brasiliano)",
+        "ip_address": "Indirizzi IPv4",
+        "ipv6_address": "Indirizzi IPv6",
+        "aws_key": "Chiavi di accesso AWS",
+        "api_key_generic": "Chiavi API e token"
+      },
+      "customPatterns": "Pattern personalizzati",
+      "customPatternsDesc": "Le corrispondenze vengono sostituite con [CUSTOM_REDACTED]. Fino a {max} pattern. I pattern a rischio di backtracking catastrofico vengono rifiutati.",
+      "typeRegex": "Espressione regolare",
+      "typeWildcard": "Carattere jolly (* e ?)",
+      "pattern": "Pattern",
+      "flags": "Flag (i, m, s, u)",
+      "sampleText": "Testo di esempio su cui provare il pattern",
+      "test": "Prova",
+      "testMatches": "{count} corrispondenze",
+      "testFailed": "Pattern rifiutato: {message}",
+      "add": "Aggiungi pattern",
+      "saved": "Salvato",
+      "saveFailed": "Impossibile salvare: {message}",
+      "statsTitle": "Rilevamenti dal riavvio",
+      "statsEmpty": "Ancora nessun rilevamento.",
+      "statsRequest": "Richieste"
+    }
   },
   "contextRtk": {
     "title": "Motore RTK",
@@ -9858,6 +9920,9 @@
     "hideQuotaRow": "Nascondi questa riga della quota",
     "showQuotaRow": "Mostra questa riga della quota",
     "hiddenQuotaRowsLabel": "Nascosto:",
+    "quotaSpeedTitle": "Velocità di decodifica recente su questo account (ultime {count} richieste riuscite)",
+    "quotaSpeedLine": "{model}: {avg} tok/s media · ultima {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s media · ultima {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Impossibile aggiornare la visibilità della quota",
     "account": "Account",
     "modelQuotas": "Quote modello",
@@ -14499,7 +14564,10 @@
     "importing": "Importazione...",
     "apiKeyPlaceholder": "Incolla la tua chiave API {providerLabel}...",
     "apiKeyStoredDescription": "Memorizzato in modo crittografato come una credenziale bearer a lungo termine. Non c'è un flusso di aggiornamento.",
-    "apiKeyRegionDescription": "Regione AWS per la chiave (predefinito: us-east-1)",
+    "apiKeyRegionAuto": "Rilevamento automatico (consigliato)",
+    "apiKeyRegionUsEast1": "Stati Uniti Est (Virginia del Nord)",
+    "apiKeyRegionEuCentral1": "Europa (Francoforte)",
+    "apiKeyRegionAutoDescription": "Il rilevamento automatico prova prima Stati Uniti Est, poi Europa (Francoforte), e salva la regione in cui la chiave funziona.",
     "validating": "Convalida in corso...",
     "validateAndSaveApiKey": "Convalida e Salva la Chiave API",
     "errorAutoDetect": "Impossibile rilevare automaticamente il token",
@@ -14875,5 +14943,43 @@
     "saveMessage": "Salva messaggio",
     "defaultModel": "Modello di prova predefinito",
     "defaultModelHint": "Utilizzato automaticamente dai pulsanti Messaggio di prova per questo account. Salvato con la connessione; non viene inviato alcun messaggio."
+  },
+  "providerTransfer": {
+    "open": "Trasferimento selettivo",
+    "title": "Trasferimento selettivo dei provider",
+    "description": "Sposta gli account provider scelti (e i nodi provider personalizzati che usano) in un'altra installazione di OmniRoute. Il file è sigillato con una passphrase e l'importazione non elimina mai nulla.",
+    "exportTab": "Esporta",
+    "importTab": "Importa",
+    "searchPlaceholder": "Cerca account…",
+    "selectAll": "Seleziona tutti",
+    "clearSelection": "Cancella",
+    "selectedCount": "{count} selezionati",
+    "noAccounts": "Nessun account provider corrisponde.",
+    "loadFailed": "Impossibile caricare gli account provider.",
+    "passphrase": "Passphrase",
+    "passphraseConfirm": "Conferma passphrase",
+    "passphraseHint": "Almeno {min} caratteri. Non viene mai salvata; senza di essa il file non può essere aperto.",
+    "passphraseMismatch": "Le passphrase non coincidono.",
+    "oauthWarning": "Gli account OAuth che ruotano il refresh token possono smettere di funzionare su un'installazione quando l'altra lo rinnova.",
+    "acknowledge": "Comprendo che questo file contiene le chiavi API e i token degli account selezionati, sigillati con questa passphrase.",
+    "exportButton": "Esporta selezionati",
+    "exportDone": "{count} account esportati.",
+    "exportFailed": "Esportazione non riuscita.",
+    "chooseFile": "Scegli il file di trasferimento",
+    "invalidFile": "Questo non è un file di trasferimento provider di OmniRoute.",
+    "previewButton": "Anteprima",
+    "previewFailed": "Impossibile leggere il file di trasferimento.",
+    "summary": "{connections} account e {nodes} nodi provider in questo file. Non verrà eliminato nulla.",
+    "statusNew": "Nuovo",
+    "statusIdentical": "Identico",
+    "statusConflict": "Conflitto",
+    "statusUnsupported": "Non supportato",
+    "actionAdd": "Aggiungi",
+    "actionSkip": "Salta",
+    "actionReplace": "Sostituisci",
+    "providerNode": "Nodo provider",
+    "importButton": "Importa",
+    "importFailed": "Importazione non riuscita.",
+    "importSuccess": "Importati {connections} account e {nodes} nodi provider; {skipped} saltati."
   }
 }

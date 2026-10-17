@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "مسح المرشحات",
     "disableNonPublicModels": "تعطيل النماذج غير العامة",
     "disableNonPublicModelsDesc": "رفض الطلبات للنماذج غير المكتشفة أو غير المحددة كعامة في كتالوج المزود",
+    "forcedModel": "النموذج المفروض",
+    "forcedModelDesc": "توجيه كل طلب محادثة يتم بهذا المفتاح إلى هذا النموذج أو التركيبة، أيًا كان النموذج الذي يطلبه العميل (أو عندما لا يرسل أي نموذج). تظل حدود النماذج والتركيبات والميزانية الخاصة بالمفتاح سارية.",
+    "forcedModelPlaceholder": "غير مفروض: استخدام النموذج الذي يطلبه العميل",
     "normalKeysSection": "المفاتيح العادية",
     "quotaKeysSection": "مفاتيح الحصص",
     "bypassProviderQuota": "تجاوز حدود حصص المزود",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — بيئة برمجة RLM ذاتية التحسين تدعم موفّري الخدمات المتوافقين مع OpenAI",
       "warp": "طرفية Warp AI مع دعم لمزودي الخدمة المخصصين",
       "agent-deck": "منسق الوكلاء المتعددين Agent Deck",
-      "5dive": "5dive — أسطول ذاتي الاستضافة من وكلاء البرمجة؛ ملف اعتماد واحد يوجّهها جميعًا إلى OmniRoute"
+      "5dive": "5dive — أسطول ذاتي الاستضافة من وكلاء البرمجة؛ ملف اعتماد واحد يوجّهها جميعًا إلى OmniRoute",
+      "zed": "محرر الأكواد Zed — وكيل مدمج عبر مزوّد متوافق مع OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3240,6 +3244,9 @@
     "copilotReloadInstruction": "ثم أعد تحميل VS Code وعيّن مفتاح API في موجه الإدخال.",
     "wireApiChatCompletions": "مكتملات الدردشة (/chat/مكتملات)",
     "wireApiResponses": "واجهة برمجة تطبيقات الاستجابات (/ الاستجابات)",
+    "codexModelCatalog": "عرض نماذج OmniRoute في منتقي ‎/model في Codex",
+    "codexModelCatalogHint": "يكتب ~/.codex/omniroute-models.json انطلاقًا من كتالوج النماذج الخاص بـ Codex المثبت (نحو 60 KB لكل نموذج). أعد التطبيق بعد ترقية Codex.",
+    "codexCatalogWarning": "لم يتم تحديث منتقي ‎/model في Codex: تعذّر على OmniRoute قراءة كتالوج نماذج Codex المثبت.",
     "cliproxyapiActionFailed": "فشل الإجراء",
     "cliproxyapiActionSucceeded": "تمت العملية بنجاح",
     "cliproxyapiCheckUpdates": "تحقق من التحديثات",
@@ -5714,6 +5721,8 @@
     "disableConnection": "تعطيل الاتصال",
     "enableConnection": "تمكين الاتصال",
     "reauthenticateConnection": "إعادة مصادقة هذا الاتصال",
+    "verifyAccount": "التحقق من الحساب",
+    "verifyAccountHint": "تطلب Google التحقق من هذا الحساب. افتح الرابط وأكمل التحقق ثم أعد المحاولة.",
     "proxyConfig": "تكوين بروكسي",
     "aliasExistsAlert": "الاسم المستعار \"{alias}\" موجود بالفعل. الرجاء استخدام نموذج مختلف أو تعديل الاسم المستعار الموجود.",
     "aliasInputPlaceholder": "اسم الاسم المستعار",
@@ -8238,6 +8247,14 @@
       "terse-cjk": {
         "label": "CJK مقتضب (文言)",
         "description": "أسلوب صيني كلاسيكي فائق الاقتضاب (متاح للغة الصينية فقط)."
+      },
+      "antislop-ui": {
+        "label": "مرشّح Antislop للواجهة",
+        "description": "عناصر بصرية مختبرة الغرض: لا تدرجات لونية عامة ولا تخطيطات قوالب ولا عناصر تحكم معطّلة."
+      },
+      "antislop-copy": {
+        "label": "مرشّح Antislop للنصوص والإنسان",
+        "description": "نصوص صادقة مع قواعد للبشر: بلا علامات الذكاء الاصطناعي، تباين WCAG AA، لوحة المفاتيح، الحالات، إعادة التدفق على الجوال."
       }
     },
     "resilienceWaitForCooldown": "انتظر فترة التهدئة",
@@ -8800,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "المزوّد (جميع الحسابات تشترك في قاطع واحد)",
     "resilienceTokenRefreshScopeConnection": "الاتصال (لكل حساب قاطع خاص به)",
     "resilienceTokenRefreshThreshold": "عدد الفشل قبل الإيقاف",
-    "resilienceTokenRefreshCooldown": "الوقفة بعد التفعيل"
+    "resilienceTokenRefreshCooldown": "الوقفة بعد التفعيل",
+    "piiMasking": {
+      "title": "إخفاء البيانات الشخصية",
+      "description": "اختر أنواع البيانات الشخصية التي يتم إخفاؤها وأضف أنماطك الخاصة. يبقى الإخفاء متوقفًا حتى تفعّل علامات الميزات الظاهرة أدناه.",
+      "requestFlag": "إخفاء الطلبات",
+      "responseFlag": "تنقية الاستجابات",
+      "templates": "القوالب",
+      "template": {
+        "minimal": "أدنى",
+        "standard": "قياسي",
+        "financial": "مالي",
+        "brazilian": "برازيلي",
+        "usa": "الولايات المتحدة",
+        "full": "كامل"
+      },
+      "builtinTypes": "الأنواع المضمّنة",
+      "types": {
+        "email": "عناوين البريد الإلكتروني",
+        "phone_us": "أرقام الهواتف الأمريكية",
+        "phone_br": "أرقام الهواتف البرازيلية",
+        "ssn": "أرقام الضمان الاجتماعي الأمريكية",
+        "credit_card": "أرقام بطاقات الائتمان",
+        "cpf": "CPF (الرقم الضريبي البرازيلي للأفراد)",
+        "cnpj": "CNPJ (رقم الشركات البرازيلي)",
+        "ip_address": "عناوين IPv4",
+        "ipv6_address": "عناوين IPv6",
+        "aws_key": "مفاتيح وصول AWS",
+        "api_key_generic": "مفاتيح API والرموز المميزة"
+      },
+      "customPatterns": "أنماط مخصصة",
+      "customPatternsDesc": "تُستبدل المطابقات بـ [CUSTOM_REDACTED]. حتى {max} نمطًا. تُرفض الأنماط المعرّضة لخطر التراجع الكارثي.",
+      "typeRegex": "تعبير نمطي",
+      "typeWildcard": "حرف بدل (* و ?)",
+      "pattern": "النمط",
+      "flags": "العلامات (i, m, s, u)",
+      "sampleText": "نص تجريبي لاختبار النمط",
+      "test": "اختبار",
+      "testMatches": "عدد المطابقات: {count}",
+      "testFailed": "تم رفض النمط: {message}",
+      "add": "إضافة نمط",
+      "saved": "تم الحفظ",
+      "saveFailed": "تعذّر الحفظ: {message}",
+      "statsTitle": "الاكتشافات منذ إعادة التشغيل",
+      "statsEmpty": "لا توجد اكتشافات بعد.",
+      "statsRequest": "الطلبات"
+    }
   },
   "contextRtk": {
     "title": "محرك آر تي كيه",
@@ -9858,6 +9920,9 @@
     "hideQuotaRow": "إخفاء صف الحصة هذا",
     "showQuotaRow": "إظهار صف الحصة هذا",
     "hiddenQuotaRowsLabel": "مخفي:",
+    "quotaSpeedTitle": "سرعة فك الترميز الأخيرة لهذا الحساب (آخر {count} طلبات ناجحة)",
+    "quotaSpeedLine": "{model}: {avg} tok/s متوسط · الأخير {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s متوسط · الأخير {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "فشل تحديث ظهور الحصة",
     "account": "الحساب",
     "modelQuotas": "الحصص النموذجية",
@@ -14499,7 +14564,10 @@
     "importing": "جارٍ الاستيراد...",
     "apiKeyPlaceholder": "الصق مفتاح API الخاص بك {providerLabel}...",
     "apiKeyStoredDescription": "تم تخزينه مشفراً كاعتماد حاملي طويل الأمد. لا يوجد تدفق تحديث.",
-    "apiKeyRegionDescription": "منطقة AWS للمفتاح (افتراضي: us-east-1)",
+    "apiKeyRegionAuto": "اكتشاف تلقائي (موصى به)",
+    "apiKeyRegionUsEast1": "شرق الولايات المتحدة (فيرجينيا الشمالية)",
+    "apiKeyRegionEuCentral1": "أوروبا (فرانكفورت)",
+    "apiKeyRegionAutoDescription": "يجرّب الاكتشاف التلقائي شرق الولايات المتحدة أولاً، ثم أوروبا (فرانكفورت)، ويحفظ المنطقة التي يعمل فيها المفتاح.",
     "validating": "جارٍ التحقق...",
     "validateAndSaveApiKey": "تحقق من مفتاح API واحفظه",
     "errorAutoDetect": "تعذر الكشف التلقائي عن الرمز",
@@ -14875,5 +14943,43 @@
     "saveMessage": "حفظ الرسالة",
     "defaultModel": "نموذج الاختبار الافتراضي",
     "defaultModelHint": "يُستخدم تلقائيًا بواسطة أزرار «رسالة اختبار» لهذا الحساب. يُحفظ مع الاتصال؛ ولا تُرسل أي رسالة."
+  },
+  "providerTransfer": {
+    "open": "نقل انتقائي",
+    "title": "نقل انتقائي لمزوّدي الخدمة",
+    "description": "انقل حسابات المزوّدين المختارة (وعُقد المزوّدين المخصصة التي تستخدمها) إلى تثبيت OmniRoute آخر. يُختم الملف بعبارة مرور، ولا يحذف الاستيراد أي شيء أبدًا.",
+    "exportTab": "تصدير",
+    "importTab": "استيراد",
+    "searchPlaceholder": "ابحث في الحسابات…",
+    "selectAll": "تحديد الكل",
+    "clearSelection": "مسح",
+    "selectedCount": "تم تحديد {count}",
+    "noAccounts": "لا توجد حسابات مزوّدين مطابقة.",
+    "loadFailed": "تعذّر تحميل حسابات المزوّدين.",
+    "passphrase": "عبارة المرور",
+    "passphraseConfirm": "تأكيد عبارة المرور",
+    "passphraseHint": "{min} حرفًا على الأقل. لا تُخزَّن أبدًا؛ ومن دونها لا يمكن فتح الملف.",
+    "passphraseMismatch": "عبارتا المرور غير متطابقتين.",
+    "oauthWarning": "قد تتوقف حسابات OAuth التي تدوّر رمز التحديث عن العمل في أحد التثبيتين عندما يجدّدها التثبيت الآخر.",
+    "acknowledge": "أفهم أن هذا الملف يحتوي على مفاتيح API والرموز الخاصة بالحسابات المحددة، مختومة بعبارة المرور هذه.",
+    "exportButton": "تصدير المحدد",
+    "exportDone": "تم تصدير {count} حسابات.",
+    "exportFailed": "فشل التصدير.",
+    "chooseFile": "اختر ملف النقل",
+    "invalidFile": "هذا ليس ملف نقل مزوّدين من OmniRoute.",
+    "previewButton": "معاينة",
+    "previewFailed": "تعذّرت قراءة ملف النقل.",
+    "summary": "يحتوي هذا الملف على {connections} حسابات و{nodes} عُقد مزوّدين. لن يُحذف أي شيء.",
+    "statusNew": "جديد",
+    "statusIdentical": "مطابق",
+    "statusConflict": "تعارض",
+    "statusUnsupported": "غير مدعوم",
+    "actionAdd": "إضافة",
+    "actionSkip": "تخطٍّ",
+    "actionReplace": "استبدال",
+    "providerNode": "عقدة مزوّد",
+    "importButton": "استيراد",
+    "importFailed": "فشل الاستيراد.",
+    "importSuccess": "تم استيراد {connections} حسابات و{nodes} عُقد مزوّدين؛ وتخطي {skipped}."
   }
 }

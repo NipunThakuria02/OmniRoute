@@ -18,6 +18,7 @@ import {
 import { AI_HORDE_IMAGE_PROVIDER } from "./providers/registry/aihorde/imageModels.ts";
 import { toRegistryImageModels as toSyntxImageModels } from "../services/syntxMediaCatalog.ts";
 import { ZENMUX_IMAGE_PROVIDER } from "./providers/registry/zenmux/imageModels.ts";
+import { MUSE_CODE_IMAGE_PROVIDER } from "./providers/registry/muse-code/imageModels.ts";
 
 export interface ImageModelEntry {
   id: string;
@@ -166,6 +167,7 @@ export const IMAGE_MODEL_ALIASES: Record<string, ImageModelAliasEntry> = {
 
 export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
   zenmux: ZENMUX_IMAGE_PROVIDER,
+  "muse-code": MUSE_CODE_IMAGE_PROVIDER,
   agnes: {
     id: "agnes",
     baseUrl: "https://apihub.agnes-ai.com/v1/images/generations",
@@ -661,6 +663,20 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
       { id: "hidream", name: "Hidream I1 Full" },
     ],
     supportedSizes: ["1024x1024", "1024x1280", "1280x1024"],
+  },
+
+  // NaN.Builders (https://nan.builders) — OpenAI-compatible /v1/images/generations.
+  nan: {
+    id: "nan",
+    baseUrl: "https://api.nan.builders/v1/images/generations",
+    authType: "apikey",
+    authHeader: "bearer",
+    format: "openai",
+    models: [
+      { id: "flux-2-klein", name: "FLUX.2 Klein" },
+      { id: "qwen-image-2.1", name: "Qwen Image 2.1" },
+    ],
+    supportedSizes: ["1024x1024"],
   },
 
   // NVIDIA NIM image generation (FLUX models). Distinct from the NVIDIA *chat* entry

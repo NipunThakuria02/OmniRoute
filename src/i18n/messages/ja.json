@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "フィルターをクリア",
     "disableNonPublicModels": "非公開モデルを無効化",
     "disableNonPublicModelsDesc": "プロバイダーカタログで検出されていない、または公開としてマークされていないモデルへのリクエストを拒否します",
+    "forcedModel": "強制モデル",
+    "forcedModelDesc": "このキーで行われるすべてのチャットリクエストを、クライアントが要求するモデルに関係なく(またはモデルを送信しない場合も)、このモデルまたはコンボにルーティングします。キーのモデル、コンボ、予算の制限は引き続き適用されます。",
+    "forcedModelPlaceholder": "強制なし:クライアントが要求するモデルを使用",
     "normalKeysSection": "通常キー",
     "quotaKeysSection": "クォータキー",
     "bypassProviderQuota": "プロバイダーのクォータ制限をバイパス",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — OpenAI互換プロバイダーをサポートする自己改善型RLMコーディングハーネス",
       "warp": "カスタムプロバイダーをサポートするWarp AIターミナル",
       "agent-deck": "Agent Deckマルチエージェントオーケストレーター",
-      "5dive": "5dive — セルフホスト型のコーディングエージェント群。1つの認証プロファイルで全体をOmniRouteに向けます"
+      "5dive": "5dive — セルフホスト型のコーディングエージェント群。1つの認証プロファイルで全体をOmniRouteに向けます",
+      "zed": "Zed コードエディター — OpenAI 互換プロバイダー経由の内蔵エージェント"
     },
     "guides": {
       "cursor": {
@@ -3240,6 +3244,9 @@
     "copilotReloadInstruction": "その後、VS Code を再読み込みし、入力プロンプトで API キーを設定します。",
     "wireApiChatCompletions": "チャットの完了 (/chat/completions)",
     "wireApiResponses": "レスポンス API (/responses)",
+    "codexModelCatalog": "Codex の /model ピッカーに OmniRoute のモデルを表示する",
+    "codexModelCatalogHint": "インストール済み Codex 自身のモデルカタログから ~/.codex/omniroute-models.json を書き出します（1 モデルあたり約 60 KB）。Codex を更新したら再適用してください。",
+    "codexCatalogWarning": "Codex の /model ピッカーは更新されませんでした: OmniRoute がインストール済み Codex のモデルカタログを読み取れませんでした。",
     "cliproxyapiActionFailed": "アクションが失敗しました",
     "cliproxyapiActionSucceeded": "アクションが成功しました",
     "cliproxyapiCheckUpdates": "更新を確認",
@@ -5714,6 +5721,8 @@
     "disableConnection": "接続を無効にする",
     "enableConnection": "接続を有効にする",
     "reauthenticateConnection": "この接続を再認証します",
+    "verifyAccount": "アカウントを確認",
+    "verifyAccountHint": "Google がこのアカウントの確認を求めています。リンクを開いて確認を完了してから、再試行してください。",
     "proxyConfig": "プロキシ構成",
     "aliasExistsAlert": "エイリアス「{alias}」はすでに存在します。別のモデルを使用するか、既存のエイリアスを編集してください。",
     "aliasInputPlaceholder": "エイリアス名",
@@ -8238,6 +8247,14 @@
       "terse-cjk": {
         "label": "簡潔なCJK (文言)",
         "description": "漢文の超簡潔スタイル (中国語でのみ利用可能)。"
+      },
+      "antislop-ui": {
+        "label": "アンチスロップUIフィルター",
+        "description": "目的を検証したビジュアル：ありきたりなグラデーション、テンプレートレイアウト、動かないコントロールを排除。"
+      },
+      "antislop-copy": {
+        "label": "アンチスロップ文章・人間フィルター",
+        "description": "誠実な文章と人のためのルール：AIっぽさなし、WCAG AAコントラスト、キーボード、状態表示、モバイルのリフロー。"
       }
     },
     "resilienceWaitForCooldown": "クールダウンを待ちます",
@@ -8800,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "プロバイダー（すべてのアカウントが1つのブレーカーを共有）",
     "resilienceTokenRefreshScopeConnection": "接続（各アカウントにはそれぞれのブレーカーがあります）",
     "resilienceTokenRefreshThreshold": "一時停止までの失敗回数",
-    "resilienceTokenRefreshCooldown": "トリップ後の一時停止"
+    "resilienceTokenRefreshCooldown": "トリップ後の一時停止",
+    "piiMasking": {
+      "title": "個人情報のマスキング",
+      "description": "マスクする個人データの種類を選び、独自のパターンを追加します。下に表示されている機能フラグを有効にするまで、マスキングはオフのままです。",
+      "requestFlag": "リクエストのマスキング",
+      "responseFlag": "レスポンスのサニタイズ",
+      "templates": "テンプレート",
+      "template": {
+        "minimal": "最小",
+        "standard": "標準",
+        "financial": "金融",
+        "brazilian": "ブラジル",
+        "usa": "米国",
+        "full": "すべて"
+      },
+      "builtinTypes": "組み込みタイプ",
+      "types": {
+        "email": "メールアドレス",
+        "phone_us": "米国の電話番号",
+        "phone_br": "ブラジルの電話番号",
+        "ssn": "米国の社会保障番号",
+        "credit_card": "クレジットカード番号",
+        "cpf": "CPF（ブラジルの個人納税者番号）",
+        "cnpj": "CNPJ（ブラジルの法人番号）",
+        "ip_address": "IPv4 アドレス",
+        "ipv6_address": "IPv6 アドレス",
+        "aws_key": "AWS アクセスキー",
+        "api_key_generic": "API キーとトークン"
+      },
+      "customPatterns": "カスタムパターン",
+      "customPatternsDesc": "一致した部分は [CUSTOM_REDACTED] に置き換えられます。パターンは最大 {max} 件です。壊滅的なバックトラックの恐れがあるパターンは拒否されます。",
+      "typeRegex": "正規表現",
+      "typeWildcard": "ワイルドカード（* と ?）",
+      "pattern": "パターン",
+      "flags": "フラグ（i, m, s, u）",
+      "sampleText": "パターンをテストするサンプルテキスト",
+      "test": "テスト",
+      "testMatches": "{count} 件一致",
+      "testFailed": "パターンが拒否されました: {message}",
+      "add": "パターンを追加",
+      "saved": "保存しました",
+      "saveFailed": "保存できませんでした: {message}",
+      "statsTitle": "再起動以降の検出",
+      "statsEmpty": "まだ検出はありません。",
+      "statsRequest": "リクエスト"
+    }
   },
   "contextRtk": {
     "title": "RTKエンジン",
@@ -9858,6 +9920,9 @@
     "hideQuotaRow": "このクォータ行を非表示",
     "showQuotaRow": "このクォータ行を表示",
     "hiddenQuotaRowsLabel": "非表示:",
+    "quotaSpeedTitle": "このアカウントの最近のデコード速度（直近 {count} 件の成功リクエスト）",
+    "quotaSpeedLine": "{model}: {avg} tok/s 平均 · 直近 {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s 平均 · 直近 {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "クォータの表示設定の更新に失敗しました",
     "account": "アカウント",
     "modelQuotas": "モデルのクォータ",
@@ -14499,7 +14564,10 @@
     "importing": "インポート中...",
     "apiKeyPlaceholder": "{providerLabel} APIキーを貼り付けてください...",
     "apiKeyStoredDescription": "長期的なベアラー資格情報として暗号化されて保存されています。リフレッシュフローはありません。",
-    "apiKeyRegionDescription": "キーのAWSリージョン（デフォルト：us-east-1）",
+    "apiKeyRegionAuto": "自動検出（推奨）",
+    "apiKeyRegionUsEast1": "米国東部（バージニア北部）",
+    "apiKeyRegionEuCentral1": "欧州（フランクフルト）",
+    "apiKeyRegionAutoDescription": "自動検出はまず米国東部、次に欧州（フランクフルト）を試し、キーが機能するリージョンを保存します。",
     "validating": "検証中...",
     "validateAndSaveApiKey": "APIキーを検証して保存する",
     "errorAutoDetect": "トークンを自動検出できませんでした",
@@ -14875,5 +14943,43 @@
     "saveMessage": "メッセージを保存",
     "defaultModel": "デフォルトのテストモデル",
     "defaultModelHint": "このアカウントの［テストメッセージ］ボタンで自動的に使用されます。接続設定とともに保存されますが、メッセージは送信されません。"
+  },
+  "providerTransfer": {
+    "open": "選択転送",
+    "title": "プロバイダーの選択転送",
+    "description": "選択したプロバイダーアカウント(と、それらが使うカスタムプロバイダーノード)を別の OmniRoute インストールへ移します。ファイルはパスフレーズで封印され、インポートで何かが削除されることはありません。",
+    "exportTab": "エクスポート",
+    "importTab": "インポート",
+    "searchPlaceholder": "アカウントを検索…",
+    "selectAll": "すべて選択",
+    "clearSelection": "クリア",
+    "selectedCount": "{count} 件選択中",
+    "noAccounts": "一致するプロバイダーアカウントはありません。",
+    "loadFailed": "プロバイダーアカウントを読み込めませんでした。",
+    "passphrase": "パスフレーズ",
+    "passphraseConfirm": "パスフレーズの確認",
+    "passphraseHint": "{min} 文字以上。保存されることはなく、これがないとファイルを開けません。",
+    "passphraseMismatch": "パスフレーズが一致しません。",
+    "oauthWarning": "リフレッシュトークンをローテーションする OAuth アカウントは、もう一方のインストールが更新すると、こちらで動かなくなる場合があります。",
+    "acknowledge": "このファイルには、選択したアカウントの API キーとトークンがこのパスフレーズで封印されて含まれることを理解しました。",
+    "exportButton": "選択項目をエクスポート",
+    "exportDone": "{count} 件のアカウントをエクスポートしました。",
+    "exportFailed": "エクスポートに失敗しました。",
+    "chooseFile": "転送ファイルを選択",
+    "invalidFile": "これは OmniRoute のプロバイダー転送ファイルではありません。",
+    "previewButton": "プレビュー",
+    "previewFailed": "転送ファイルを読み取れませんでした。",
+    "summary": "このファイルには {connections} 件のアカウントと {nodes} 件のプロバイダーノードがあります。何も削除されません。",
+    "statusNew": "新規",
+    "statusIdentical": "同一",
+    "statusConflict": "競合",
+    "statusUnsupported": "非対応",
+    "actionAdd": "追加",
+    "actionSkip": "スキップ",
+    "actionReplace": "置き換え",
+    "providerNode": "プロバイダーノード",
+    "importButton": "インポート",
+    "importFailed": "インポートに失敗しました。",
+    "importSuccess": "{connections} 件のアカウントと {nodes} 件のプロバイダーノードをインポートしました。{skipped} 件はスキップしました。"
   }
 }
