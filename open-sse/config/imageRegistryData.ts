@@ -18,6 +18,7 @@ import {
 import { AI_HORDE_IMAGE_PROVIDER } from "./providers/registry/aihorde/imageModels.ts";
 import { toRegistryImageModels as toSyntxImageModels } from "../services/syntxMediaCatalog.ts";
 import { ZENMUX_IMAGE_PROVIDER } from "./providers/registry/zenmux/imageModels.ts";
+import { MUSE_CODE_IMAGE_PROVIDER } from "./providers/registry/muse-code/imageModels.ts";
 
 export interface ImageModelEntry {
   id: string;
@@ -166,6 +167,7 @@ export const IMAGE_MODEL_ALIASES: Record<string, ImageModelAliasEntry> = {
 
 export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
   zenmux: ZENMUX_IMAGE_PROVIDER,
+  "muse-code": MUSE_CODE_IMAGE_PROVIDER,
   agnes: {
     id: "agnes",
     baseUrl: "https://apihub.agnes-ai.com/v1/images/generations",
