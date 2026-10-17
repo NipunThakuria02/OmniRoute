@@ -28,6 +28,9 @@
 - [`POST /api/settings/require-login`](#post-apisettingsrequire-login)
 - [`GET /api/settings/ip-filter`](#get-apisettingsip-filter)
 - [`PUT /api/settings/ip-filter`](#put-apisettingsip-filter)
+- [`GET /api/settings/pii`](#get-apisettingspii)
+- [`PUT /api/settings/pii`](#put-apisettingspii)
+- [`POST /api/settings/pii/test`](#post-apisettingspiitest)
 - [`GET /api/settings/system-prompt`](#get-apisettingssystem-prompt)
 - [`PUT /api/settings/system-prompt`](#put-apisettingssystem-prompt)
 - [`GET /api/settings/thinking-budget`](#get-apisettingsthinking-budget)
@@ -415,6 +418,49 @@ Configure IP filtering with blacklist/whitelist modes, add/remove individual IPs
 
 ```bash
 curl -X PUT http://localhost:20128/api/settings/ip-filter \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+### GET /api/settings/pii
+
+Get PII masking settings
+
+Returns the opt-in flag state (`PII_REDACTION_ENABLED`, `PII_RESPONSE_SANITIZATION`),
+the per-type selection (`enabledTypes`, `null` = all built-in types), the custom
+patterns and in-memory detection counters (counts only, never matched values).
+
+
+```bash
+curl http://localhost:20128/api/settings/pii \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### PUT /api/settings/pii
+
+Update PII masking settings
+
+Replaces the per-type selection and/or the custom pattern list. Custom regex patterns
+that fail the safe-regex (catastrophic backtracking) check, do not compile, or match an
+empty string are refused with 400. Does not turn masking on.
+
+
+```bash
+curl -X PUT http://localhost:20128/api/settings/pii \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+### POST /api/settings/pii/test
+
+Test a custom PII pattern
+
+Dry-runs one pattern against a sample of at most 8 KB. Nothing is stored.
+
+```bash
+curl -X POST http://localhost:20128/api/settings/pii/test \
   -H "Authorization: Bearer $OMNIROUTE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{}'
