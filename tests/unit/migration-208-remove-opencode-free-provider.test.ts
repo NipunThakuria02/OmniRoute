@@ -6,11 +6,15 @@ import path from "node:path";
 
 const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-opencode-free-retirement-"));
 process.env.DATA_DIR = TEST_DATA_DIR;
+const originalEncryptionKey = process.env.STORAGE_ENCRYPTION_KEY;
+process.env.STORAGE_ENCRYPTION_KEY = "migration-208-isolated-test-key";
 
 const core = await import("../../src/lib/db/core.ts");
 
 test.after(() => {
   core.resetDbInstance();
+  if (originalEncryptionKey === undefined) delete process.env.STORAGE_ENCRYPTION_KEY;
+  else process.env.STORAGE_ENCRYPTION_KEY = originalEncryptionKey;
   fs.rmSync(TEST_DATA_DIR, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
 });
 
@@ -277,4 +281,96 @@ test("migration 208 removes stale OpenCode Free provider state, keeps opencode-z
       )
       .get()
   );
+});
+
+test("migration 208 preserves encrypted tokens and nested credentials through real provider reads", async () => {
+  const { encryptConnectionFields } = await import("../../src/lib/db/encryption.ts");
+  const connections = await import("../../src/lib/db/providers.ts");
+  const { OpencodeExecutor } = await import("../../open-sse/executors/opencode.ts");
+  const db = core.getDbInstance();
+  const sql = fs.readFileSync(
+    path.join(process.cwd(), "src/lib/db/migrations/208_remove_opencode_free_provider.sql"),
+    "utf8"
+  );
+  const fixtures = ["opencode", "oc"].map((provider) => {
+    const plaintext = {
+      apiKey: `nested-api-${provider}`,
+      accessToken: `nested-token-${provider}`,
+      authCookie: `cookie-${provider}`,
+      extraApiKeys: [`extra-key-${provider}`],
+      workspaceId: `workspace-${provider}`,
+    };
+    const encrypted = encryptConnectionFields({
+      accessToken: `top-token-${provider}`,
+      providerSpecificData: plaintext,
+    });
+    assert.match(encrypted.accessToken, /^enc:v1:/);
+    for (const field of ["apiKey", "accessToken", "authCookie"] as const) {
+      assert.match(encrypted.providerSpecificData[field], /^enc:v1:/);
+      assert.notEqual(encrypted.providerSpecificData[field], plaintext[field]);
+    }
+    const id = `encrypted-legacy-${provider}`;
+    const tokenOnlyId = `encrypted-token-only-${provider}`;
+    // Simulate stored legacy rows: current CRUD correctly rejects retired provider IDs.
+    const insert = db.prepare(
+      "INSERT INTO provider_connections " +
+        "(id, provider, auth_type, name, access_token, provider_specific_data, is_active, created_at, updated_at) " +
+        "VALUES (?, ?, 'apikey', ?, ?, ?, 1, datetime('now'), datetime('now'))"
+    );
+    insert.run(
+      id,
+      provider,
+      id,
+      encrypted.accessToken,
+      JSON.stringify(encrypted.providerSpecificData)
+    );
+    insert.run(tokenOnlyId, provider, tokenOnlyId, encrypted.accessToken, null);
+    const readRaw = (rowId: string) =>
+      db
+        .prepare(
+          "SELECT id, provider, access_token, provider_specific_data FROM provider_connections WHERE id = ?"
+        )
+        .get(rowId) as {
+        id: string;
+        provider: string;
+        access_token: string;
+        provider_specific_data: string | null;
+      };
+    const before = readRaw(id);
+    const tokenBefore = readRaw(tokenOnlyId);
+    return { provider, plaintext, id, tokenOnlyId, readRaw, before, tokenBefore };
+  });
+  // A real upgrade migrates all stored rows before CRUD reads populate their cache.
+  db.transaction(() => db.exec(sql))();
+  for (const { provider, plaintext, id, tokenOnlyId, readRaw, before, tokenBefore } of fixtures) {
+    assert.deepEqual(readRaw(id), { ...before, provider: "opencode-zen" });
+    assert.deepEqual(readRaw(tokenOnlyId), { ...tokenBefore, provider: "opencode-zen" });
+    const loaded = await connections.getProviderConnectionById(id);
+    assert.equal(loaded?.id, id);
+    assert.equal(loaded?.provider, "opencode-zen");
+    assert.equal(loaded?.accessToken, `top-token-${provider}`);
+    assert.deepEqual(loaded?.providerSpecificData, plaintext);
+    const lazy = (await connections.getProviderConnections({ provider: "opencode-zen" })).find(
+      (row) => row.id === id
+    );
+    assert.equal(lazy?.accessToken, `top-token-${provider}`);
+    assert.deepEqual(lazy?.providerSpecificData, plaintext);
+    const tokenOnly = await connections.getProviderConnectionById(tokenOnlyId);
+    const headers = new OpencodeExecutor("opencode-zen").buildHeaders(
+      {
+        apiKey: null,
+        accessToken: String(tokenOnly?.accessToken),
+        connectionId: tokenOnlyId,
+        providerSpecificData: {},
+      },
+      false,
+      null,
+      "gpt-5"
+    );
+    assert.equal(headers.Authorization, `Bearer top-token-${provider}`);
+    const after = readRaw(id);
+    db.transaction(() => db.exec(sql))();
+    assert.deepEqual(readRaw(id), after, "repeat migration must preserve ciphertext bytes");
+    assert.deepEqual(readRaw(tokenOnlyId), { ...tokenBefore, provider: "opencode-zen" });
+  }
 });
