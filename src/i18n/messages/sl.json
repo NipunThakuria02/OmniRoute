@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Ponudnik (vsi računi si delijo eno stikalo)",
     "resilienceTokenRefreshScopeConnection": "Povezava (vsak račun ima svoj odklopnik)",
     "resilienceTokenRefreshThreshold": "Neuspehi pred začasnim zaustavitvijo",
-    "resilienceTokenRefreshCooldown": "Pavza po sprožitvi"
+    "resilienceTokenRefreshCooldown": "Pavza po sprožitvi",
+    "piiMasking": {
+      "title": "Maskiranje osebnih podatkov",
+      "description": "Izberite, katere vrste osebnih podatkov se maskirajo, in dodajte svoje vzorce. Maskiranje ostane izklopljeno, dokler ne vklopite spodaj prikazanih zastavic funkcij.",
+      "requestFlag": "Maskiranje zahtev",
+      "responseFlag": "Čiščenje odgovorov",
+      "templates": "Predloge",
+      "template": {
+        "minimal": "Minimalna",
+        "standard": "Standardna",
+        "financial": "Finančna",
+        "brazilian": "Brazilska",
+        "usa": "ZDA",
+        "full": "Popolna"
+      },
+      "builtinTypes": "Vgrajene vrste",
+      "types": {
+        "email": "E-poštni naslovi",
+        "phone_us": "Telefonske številke v ZDA",
+        "phone_br": "Brazilske telefonske številke",
+        "ssn": "Številke socialnega zavarovanja ZDA",
+        "credit_card": "Številke kreditnih kartic",
+        "cpf": "CPF (brazilska davčna številka)",
+        "cnpj": "CNPJ (brazilska številka podjetja)",
+        "ip_address": "Naslovi IPv4",
+        "ipv6_address": "Naslovi IPv6",
+        "aws_key": "Dostopni ključi AWS",
+        "api_key_generic": "Ključi API in žetoni"
+      },
+      "customPatterns": "Vzorci po meri",
+      "customPatternsDesc": "Ujemanja se zamenjajo z [CUSTOM_REDACTED]. Največ {max} vzorcev. Vzorci s tveganjem katastrofalnega vračanja se zavrnejo.",
+      "typeRegex": "Regularni izraz",
+      "typeWildcard": "Nadomestni znak (* in ?)",
+      "pattern": "Vzorec",
+      "flags": "Zastavice (i, m, s, u)",
+      "sampleText": "Vzorčno besedilo za preizkus vzorca",
+      "test": "Preizkusi",
+      "testMatches": "Število ujemanj: {count}",
+      "testFailed": "Vzorec zavrnjen: {message}",
+      "add": "Dodaj vzorec",
+      "saved": "Shranjeno",
+      "saveFailed": "Shranjevanje ni uspelo: {message}",
+      "statsTitle": "Zaznave od ponovnega zagona",
+      "statsEmpty": "Še ni zaznav.",
+      "statsRequest": "Zahteve"
+    }
   },
   "contextRtk": {
     "title": "Pogon RTK",

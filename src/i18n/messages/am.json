@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "አቅራቢ (ሁሉም መለያዎች አንድ መበረታች ይጋራሉ)",
     "resilienceTokenRefreshScopeConnection": "አገናኝ (እያንዳንዱ መለያ የራሱ መበረታቸው አለው)",
     "resilienceTokenRefreshThreshold": "ማቆሚያዎ ከመጠበቅ በፊት የሚደረጉ መሳሮች",
-    "resilienceTokenRefreshCooldown": "ከመዘጋት በኋላ ይታቀኑ"
+    "resilienceTokenRefreshCooldown": "ከመዘጋት በኋላ ይታቀኑ",
+    "piiMasking": {
+      "title": "የግል መረጃ መደበቅ",
+      "description": "የትኞቹ የግል መረጃ ዓይነቶች እንደሚደበቁ ይምረጡ እና የራስዎን ቅጦች ያክሉ። ከታች የሚታዩትን የባህሪ ባንዲራዎች እስኪያበሩ ድረስ መደበቁ ጠፍቶ ይቆያል።",
+      "requestFlag": "የጥያቄ መደበቅ",
+      "responseFlag": "የምላሽ ማጽዳት",
+      "templates": "አብነቶች",
+      "template": {
+        "minimal": "ዝቅተኛ",
+        "standard": "መደበኛ",
+        "financial": "ፋይናንስ",
+        "brazilian": "ብራዚላዊ",
+        "usa": "አሜሪካ",
+        "full": "ሙሉ"
+      },
+      "builtinTypes": "አብሮ የተሰሩ ዓይነቶች",
+      "types": {
+        "email": "የኢሜይል አድራሻዎች",
+        "phone_us": "የአሜሪካ ስልክ ቁጥሮች",
+        "phone_br": "የብራዚል ስልክ ቁጥሮች",
+        "ssn": "የአሜሪካ ማኅበራዊ ዋስትና ቁጥሮች",
+        "credit_card": "የክሬዲት ካርድ ቁጥሮች",
+        "cpf": "CPF (የብራዚል ግብር ከፋይ መታወቂያ)",
+        "cnpj": "CNPJ (የብራዚል ኩባንያ መታወቂያ)",
+        "ip_address": "IPv4 አድራሻዎች",
+        "ipv6_address": "IPv6 አድራሻዎች",
+        "aws_key": "የAWS መዳረሻ ቁልፎች",
+        "api_key_generic": "የAPI ቁልፎች እና ቶከኖች"
+      },
+      "customPatterns": "ብጁ ቅጦች",
+      "customPatternsDesc": "ተዛማጆች በ[CUSTOM_REDACTED] ይተካሉ። እስከ {max} ቅጦች። አስከፊ የኋሊት ፍለጋ አደጋ ያላቸው ቅጦች ውድቅ ይደረጋሉ።",
+      "typeRegex": "መደበኛ አገላለጽ",
+      "typeWildcard": "ምትክ ቁምፊ (* እና ?)",
+      "pattern": "ቅጥ",
+      "flags": "ባንዲራዎች (i, m, s, u)",
+      "sampleText": "ቅጡን ለመሞከር ናሙና ጽሑፍ",
+      "test": "ሞክር",
+      "testMatches": "ተዛማጆች፦ {count}",
+      "testFailed": "ቅጡ ውድቅ ተደርጓል፦ {message}",
+      "add": "ቅጥ አክል",
+      "saved": "ተቀምጧል",
+      "saveFailed": "ማስቀመጥ አልተቻለም፦ {message}",
+      "statsTitle": "ዳግም ከተጀመረ ወዲህ የተገኙ",
+      "statsEmpty": "እስካሁን የተገኘ የለም።",
+      "statsRequest": "ጥያቄዎች"
+    }
   },
   "contextRtk": {
     "title": "RTK ሞተር",

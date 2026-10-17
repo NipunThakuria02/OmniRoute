@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "ਪ੍ਰੋਵਾਈਡਰ (ਸਾਰੇ ਖਾਤੇ ਇੱਕ ਬ੍ਰੇਕਰ ਸਾਂਝਾ ਕਰਦੇ ਹਨ)",
     "resilienceTokenRefreshScopeConnection": "ਕਨੈਕਸ਼ਨ (ਹਰ ਖਾਤੇ ਦਾ ਆਪਣਾ ਬ੍ਰੇਕਰ ਹੈ)",
     "resilienceTokenRefreshThreshold": "ਰੋਕਣ ਤੋਂ ਪਹਿਲਾਂ ਅਸਫਲਤਾਵਾਂ",
-    "resilienceTokenRefreshCooldown": "ਟ੍ਰਿੱਪ ਹੋਣ ਤੋਂ ਬਾਅਦ ਵਿਰਾਮ ਦਿਓ"
+    "resilienceTokenRefreshCooldown": "ਟ੍ਰਿੱਪ ਹੋਣ ਤੋਂ ਬਾਅਦ ਵਿਰਾਮ ਦਿਓ",
+    "piiMasking": {
+      "title": "ਨਿੱਜੀ ਡਾਟਾ ਮਾਸਕਿੰਗ",
+      "description": "ਚੁਣੋ ਕਿ ਕਿਹੜੀ ਕਿਸਮ ਦਾ ਨਿੱਜੀ ਡਾਟਾ ਮਾਸਕ ਕੀਤਾ ਜਾਵੇ ਅਤੇ ਆਪਣੇ ਪੈਟਰਨ ਸ਼ਾਮਲ ਕਰੋ। ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਹੇਠਾਂ ਦਿਖਾਏ ਫੀਚਰ ਫਲੈਗ ਚਾਲੂ ਨਹੀਂ ਕਰਦੇ, ਮਾਸਕਿੰਗ ਬੰਦ ਰਹਿੰਦੀ ਹੈ।",
+      "requestFlag": "ਬੇਨਤੀ ਮਾਸਕਿੰਗ",
+      "responseFlag": "ਜਵਾਬ ਸਫ਼ਾਈ",
+      "templates": "ਟੈਮਪਲੇਟ",
+      "template": {
+        "minimal": "ਘੱਟੋ-ਘੱਟ",
+        "standard": "ਮਿਆਰੀ",
+        "financial": "ਵਿੱਤੀ",
+        "brazilian": "ਬ੍ਰਾਜ਼ੀਲੀ",
+        "usa": "ਅਮਰੀਕਾ",
+        "full": "ਪੂਰਾ"
+      },
+      "builtinTypes": "ਬਿਲਟ-ਇਨ ਕਿਸਮਾਂ",
+      "types": {
+        "email": "ਈਮੇਲ ਪਤੇ",
+        "phone_us": "ਅਮਰੀਕੀ ਫ਼ੋਨ ਨੰਬਰ",
+        "phone_br": "ਬ੍ਰਾਜ਼ੀਲੀ ਫ਼ੋਨ ਨੰਬਰ",
+        "ssn": "ਅਮਰੀਕੀ ਸੋਸ਼ਲ ਸਿਕਿਓਰਿਟੀ ਨੰਬਰ",
+        "credit_card": "ਕ੍ਰੈਡਿਟ ਕਾਰਡ ਨੰਬਰ",
+        "cpf": "CPF (ਬ੍ਰਾਜ਼ੀਲੀ ਟੈਕਸਦਾਤਾ ID)",
+        "cnpj": "CNPJ (ਬ੍ਰਾਜ਼ੀਲੀ ਕੰਪਨੀ ID)",
+        "ip_address": "IPv4 ਪਤੇ",
+        "ipv6_address": "IPv6 ਪਤੇ",
+        "aws_key": "AWS ਪਹੁੰਚ ਕੁੰਜੀਆਂ",
+        "api_key_generic": "API ਕੁੰਜੀਆਂ ਅਤੇ ਟੋਕਨ"
+      },
+      "customPatterns": "ਕਸਟਮ ਪੈਟਰਨ",
+      "customPatternsDesc": "ਮੇਲ [CUSTOM_REDACTED] ਨਾਲ ਬਦਲੇ ਜਾਂਦੇ ਹਨ। ਵੱਧ ਤੋਂ ਵੱਧ {max} ਪੈਟਰਨ। ਤਬਾਹਕੁਨ ਬੈਕਟ੍ਰੈਕਿੰਗ ਦੇ ਖ਼ਤਰੇ ਵਾਲੇ ਪੈਟਰਨ ਰੱਦ ਕੀਤੇ ਜਾਂਦੇ ਹਨ।",
+      "typeRegex": "ਰੈਗੂਲਰ ਐਕਸਪ੍ਰੈਸ਼ਨ",
+      "typeWildcard": "ਵਾਈਲਡਕਾਰਡ (* ਅਤੇ ?)",
+      "pattern": "ਪੈਟਰਨ",
+      "flags": "ਫਲੈਗ (i, m, s, u)",
+      "sampleText": "ਪੈਟਰਨ ਜਾਂਚਣ ਲਈ ਨਮੂਨਾ ਲਿਖਤ",
+      "test": "ਜਾਂਚੋ",
+      "testMatches": "{count} ਮੇਲ",
+      "testFailed": "ਪੈਟਰਨ ਰੱਦ: {message}",
+      "add": "ਪੈਟਰਨ ਸ਼ਾਮਲ ਕਰੋ",
+      "saved": "ਸੁਰੱਖਿਅਤ ਕੀਤਾ",
+      "saveFailed": "ਸੁਰੱਖਿਅਤ ਨਹੀਂ ਹੋ ਸਕਿਆ: {message}",
+      "statsTitle": "ਮੁੜ-ਚਾਲੂ ਹੋਣ ਤੋਂ ਬਾਅਦ ਦੀਆਂ ਪਛਾਣਾਂ",
+      "statsEmpty": "ਅਜੇ ਕੋਈ ਪਛਾਣ ਨਹੀਂ।",
+      "statsRequest": "ਬੇਨਤੀਆਂ"
+    }
   },
   "contextRtk": {
     "title": "RTK ਇੰਜਣ",

@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Onye nnye (akkaunt niile dabere na otu breaker)",
     "resilienceTokenRefreshScopeConnection": "Njikọ (ọ bụrụ na ngwaọrụ ọ bụla nwere ya nke ya)",
     "resilienceTokenRefreshThreshold": "Njefọ n'ihu ka a ga-egbu oge",
-    "resilienceTokenRefreshCooldown": "Egwu mgbe e tinyere"
+    "resilienceTokenRefreshCooldown": "Egwu mgbe e tinyere",
+    "piiMasking": {
+      "title": "Nzuzo data onwe",
+      "description": "Họrọ ụdị data onwe a ga-ezo ma tinye usoro nke gị. Nzuzo na-anọgide na-agbanyụ ruo mgbe ị gbanwụrụ ọkọlọtọ atụmatụ e gosiri n'okpuru.",
+      "requestFlag": "Nzuzo arịrịọ",
+      "responseFlag": "Ihicha nzaghachi",
+      "templates": "Ndebiri",
+      "template": {
+        "minimal": "Obere",
+        "standard": "Ọkọlọtọ",
+        "financial": "Ego",
+        "brazilian": "Brazil",
+        "usa": "Amerịka",
+        "full": "Zuru oke"
+      },
+      "builtinTypes": "Ụdị arụnyere",
+      "types": {
+        "email": "Adreesị email",
+        "phone_us": "Nọmba ekwentị Amerịka",
+        "phone_br": "Nọmba ekwentị Brazil",
+        "ssn": "Nọmba Nchekwa Ọha Amerịka",
+        "credit_card": "Nọmba kaadị kredit",
+        "cpf": "CPF (ID onye na-akwụ ụtụ isi na Brazil)",
+        "cnpj": "CNPJ (ID ụlọ ọrụ na Brazil)",
+        "ip_address": "Adreesị IPv4",
+        "ipv6_address": "Adreesị IPv6",
+        "aws_key": "Igodo nnweta AWS",
+        "api_key_generic": "Igodo API na tokin"
+      },
+      "customPatterns": "Usoro ahaziri",
+      "customPatternsDesc": "A na-eji [CUSTOM_REDACTED] dochie ihe dabara. Ruo usoro {max}. A na-ajụ usoro nwere ihe ize ndụ nke ịlaghachi azụ ọdachi.",
+      "typeRegex": "Okwu usoro oge niile",
+      "typeWildcard": "Mkpụrụedemede nnọchi (* na ?)",
+      "pattern": "Usoro",
+      "flags": "Ọkọlọtọ (i, m, s, u)",
+      "sampleText": "Ederede atụ iji nwalee usoro",
+      "test": "Nwalee",
+      "testMatches": "Ndakọrịta: {count}",
+      "testFailed": "Ajụrụ usoro: {message}",
+      "add": "Tinye usoro",
+      "saved": "Echekwara",
+      "saveFailed": "Enweghị ike ichekwa: {message}",
+      "statsTitle": "Nchọpụta kemgbe mmalitegharị",
+      "statsEmpty": "Enweghị nchọpụta ka ọ dị ugbu a.",
+      "statsRequest": "Arịrịọ"
+    }
   },
   "contextRtk": {
     "title": "Injin RTK",

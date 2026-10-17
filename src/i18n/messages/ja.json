@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "プロバイダー（すべてのアカウントが1つのブレーカーを共有）",
     "resilienceTokenRefreshScopeConnection": "接続（各アカウントにはそれぞれのブレーカーがあります）",
     "resilienceTokenRefreshThreshold": "一時停止までの失敗回数",
-    "resilienceTokenRefreshCooldown": "トリップ後の一時停止"
+    "resilienceTokenRefreshCooldown": "トリップ後の一時停止",
+    "piiMasking": {
+      "title": "個人情報のマスキング",
+      "description": "マスクする個人データの種類を選び、独自のパターンを追加します。下に表示されている機能フラグを有効にするまで、マスキングはオフのままです。",
+      "requestFlag": "リクエストのマスキング",
+      "responseFlag": "レスポンスのサニタイズ",
+      "templates": "テンプレート",
+      "template": {
+        "minimal": "最小",
+        "standard": "標準",
+        "financial": "金融",
+        "brazilian": "ブラジル",
+        "usa": "米国",
+        "full": "すべて"
+      },
+      "builtinTypes": "組み込みタイプ",
+      "types": {
+        "email": "メールアドレス",
+        "phone_us": "米国の電話番号",
+        "phone_br": "ブラジルの電話番号",
+        "ssn": "米国の社会保障番号",
+        "credit_card": "クレジットカード番号",
+        "cpf": "CPF（ブラジルの個人納税者番号）",
+        "cnpj": "CNPJ（ブラジルの法人番号）",
+        "ip_address": "IPv4 アドレス",
+        "ipv6_address": "IPv6 アドレス",
+        "aws_key": "AWS アクセスキー",
+        "api_key_generic": "API キーとトークン"
+      },
+      "customPatterns": "カスタムパターン",
+      "customPatternsDesc": "一致した部分は [CUSTOM_REDACTED] に置き換えられます。パターンは最大 {max} 件です。壊滅的なバックトラックの恐れがあるパターンは拒否されます。",
+      "typeRegex": "正規表現",
+      "typeWildcard": "ワイルドカード（* と ?）",
+      "pattern": "パターン",
+      "flags": "フラグ（i, m, s, u）",
+      "sampleText": "パターンをテストするサンプルテキスト",
+      "test": "テスト",
+      "testMatches": "{count} 件一致",
+      "testFailed": "パターンが拒否されました: {message}",
+      "add": "パターンを追加",
+      "saved": "保存しました",
+      "saveFailed": "保存できませんでした: {message}",
+      "statsTitle": "再起動以降の検出",
+      "statsEmpty": "まだ検出はありません。",
+      "statsRequest": "リクエスト"
+    }
   },
   "contextRtk": {
     "title": "RTKエンジン",

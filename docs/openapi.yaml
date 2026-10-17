@@ -3446,6 +3446,92 @@ paths:
         "200":
           description: Updated IP filter configuration
 
+  /api/settings/pii:
+    get:
+      tags: [Settings]
+      summary: Get PII masking settings
+      description: |
+        Returns the opt-in flag state (`PII_REDACTION_ENABLED`, `PII_RESPONSE_SANITIZATION`),
+        the per-type selection (`enabledTypes`, `null` = all built-in types), the custom
+        patterns and in-memory detection counters (counts only, never matched values).
+      responses:
+        "200":
+          description: PII masking settings
+    put:
+      tags: [Settings]
+      summary: Update PII masking settings
+      description: |
+        Replaces the per-type selection and/or the custom pattern list. Custom regex patterns
+        that fail the safe-regex (catastrophic backtracking) check, do not compile, or match an
+        empty string are refused with 400. Does not turn masking on.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                enabledTypes:
+                  type: array
+                  nullable: true
+                  items:
+                    type: string
+                customPatterns:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: object
+                    required: [id, name, type, pattern]
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      type:
+                        type: string
+                        enum: [regex, wildcard]
+                      pattern:
+                        type: string
+                        maxLength: 500
+                      flags:
+                        type: string
+                      enabled:
+                        type: boolean
+      responses:
+        "200":
+          description: Updated PII masking settings
+        "400":
+          description: Validation failed (including an unsafe pattern)
+
+  /api/settings/pii/test:
+    post:
+      tags: [Settings]
+      summary: Test a custom PII pattern
+      description: Dry-runs one pattern against a sample of at most 8 KB. Nothing is stored.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pattern, sampleText]
+              properties:
+                type:
+                  type: string
+                  enum: [regex, wildcard]
+                pattern:
+                  type: string
+                flags:
+                  type: string
+                sampleText:
+                  type: string
+      responses:
+        "200":
+          description: Matches and a redacted preview
+        "400":
+          description: Invalid body, oversized sample or unsafe pattern
+
   /api/settings/system-prompt:
     get:
       tags: [Settings]

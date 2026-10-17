@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Доставчик (всички акаунти споделят един прекъсвач)",
     "resilienceTokenRefreshScopeConnection": "Връзка (всеки акаунт има собствен прекъсвач)",
     "resilienceTokenRefreshThreshold": "Неуспехи преди пауза",
-    "resilienceTokenRefreshCooldown": "Пауза след задействане"
+    "resilienceTokenRefreshCooldown": "Пауза след задействане",
+    "piiMasking": {
+      "title": "Маскиране на лични данни",
+      "description": "Изберете кои видове лични данни да се маскират и добавете свои шаблони. Маскирането остава изключено, докато не включите показаните по-долу флагове за функции.",
+      "requestFlag": "Маскиране на заявки",
+      "responseFlag": "Почистване на отговори",
+      "templates": "Шаблони",
+      "template": {
+        "minimal": "Минимален",
+        "standard": "Стандартен",
+        "financial": "Финансов",
+        "brazilian": "Бразилски",
+        "usa": "САЩ",
+        "full": "Пълен"
+      },
+      "builtinTypes": "Вградени типове",
+      "types": {
+        "email": "Имейл адреси",
+        "phone_us": "Телефонни номера в САЩ",
+        "phone_br": "Бразилски телефонни номера",
+        "ssn": "Номера за социално осигуряване в САЩ",
+        "credit_card": "Номера на кредитни карти",
+        "cpf": "CPF (бразилски данъчен номер)",
+        "cnpj": "CNPJ (бразилски номер на фирма)",
+        "ip_address": "IPv4 адреси",
+        "ipv6_address": "IPv6 адреси",
+        "aws_key": "Ключове за достъп до AWS",
+        "api_key_generic": "API ключове и токени"
+      },
+      "customPatterns": "Персонализирани шаблони",
+      "customPatternsDesc": "Съвпаденията се заменят с [CUSTOM_REDACTED]. До {max} шаблона. Шаблоните с риск от катастрофално връщане се отхвърлят.",
+      "typeRegex": "Регулярен израз",
+      "typeWildcard": "Заместващ символ (* и ?)",
+      "pattern": "Шаблон",
+      "flags": "Флагове (i, m, s, u)",
+      "sampleText": "Примерен текст за тестване на шаблона",
+      "test": "Тествай",
+      "testMatches": "Съвпадения: {count}",
+      "testFailed": "Шаблонът е отхвърлен: {message}",
+      "add": "Добави шаблон",
+      "saved": "Запазено",
+      "saveFailed": "Неуспешно запазване: {message}",
+      "statsTitle": "Засичания от рестарта",
+      "statsEmpty": "Все още няма засичания.",
+      "statsRequest": "Заявки"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

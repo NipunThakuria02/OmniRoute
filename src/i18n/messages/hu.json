@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Szolgáltató (minden fiók egyetlen megszakítót oszt meg)",
     "resilienceTokenRefreshScopeConnection": "Kapcsolat (minden fióknak saját megszakítója van)",
     "resilienceTokenRefreshThreshold": "Sikertelen próbálkozások a szüneteltetés előtt",
-    "resilienceTokenRefreshCooldown": "Szünet a kioldás után"
+    "resilienceTokenRefreshCooldown": "Szünet a kioldás után",
+    "piiMasking": {
+      "title": "Személyes adatok maszkolása",
+      "description": "Válassza ki, mely személyesadat-típusokat maszkolja a rendszer, és adjon hozzá saját mintákat. A maszkolás kikapcsolva marad, amíg be nem kapcsolja az alább látható funkciójelzőket.",
+      "requestFlag": "Kérések maszkolása",
+      "responseFlag": "Válaszok tisztítása",
+      "templates": "Sablonok",
+      "template": {
+        "minimal": "Minimális",
+        "standard": "Alapértelmezett",
+        "financial": "Pénzügyi",
+        "brazilian": "Brazil",
+        "usa": "USA",
+        "full": "Teljes"
+      },
+      "builtinTypes": "Beépített típusok",
+      "types": {
+        "email": "E-mail-címek",
+        "phone_us": "Egyesült államokbeli telefonszámok",
+        "phone_br": "Brazil telefonszámok",
+        "ssn": "Egyesült államokbeli társadalombiztosítási számok",
+        "credit_card": "Bankkártyaszámok",
+        "cpf": "CPF (brazil adóazonosító)",
+        "cnpj": "CNPJ (brazil cégazonosító)",
+        "ip_address": "IPv4-címek",
+        "ipv6_address": "IPv6-címek",
+        "aws_key": "AWS hozzáférési kulcsok",
+        "api_key_generic": "API-kulcsok és tokenek"
+      },
+      "customPatterns": "Egyéni minták",
+      "customPatternsDesc": "A találatokat a rendszer [CUSTOM_REDACTED] értékre cseréli. Legfeljebb {max} minta. A katasztrofális visszalépés kockázatával járó mintákat elutasítja.",
+      "typeRegex": "Reguláris kifejezés",
+      "typeWildcard": "Helyettesítő karakter (* és ?)",
+      "pattern": "Minta",
+      "flags": "Jelzők (i, m, s, u)",
+      "sampleText": "Mintaszöveg a minta teszteléséhez",
+      "test": "Tesztelés",
+      "testMatches": "Találatok: {count}",
+      "testFailed": "Minta elutasítva: {message}",
+      "add": "Minta hozzáadása",
+      "saved": "Mentve",
+      "saveFailed": "A mentés nem sikerült: {message}",
+      "statsTitle": "Észlelések az újraindítás óta",
+      "statsEmpty": "Még nincs észlelés.",
+      "statsRequest": "Kérések"
+    }
   },
   "contextRtk": {
     "title": "RTK-motor",

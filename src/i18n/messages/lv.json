@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Pakalpojuma sniedzējs (visi konti koplieto vienu pārtraucēju)",
     "resilienceTokenRefreshScopeConnection": "Savienojums (katram kontam ir sava pārtraucēja)",
     "resilienceTokenRefreshThreshold": "Neveiksmes pirms pauzes",
-    "resilienceTokenRefreshCooldown": "Pauze pēc darbības sākšanas"
+    "resilienceTokenRefreshCooldown": "Pauze pēc darbības sākšanas",
+    "piiMasking": {
+      "title": "Personas datu maskēšana",
+      "description": "Izvēlieties, kurus personas datu veidus maskēt, un pievienojiet savus šablonus. Maskēšana ir izslēgta, līdz ieslēdzat zemāk redzamos funkciju karogus.",
+      "requestFlag": "Pieprasījumu maskēšana",
+      "responseFlag": "Atbilžu attīrīšana",
+      "templates": "Veidnes",
+      "template": {
+        "minimal": "Minimālā",
+        "standard": "Standarta",
+        "financial": "Finanšu",
+        "brazilian": "Brazīlijas",
+        "usa": "ASV",
+        "full": "Pilnā"
+      },
+      "builtinTypes": "Iebūvētie veidi",
+      "types": {
+        "email": "E-pasta adreses",
+        "phone_us": "ASV tālruņa numuri",
+        "phone_br": "Brazīlijas tālruņa numuri",
+        "ssn": "ASV sociālās apdrošināšanas numuri",
+        "credit_card": "Kredītkaršu numuri",
+        "cpf": "CPF (Brazīlijas nodokļu maksātāja ID)",
+        "cnpj": "CNPJ (Brazīlijas uzņēmuma ID)",
+        "ip_address": "IPv4 adreses",
+        "ipv6_address": "IPv6 adreses",
+        "aws_key": "AWS piekļuves atslēgas",
+        "api_key_generic": "API atslēgas un žetoni"
+      },
+      "customPatterns": "Pielāgoti šabloni",
+      "customPatternsDesc": "Atbilstības tiek aizstātas ar [CUSTOM_REDACTED]. Līdz {max} šabloniem. Šabloni ar katastrofālas atkāpšanās risku tiek noraidīti.",
+      "typeRegex": "Regulārā izteiksme",
+      "typeWildcard": "Aizstājējzīme (* un ?)",
+      "pattern": "Šablons",
+      "flags": "Karogi (i, m, s, u)",
+      "sampleText": "Parauga teksts šablona pārbaudei",
+      "test": "Pārbaudīt",
+      "testMatches": "Atbilstības: {count}",
+      "testFailed": "Šablons noraidīts: {message}",
+      "add": "Pievienot šablonu",
+      "saved": "Saglabāts",
+      "saveFailed": "Neizdevās saglabāt: {message}",
+      "statsTitle": "Atklājumi kopš restartēšanas",
+      "statsEmpty": "Atklājumu vēl nav.",
+      "statsRequest": "Pieprasījumi"
+    }
   },
   "contextRtk": {
     "title": "RTK dzinējs",

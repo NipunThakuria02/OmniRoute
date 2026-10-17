@@ -5,6 +5,7 @@ import { Card, Button, Input, Toggle, Modal } from "@/shared/components";
 import { AI_PROVIDERS } from "@/shared/constants/providers";
 import ProviderIcon from "@/shared/components/ProviderIcon";
 import IPFilterSection from "./IPFilterSection";
+import PiiMaskingCard from "./PiiMaskingCard";
 import SessionInfoCard from "./SessionInfoCard";
 import AuthzSection from "./AuthzSection";
 import { useTranslations } from "next-intl";
@@ -308,6 +309,8 @@ export default function SecurityTab() {
       </Card>
 
       <IPFilterSection />
+
+      <PiiMaskingCard />
 
       {/* API Endpoint Protection */}
       <Card>

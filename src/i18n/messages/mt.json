@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Provider (l-kontijiet kollha jaqsmu breaker wieħed)",
     "resilienceTokenRefreshScopeConnection": "Konnessjoni (kull kont għandu l-breaker tiegħu)",
     "resilienceTokenRefreshThreshold": "Fallimenti qabel ma jieqaf",
-    "resilienceTokenRefreshCooldown": "Waqqaf wara li tinstab"
+    "resilienceTokenRefreshCooldown": "Waqqaf wara li tinstab",
+    "piiMasking": {
+      "title": "Mascherament tad-data personali",
+      "description": "Agħżel liema tipi ta' data personali jiġu mgħottija u żid il-mudelli tiegħek. Il-mascherament jibqa' mitfi sakemm tixgħel il-feature flags murija hawn taħt.",
+      "requestFlag": "Mascherament tat-talbiet",
+      "responseFlag": "Tindif tat-tweġibiet",
+      "templates": "Mudelli lesti",
+      "template": {
+        "minimal": "Minimu",
+        "standard": "Standard",
+        "financial": "Finanzjarju",
+        "brazilian": "Brażiljan",
+        "usa": "Stati Uniti",
+        "full": "Sħiħ"
+      },
+      "builtinTypes": "Tipi integrati",
+      "types": {
+        "email": "Indirizzi tal-email",
+        "phone_us": "Numri tat-telefon tal-Istati Uniti",
+        "phone_br": "Numri tat-telefon Brażiljani",
+        "ssn": "Numri tas-Sigurtà Soċjali tal-Istati Uniti",
+        "credit_card": "Numri tal-karti tal-kreditu",
+        "cpf": "CPF (ID tal-kontribwent Brażiljan)",
+        "cnpj": "CNPJ (ID tal-kumpanija Brażiljana)",
+        "ip_address": "Indirizzi IPv4",
+        "ipv6_address": "Indirizzi IPv6",
+        "aws_key": "Ċwievet tal-aċċess AWS",
+        "api_key_generic": "Ċwievet API u tokens"
+      },
+      "customPatterns": "Mudelli personalizzati",
+      "customPatternsDesc": "Il-qbil jiġu sostitwiti b'[CUSTOM_REDACTED]. Sa {max} mudelli. Mudelli b'riskju ta' backtracking katastrofiku jiġu rifjutati.",
+      "typeRegex": "Espressjoni regolari",
+      "typeWildcard": "Karattru jolly (* u ?)",
+      "pattern": "Mudell",
+      "flags": "Bnadar (i, m, s, u)",
+      "sampleText": "Test ta' kampjun biex tittestja l-mudell",
+      "test": "Ittestja",
+      "testMatches": "{count} qbil",
+      "testFailed": "Mudell rifjutat: {message}",
+      "add": "Żid mudell",
+      "saved": "Issejvjat",
+      "saveFailed": "Ma setax jiġi ssejvjat: {message}",
+      "statsTitle": "Sejbiet mill-bidu mill-ġdid",
+      "statsEmpty": "Għad m'hemm l-ebda sejba.",
+      "statsRequest": "Talbiet"
+    }
   },
   "contextRtk": {
     "title": "Magna RTK",

@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Udbyder (alle konti deler én afbryder)",
     "resilienceTokenRefreshScopeConnection": "Forbindelse (hver konto har sin egen afbryder)",
     "resilienceTokenRefreshThreshold": "Fejl før pause",
-    "resilienceTokenRefreshCooldown": "Pause efter udløsning"
+    "resilienceTokenRefreshCooldown": "Pause efter udløsning",
+    "piiMasking": {
+      "title": "PII-maskering",
+      "description": "Vælg, hvilke typer personoplysninger der maskeres, og tilføj dine egne mønstre. Maskeringen er slået fra, indtil du aktiverer de funktionsflag, der vises nedenfor.",
+      "requestFlag": "Maskering af anmodninger",
+      "responseFlag": "Rensning af svar",
+      "templates": "Skabeloner",
+      "template": {
+        "minimal": "Minimal",
+        "standard": "Standard",
+        "financial": "Finansiel",
+        "brazilian": "Brasiliansk",
+        "usa": "USA",
+        "full": "Fuld"
+      },
+      "builtinTypes": "Indbyggede typer",
+      "types": {
+        "email": "E-mailadresser",
+        "phone_us": "Amerikanske telefonnumre",
+        "phone_br": "Brasilianske telefonnumre",
+        "ssn": "Amerikanske personnumre (SSN)",
+        "credit_card": "Kreditkortnumre",
+        "cpf": "CPF (brasiliansk skatte-ID)",
+        "cnpj": "CNPJ (brasiliansk virksomheds-ID)",
+        "ip_address": "IPv4-adresser",
+        "ipv6_address": "IPv6-adresser",
+        "aws_key": "AWS-adgangsnøgler",
+        "api_key_generic": "API-nøgler og tokens"
+      },
+      "customPatterns": "Egne mønstre",
+      "customPatternsDesc": "Match erstattes med [CUSTOM_REDACTED]. Op til {max} mønstre. Mønstre med risiko for katastrofal backtracking afvises.",
+      "typeRegex": "Regulært udtryk",
+      "typeWildcard": "Jokertegn (* og ?)",
+      "pattern": "Mønster",
+      "flags": "Flag (i, m, s, u)",
+      "sampleText": "Eksempeltekst at teste mønsteret på",
+      "test": "Test",
+      "testMatches": "{count} match",
+      "testFailed": "Mønsteret blev afvist: {message}",
+      "add": "Tilføj mønster",
+      "saved": "Gemt",
+      "saveFailed": "Kunne ikke gemme: {message}",
+      "statsTitle": "Fund siden genstart",
+      "statsEmpty": "Ingen fund endnu.",
+      "statsRequest": "Anmodninger"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

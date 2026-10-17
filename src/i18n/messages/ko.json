@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "공급자(모든 계정이 하나의 차단기를 공유)",
     "resilienceTokenRefreshScopeConnection": "연결(각 계정마다 고유한 차단기가 있습니다)",
     "resilienceTokenRefreshThreshold": "일시 중지 전 실패 횟수",
-    "resilienceTokenRefreshCooldown": "작동 후 일시 중지"
+    "resilienceTokenRefreshCooldown": "작동 후 일시 중지",
+    "piiMasking": {
+      "title": "개인정보 마스킹",
+      "description": "마스킹할 개인 데이터 유형을 선택하고 직접 패턴을 추가하세요. 아래 표시된 기능 플래그를 켜기 전까지 마스킹은 꺼져 있습니다.",
+      "requestFlag": "요청 마스킹",
+      "responseFlag": "응답 정제",
+      "templates": "템플릿",
+      "template": {
+        "minimal": "최소",
+        "standard": "표준",
+        "financial": "금융",
+        "brazilian": "브라질",
+        "usa": "미국",
+        "full": "전체"
+      },
+      "builtinTypes": "기본 제공 유형",
+      "types": {
+        "email": "이메일 주소",
+        "phone_us": "미국 전화번호",
+        "phone_br": "브라질 전화번호",
+        "ssn": "미국 사회보장번호",
+        "credit_card": "신용카드 번호",
+        "cpf": "CPF(브라질 개인 납세자 번호)",
+        "cnpj": "CNPJ(브라질 법인 번호)",
+        "ip_address": "IPv4 주소",
+        "ipv6_address": "IPv6 주소",
+        "aws_key": "AWS 액세스 키",
+        "api_key_generic": "API 키 및 토큰"
+      },
+      "customPatterns": "사용자 지정 패턴",
+      "customPatternsDesc": "일치 항목은 [CUSTOM_REDACTED](으)로 바뀝니다. 최대 {max}개 패턴. 치명적인 백트래킹 위험이 있는 패턴은 거부됩니다.",
+      "typeRegex": "정규식",
+      "typeWildcard": "와일드카드(* 및 ?)",
+      "pattern": "패턴",
+      "flags": "플래그(i, m, s, u)",
+      "sampleText": "패턴을 테스트할 샘플 텍스트",
+      "test": "테스트",
+      "testMatches": "{count}개 일치",
+      "testFailed": "패턴 거부됨: {message}",
+      "add": "패턴 추가",
+      "saved": "저장됨",
+      "saveFailed": "저장할 수 없음: {message}",
+      "statsTitle": "재시작 이후 감지",
+      "statsEmpty": "아직 감지된 항목이 없습니다.",
+      "statsRequest": "요청"
+    }
   },
   "contextRtk": {
     "title": "RTK 엔진",

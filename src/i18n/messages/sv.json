@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Leverantör (alla konton delar en enda strömbrytare)",
     "resilienceTokenRefreshScopeConnection": "Anslutning (varje konto har egen strömbrytare)",
     "resilienceTokenRefreshThreshold": "Misslyckanden innan paus",
-    "resilienceTokenRefreshCooldown": "Paus efter utlösnings"
+    "resilienceTokenRefreshCooldown": "Paus efter utlösnings",
+    "piiMasking": {
+      "title": "PII-maskering",
+      "description": "Välj vilka typer av personuppgifter som maskeras och lägg till egna mönster. Maskeringen är avstängd tills du aktiverar funktionsflaggorna som visas nedan.",
+      "requestFlag": "Maskering av förfrågningar",
+      "responseFlag": "Sanering av svar",
+      "templates": "Mallar",
+      "template": {
+        "minimal": "Minimal",
+        "standard": "Standard",
+        "financial": "Finansiell",
+        "brazilian": "Brasiliansk",
+        "usa": "USA",
+        "full": "Fullständig"
+      },
+      "builtinTypes": "Inbyggda typer",
+      "types": {
+        "email": "E-postadresser",
+        "phone_us": "Amerikanska telefonnummer",
+        "phone_br": "Brasilianska telefonnummer",
+        "ssn": "Amerikanska personnummer (SSN)",
+        "credit_card": "Kreditkortsnummer",
+        "cpf": "CPF (brasilianskt skatte-ID)",
+        "cnpj": "CNPJ (brasilianskt företags-ID)",
+        "ip_address": "IPv4-adresser",
+        "ipv6_address": "IPv6-adresser",
+        "aws_key": "AWS-åtkomstnycklar",
+        "api_key_generic": "API-nycklar och tokens"
+      },
+      "customPatterns": "Egna mönster",
+      "customPatternsDesc": "Träffar ersätts med [CUSTOM_REDACTED]. Upp till {max} mönster. Mönster som riskerar katastrofal backtracking avvisas.",
+      "typeRegex": "Reguljärt uttryck",
+      "typeWildcard": "Jokertecken (* och ?)",
+      "pattern": "Mönster",
+      "flags": "Flaggor (i, m, s, u)",
+      "sampleText": "Exempeltext att testa mönstret mot",
+      "test": "Testa",
+      "testMatches": "{count} träffar",
+      "testFailed": "Mönstret avvisades: {message}",
+      "add": "Lägg till mönster",
+      "saved": "Sparat",
+      "saveFailed": "Kunde inte spara: {message}",
+      "statsTitle": "Upptäckter sedan omstart",
+      "statsEmpty": "Inga upptäckter än.",
+      "statsRequest": "Förfrågningar"
+    }
   },
   "contextRtk": {
     "title": "RTK-motor",
