@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-संगत प्रदाता समर्थन वाला, स्वयं में सुधार करने वाला RLM कोडिंग हार्नेस",
       "warp": "कस्टम प्रदाता समर्थन के साथ Warp AI टर्मिनल",
       "agent-deck": "Agent Deck मल्टी-एजेंट ऑर्केस्ट्रेटर",
-      "5dive": "5dive — स्व-होस्टेड कोडिंग एजेंट्स का बेड़ा; एक auth प्रोफ़ाइल सभी को OmniRoute की ओर इंगित करती है"
+      "5dive": "5dive — स्व-होस्टेड कोडिंग एजेंट्स का बेड़ा; एक auth प्रोफ़ाइल सभी को OmniRoute की ओर इंगित करती है",
+      "zed": "Zed कोड एडिटर — OpenAI-संगत प्रदाता के माध्यम से बिल्ट-इन एजेंट"
     },
     "guides": {
       "cursor": {
@@ -9860,6 +9861,9 @@
     "hideQuotaRow": "इस कोटा पंक्ति को छिपाएं",
     "showQuotaRow": "इस कोटा पंक्ति को दिखाएं",
     "hiddenQuotaRowsLabel": "छिपा हुआ:",
+    "quotaSpeedTitle": "इस खाते पर हाल की डिकोड गति (पिछले {count} सफल अनुरोध)",
+    "quotaSpeedLine": "{model}: {avg} tok/s औसत · अंतिम {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s औसत · अंतिम {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "कोटा दृश्यता अपडेट करने में विफल",
     "account": "खाता",
     "modelQuotas": "मॉडल कोटा",
