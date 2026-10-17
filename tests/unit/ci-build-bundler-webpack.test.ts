@@ -1,21 +1,17 @@
 /**
  * Which bundler CI uses when it compiles the app (16/10/2026).
  *
- * A Turbopack production build of this tree needs more memory than our runners can give it.
- * Measured alone on the 32-vCPU/47 GB .113 (cgroup cap, swap off) on 2026-10-16: Next
- * 16.3.5, 16.3.6 and 16.3.8 all peak at 33-37 GB (the Rust compile ~21 GB plus 31
- * static-generation workers at 17-21 GB) and finish in ~25 min; 16.4.2 needs more than
- * 36 GB in the compile phase alone and is OOM-killed, with or without the FS build cache,
- * the Rust React Compiler, or a 4-CPU pin. Next to the three omni-light runners the .113
- * cannot spare 36 GB, so every Build there died since 2026-10-06 (~200 red runs, each
- * swap-thrashing the box for 17-90 min), and the backend-only nightlies (dashboard stubbed)
- * hit the same wall: garak/promptfoo/schemathesis/a11y have not been green since 10-13.
- * The same tree builds with webpack in 14 GB.
+ * A Turbopack production build of this tree needs ~36-49 GB (measured 2026-10-16 on the
+ * 32-vCPU .113 with a cgroup cap and swap off: Next 16.3.5/16.3.6/16.3.8 peak at 33-37 GB
+ * under the cap, 49 GB uncapped, and finish in 23-25 min; 16.4.2 needs more than 36 GB in
+ * the compile phase alone and is OOM-killed). The .113 was raised from 48 to 64 GB on
+ * 2026-10-16 and the build passed there with three lint jobs alongside; the 16 GB hosted
+ * runners cannot hold it. The backend-only nightlies share the .113 with the light runners,
+ * so they stay on webpack (14 GB) - with Turbopack they had not been green since 10-13.
  *
- * So every CI step that compiles the app runs webpack (`OMNIROUTE_USE_TURBOPACK: "0"`,
- * the escape hatch documented in docs/reference/ENVIRONMENT.md): the four nightly
- * `build:cli` steps and the ci.yml `Build` job, whose self-hosted branch used to opt into
- * Turbopack. Flip a step back to "1" only with a measurement showing it fits.
+ * Policy: the ci.yml Build uses Turbopack only when it lands on the opt-in self-hosted slot
+ * (USE_VPS_RUNNER and USE_VPS_BUILD_RUNNER both 'true') and webpack everywhere else; the
+ * nightly build:cli steps always use webpack. Flip a step only with a measurement.
  */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -62,8 +58,10 @@ test("the nightly backend-only builds compile with webpack", () => {
   assert.deepEqual(onTurbopack, [], "these steps would run the Turbopack build that OOMs the .113");
 });
 
-test("the ci.yml Build job no longer opts into Turbopack on the self-hosted runner", () => {
+test("the ci.yml Build job uses Turbopack only on the self-hosted build slot", () => {
   const [build] = buildSteps("ci.yml", /^npm run build$/m);
   assert.ok(build, "ci.yml build job runs `npm run build`");
-  assert.equal(String(build.step.env?.OMNIROUTE_USE_TURBOPACK), "0");
+  const sw = String(build.step.env?.OMNIROUTE_USE_TURBOPACK);
+  assert.match(sw, /vars\.USE_VPS_BUILD_RUNNER == 'true'/, "Turbopack is tied to the opt-in slot");
+  assert.match(sw, /&& '1' \|\| '0' \}\}$/, "hosted runners (16 GB) fall back to webpack");
 });
