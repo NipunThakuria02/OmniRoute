@@ -81,6 +81,7 @@ jobs:
         env:
           JWT_SECRET: ci-build-secret-with-sufficient-length-for-validation
           OMNIROUTE_BUILD_BACKEND_ONLY: "1"
+          OMNIROUTE_USE_TURBOPACK: "0"
         run: npm run build:cli
       # Own port: this box also hosts the deployed server on 20128. A test server that
       # dies on EADDRINUSE must NOT let the soak fall through to whatever else answers
