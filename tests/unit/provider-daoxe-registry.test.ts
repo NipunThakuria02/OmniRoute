@@ -20,8 +20,11 @@ test("daoxe is registered as an API-key gateway provider in the UI catalog", () 
   assert.equal(entry.website, "https://daoxe.com");
   assert.equal(entry.passthroughModels, true);
   assert.notEqual(entry.hasFree, true, "no free-tier claim for a reseller gateway");
-  assert.equal(typeof entry.apiHint, "string");
-  assert.ok((entry.apiHint as string).includes("https://api.daoxe.com/v1"));
+  assert.equal(
+    entry.apiHint,
+    "Create an API token at https://daoxe.com/token, then paste it here as a Bearer token. " +
+      "OpenAI-compatible base URL: https://api.daoxe.com/v1."
+  );
 });
 
 test("daoxe registry entry uses OpenAI format with bearer API-key auth", () => {
