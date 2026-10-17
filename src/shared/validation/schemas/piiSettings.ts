@@ -84,5 +84,3 @@ export const testPiiPatternSchema = z
   })
   .strict()
   .superRefine(refusePatternsThatFailTheGate);
-
-export type UpdatePiiSettingsInput = z.infer<typeof updatePiiSettingsSchema>;
