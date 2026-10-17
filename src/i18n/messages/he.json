@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "ספק (כל החשבונות חולקים מפסק אחד)",
     "resilienceTokenRefreshScopeConnection": "חיבור (לכל חשבון יש מפסיק משלו)",
     "resilienceTokenRefreshThreshold": "כשלים לפני השהיה",
-    "resilienceTokenRefreshCooldown": "השהיה לאחר הפעלה"
+    "resilienceTokenRefreshCooldown": "השהיה לאחר הפעלה",
+    "piiMasking": {
+      "title": "הסתרת מידע אישי",
+      "description": "בחרו אילו סוגי מידע אישי יוסתרו והוסיפו תבניות משלכם. ההסתרה נשארת כבויה עד שתפעילו את דגלי התכונות המוצגים למטה.",
+      "requestFlag": "הסתרה בבקשות",
+      "responseFlag": "ניקוי תגובות",
+      "templates": "תבניות מוכנות",
+      "template": {
+        "minimal": "מינימלי",
+        "standard": "רגיל",
+        "financial": "פיננסי",
+        "brazilian": "ברזילאי",
+        "usa": "ארה״ב",
+        "full": "מלא"
+      },
+      "builtinTypes": "סוגים מובנים",
+      "types": {
+        "email": "כתובות אימייל",
+        "phone_us": "מספרי טלפון בארה״ב",
+        "phone_br": "מספרי טלפון בברזיל",
+        "ssn": "מספרי ביטוח לאומי בארה״ב",
+        "credit_card": "מספרי כרטיסי אשראי",
+        "cpf": "CPF (מספר מזהה מס ברזילאי)",
+        "cnpj": "CNPJ (מספר חברה ברזילאי)",
+        "ip_address": "כתובות IPv4",
+        "ipv6_address": "כתובות IPv6",
+        "aws_key": "מפתחות גישה של AWS",
+        "api_key_generic": "מפתחות API ואסימונים"
+      },
+      "customPatterns": "תבניות מותאמות אישית",
+      "customPatternsDesc": "התאמות מוחלפות ב-[CUSTOM_REDACTED]. עד {max} תבניות. תבניות בסיכון לחזרה לאחור קטסטרופלית נדחות.",
+      "typeRegex": "ביטוי רגולרי",
+      "typeWildcard": "תו כללי (* ו-?)",
+      "pattern": "תבנית",
+      "flags": "דגלים (i, m, s, u)",
+      "sampleText": "טקסט לדוגמה לבדיקת התבנית",
+      "test": "בדיקה",
+      "testMatches": "התאמות: {count}",
+      "testFailed": "התבנית נדחתה: {message}",
+      "add": "הוספת תבנית",
+      "saved": "נשמר",
+      "saveFailed": "השמירה נכשלה: {message}",
+      "statsTitle": "זיהויים מאז ההפעלה מחדש",
+      "statsEmpty": "אין זיהויים עדיין.",
+      "statsRequest": "בקשות"
+    }
   },
   "contextRtk": {
     "title": "מנוע RTK",

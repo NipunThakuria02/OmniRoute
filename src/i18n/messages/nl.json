@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Provider (alle accounts delen één breaker)",
     "resilienceTokenRefreshScopeConnection": "Verbinding (elk account heeft zijn eigen breaker)",
     "resilienceTokenRefreshThreshold": "Mislukkingen vóór pauzeren",
-    "resilienceTokenRefreshCooldown": "Pauzeer na het uitschakelen"
+    "resilienceTokenRefreshCooldown": "Pauzeer na het uitschakelen",
+    "piiMasking": {
+      "title": "PII-maskering",
+      "description": "Kies welke soorten persoonsgegevens worden gemaskeerd en voeg je eigen patronen toe. Maskering blijft uit totdat je de hieronder getoonde feature flags inschakelt.",
+      "requestFlag": "Maskering van verzoeken",
+      "responseFlag": "Opschoning van antwoorden",
+      "templates": "Sjablonen",
+      "template": {
+        "minimal": "Minimaal",
+        "standard": "Standaard",
+        "financial": "Financieel",
+        "brazilian": "Braziliaans",
+        "usa": "VS",
+        "full": "Volledig"
+      },
+      "builtinTypes": "Ingebouwde typen",
+      "types": {
+        "email": "E-mailadressen",
+        "phone_us": "Amerikaanse telefoonnummers",
+        "phone_br": "Braziliaanse telefoonnummers",
+        "ssn": "Amerikaanse burgerservicenummers (SSN)",
+        "credit_card": "Creditcardnummers",
+        "cpf": "CPF (Braziliaans fiscaal nummer)",
+        "cnpj": "CNPJ (Braziliaans bedrijfsnummer)",
+        "ip_address": "IPv4-adressen",
+        "ipv6_address": "IPv6-adressen",
+        "aws_key": "AWS-toegangssleutels",
+        "api_key_generic": "API-sleutels en tokens"
+      },
+      "customPatterns": "Aangepaste patronen",
+      "customPatternsDesc": "Overeenkomsten worden vervangen door [CUSTOM_REDACTED]. Maximaal {max} patronen. Patronen met risico op catastrofale backtracking worden geweigerd.",
+      "typeRegex": "Reguliere expressie",
+      "typeWildcard": "Jokerteken (* en ?)",
+      "pattern": "Patroon",
+      "flags": "Vlaggen (i, m, s, u)",
+      "sampleText": "Voorbeeldtekst om het patroon op te testen",
+      "test": "Testen",
+      "testMatches": "{count} overeenkomsten",
+      "testFailed": "Patroon geweigerd: {message}",
+      "add": "Patroon toevoegen",
+      "saved": "Opgeslagen",
+      "saveFailed": "Opslaan mislukt: {message}",
+      "statsTitle": "Detecties sinds herstart",
+      "statsEmpty": "Nog geen detecties.",
+      "statsRequest": "Verzoeken"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Провайдер (усі облікові записи використовують один розривач)",
     "resilienceTokenRefreshScopeConnection": "З'єднання (кожен обліковий запис має власний автомат)",
     "resilienceTokenRefreshThreshold": "Помилки перед призупиненням",
-    "resilienceTokenRefreshCooldown": "Пауза після спрацювання"
+    "resilienceTokenRefreshCooldown": "Пауза після спрацювання",
+    "piiMasking": {
+      "title": "Маскування ПД",
+      "description": "Виберіть, які типи персональних даних маскувати, і додайте власні шаблони. Маскування вимкнене, доки ви не ввімкнете прапорці функцій, показані нижче.",
+      "requestFlag": "Маскування запитів",
+      "responseFlag": "Очищення відповідей",
+      "templates": "Шаблони",
+      "template": {
+        "minimal": "Мінімальний",
+        "standard": "Стандартний",
+        "financial": "Фінансовий",
+        "brazilian": "Бразильський",
+        "usa": "США",
+        "full": "Повний"
+      },
+      "builtinTypes": "Вбудовані типи",
+      "types": {
+        "email": "Адреси електронної пошти",
+        "phone_us": "Телефонні номери США",
+        "phone_br": "Бразильські телефонні номери",
+        "ssn": "Номери соціального страхування США",
+        "credit_card": "Номери банківських карток",
+        "cpf": "CPF (податковий номер фізособи в Бразилії)",
+        "cnpj": "CNPJ (номер компанії в Бразилії)",
+        "ip_address": "IPv4-адреси",
+        "ipv6_address": "IPv6-адреси",
+        "aws_key": "Ключі доступу AWS",
+        "api_key_generic": "API-ключі та токени"
+      },
+      "customPatterns": "Власні шаблони",
+      "customPatternsDesc": "Збіги замінюються на [CUSTOM_REDACTED]. До {max} шаблонів. Шаблони з ризиком катастрофічного бектрекінгу відхиляються.",
+      "typeRegex": "Регулярний вираз",
+      "typeWildcard": "Символ підстановки (* і ?)",
+      "pattern": "Шаблон",
+      "flags": "Прапорці (i, m, s, u)",
+      "sampleText": "Приклад тексту для перевірки шаблону",
+      "test": "Перевірити",
+      "testMatches": "Збігів: {count}",
+      "testFailed": "Шаблон відхилено: {message}",
+      "add": "Додати шаблон",
+      "saved": "Збережено",
+      "saveFailed": "Не вдалося зберегти: {message}",
+      "statsTitle": "Виявлення від перезапуску",
+      "statsEmpty": "Виявлень поки немає.",
+      "statsRequest": "Запити"
+    }
   },
   "contextRtk": {
     "title": "Двигун RTK",

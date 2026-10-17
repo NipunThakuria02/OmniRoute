@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "प्रोव्हाइडर (सर्व खाती एकाच ब्रेकर शेअर करतात)",
     "resilienceTokenRefreshScopeConnection": "कनेक्शन (प्रत्येक खात्याला स्वतःचा ब्रेकर असतो)",
     "resilienceTokenRefreshThreshold": "थांबवण्यापूर्वी अपयशी",
-    "resilienceTokenRefreshCooldown": "ट्रिप झाल्यानंतर थांबा"
+    "resilienceTokenRefreshCooldown": "ट्रिप झाल्यानंतर थांबा",
+    "piiMasking": {
+      "title": "वैयक्तिक डेटा मास्किंग",
+      "description": "कोणत्या प्रकारचा वैयक्तिक डेटा मास्क करायचा ते निवडा आणि स्वतःचे पॅटर्न जोडा. खाली दाखवलेले फीचर फ्लॅग चालू करेपर्यंत मास्किंग बंद राहते.",
+      "requestFlag": "विनंती मास्किंग",
+      "responseFlag": "प्रतिसाद स्वच्छता",
+      "templates": "साचे",
+      "template": {
+        "minimal": "किमान",
+        "standard": "मानक",
+        "financial": "आर्थिक",
+        "brazilian": "ब्राझिलियन",
+        "usa": "अमेरिका",
+        "full": "संपूर्ण"
+      },
+      "builtinTypes": "अंगभूत प्रकार",
+      "types": {
+        "email": "ईमेल पत्ते",
+        "phone_us": "अमेरिकेतील फोन नंबर",
+        "phone_br": "ब्राझीलमधील फोन नंबर",
+        "ssn": "अमेरिकन सामाजिक सुरक्षा क्रमांक",
+        "credit_card": "क्रेडिट कार्ड क्रमांक",
+        "cpf": "CPF (ब्राझिलियन करदाता ओळख)",
+        "cnpj": "CNPJ (ब्राझिलियन कंपनी ओळख)",
+        "ip_address": "IPv4 पत्ते",
+        "ipv6_address": "IPv6 पत्ते",
+        "aws_key": "AWS प्रवेश की",
+        "api_key_generic": "API की आणि टोकन"
+      },
+      "customPatterns": "सानुकूल पॅटर्न",
+      "customPatternsDesc": "जुळण्या [CUSTOM_REDACTED] ने बदलल्या जातात. जास्तीत जास्त {max} पॅटर्न. विनाशकारी बॅकट्रॅकिंगचा धोका असलेले पॅटर्न नाकारले जातात.",
+      "typeRegex": "रेग्युलर एक्सप्रेशन",
+      "typeWildcard": "वाइल्डकार्ड (* आणि ?)",
+      "pattern": "पॅटर्न",
+      "flags": "फ्लॅग (i, m, s, u)",
+      "sampleText": "पॅटर्न तपासण्यासाठी नमुना मजकूर",
+      "test": "तपासा",
+      "testMatches": "{count} जुळण्या",
+      "testFailed": "पॅटर्न नाकारला: {message}",
+      "add": "पॅटर्न जोडा",
+      "saved": "जतन केले",
+      "saveFailed": "जतन करता आले नाही: {message}",
+      "statsTitle": "पुन्हा सुरू झाल्यापासूनच्या ओळखी",
+      "statsEmpty": "अद्याप कोणतीही ओळख नाही.",
+      "statsRequest": "विनंत्या"
+    }
   },
   "contextRtk": {
     "title": "RTK इंजिन",

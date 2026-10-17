@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Fournisseur (tous les comptes partagent un seul disjoncteur)",
     "resilienceTokenRefreshScopeConnection": "Connexion (chaque compte a son propre disjoncteur)",
     "resilienceTokenRefreshThreshold": "Échecs avant la mise en pause",
-    "resilienceTokenRefreshCooldown": "Pause après déclenchement"
+    "resilienceTokenRefreshCooldown": "Pause après déclenchement",
+    "piiMasking": {
+      "title": "Masquage des PII",
+      "description": "Choisissez les types de données personnelles à masquer et ajoutez vos propres motifs. Le masquage reste désactivé tant que vous n’activez pas les feature flags indiqués ci-dessous.",
+      "requestFlag": "Masquage des requêtes",
+      "responseFlag": "Assainissement des réponses",
+      "templates": "Modèles",
+      "template": {
+        "minimal": "Minimal",
+        "standard": "Standard",
+        "financial": "Financier",
+        "brazilian": "Brésilien",
+        "usa": "États-Unis",
+        "full": "Complet"
+      },
+      "builtinTypes": "Types intégrés",
+      "types": {
+        "email": "Adresses e-mail",
+        "phone_us": "Numéros de téléphone américains",
+        "phone_br": "Numéros de téléphone brésiliens",
+        "ssn": "Numéros de sécurité sociale américains",
+        "credit_card": "Numéros de carte bancaire",
+        "cpf": "CPF (identifiant fiscal brésilien)",
+        "cnpj": "CNPJ (identifiant d’entreprise brésilien)",
+        "ip_address": "Adresses IPv4",
+        "ipv6_address": "Adresses IPv6",
+        "aws_key": "Clés d’accès AWS",
+        "api_key_generic": "Clés d’API et jetons"
+      },
+      "customPatterns": "Motifs personnalisés",
+      "customPatternsDesc": "Les correspondances sont remplacées par [CUSTOM_REDACTED]. Jusqu’à {max} motifs. Les motifs qui risquent un backtracking catastrophique sont refusés.",
+      "typeRegex": "Expression régulière",
+      "typeWildcard": "Joker (* et ?)",
+      "pattern": "Motif",
+      "flags": "Drapeaux (i, m, s, u)",
+      "sampleText": "Texte d’exemple pour tester le motif",
+      "test": "Tester",
+      "testMatches": "{count} correspondances",
+      "testFailed": "Motif refusé : {message}",
+      "add": "Ajouter un motif",
+      "saved": "Enregistré",
+      "saveFailed": "Échec de l’enregistrement : {message}",
+      "statsTitle": "Détections depuis le redémarrage",
+      "statsEmpty": "Aucune détection pour l’instant.",
+      "statsRequest": "Requêtes"
+    }
   },
   "contextRtk": {
     "title": "Moteur RTK",

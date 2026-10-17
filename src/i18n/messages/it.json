@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Provider (tutti gli account condividono un unico interruttore)",
     "resilienceTokenRefreshScopeConnection": "Connessione (ogni account ha il proprio circuit breaker)",
     "resilienceTokenRefreshThreshold": "Fallimenti prima della pausa",
-    "resilienceTokenRefreshCooldown": "Pausa dopo l'attivazione"
+    "resilienceTokenRefreshCooldown": "Pausa dopo l'attivazione",
+    "piiMasking": {
+      "title": "Mascheramento PII",
+      "description": "Scegli quali tipi di dati personali mascherare e aggiungi i tuoi pattern. Il mascheramento resta disattivato finché non attivi i feature flag mostrati qui sotto.",
+      "requestFlag": "Mascheramento delle richieste",
+      "responseFlag": "Sanificazione delle risposte",
+      "templates": "Modelli",
+      "template": {
+        "minimal": "Minimo",
+        "standard": "Standard",
+        "financial": "Finanziario",
+        "brazilian": "Brasiliano",
+        "usa": "USA",
+        "full": "Completo"
+      },
+      "builtinTypes": "Tipi integrati",
+      "types": {
+        "email": "Indirizzi email",
+        "phone_us": "Numeri di telefono USA",
+        "phone_br": "Numeri di telefono brasiliani",
+        "ssn": "Numeri di previdenza sociale USA",
+        "credit_card": "Numeri di carta di credito",
+        "cpf": "CPF (codice fiscale brasiliano)",
+        "cnpj": "CNPJ (codice aziendale brasiliano)",
+        "ip_address": "Indirizzi IPv4",
+        "ipv6_address": "Indirizzi IPv6",
+        "aws_key": "Chiavi di accesso AWS",
+        "api_key_generic": "Chiavi API e token"
+      },
+      "customPatterns": "Pattern personalizzati",
+      "customPatternsDesc": "Le corrispondenze vengono sostituite con [CUSTOM_REDACTED]. Fino a {max} pattern. I pattern a rischio di backtracking catastrofico vengono rifiutati.",
+      "typeRegex": "Espressione regolare",
+      "typeWildcard": "Carattere jolly (* e ?)",
+      "pattern": "Pattern",
+      "flags": "Flag (i, m, s, u)",
+      "sampleText": "Testo di esempio su cui provare il pattern",
+      "test": "Prova",
+      "testMatches": "{count} corrispondenze",
+      "testFailed": "Pattern rifiutato: {message}",
+      "add": "Aggiungi pattern",
+      "saved": "Salvato",
+      "saveFailed": "Impossibile salvare: {message}",
+      "statsTitle": "Rilevamenti dal riavvio",
+      "statsEmpty": "Ancora nessun rilevamento.",
+      "statsRequest": "Richieste"
+    }
   },
   "contextRtk": {
     "title": "Motore RTK",

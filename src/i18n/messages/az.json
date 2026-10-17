@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Təminatçı (bütün hesablar bir açarla bölüşür)",
     "resilienceTokenRefreshScopeConnection": "Bağlantı (hər hesabın öz açarı var)",
     "resilienceTokenRefreshThreshold": "Fasilə verilmədən əvvəl uğursuzluqlar",
-    "resilienceTokenRefreshCooldown": "İşə düşdükdən sonra fasilə"
+    "resilienceTokenRefreshCooldown": "İşə düşdükdən sonra fasilə",
+    "piiMasking": {
+      "title": "Şəxsi məlumatların maskalanması",
+      "description": "Hansı növ şəxsi məlumatların maskalanacağını seçin və öz nümunələrinizi əlavə edin. Aşağıda göstərilən funksiya bayraqlarını yandırana qədər maskalama söndürülmüş qalır.",
+      "requestFlag": "Sorğuların maskalanması",
+      "responseFlag": "Cavabların təmizlənməsi",
+      "templates": "Şablonlar",
+      "template": {
+        "minimal": "Minimal",
+        "standard": "Standart",
+        "financial": "Maliyyə",
+        "brazilian": "Braziliya",
+        "usa": "ABŞ",
+        "full": "Tam"
+      },
+      "builtinTypes": "Daxili növlər",
+      "types": {
+        "email": "E-poçt ünvanları",
+        "phone_us": "ABŞ telefon nömrələri",
+        "phone_br": "Braziliya telefon nömrələri",
+        "ssn": "ABŞ sosial təminat nömrələri",
+        "credit_card": "Kredit kartı nömrələri",
+        "cpf": "CPF (Braziliya vergi ödəyicisi ID)",
+        "cnpj": "CNPJ (Braziliya şirkət ID)",
+        "ip_address": "IPv4 ünvanları",
+        "ipv6_address": "IPv6 ünvanları",
+        "aws_key": "AWS giriş açarları",
+        "api_key_generic": "API açarları və tokenlər"
+      },
+      "customPatterns": "Fərdi nümunələr",
+      "customPatternsDesc": "Uyğunluqlar [CUSTOM_REDACTED] ilə əvəz olunur. Ən çox {max} nümunə. Fəlakətli geri izləmə riski olan nümunələr rədd edilir.",
+      "typeRegex": "Müntəzəm ifadə",
+      "typeWildcard": "Əvəzedici simvol (* və ?)",
+      "pattern": "Nümunə",
+      "flags": "Bayraqlar (i, m, s, u)",
+      "sampleText": "Nümunəni sınamaq üçün nümunə mətn",
+      "test": "Sına",
+      "testMatches": "{count} uyğunluq",
+      "testFailed": "Nümunə rədd edildi: {message}",
+      "add": "Nümunə əlavə et",
+      "saved": "Yadda saxlanıldı",
+      "saveFailed": "Yadda saxlamaq mümkün olmadı: {message}",
+      "statsTitle": "Yenidən başladılandan bəri aşkarlamalar",
+      "statsEmpty": "Hələ aşkarlama yoxdur.",
+      "statsRequest": "Sorğular"
+    }
   },
   "contextRtk": {
     "title": "RTK Mühərriki",

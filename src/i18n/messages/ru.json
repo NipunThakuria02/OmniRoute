@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Провайдер (все аккаунты используют один предохранитель)",
     "resilienceTokenRefreshScopeConnection": "Подключение (у каждого аккаунта свой автоматический выключатель)",
     "resilienceTokenRefreshThreshold": "Количество сбоев до приостановки",
-    "resilienceTokenRefreshCooldown": "Пауза после срабатывания"
+    "resilienceTokenRefreshCooldown": "Пауза после срабатывания",
+    "piiMasking": {
+      "title": "Маскирование ПДн",
+      "description": "Выберите, какие типы персональных данных маскировать, и добавьте свои шаблоны. Маскирование выключено, пока вы не включите флаги функций, показанные ниже.",
+      "requestFlag": "Маскирование запросов",
+      "responseFlag": "Очистка ответов",
+      "templates": "Шаблоны",
+      "template": {
+        "minimal": "Минимальный",
+        "standard": "Стандартный",
+        "financial": "Финансовый",
+        "brazilian": "Бразильский",
+        "usa": "США",
+        "full": "Полный"
+      },
+      "builtinTypes": "Встроенные типы",
+      "types": {
+        "email": "Адреса электронной почты",
+        "phone_us": "Телефонные номера США",
+        "phone_br": "Бразильские телефонные номера",
+        "ssn": "Номера социального страхования США",
+        "credit_card": "Номера банковских карт",
+        "cpf": "CPF (налоговый номер физлица в Бразилии)",
+        "cnpj": "CNPJ (номер компании в Бразилии)",
+        "ip_address": "IPv4-адреса",
+        "ipv6_address": "IPv6-адреса",
+        "aws_key": "Ключи доступа AWS",
+        "api_key_generic": "API-ключи и токены"
+      },
+      "customPatterns": "Пользовательские шаблоны",
+      "customPatternsDesc": "Совпадения заменяются на [CUSTOM_REDACTED]. До {max} шаблонов. Шаблоны с риском катастрофического бэктрекинга отклоняются.",
+      "typeRegex": "Регулярное выражение",
+      "typeWildcard": "Подстановочный знак (* и ?)",
+      "pattern": "Шаблон",
+      "flags": "Флаги (i, m, s, u)",
+      "sampleText": "Пример текста для проверки шаблона",
+      "test": "Проверить",
+      "testMatches": "Совпадений: {count}",
+      "testFailed": "Шаблон отклонён: {message}",
+      "add": "Добавить шаблон",
+      "saved": "Сохранено",
+      "saveFailed": "Не удалось сохранить: {message}",
+      "statsTitle": "Обнаружения с момента перезапуска",
+      "statsEmpty": "Пока нет обнаружений.",
+      "statsRequest": "Запросы"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

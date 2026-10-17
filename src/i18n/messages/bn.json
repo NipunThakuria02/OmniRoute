@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "প্রদানকারী (সমস্ত অ্যাকাউন্ট একটি ব্রেকার ভাগ করে নেয়)",
     "resilienceTokenRefreshScopeConnection": "সংযোগ (প্রতিটি অ্যাকাউন্টের নিজস্ব ব্রেকার আছে)",
     "resilienceTokenRefreshThreshold": "বিরতি নেওয়ার আগে ব্যর্থতা",
-    "resilienceTokenRefreshCooldown": "ট্রিপ হওয়ার পরে বিরতি"
+    "resilienceTokenRefreshCooldown": "ট্রিপ হওয়ার পরে বিরতি",
+    "piiMasking": {
+      "title": "ব্যক্তিগত তথ্য মাস্কিং",
+      "description": "কোন ধরনের ব্যক্তিগত তথ্য মাস্ক করা হবে তা বেছে নিন এবং নিজের প্যাটার্ন যোগ করুন। নিচে দেখানো ফিচার ফ্ল্যাগগুলো চালু না করা পর্যন্ত মাস্কিং বন্ধ থাকে।",
+      "requestFlag": "অনুরোধ মাস্কিং",
+      "responseFlag": "প্রতিক্রিয়া পরিশোধন",
+      "templates": "টেমপ্লেট",
+      "template": {
+        "minimal": "ন্যূনতম",
+        "standard": "মানক",
+        "financial": "আর্থিক",
+        "brazilian": "ব্রাজিলীয়",
+        "usa": "যুক্তরাষ্ট্র",
+        "full": "সম্পূর্ণ"
+      },
+      "builtinTypes": "অন্তর্নির্মিত ধরন",
+      "types": {
+        "email": "ইমেল ঠিকানা",
+        "phone_us": "মার্কিন ফোন নম্বর",
+        "phone_br": "ব্রাজিলীয় ফোন নম্বর",
+        "ssn": "মার্কিন সামাজিক নিরাপত্তা নম্বর",
+        "credit_card": "ক্রেডিট কার্ড নম্বর",
+        "cpf": "CPF (ব্রাজিলীয় করদাতা আইডি)",
+        "cnpj": "CNPJ (ব্রাজিলীয় কোম্পানি আইডি)",
+        "ip_address": "IPv4 ঠিকানা",
+        "ipv6_address": "IPv6 ঠিকানা",
+        "aws_key": "AWS অ্যাক্সেস কী",
+        "api_key_generic": "API কী ও টোকেন"
+      },
+      "customPatterns": "কাস্টম প্যাটার্ন",
+      "customPatternsDesc": "মিলগুলো [CUSTOM_REDACTED] দিয়ে প্রতিস্থাপিত হয়। সর্বোচ্চ {max}টি প্যাটার্ন। বিপর্যয়কর ব্যাকট্র্যাকিংয়ের ঝুঁকিপূর্ণ প্যাটার্ন প্রত্যাখ্যান করা হয়।",
+      "typeRegex": "রেগুলার এক্সপ্রেশন",
+      "typeWildcard": "ওয়াইল্ডকার্ড (* এবং ?)",
+      "pattern": "প্যাটার্ন",
+      "flags": "ফ্ল্যাগ (i, m, s, u)",
+      "sampleText": "প্যাটার্ন পরীক্ষার জন্য নমুনা লেখা",
+      "test": "পরীক্ষা করুন",
+      "testMatches": "{count}টি মিল",
+      "testFailed": "প্যাটার্ন প্রত্যাখ্যাত: {message}",
+      "add": "প্যাটার্ন যোগ করুন",
+      "saved": "সংরক্ষিত",
+      "saveFailed": "সংরক্ষণ করা যায়নি: {message}",
+      "statsTitle": "পুনরায় চালুর পর থেকে শনাক্তকরণ",
+      "statsEmpty": "এখনও কোনো শনাক্তকরণ নেই।",
+      "statsRequest": "অনুরোধ"
+    }
   },
   "contextRtk": {
     "title": "RTK ইঞ্জিন",

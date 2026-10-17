@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "ผู้ให้บริการ (บัญชีทั้งหมดใช้ตัวเบรกเกอร์เดียวกัน)",
     "resilienceTokenRefreshScopeConnection": "การเชื่อมต่อ (แต่ละบัญชีมีตัวเบรกเกอร์ของตัวเอง)",
     "resilienceTokenRefreshThreshold": "ความล้มเหลวก่อนหยุดชั่วคราว",
-    "resilienceTokenRefreshCooldown": "หยุดชั่วคราวหลังจากกระตุ้น"
+    "resilienceTokenRefreshCooldown": "หยุดชั่วคราวหลังจากกระตุ้น",
+    "piiMasking": {
+      "title": "การปิดบังข้อมูลส่วนบุคคล",
+      "description": "เลือกประเภทข้อมูลส่วนบุคคลที่จะปิดบังและเพิ่มรูปแบบของคุณเอง การปิดบังจะปิดอยู่จนกว่าคุณจะเปิดแฟล็กฟีเจอร์ที่แสดงด้านล่าง",
+      "requestFlag": "ปิดบังคำขอ",
+      "responseFlag": "ทำความสะอาดการตอบกลับ",
+      "templates": "เทมเพลต",
+      "template": {
+        "minimal": "ขั้นต่ำ",
+        "standard": "มาตรฐาน",
+        "financial": "การเงิน",
+        "brazilian": "บราซิล",
+        "usa": "สหรัฐฯ",
+        "full": "ทั้งหมด"
+      },
+      "builtinTypes": "ประเภทในตัว",
+      "types": {
+        "email": "ที่อยู่อีเมล",
+        "phone_us": "หมายเลขโทรศัพท์สหรัฐฯ",
+        "phone_br": "หมายเลขโทรศัพท์บราซิล",
+        "ssn": "หมายเลขประกันสังคมสหรัฐฯ",
+        "credit_card": "หมายเลขบัตรเครดิต",
+        "cpf": "CPF (เลขประจำตัวผู้เสียภาษีบราซิล)",
+        "cnpj": "CNPJ (เลขทะเบียนบริษัทบราซิล)",
+        "ip_address": "ที่อยู่ IPv4",
+        "ipv6_address": "ที่อยู่ IPv6",
+        "aws_key": "คีย์การเข้าถึง AWS",
+        "api_key_generic": "คีย์ API และโทเค็น"
+      },
+      "customPatterns": "รูปแบบที่กำหนดเอง",
+      "customPatternsDesc": "ส่วนที่ตรงกันจะถูกแทนที่ด้วย [CUSTOM_REDACTED] ได้สูงสุด {max} รูปแบบ รูปแบบที่เสี่ยงต่อการย้อนรอยแบบหายนะจะถูกปฏิเสธ",
+      "typeRegex": "นิพจน์ทั่วไป",
+      "typeWildcard": "ไวลด์การ์ด (* และ ?)",
+      "pattern": "รูปแบบ",
+      "flags": "แฟล็ก (i, m, s, u)",
+      "sampleText": "ข้อความตัวอย่างสำหรับทดสอบรูปแบบ",
+      "test": "ทดสอบ",
+      "testMatches": "ตรงกัน {count} รายการ",
+      "testFailed": "รูปแบบถูกปฏิเสธ: {message}",
+      "add": "เพิ่มรูปแบบ",
+      "saved": "บันทึกแล้ว",
+      "saveFailed": "บันทึกไม่ได้: {message}",
+      "statsTitle": "การตรวจพบตั้งแต่รีสตาร์ต",
+      "statsEmpty": "ยังไม่มีการตรวจพบ",
+      "statsRequest": "คำขอ"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

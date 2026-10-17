@@ -735,16 +735,18 @@ jobs:
       # Use the existing webpack fallback on hosted runners, matching limited Docker builders.
       # Keep the benchmarked Turbopack build on the dedicated omni-build runner.
       # Both produce the standalone artifact consumed by downstream smoke checks.
-      # 2026-10-16: Turbopack is OFF on every runner. Measured alone on the 32-vCPU/47 GB
-      # .113 (cgroup cap, swap off), a Turbopack build of this tree peaks at 33-37 GB on
-      # Next 16.3.5/16.3.6/16.3.8 (compile ~21 GB + 31 static-generation workers 17-21 GB),
-      # which the box cannot spare next to the three omni-light runners (~200 red Builds
-      # since 10-06, each swap-thrashing for 17-90 min); 16.4.2 needs more than 36 GB in
-      # the compile phase alone. webpack builds the same tree in 14 GB. Guarded by
-      # tests/unit/ci-build-bundler-webpack.test.ts; flip back only with a measurement.
+      # 2026-10-16: Turbopack only on the self-hosted build slot, webpack everywhere else.
+      # Measured on the 32-vCPU .113 (cgroup cap, swap off): the Turbopack build of this
+      # tree peaks at ~36 GB under the cap (49 GB uncapped; compile ~21 GB + 31 static-
+      # generation workers 17-21 GB), so it did not fit the 48 GB box next to the three
+      # omni-light runners (~200 red Builds 10-06..10-16). The VM now has 64 GB and the
+      # build passed there in 23 min with three lint jobs alongside; the 16 GB hosted
+      # runners cannot hold it and build with webpack (14 GB). Next 16.4.x regresses
+      # (33 GB in the compile phase alone) - re-measure before bumping. Guarded by
+      # tests/unit/ci-build-bundler-webpack.test.ts and heavy-build-queue.test.ts.
       - run: npm run build
         env:
-          OMNIROUTE_USE_TURBOPACK: "0"
+          OMNIROUTE_USE_TURBOPACK: ${{ (vars.USE_VPS_RUNNER == 'true' && vars.USE_VPS_BUILD_RUNNER == 'true' && github.event_name != 'merge_group' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)) && '1' || '0' }}
       - name: Verify colocated compression worker
         run: node --import tsx/esm --test tests/integration/compression-worker-standalone.int.test.ts
         env:

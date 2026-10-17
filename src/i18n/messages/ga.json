@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Soláthraí (roinneann gach cuntas amháon bhriseoir)",
     "resilienceTokenRefreshScopeConnection": "Ceangal (tá meitneoir féin ag gach cuntas)",
     "resilienceTokenRefreshThreshold": "Teipimhí roimh an sos",
-    "resilienceTokenRefreshCooldown": "Sos tar éis an rith a thosú"
+    "resilienceTokenRefreshCooldown": "Sos tar éis an rith a thosú",
+    "piiMasking": {
+      "title": "Folú sonraí pearsanta",
+      "description": "Roghnaigh na cineálacha sonraí pearsanta a fholófar agus cuir do phatrúin féin leis. Fanann an folú múchta go dtí go gcasann tú air na bratacha gné a thaispeántar thíos.",
+      "requestFlag": "Folú iarratas",
+      "responseFlag": "Sláintíocht freagraí",
+      "templates": "Teimpléid",
+      "template": {
+        "minimal": "Íosta",
+        "standard": "Caighdeánach",
+        "financial": "Airgeadais",
+        "brazilian": "Brasaíleach",
+        "usa": "SAM",
+        "full": "Iomlán"
+      },
+      "builtinTypes": "Cineálacha ionsuite",
+      "types": {
+        "email": "Seoltaí ríomhphoist",
+        "phone_us": "Uimhreacha gutháin SAM",
+        "phone_br": "Uimhreacha gutháin na Brasaíle",
+        "ssn": "Uimhreacha Slándála Sóisialta SAM",
+        "credit_card": "Uimhreacha cártaí creidmheasa",
+        "cpf": "CPF (aitheantas cáiníocóra na Brasaíle)",
+        "cnpj": "CNPJ (aitheantas cuideachta na Brasaíle)",
+        "ip_address": "Seoltaí IPv4",
+        "ipv6_address": "Seoltaí IPv6",
+        "aws_key": "Eochracha rochtana AWS",
+        "api_key_generic": "Eochracha API agus comharthaí"
+      },
+      "customPatterns": "Patrúin shaincheaptha",
+      "customPatternsDesc": "Cuirtear [CUSTOM_REDACTED] in ionad na meaitseálacha. Suas le {max} patrún. Diúltaítear do phatrúin a bhfuil baol cúlrianaithe tubaistigh ag baint leo.",
+      "typeRegex": "Slonn ionadaíochta",
+      "typeWildcard": "Saoróg (* agus ?)",
+      "pattern": "Patrún",
+      "flags": "Bratacha (i, m, s, u)",
+      "sampleText": "Téacs samplach chun an patrún a thástáil",
+      "test": "Tástáil",
+      "testMatches": "{count} meaitseáil",
+      "testFailed": "Diúltaíodh don phatrún: {message}",
+      "add": "Cuir patrún leis",
+      "saved": "Sábháilte",
+      "saveFailed": "Níorbh fhéidir sábháil: {message}",
+      "statsTitle": "Brathanna ó atosú",
+      "statsEmpty": "Níl aon bhrath fós.",
+      "statsRequest": "Iarratais"
+    }
   },
   "contextRtk": {
     "title": "Inneall RTK",

@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "සැපයුම්කරු (සියලු ගිණුම් එක් බ්‍රේකරයක් බෙදා ගනී)",
     "resilienceTokenRefreshScopeConnection": "සම්බන්ධතාවය (සෑම ගිණුමකටම එහිම බ්‍රේකරය ඇත)",
     "resilienceTokenRefreshThreshold": "විරාමයකට පෙර අසාර්ථකතා",
-    "resilienceTokenRefreshCooldown": "සක්‍රීය වූ පසු විරාමය"
+    "resilienceTokenRefreshCooldown": "සක්‍රීය වූ පසු විරාමය",
+    "piiMasking": {
+      "title": "පුද්ගලික දත්ත සැඟවීම",
+      "description": "සැඟවිය යුතු පුද්ගලික දත්ත වර්ග තෝරා ඔබේම රටා එක් කරන්න. පහත පෙන්වා ඇති විශේෂාංග ධජ සක්‍රිය කරන තුරු සැඟවීම අක්‍රියව පවතී.",
+      "requestFlag": "ඉල්ලීම් සැඟවීම",
+      "responseFlag": "ප්‍රතිචාර පිරිසිදු කිරීම",
+      "templates": "සැකිලි",
+      "template": {
+        "minimal": "අවම",
+        "standard": "සම්මත",
+        "financial": "මූල්‍ය",
+        "brazilian": "බ්‍රසීල",
+        "usa": "ඇමරිකාව",
+        "full": "සම්පූර්ණ"
+      },
+      "builtinTypes": "ගොඩනඟන ලද වර්ග",
+      "types": {
+        "email": "ඊමේල් ලිපින",
+        "phone_us": "එක්සත් ජනපද දුරකථන අංක",
+        "phone_br": "බ්‍රසීල දුරකථන අංක",
+        "ssn": "එක්සත් ජනපද සමාජ ආරක්ෂණ අංක",
+        "credit_card": "ක්‍රෙඩිට් කාඩ් අංක",
+        "cpf": "CPF (බ්‍රසීල බදු ගෙවන්නාගේ ID)",
+        "cnpj": "CNPJ (බ්‍රසීල සමාගම් ID)",
+        "ip_address": "IPv4 ලිපින",
+        "ipv6_address": "IPv6 ලිපින",
+        "aws_key": "AWS ප්‍රවේශ යතුරු",
+        "api_key_generic": "API යතුරු සහ ටෝකන"
+      },
+      "customPatterns": "අභිරුචි රටා",
+      "customPatternsDesc": "ගැළපීම් [CUSTOM_REDACTED] මගින් ප්‍රතිස්ථාපනය වේ. උපරිම රටා {max}. විනාශකාරී පසුගමන අවදානමක් ඇති රටා ප්‍රතික්ෂේප වේ.",
+      "typeRegex": "නිත්‍ය ප්‍රකාශනය",
+      "typeWildcard": "වයිල්ඩ්කාඩ් (* සහ ?)",
+      "pattern": "රටාව",
+      "flags": "ධජ (i, m, s, u)",
+      "sampleText": "රටාව පරීක්ෂා කිරීමට නියැදි පෙළ",
+      "test": "පරීක්ෂා කරන්න",
+      "testMatches": "ගැළපීම් {count}",
+      "testFailed": "රටාව ප්‍රතික්ෂේප විය: {message}",
+      "add": "රටාවක් එක් කරන්න",
+      "saved": "සුරැකිණි",
+      "saveFailed": "සුරැකීමට නොහැකි විය: {message}",
+      "statsTitle": "නැවත ආරම්භයෙන් පසු අනාවරණ",
+      "statsEmpty": "තවම අනාවරණ නැත.",
+      "statsRequest": "ඉල්ලීම්"
+    }
   },
   "contextRtk": {
     "title": "RTK එන්ජිම",

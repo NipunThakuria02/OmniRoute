@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "प्रोभाइडर (सबै खाताहरूले एउटै ब्रेकर साझा गर्छन्)",
     "resilienceTokenRefreshScopeConnection": "जडान (प्रत्येक खातासँग आफ्नै ब्रेकर हुन्छ)",
     "resilienceTokenRefreshThreshold": "रोक्नु अघिको असफलताहरू",
-    "resilienceTokenRefreshCooldown": "ट्रिप भएपछि विश्राम गर्नुहोस्"
+    "resilienceTokenRefreshCooldown": "ट्रिप भएपछि विश्राम गर्नुहोस्",
+    "piiMasking": {
+      "title": "व्यक्तिगत डेटा मास्किङ",
+      "description": "कुन प्रकारको व्यक्तिगत डेटा मास्क गर्ने छान्नुहोस् र आफ्नै ढाँचाहरू थप्नुहोस्। तल देखाइएका फिचर फ्ल्यागहरू सक्रिय नगरेसम्म मास्किङ बन्द रहन्छ।",
+      "requestFlag": "अनुरोध मास्किङ",
+      "responseFlag": "प्रतिक्रिया सफाइ",
+      "templates": "टेम्प्लेटहरू",
+      "template": {
+        "minimal": "न्यूनतम",
+        "standard": "मानक",
+        "financial": "वित्तीय",
+        "brazilian": "ब्राजिली",
+        "usa": "अमेरिका",
+        "full": "पूर्ण"
+      },
+      "builtinTypes": "निर्मित प्रकारहरू",
+      "types": {
+        "email": "इमेल ठेगानाहरू",
+        "phone_us": "अमेरिकी फोन नम्बरहरू",
+        "phone_br": "ब्राजिली फोन नम्बरहरू",
+        "ssn": "अमेरिकी सामाजिक सुरक्षा नम्बरहरू",
+        "credit_card": "क्रेडिट कार्ड नम्बरहरू",
+        "cpf": "CPF (ब्राजिली करदाता परिचय)",
+        "cnpj": "CNPJ (ब्राजिली कम्पनी परिचय)",
+        "ip_address": "IPv4 ठेगानाहरू",
+        "ipv6_address": "IPv6 ठेगानाहरू",
+        "aws_key": "AWS पहुँच कुञ्जीहरू",
+        "api_key_generic": "API कुञ्जी र टोकनहरू"
+      },
+      "customPatterns": "अनुकूल ढाँचाहरू",
+      "customPatternsDesc": "मेलहरू [CUSTOM_REDACTED] ले प्रतिस्थापन गरिन्छन्। बढीमा {max} ढाँचा। विनाशकारी ब्याकट्र्याकिङको जोखिम भएका ढाँचाहरू अस्वीकार गरिन्छन्।",
+      "typeRegex": "रेगुलर एक्सप्रेसन",
+      "typeWildcard": "वाइल्डकार्ड (* र ?)",
+      "pattern": "ढाँचा",
+      "flags": "फ्ल्यागहरू (i, m, s, u)",
+      "sampleText": "ढाँचा परीक्षण गर्न नमुना पाठ",
+      "test": "परीक्षण गर्नुहोस्",
+      "testMatches": "{count} मेल",
+      "testFailed": "ढाँचा अस्वीकृत: {message}",
+      "add": "ढाँचा थप्नुहोस्",
+      "saved": "सुरक्षित गरियो",
+      "saveFailed": "सुरक्षित गर्न सकिएन: {message}",
+      "statsTitle": "पुनः सुरु भएदेखिका पहिचानहरू",
+      "statsEmpty": "अहिलेसम्म कुनै पहिचान छैन।",
+      "statsRequest": "अनुरोधहरू"
+    }
   },
   "contextRtk": {
     "title": "RTK इन्जिन",

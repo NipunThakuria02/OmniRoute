@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Pakkuja (kõik kontod jagavad ühte piirajat)",
     "resilienceTokenRefreshScopeConnection": "Ühendus (igal kontol on oma katkesti)",
     "resilienceTokenRefreshThreshold": "Tõrgete arv enne peatamist",
-    "resilienceTokenRefreshCooldown": "Paus pärast käivitumist"
+    "resilienceTokenRefreshCooldown": "Paus pärast käivitumist",
+    "piiMasking": {
+      "title": "Isikuandmete maskeerimine",
+      "description": "Valige, milliseid isikuandmeid maskeeritakse, ja lisage oma mustrid. Maskeerimine on välja lülitatud, kuni lülitate sisse allpool näidatud funktsioonilipud.",
+      "requestFlag": "Päringute maskeerimine",
+      "responseFlag": "Vastuste puhastamine",
+      "templates": "Mallid",
+      "template": {
+        "minimal": "Minimaalne",
+        "standard": "Tavaline",
+        "financial": "Finants",
+        "brazilian": "Brasiilia",
+        "usa": "USA",
+        "full": "Täielik"
+      },
+      "builtinTypes": "Sisseehitatud tüübid",
+      "types": {
+        "email": "E-posti aadressid",
+        "phone_us": "USA telefoninumbrid",
+        "phone_br": "Brasiilia telefoninumbrid",
+        "ssn": "USA sotsiaalkindlustusnumbrid",
+        "credit_card": "Krediitkaardi numbrid",
+        "cpf": "CPF (Brasiilia maksukohustuslase number)",
+        "cnpj": "CNPJ (Brasiilia ettevõtte number)",
+        "ip_address": "IPv4-aadressid",
+        "ipv6_address": "IPv6-aadressid",
+        "aws_key": "AWS-i juurdepääsuvõtmed",
+        "api_key_generic": "API-võtmed ja tokenid"
+      },
+      "customPatterns": "Kohandatud mustrid",
+      "customPatternsDesc": "Vasted asendatakse tekstiga [CUSTOM_REDACTED]. Kuni {max} mustrit. Katastroofilise tagasiotsingu ohuga mustrid lükatakse tagasi.",
+      "typeRegex": "Regulaaravaldis",
+      "typeWildcard": "Metamärk (* ja ?)",
+      "pattern": "Muster",
+      "flags": "Lipud (i, m, s, u)",
+      "sampleText": "Näidistekst mustri testimiseks",
+      "test": "Testi",
+      "testMatches": "Vasteid: {count}",
+      "testFailed": "Muster lükati tagasi: {message}",
+      "add": "Lisa muster",
+      "saved": "Salvestatud",
+      "saveFailed": "Salvestamine ebaõnnestus: {message}",
+      "statsTitle": "Tuvastused alates taaskäivitusest",
+      "statsEmpty": "Tuvastusi veel pole.",
+      "statsRequest": "Päringud"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Furnizor (toate conturile împart un singur întrerupător)",
     "resilienceTokenRefreshScopeConnection": "Conexiune (fiecare cont are propriul său întrerupător)",
     "resilienceTokenRefreshThreshold": "Eșecuri înainte de pauză",
-    "resilienceTokenRefreshCooldown": "Pauză după declanșare"
+    "resilienceTokenRefreshCooldown": "Pauză după declanșare",
+    "piiMasking": {
+      "title": "Mascarea datelor personale",
+      "description": "Alegeți ce tipuri de date personale sunt mascate și adăugați propriile modele. Mascarea rămâne dezactivată până când activați feature flag-urile afișate mai jos.",
+      "requestFlag": "Mascarea cererilor",
+      "responseFlag": "Igienizarea răspunsurilor",
+      "templates": "Șabloane",
+      "template": {
+        "minimal": "Minim",
+        "standard": "Standard",
+        "financial": "Financiar",
+        "brazilian": "Brazilian",
+        "usa": "SUA",
+        "full": "Complet"
+      },
+      "builtinTypes": "Tipuri încorporate",
+      "types": {
+        "email": "Adrese de e-mail",
+        "phone_us": "Numere de telefon din SUA",
+        "phone_br": "Numere de telefon braziliene",
+        "ssn": "Numere de asigurare socială din SUA",
+        "credit_card": "Numere de card de credit",
+        "cpf": "CPF (cod fiscal brazilian)",
+        "cnpj": "CNPJ (cod de firmă brazilian)",
+        "ip_address": "Adrese IPv4",
+        "ipv6_address": "Adrese IPv6",
+        "aws_key": "Chei de acces AWS",
+        "api_key_generic": "Chei API și tokenuri"
+      },
+      "customPatterns": "Modele personalizate",
+      "customPatternsDesc": "Potrivirile sunt înlocuite cu [CUSTOM_REDACTED]. Până la {max} modele. Modelele cu risc de backtracking catastrofal sunt refuzate.",
+      "typeRegex": "Expresie regulată",
+      "typeWildcard": "Caracter wildcard (* și ?)",
+      "pattern": "Model",
+      "flags": "Indicatori (i, m, s, u)",
+      "sampleText": "Text de exemplu pentru testarea modelului",
+      "test": "Testează",
+      "testMatches": "{count} potriviri",
+      "testFailed": "Model refuzat: {message}",
+      "add": "Adaugă model",
+      "saved": "Salvat",
+      "saveFailed": "Salvarea a eșuat: {message}",
+      "statsTitle": "Detecții de la repornire",
+      "statsEmpty": "Nicio detecție încă.",
+      "statsRequest": "Cereri"
+    }
   },
   "contextRtk": {
     "title": "Motor RTK",

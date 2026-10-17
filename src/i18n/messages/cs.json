@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Poskytovatel (všechny účty sdílejí jeden přerušovač)",
     "resilienceTokenRefreshScopeConnection": "Připojení (každý účet má vlastní jistič)",
     "resilienceTokenRefreshThreshold": "Neúspěchy před pozastavením",
-    "resilienceTokenRefreshCooldown": "Pauza po spuštění"
+    "resilienceTokenRefreshCooldown": "Pauza po spuštění",
+    "piiMasking": {
+      "title": "Maskování osobních údajů",
+      "description": "Vyberte, které druhy osobních údajů se maskují, a přidejte vlastní vzory. Maskování zůstává vypnuté, dokud nezapnete níže zobrazené příznaky funkcí.",
+      "requestFlag": "Maskování požadavků",
+      "responseFlag": "Čištění odpovědí",
+      "templates": "Šablony",
+      "template": {
+        "minimal": "Minimální",
+        "standard": "Standardní",
+        "financial": "Finanční",
+        "brazilian": "Brazilská",
+        "usa": "USA",
+        "full": "Úplná"
+      },
+      "builtinTypes": "Vestavěné typy",
+      "types": {
+        "email": "E-mailové adresy",
+        "phone_us": "Telefonní čísla v USA",
+        "phone_br": "Brazilská telefonní čísla",
+        "ssn": "Čísla sociálního zabezpečení USA",
+        "credit_card": "Čísla platebních karet",
+        "cpf": "CPF (brazilské daňové číslo)",
+        "cnpj": "CNPJ (brazilské číslo firmy)",
+        "ip_address": "Adresy IPv4",
+        "ipv6_address": "Adresy IPv6",
+        "aws_key": "Přístupové klíče AWS",
+        "api_key_generic": "Klíče API a tokeny"
+      },
+      "customPatterns": "Vlastní vzory",
+      "customPatternsDesc": "Shody se nahrazují za [CUSTOM_REDACTED]. Nejvýše {max} vzorů. Vzory s rizikem katastrofického backtrackingu se odmítají.",
+      "typeRegex": "Regulární výraz",
+      "typeWildcard": "Zástupný znak (* a ?)",
+      "pattern": "Vzor",
+      "flags": "Příznaky (i, m, s, u)",
+      "sampleText": "Ukázkový text pro otestování vzoru",
+      "test": "Otestovat",
+      "testMatches": "Počet shod: {count}",
+      "testFailed": "Vzor odmítnut: {message}",
+      "add": "Přidat vzor",
+      "saved": "Uloženo",
+      "saveFailed": "Uložení se nezdařilo: {message}",
+      "statsTitle": "Detekce od restartu",
+      "statsEmpty": "Zatím žádné detekce.",
+      "statsRequest": "Požadavky"
+    }
   },
   "contextRtk": {
     "title": "Modul RTK",

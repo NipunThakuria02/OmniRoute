@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Провајдер (сви налогови деле један прекидач)",
     "resilienceTokenRefreshScopeConnection": "Веза (сваки налог има свој прекидач)",
     "resilienceTokenRefreshThreshold": "Неуспеси пре паузирања",
-    "resilienceTokenRefreshCooldown": "Пауза после активирања"
+    "resilienceTokenRefreshCooldown": "Пауза после активирања",
+    "piiMasking": {
+      "title": "Маскирање личних података",
+      "description": "Изаберите које врсте личних података се маскирају и додајте сопствене обрасце. Маскирање остаје искључено док не укључите заставице функција приказане испод.",
+      "requestFlag": "Маскирање захтева",
+      "responseFlag": "Чишћење одговора",
+      "templates": "Шаблони",
+      "template": {
+        "minimal": "Минимални",
+        "standard": "Стандардни",
+        "financial": "Финансијски",
+        "brazilian": "Бразилски",
+        "usa": "САД",
+        "full": "Потпуни"
+      },
+      "builtinTypes": "Уграђени типови",
+      "types": {
+        "email": "Адресе е-поште",
+        "phone_us": "Бројеви телефона у САД",
+        "phone_br": "Бразилски бројеви телефона",
+        "ssn": "Бројеви социјалног осигурања у САД",
+        "credit_card": "Бројеви кредитних картица",
+        "cpf": "CPF (бразилски порески број)",
+        "cnpj": "CNPJ (бразилски број предузећа)",
+        "ip_address": "IPv4 адресе",
+        "ipv6_address": "IPv6 адресе",
+        "aws_key": "AWS приступни кључеви",
+        "api_key_generic": "API кључеви и токени"
+      },
+      "customPatterns": "Прилагођени обрасци",
+      "customPatternsDesc": "Подударања се замењују са [CUSTOM_REDACTED]. Највише {max} образаца. Обрасци са ризиком од катастрофалног враћања се одбијају.",
+      "typeRegex": "Регуларни израз",
+      "typeWildcard": "Џокер знак (* и ?)",
+      "pattern": "Образац",
+      "flags": "Заставице (i, m, s, u)",
+      "sampleText": "Пример текста за тестирање обрасца",
+      "test": "Тестирај",
+      "testMatches": "Подударања: {count}",
+      "testFailed": "Образац је одбијен: {message}",
+      "add": "Додај образац",
+      "saved": "Сачувано",
+      "saveFailed": "Чување није успело: {message}",
+      "statsTitle": "Откривања од поновног покретања",
+      "statsEmpty": "Још нема откривања.",
+      "statsRequest": "Захтеви"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

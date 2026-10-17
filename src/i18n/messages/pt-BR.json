@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Provedor (todas as contas compartilham um único disjuntor)",
     "resilienceTokenRefreshScopeConnection": "Conexão (cada conta tem seu próprio disjuntor)",
     "resilienceTokenRefreshThreshold": "Falhas antes de pausar",
-    "resilienceTokenRefreshCooldown": "Pausa após acionamento"
+    "resilienceTokenRefreshCooldown": "Pausa após acionamento",
+    "piiMasking": {
+      "title": "Mascaramento de PII",
+      "description": "Escolha quais tipos de dados pessoais são mascarados e adicione seus próprios padrões. O mascaramento fica desligado até você ativar as feature flags mostradas abaixo.",
+      "requestFlag": "Mascaramento de requisições",
+      "responseFlag": "Sanitização de respostas",
+      "templates": "Modelos",
+      "template": {
+        "minimal": "Mínimo",
+        "standard": "Padrão",
+        "financial": "Financeiro",
+        "brazilian": "Brasileiro",
+        "usa": "EUA",
+        "full": "Completo"
+      },
+      "builtinTypes": "Tipos integrados",
+      "types": {
+        "email": "Endereços de e-mail",
+        "phone_us": "Telefones dos EUA",
+        "phone_br": "Telefones brasileiros",
+        "ssn": "Números de Seguro Social dos EUA",
+        "credit_card": "Números de cartão de crédito",
+        "cpf": "CPF (cadastro de pessoa física)",
+        "cnpj": "CNPJ (cadastro de empresa)",
+        "ip_address": "Endereços IPv4",
+        "ipv6_address": "Endereços IPv6",
+        "aws_key": "Chaves de acesso da AWS",
+        "api_key_generic": "Chaves de API e tokens"
+      },
+      "customPatterns": "Padrões personalizados",
+      "customPatternsDesc": "As ocorrências são substituídas por [CUSTOM_REDACTED]. Até {max} padrões. Padrões com risco de backtracking catastrófico são recusados.",
+      "typeRegex": "Expressão regular",
+      "typeWildcard": "Curinga (* e ?)",
+      "pattern": "Padrão",
+      "flags": "Flags (i, m, s, u)",
+      "sampleText": "Texto de exemplo para testar o padrão",
+      "test": "Testar",
+      "testMatches": "{count} ocorrências",
+      "testFailed": "Padrão recusado: {message}",
+      "add": "Adicionar padrão",
+      "saved": "Salvo",
+      "saveFailed": "Não foi possível salvar: {message}",
+      "statsTitle": "Detecções desde a reinicialização",
+      "statsEmpty": "Nenhuma detecção ainda.",
+      "statsRequest": "Requisições"
+    }
   },
   "contextRtk": {
     "title": "Motor RTK",
