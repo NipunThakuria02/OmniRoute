@@ -403,6 +403,10 @@ function subscribeToEventBus(): () => void {
 }
 
 function isLoopbackRequest(req: IncomingMessage): boolean {
+  // A same-host reverse proxy also connects from loopback; its forwarding headers are
+  // what tells its remote callers apart from the local publisher — same discipline as
+  // isLocalWsPeer() on the upgrade path. The publisher posts without such headers.
+  if (hasProxyHopHeader(req.headers)) return false;
   const addr = req.socket.remoteAddress;
   return addr === "127.0.0.1" || addr === "::1" || addr === "::ffff:127.0.0.1";
 }
