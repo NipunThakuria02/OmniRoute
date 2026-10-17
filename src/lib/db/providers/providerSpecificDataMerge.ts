@@ -1,7 +1,6 @@
 import { getDbInstance } from "../core";
 import { invalidateDbCache } from "../readCache";
 import { parseProviderSpecificData } from "../webSessionDedup";
-import { serializeProviderSpecificDataForStorage } from "./secretFields";
 
 interface StatementLike<TRow = unknown> {
   get: (...params: unknown[]) => TRow | undefined;
@@ -40,7 +39,7 @@ export async function mergeConnectionProviderSpecificData(
     const merged = { ...existing, ...patch };
     db.prepare(
       "UPDATE provider_connections SET provider_specific_data = ?, updated_at = ? WHERE id = ?"
-    ).run(serializeProviderSpecificDataForStorage(merged), new Date().toISOString(), id);
+    ).run(JSON.stringify(merged), new Date().toISOString(), id);
     invalidateDbCache("connections", id, { skipModelCatalog: true });
   })();
 }

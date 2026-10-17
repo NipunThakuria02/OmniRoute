@@ -1,195 +1,213 @@
-// One constant names the credential-bearing `providerSpecificData` fields. The
-// response sanitizer (masks/strips them) and the at-rest encryptor (envelopes them)
-// both read it, so neither can drift from the other: a field added to one side is
-// automatically covered by the other, and this test fails if either side stops
-// honoring an entry.
+// ONE allowlist — PROVIDER_SPECIFIC_SECRET_FIELDS — names the credential-bearing
+// `providerSpecificData` fields. Four consumers read it and must not drift from each
+// other: the at-rest encryptor (encryptConnectionFields, #16863), the API response
+// sanitizer (strips them, masks the list-valued pool like `apiKey`), the compliance audit
+// summary, and the web-session credential storage keys. Every assertion below iterates
+// the live constant, so a field added to the list is automatically checked on every side.
 import test from "node:test";
 import assert from "node:assert/strict";
 import type { WebSessionCredentialRequirement } from "../../src/shared/providers/webSessionCredentials.ts";
 
 process.env.STORAGE_ENCRYPTION_KEY = "psd-secrets-drift-synthetic-key";
 
-const {
-  PROVIDER_SPECIFIC_DATA_MASKED_SECRET_KEYS,
-  PROVIDER_SPECIFIC_DATA_STRIPPED_SECRET_KEYS,
-  PROVIDER_SPECIFIC_DATA_SECRET_KEYS,
-  isProviderSpecificDataSecretKey,
-  isProviderSpecificDataMaskedListKey,
-} = await import("../../src/shared/constants/providerSpecificDataSecrets.ts");
-const { sanitizeProviderSpecificDataForResponse } =
+const { PROVIDER_SPECIFIC_SECRET_FIELDS, mapProviderSpecificDataSecrets } =
+  await import("../../src/lib/db/providers/providerSpecificDataSecrets.ts");
+const { encryptConnectionFields, decryptConnectionFields, looksEncrypted } =
+  await import("../../src/lib/db/encryption.ts");
+const { sanitizeProviderSpecificDataForResponse, PROVIDER_SPECIFIC_DATA_MASKED_LIST_FIELDS } =
   await import("../../src/lib/providers/requestDefaults.ts");
-const { encryptProviderSpecificDataSecrets, decryptProviderSpecificDataSecrets } =
-  await import("../../src/lib/db/providers/secretFields.ts");
-const { looksEncrypted } = await import("../../src/lib/db/encryption.ts");
+const { summarizeProviderConnectionForAudit } =
+  await import("../../src/lib/compliance/providerAudit.ts");
 const apiKeyMask = await import("../../src/shared/utils/apiKeyMask.ts");
 const apiKeyExposure = await import("../../src/lib/apiKeyExposure.ts");
 const { WEB_SESSION_CREDENTIAL_REQUIREMENTS } =
   await import("../../src/shared/providers/webSessionCredentials.ts");
 
-// Every key the sanitizer removed before the shared constant existed. Dropping one
-// from the constant would silently start exposing it again.
-const PREVIOUSLY_STRIPPED = [
-  "accessToken",
-  "refreshToken",
-  "idToken",
-  "apiKey",
-  "consoleApiKey",
-  "secretAccessKey",
-  "awsSecretAccessKey",
-  "sessionToken",
-  "awsSessionToken",
-  "openCodeGoAuthCookie",
-  "opencodeGoAuthCookie",
-  "authCookie",
-  "ollamaUsageCookie",
-  "ollamaCloudUsageCookie",
-  "ollamaCloudCookie",
-  "usageCookie",
-  "qwenCloudCookie",
-  "qwenCloudSecToken",
-  "alibabaConsoleCookie",
-  "alibabaConsoleSecToken",
-  "xiaomiMimoConsoleCookie",
-  "runtimeKey",
-  "validationId",
-  "volcConsoleCookie",
-  "volcCsrfToken",
-  "codexFingerprintSeed",
-  "codexClientIdentity",
-  "codexOriginalIdentityHeaders",
-  "codexTurnStateEcho",
-];
+type Psd = Record<string, unknown>;
 
-const META = { connectionId: "conn-drift", provider: "openai" };
+const SECRET_FIELDS: ReadonlySet<string> = new Set(PROVIDER_SPECIFIC_SECRET_FIELDS);
+const MASKED_LIST_FIELDS: ReadonlySet<string> = new Set(PROVIDER_SPECIFIC_DATA_MASKED_LIST_FIELDS);
+const SECRET = "plain-secret-value-0123456789";
 
-test("the constant is well-formed: unique keys, masked ∪ stripped, no overlap", () => {
-  assert.ok(PROVIDER_SPECIFIC_DATA_SECRET_KEYS.length > 0);
+/** A providerSpecificData fixture holding `SECRET` under `key` (a list for the masked keys). */
+function fixtureFor(key: string): Psd {
+  return {
+    [key]: MASKED_LIST_FIELDS.has(key) ? [SECRET, `${SECRET}-b`] : SECRET,
+    workspaceId: "ws-visible",
+    count: 2,
+  };
+}
+
+function psdOf(value: unknown): Psd {
+  const psd = (value as { providerSpecificData?: unknown } | null)?.providerSpecificData;
+  assert.ok(psd && typeof psd === "object", "providerSpecificData must be present");
+  return psd as Psd;
+}
+
+test("the shared allowlist covers the rotation pool, refresh-flow sub-tokens and web-session cookies", () => {
   assert.equal(
-    new Set(PROVIDER_SPECIFIC_DATA_SECRET_KEYS).size,
-    PROVIDER_SPECIFIC_DATA_SECRET_KEYS.length
+    new Set(PROVIDER_SPECIFIC_SECRET_FIELDS).size,
+    PROVIDER_SPECIFIC_SECRET_FIELDS.length
   );
-  assert.deepEqual(
-    [...PROVIDER_SPECIFIC_DATA_SECRET_KEYS].sort(),
-    [
-      ...PROVIDER_SPECIFIC_DATA_MASKED_SECRET_KEYS,
-      ...PROVIDER_SPECIFIC_DATA_STRIPPED_SECRET_KEYS,
-    ].sort()
-  );
-  const stripped: readonly string[] = PROVIDER_SPECIFIC_DATA_STRIPPED_SECRET_KEYS;
-  for (const key of PROVIDER_SPECIFIC_DATA_MASKED_SECRET_KEYS) {
-    assert.ok(!stripped.includes(key), `${key} is in both lists`);
-    assert.equal(isProviderSpecificDataMaskedListKey(key), true);
-  }
-  assert.ok(PROVIDER_SPECIFIC_DATA_MASKED_SECRET_KEYS.includes("extraApiKeys"));
-  assert.equal(isProviderSpecificDataSecretKey("extraApiKeys"), true);
-  assert.equal(isProviderSpecificDataSecretKey("tags"), false);
-});
-
-test("every previously stripped key and every audited credential field is in the constant", () => {
-  const audited = [
+  for (const key of [
+    // list of full upstream keys, shown masked by the dashboard
     "extraApiKeys",
+    // short-lived sub-tokens written back by refresh / mint flows
     "copilotToken",
+    "dcaToken",
+    "recaptchaV3Token",
     "clientSecret",
+    // web-session providers (src/shared/providers/webSessionCredentials.ts storageKeys)
     "cookie",
     "token",
-    "token_v2",
-    "dcaToken",
-    "browserSessionKey",
-    "authorization",
-    "recaptchaV3Token",
-    "openrouterAccountKey",
-  ];
-  for (const key of [...PREVIOUSLY_STRIPPED, ...audited]) {
-    assert.ok(
-      isProviderSpecificDataSecretKey(key),
-      `${key} must be a secret providerSpecificData key`
-    );
+    "sso",
+    "sso-rw",
+    "session",
+    "jwt",
+    "access_token",
+    "refresh_token",
+    "app-config-uuid",
+  ]) {
+    assert.ok(SECRET_FIELDS.has(key), `${key} must be a declared secret field`);
+  }
+  for (const key of PROVIDER_SPECIFIC_DATA_MASKED_LIST_FIELDS) {
+    assert.ok(SECRET_FIELDS.has(key), `${key} is masked in responses, so it must be encrypted`);
+  }
+  // SQLite-queryable identity / display fields must never be enveloped.
+  for (const key of [
+    "workspaceId",
+    "chatgptUserId",
+    "username",
+    "email",
+    "baseUrl",
+    "tags",
+    "uuid",
+  ]) {
+    assert.equal(SECRET_FIELDS.has(key), false, `${key} is an identity field, not a secret`);
   }
 });
 
-test("the sanitizer removes or masks every key in the constant and keeps the rest", () => {
-  const SECRET = "plain-secret-value-0123456789";
-  for (const key of PROVIDER_SPECIFIC_DATA_SECRET_KEYS) {
-    const isList = isProviderSpecificDataMaskedListKey(key);
-    const input = { [key]: isList ? [SECRET] : SECRET, keepMe: "visible", region: "eu" };
-    const sanitized = sanitizeProviderSpecificDataForResponse(input) as Record<string, unknown>;
+test("the response sanitizer strips or masks every declared field and keeps the rest", () => {
+  for (const key of PROVIDER_SPECIFIC_SECRET_FIELDS) {
+    const sanitized = sanitizeProviderSpecificDataForResponse(fixtureFor(key)) as Psd;
     assert.ok(sanitized, `${key}: sanitizer returned nothing`);
     assert.ok(
       !JSON.stringify(sanitized).includes(SECRET),
       `${key}: raw secret reached the response`
     );
-    if (isList) {
-      assert.deepEqual(sanitized[key], [apiKeyMask.maskStoredApiKey(SECRET)]);
+    if (MASKED_LIST_FIELDS.has(key)) {
+      assert.deepEqual(sanitized[key], [
+        apiKeyMask.maskStoredApiKey(SECRET),
+        apiKeyMask.maskStoredApiKey(`${SECRET}-b`),
+      ]);
     } else {
       assert.ok(!(key in sanitized), `${key}: must be stripped from the response`);
     }
-    assert.equal(sanitized.keepMe, "visible");
-    assert.equal(sanitized.region, "eu");
+    assert.equal(sanitized.workspaceId, "ws-visible");
+    assert.equal(sanitized.count, 2);
   }
 });
 
-test("the encryptor envelopes every string-valued key in the constant and the decryptor restores it", () => {
-  const SECRET = "plain-secret-value-0123456789";
-  for (const key of PROVIDER_SPECIFIC_DATA_SECRET_KEYS) {
-    const isList = isProviderSpecificDataMaskedListKey(key);
-    const input = { [key]: isList ? [SECRET, SECRET + "-b"] : SECRET, keepMe: "visible", count: 2 };
-    const encrypted = encryptProviderSpecificDataSecrets(input) as Record<string, unknown>;
-    assert.notStrictEqual(encrypted, input, `${key}: the encryptor must not mutate its input`);
-    assert.ok(!JSON.stringify(encrypted).includes(SECRET), `${key}: plaintext survived encryption`);
-    if (isList) {
-      for (const entry of encrypted[key] as unknown[])
-        assert.ok(looksEncrypted(entry), `${key}[] entry`);
+test("encryptConnectionFields envelopes every declared field — each string of a list — and decrypt restores it", () => {
+  for (const key of PROVIDER_SPECIFIC_SECRET_FIELDS) {
+    const input = fixtureFor(key);
+    const stored = encryptConnectionFields({
+      id: "conn-drift",
+      provider: "openai",
+      providerSpecificData: input,
+    });
+    const atRest = psdOf(stored);
+    assert.notStrictEqual(atRest, input, `${key}: the input object must not be mutated`);
+    assert.ok(!JSON.stringify(atRest).includes(SECRET), `${key}: plaintext survived encryption`);
+    if (MASKED_LIST_FIELDS.has(key)) {
+      const entries = atRest[key] as unknown[];
+      assert.equal(entries.length, 2, `${key}: list length preserved`);
+      for (const entry of entries) assert.ok(looksEncrypted(entry), `${key}[] entry not enveloped`);
     } else {
-      assert.ok(looksEncrypted(encrypted[key]), `${key}: not enveloped`);
+      assert.ok(looksEncrypted(atRest[key]), `${key}: not enveloped`);
     }
-    assert.equal(encrypted.keepMe, "visible");
-    assert.equal(encrypted.count, 2);
+    assert.equal(atRest.workspaceId, "ws-visible");
+    assert.equal(atRest.count, 2);
 
     // Idempotent: a second pass never re-wraps an envelope.
-    const twice = encryptProviderSpecificDataSecrets(encrypted) as Record<string, unknown>;
-    assert.deepEqual(twice, encrypted, `${key}: double encryption`);
+    const twice = encryptConnectionFields({ providerSpecificData: atRest });
+    assert.deepEqual(psdOf(twice), atRest, `${key}: double encryption`);
 
-    const decrypted = decryptProviderSpecificDataSecrets(encrypted, META) as Record<
-      string,
-      unknown
-    >;
-    assert.deepEqual(decrypted, input, `${key}: round-trip mismatch`);
+    assert.deepEqual(psdOf(decryptConnectionFields(stored)), input, `${key}: round-trip mismatch`);
   }
 });
 
-test("object secret values pass through; a lone string under a list key is still enveloped", () => {
-  const input = { codexClientIdentity: { a: 1 }, extraApiKeys: "not-a-list", count: 1 };
-  const encrypted = encryptProviderSpecificDataSecrets(input) as Record<string, unknown>;
-  assert.deepEqual(encrypted.codexClientIdentity, { a: 1 });
-  assert.ok(looksEncrypted(encrypted.extraApiKeys), "a string under a secret key is enveloped");
-  const sanitized = sanitizeProviderSpecificDataForResponse(input) as Record<string, unknown>;
-  assert.ok(!("codexClientIdentity" in sanitized));
-  assert.ok(!("extraApiKeys" in sanitized), "a malformed list is dropped rather than echoed");
-  assert.equal(sanitized.count, 1);
+test("the compliance audit strips every declared field, ciphertext or legacy plaintext", () => {
+  for (const key of PROVIDER_SPECIFIC_SECRET_FIELDS) {
+    const row = { id: "audit-drift", provider: "openai", providerSpecificData: fixtureFor(key) };
+    for (const candidate of [row, encryptConnectionFields({ ...row })]) {
+      const audit = summarizeProviderConnectionForAudit(candidate);
+      assert.deepEqual(audit?.providerSpecificData, { workspaceId: "ws-visible", count: 2 }, key);
+      assert.ok(!JSON.stringify(audit).includes(SECRET), `${key}: secret reached the audit record`);
+    }
+  }
 });
 
-test("plaintext (legacy) values decrypt as themselves; missing/empty data is left alone", () => {
-  const legacy = { extraApiKeys: ["plain-a", "plain-b"], copilotToken: "plain-token", tags: ["x"] };
-  assert.deepEqual(decryptProviderSpecificDataSecrets(legacy, META), legacy);
-  assert.equal(decryptProviderSpecificDataSecrets(null, META), null);
-  assert.equal(decryptProviderSpecificDataSecrets(undefined, META), undefined);
-  assert.equal(encryptProviderSpecificDataSecrets(null), null);
-  assert.deepEqual(encryptProviderSpecificDataSecrets({ tags: ["x"] }), { tags: ["x"] });
-});
-
-test("every web-session credential requirement stores its credential under a key in the constant", () => {
+test("every web-session credential requirement stores its credential under a declared field", () => {
   const requirements: Record<string, WebSessionCredentialRequirement> =
     WEB_SESSION_CREDENTIAL_REQUIREMENTS;
   for (const [provider, requirement] of Object.entries(requirements)) {
     if (requirement.kind === "none") continue;
-    const covered = requirement.storageKeys.filter((key: string) =>
-      isProviderSpecificDataSecretKey(key)
-    );
+    const covered = requirement.storageKeys.filter((key: string) => SECRET_FIELDS.has(key));
     assert.ok(
       covered.length > 0,
-      `${provider}: none of its storageKeys [${requirement.storageKeys.join(", ")}] is a secret key`
+      `${provider}: none of its storageKeys [${requirement.storageKeys.join(", ")}] is a declared secret field`
     );
   }
+});
+
+test("mapProviderSpecificDataSecrets maps string lists entry by entry and leaves everything else alone", () => {
+  const input = { extraApiKeys: ["a", "b", 7, ""], storageState: { cookies: [] }, tags: ["x"] };
+  const upper = mapProviderSpecificDataSecrets(input, (value) => value.toUpperCase()) as Psd;
+  assert.deepEqual(upper, {
+    extraApiKeys: ["A", "B", 7, ""],
+    storageState: { cookies: [] },
+    tags: ["x"],
+  });
+  assert.deepEqual(input.extraApiKeys, ["a", "b", 7, ""], "input list not mutated");
+  assert.strictEqual(
+    upper.storageState,
+    input.storageState,
+    "object values pass through by reference"
+  );
+
+  // A null/undefined result drops that entry: an undecryptable token must never be forwarded
+  // upstream as if it were a key.
+  const dropped = mapProviderSpecificDataSecrets(input, (value) =>
+    value === "b" ? null : value
+  ) as Psd;
+  assert.deepEqual(dropped.extraApiKeys, ["a", 7, ""]);
+
+  // Nothing changed → the very same object comes back (callers skip the write).
+  assert.strictEqual(
+    mapProviderSpecificDataSecrets(input, (value) => value),
+    input
+  );
+  for (const passthrough of [null, undefined, "text", ["list"], 42]) {
+    assert.strictEqual(
+      mapProviderSpecificDataSecrets(passthrough, (value) => value),
+      passthrough
+    );
+  }
+});
+
+test("decryptConnectionFields drops an undecryptable list entry and raises the recovery flag", () => {
+  const stored = encryptConnectionFields({
+    id: "conn-corrupt-list",
+    provider: "openai",
+    providerSpecificData: { extraApiKeys: ["sk-good-0123456789abcdef", "sk-bad-0123456789abcdef"] },
+  });
+  const list = psdOf(stored).extraApiKeys as string[];
+  const corrupt = list[1];
+  list[1] = corrupt.slice(0, -1) + (corrupt.endsWith("0") ? "1" : "0");
+  const restored = decryptConnectionFields(stored);
+  assert.equal(restored.credentialDecryptFailed, true);
+  assert.deepEqual(psdOf(restored).extraApiKeys, ["sk-good-0123456789abcdef"]);
 });
 
 test("extraApiKeys are masked with the very same function the routes use for apiKey", () => {

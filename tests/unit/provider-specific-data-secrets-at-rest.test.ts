@@ -1,19 +1,20 @@
-// `provider_connections.api_key` is stored as an `enc:v1:` envelope, but the JSON in
-// `provider_specific_data` was written verbatim — so the rotation pool in
-// `extraApiKeys[]` and provider cookies / refresh tokens sat in plaintext next to the
-// encrypted primary key. The providers DB module must encrypt those fields on every
-// write and decrypt them on every read, so callers (rotator, executors, exports) keep
-// seeing plaintext while the file at rest does not. Legacy plaintext rows must keep
-// working, get re-encrypted on their next write, and be swept by the in-module
-// first-use pass. With no STORAGE_ENCRYPTION_KEY the column stays plaintext, exactly
-// like `api_key` does today.
+// `provider_connections.provider_specific_data`: the declared secret fields
+// (PROVIDER_SPECIFIC_SECRET_FIELDS) are enveloped by encryptConnectionFields on every
+// full-row write and decrypted on every read (#16863). This file covers what that leaves
+// open: list-valued secrets (the `extraApiKeys` rotation pool), refresh-flow sub-tokens
+// (`copilotToken`), web-session cookies, the one-shot sweep of rows that were already on
+// disk in plaintext, patches written through mergeConnectionProviderSpecificData, and the
+// JSON export → import round-trip. With no STORAGE_ENCRYPTION_KEY the column stays
+// plaintext, exactly like `api_key` does.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const TEST_DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "omniroute-psd-secrets-at-rest-"));
+const TEST_DATA_DIR = fs.mkdtempSync(
+  path.join(process.env.DATA_DIR || os.tmpdir(), "omniroute-psd-secrets-at-rest-")
+);
 process.env.DATA_DIR = TEST_DATA_DIR;
 process.env.APP_LOG_TO_FILE = "false";
 process.env.STORAGE_ENCRYPTION_KEY = "psd-secrets-at-rest-synthetic-key";
@@ -21,6 +22,10 @@ process.env.STORAGE_ENCRYPTION_KEY = "psd-secrets-at-rest-synthetic-key";
 const core = await import("../../src/lib/db/core.ts");
 const { looksEncrypted, isEncryptionEnabled } = await import("../../src/lib/db/encryption.ts");
 const providers = await import("../../src/lib/db/providers.ts");
+const { ensureProviderSpecificDataSecretsEncrypted } =
+  await import("../../src/lib/db/providers/migrations.ts");
+const { mergeConnectionProviderSpecificData } =
+  await import("../../src/lib/db/providers/providerSpecificDataMerge.ts");
 const { runJsonMigration } = await import("../../src/lib/db/jsonMigration.ts");
 const { invalidateDbCache } = await import("../../src/lib/db/readCache.ts");
 
@@ -34,6 +39,7 @@ const COPILOT_TOKEN = "ghu_copilotbearer_0123456789abcdef";
 const GROK_COOKIE = "sso=grok-sso-0123456789; sso-rw=grok-sso-rw-0123456789";
 
 type Row = { provider_specific_data: string | null; api_key: string | null };
+type Psd = Record<string, unknown>;
 
 function resetDb() {
   core.resetDbInstance();
@@ -50,13 +56,19 @@ function rawRow(id: string): Row {
   return row;
 }
 
-function rawPsd(id: string): Record<string, unknown> {
+function rawPsd(id: string): Psd {
   const row = rawRow(id);
   assert.ok(row.provider_specific_data, "provider_specific_data must be stored");
-  return JSON.parse(row.provider_specific_data) as Record<string, unknown>;
+  return JSON.parse(row.provider_specific_data) as Psd;
 }
 
-function insertLegacyPlaintextRow(id: string, psd: Record<string, unknown>) {
+function psdOf(connection: unknown): Psd {
+  const psd = (connection as { providerSpecificData?: unknown } | null)?.providerSpecificData;
+  assert.ok(psd && typeof psd === "object", "providerSpecificData must be present");
+  return psd as Psd;
+}
+
+function insertLegacyPlaintextRow(id: string, psd: Psd) {
   const now = new Date().toISOString();
   core
     .getDbInstance()
@@ -67,6 +79,18 @@ function insertLegacyPlaintextRow(id: string, psd: Record<string, unknown>) {
     )
     .run(id, `legacy-${id}`, PRIMARY_KEY, JSON.stringify(psd), now, now);
   invalidateDbCache("connections");
+}
+
+async function createPool(label: string, providerSpecificData: Psd) {
+  const created = (await providers.createProviderConnection({
+    provider: "openai",
+    authType: "apikey",
+    name: label,
+    apiKey: uniqueKey(label),
+    providerSpecificData,
+  })) as Record<string, unknown> & { id: string };
+  assert.ok(typeof created.id === "string" && created.id.length > 0);
+  return created;
 }
 
 test.before(() => {
@@ -80,24 +104,17 @@ test.after(() => {
   delete process.env.STORAGE_ENCRYPTION_KEY;
 });
 
-test("createProviderConnection encrypts extraApiKeys and other credential fields at rest", async () => {
-  const created = (await providers.createProviderConnection({
-    provider: "openai",
-    authType: "apikey",
-    name: "pool",
-    apiKey: uniqueKey("pool"),
-    providerSpecificData: {
-      extraApiKeys: [EXTRA_ONE, EXTRA_TWO],
-      copilotToken: COPILOT_TOKEN,
-      tags: ["pool"],
-      baseUrl: "https://api.example.test/v1",
-    },
-  })) as Record<string, unknown> & { id: string };
+test("createProviderConnection envelopes every extraApiKeys entry and the copilot sub-token", async () => {
+  const created = await createPool("pool", {
+    extraApiKeys: [EXTRA_ONE, EXTRA_TWO],
+    copilotToken: COPILOT_TOKEN,
+    tags: ["pool"],
+    baseUrl: "https://api.example.test/v1",
+  });
 
   // The object handed back to the caller is still plaintext.
-  const returnedPsd = created.providerSpecificData as Record<string, unknown>;
-  assert.deepEqual(returnedPsd.extraApiKeys, [EXTRA_ONE, EXTRA_TWO]);
-  assert.equal(returnedPsd.copilotToken, COPILOT_TOKEN);
+  assert.deepEqual(psdOf(created).extraApiKeys, [EXTRA_ONE, EXTRA_TWO]);
+  assert.equal(psdOf(created).copilotToken, COPILOT_TOKEN);
 
   const row = rawRow(created.id);
   assert.ok(looksEncrypted(row.api_key), "control: api_key is encrypted as before");
@@ -108,7 +125,7 @@ test("createProviderConnection encrypts extraApiKeys and other credential fields
       `provider_specific_data stores ${secret.slice(0, 12)}… in plaintext`
     );
   }
-  const stored = JSON.parse(column) as Record<string, unknown>;
+  const stored = JSON.parse(column) as Psd;
   assert.ok(Array.isArray(stored.extraApiKeys) && stored.extraApiKeys.length === 2);
   for (const entry of stored.extraApiKeys as unknown[]) {
     assert.ok(
@@ -121,42 +138,28 @@ test("createProviderConnection encrypts extraApiKeys and other credential fields
   assert.equal(stored.baseUrl, "https://api.example.test/v1");
 
   // Every module read path returns plaintext.
-  const byId = (await providers.getProviderConnectionById(created.id)) as Record<string, unknown>;
-  assert.deepEqual((byId.providerSpecificData as Record<string, unknown>).extraApiKeys, [
-    EXTRA_ONE,
-    EXTRA_TWO,
-  ]);
-  assert.equal((byId.providerSpecificData as Record<string, unknown>).copilotToken, COPILOT_TOKEN);
+  const byId = await providers.getProviderConnectionById(created.id);
+  assert.deepEqual(psdOf(byId).extraApiKeys, [EXTRA_ONE, EXTRA_TWO]);
+  assert.equal(psdOf(byId).copilotToken, COPILOT_TOKEN);
 
   const listed = (await providers.getProviderConnections({ provider: "openai" })).find(
     (c) => c.id === created.id
-  ) as Record<string, unknown>;
+  );
   assert.ok(listed);
-  assert.deepEqual((listed.providerSpecificData as Record<string, unknown>).extraApiKeys, [
-    EXTRA_ONE,
-    EXTRA_TWO,
-  ]);
+  assert.deepEqual(psdOf(listed).extraApiKeys, [EXTRA_ONE, EXTRA_TWO]);
   // The export path serializes the lazy view — still plaintext.
   const exported = JSON.parse(JSON.stringify(listed)) as Record<string, unknown>;
-  assert.deepEqual((exported.providerSpecificData as Record<string, unknown>).extraApiKeys, [
-    EXTRA_ONE,
-    EXTRA_TWO,
-  ]);
+  assert.deepEqual(psdOf(exported).extraApiKeys, [EXTRA_ONE, EXTRA_TWO]);
 });
 
-test("updateProviderConnection re-encrypts and never double-encrypts", async () => {
-  const created = (await providers.createProviderConnection({
-    provider: "openai",
-    authType: "apikey",
-    name: "pool-update",
-    apiKey: uniqueKey("pool-update"),
-    providerSpecificData: { extraApiKeys: [EXTRA_ONE] },
-  })) as Record<string, unknown> & { id: string };
+test("updateProviderConnection envelopes a plaintext list and never double-encrypts it", async () => {
+  const created = await createPool("pool-update", { extraApiKeys: [EXTRA_ONE] });
 
   // A metadata-only update must not disturb the stored secrets.
+  const before = rawPsd(created.id).extraApiKeys;
   await providers.updateProviderConnection(created.id, { name: "renamed" });
-  let byId = (await providers.getProviderConnectionById(created.id)) as Record<string, unknown>;
-  assert.deepEqual((byId.providerSpecificData as Record<string, unknown>).extraApiKeys, [
+  assert.deepEqual(rawPsd(created.id).extraApiKeys, before, "ciphertext untouched by a rename");
+  assert.deepEqual(psdOf(await providers.getProviderConnectionById(created.id)).extraApiKeys, [
     EXTRA_ONE,
   ]);
 
@@ -164,72 +167,46 @@ test("updateProviderConnection re-encrypts and never double-encrypts", async () 
   await providers.updateProviderConnection(created.id, {
     providerSpecificData: { extraApiKeys: [EXTRA_ONE, EXTRA_TWO], tags: ["x"] },
   });
-  const stored = rawPsd(created.id);
-  const entries = stored.extraApiKeys as string[];
+  const entries = rawPsd(created.id).extraApiKeys as string[];
   assert.equal(entries.length, 2);
   for (const entry of entries) assert.ok(entry.startsWith(ENC_PREFIX));
   // Exactly one envelope per value: decrypting once yields the token itself.
-  byId = (await providers.getProviderConnectionById(created.id)) as Record<string, unknown>;
-  assert.deepEqual((byId.providerSpecificData as Record<string, unknown>).extraApiKeys, [
+  assert.deepEqual(psdOf(await providers.getProviderConnectionById(created.id)).extraApiKeys, [
     EXTRA_ONE,
     EXTRA_TWO,
   ]);
 });
 
-test("a legacy plaintext row is readable and gets re-encrypted on its next write", async () => {
-  const id = "legacy-plaintext-row";
-  insertLegacyPlaintextRow(id, { extraApiKeys: [EXTRA_ONE], copilotToken: COPILOT_TOKEN });
-
-  const byId = (await providers.getProviderConnectionById(id)) as Record<string, unknown>;
-  assert.deepEqual((byId.providerSpecificData as Record<string, unknown>).extraApiKeys, [
-    EXTRA_ONE,
-  ]);
-  assert.equal((byId.providerSpecificData as Record<string, unknown>).copilotToken, COPILOT_TOKEN);
-
-  await providers.updateProviderConnection(id, { name: "touched" });
-
-  const column = rawRow(id).provider_specific_data ?? "";
-  assert.ok(!column.includes(EXTRA_ONE), "the write must re-encrypt the legacy extra key");
-  assert.ok(!column.includes(COPILOT_TOKEN), "the write must re-encrypt the legacy token");
-  const after = (await providers.getProviderConnectionById(id)) as Record<string, unknown>;
-  assert.deepEqual((after.providerSpecificData as Record<string, unknown>).extraApiKeys, [
-    EXTRA_ONE,
-  ]);
-});
-
-test("first use of the providers module sweeps still-plaintext secret fields (idempotent)", async () => {
+test("first use of the providers module sweeps rows still holding plaintext secrets (idempotent)", async () => {
   resetDb();
   core.getDbInstance();
   const id = "legacy-sweep-row";
-  insertLegacyPlaintextRow(id, { extraApiKeys: [EXTRA_ONE, EXTRA_TWO], tags: ["keep"] });
-  await providers.createProviderConnection({
-    provider: "openai",
-    authType: "apikey",
-    name: "already",
-    apiKey: uniqueKey("already"),
-    providerSpecificData: { extraApiKeys: [EXTRA_ONE] },
+  insertLegacyPlaintextRow(id, {
+    extraApiKeys: [EXTRA_ONE, EXTRA_TWO],
+    copilotToken: COPILOT_TOKEN,
+    tags: ["keep"],
   });
+  await createPool("already", { extraApiKeys: [EXTRA_ONE] });
 
   // Trigger the module's first read on this database instance.
   const connections = await providers.getProviderConnections({ provider: "openai" });
   assert.ok(connections.length >= 1);
 
   const sweptColumn = rawRow(id).provider_specific_data ?? "";
-  assert.ok(
-    !sweptColumn.includes(EXTRA_ONE) && !sweptColumn.includes(EXTRA_TWO),
-    "sweep encrypted the legacy row"
-  );
-  const swept = JSON.parse(sweptColumn) as Record<string, unknown>;
+  for (const secret of [EXTRA_ONE, EXTRA_TWO, COPILOT_TOKEN]) {
+    assert.ok(!sweptColumn.includes(secret), `sweep left ${secret.slice(0, 12)}… in plaintext`);
+  }
+  const swept = JSON.parse(sweptColumn) as Psd;
   assert.deepEqual(swept.tags, ["keep"]);
   for (const entry of swept.extraApiKeys as string[]) assert.ok(entry.startsWith(ENC_PREFIX));
+  assert.ok(String(swept.copilotToken).startsWith(ENC_PREFIX));
 
-  const readBack = (await providers.getProviderConnectionById(id)) as Record<string, unknown>;
-  assert.deepEqual((readBack.providerSpecificData as Record<string, unknown>).extraApiKeys, [
-    EXTRA_ONE,
-    EXTRA_TWO,
-  ]);
+  const readBack = await providers.getProviderConnectionById(id);
+  assert.deepEqual(psdOf(readBack).extraApiKeys, [EXTRA_ONE, EXTRA_TWO]);
+  assert.equal(psdOf(readBack).copilotToken, COPILOT_TOKEN);
 
-  // Rows that were already encrypted are left exactly as they were (no re-wrap).
+  // Rows that were already encrypted are left exactly as they were (no re-wrap), and a
+  // second pass on the same database instance is a no-op.
   const alreadyRows = core
     .getDbInstance()
     .prepare("SELECT id, provider_specific_data FROM provider_connections WHERE name = 'already'")
@@ -238,16 +215,37 @@ test("first use of the providers module sweeps still-plaintext secret fields (id
   const before = alreadyRows[0].provider_specific_data;
   await providers.getProviderConnections({ provider: "openai" });
   assert.equal(rawRow(alreadyRows[0].id).provider_specific_data, before);
+  assert.equal(ensureProviderSpecificDataSecretsEncrypted(core.getDbInstance()), 0);
+});
+
+test("mergeConnectionProviderSpecificData envelopes the secret fields of a patch", async () => {
+  const created = await createPool("merge-patch", { extraApiKeys: [EXTRA_ONE], tags: ["keep"] });
+  const poolBefore = rawPsd(created.id).extraApiKeys;
+
+  // What the GHE Copilot executor does after minting a bearer: patch the token in place.
+  await mergeConnectionProviderSpecificData(created.id, {
+    copilotToken: COPILOT_TOKEN,
+    copilotTokenExpiresAt: 1_900_000_000,
+  });
+
+  const column = rawRow(created.id).provider_specific_data ?? "";
+  assert.ok(!column.includes(COPILOT_TOKEN), "the patched token must not land in plaintext");
+  const stored = JSON.parse(column) as Psd;
+  assert.ok(String(stored.copilotToken).startsWith(ENC_PREFIX), "copilotToken is enveloped");
+  assert.equal(stored.copilotTokenExpiresAt, 1_900_000_000, "non-secret patch keys stay plain");
+  assert.deepEqual(stored.tags, ["keep"], "existing non-secret fields are preserved");
+  assert.deepEqual(stored.extraApiKeys, poolBefore, "existing ciphertext is not re-wrapped");
+
+  const readBack = await providers.getProviderConnectionById(created.id);
+  assert.equal(psdOf(readBack).copilotToken, COPILOT_TOKEN);
+  assert.deepEqual(psdOf(readBack).extraApiKeys, [EXTRA_ONE]);
 });
 
 test("JSON export → import round-trip restores usable tokens and stores them encrypted", async () => {
-  const created = (await providers.createProviderConnection({
-    provider: "openai",
-    authType: "apikey",
-    name: "roundtrip",
-    apiKey: uniqueKey("roundtrip"),
-    providerSpecificData: { extraApiKeys: [EXTRA_ONE, EXTRA_TWO], copilotToken: COPILOT_TOKEN },
-  })) as Record<string, unknown> & { id: string };
+  const created = await createPool("roundtrip", {
+    extraApiKeys: [EXTRA_ONE, EXTRA_TWO],
+    copilotToken: COPILOT_TOKEN,
+  });
 
   // What GET /api/settings/export-json serializes: the decrypted module view.
   const exportedConnections = JSON.parse(
@@ -255,10 +253,7 @@ test("JSON export → import round-trip restores usable tokens and stores them e
   ) as Array<Record<string, unknown>>;
   const exported = exportedConnections.find((c) => c.id === created.id);
   assert.ok(exported, "export must contain the connection");
-  assert.deepEqual((exported.providerSpecificData as Record<string, unknown>).extraApiKeys, [
-    EXTRA_ONE,
-    EXTRA_TWO,
-  ]);
+  assert.deepEqual(psdOf(exported).extraApiKeys, [EXTRA_ONE, EXTRA_TWO]);
 
   const db = core.getDbInstance();
   db.prepare("DELETE FROM provider_connections WHERE id = ?").run(created.id);
@@ -270,19 +265,10 @@ test("JSON export → import round-trip restores usable tokens and stores them e
   for (const secret of [EXTRA_ONE, EXTRA_TWO, COPILOT_TOKEN]) {
     assert.ok(!column.includes(secret), "import must store the secret fields encrypted");
   }
-  const restored = (await providers.getProviderConnectionById(created.id)) as Record<
-    string,
-    unknown
-  >;
-  assert.deepEqual((restored.providerSpecificData as Record<string, unknown>).extraApiKeys, [
-    EXTRA_ONE,
-    EXTRA_TWO,
-  ]);
-  assert.equal(
-    (restored.providerSpecificData as Record<string, unknown>).copilotToken,
-    COPILOT_TOKEN
-  );
-  assert.equal(restored.apiKey, uniqueKey("roundtrip"));
+  const restored = await providers.getProviderConnectionById(created.id);
+  assert.deepEqual(psdOf(restored).extraApiKeys, [EXTRA_ONE, EXTRA_TWO]);
+  assert.equal(psdOf(restored).copilotToken, COPILOT_TOKEN);
+  assert.equal((restored as Record<string, unknown>).apiKey, uniqueKey("roundtrip"));
 });
 
 test("web-session cookie dedup still matches the stored (now encrypted) credential", async () => {
@@ -294,6 +280,7 @@ test("web-session cookie dedup still matches the stored (now encrypted) credenti
   })) as Record<string, unknown> & { id: string };
   const column = rawRow(first.id).provider_specific_data ?? "";
   assert.ok(!column.includes(GROK_COOKIE), "the cookie is encrypted at rest");
+  assert.ok(!column.includes("grok-sso-0123456789"), "the sso token is encrypted at rest");
 
   const second = (await providers.createProviderConnection({
     provider: "grok-web",
@@ -310,13 +297,7 @@ test("without STORAGE_ENCRYPTION_KEY the column stays plaintext, like api_key", 
   delete process.env.STORAGE_ENCRYPTION_KEY;
   try {
     assert.equal(isEncryptionEnabled(), false);
-    const created = (await providers.createProviderConnection({
-      provider: "openai",
-      authType: "apikey",
-      name: "plain-mode",
-      apiKey: uniqueKey("plain-mode"),
-      providerSpecificData: { extraApiKeys: [EXTRA_ONE] },
-    })) as Record<string, unknown> & { id: string };
+    const created = await createPool("plain-mode", { extraApiKeys: [EXTRA_ONE] });
     const row = rawRow(created.id);
     assert.equal(row.api_key, uniqueKey("plain-mode"), "control: api_key passthrough");
     assert.deepEqual(rawPsd(created.id).extraApiKeys, [EXTRA_ONE]);

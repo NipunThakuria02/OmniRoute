@@ -15,8 +15,6 @@
 
 import type { SqliteAdapter } from "../adapters/types";
 import { encryptConnectionFields } from "../encryption";
-import { encryptProviderSpecificDataSecrets } from "../providers/secretFields";
-import { parseProviderSpecificData } from "../webSessionDedup";
 import { mapBackupRecordToColumns, selectExistingRow, upsertColumns } from "./columnUpsert";
 
 type JsonRecord = Record<string, unknown>;
@@ -28,15 +26,6 @@ export function importProviderConnectionRecord(
 ) {
   const record = encryptConnectionFields({ ...conn });
   if (record.rateLimitOverrides == null) delete record.rateLimitOverrides;
-  // The credential fields inside providerSpecificData are enveloped exactly like the
-  // scalar credentials above (a hand-written backup may carry the column as a JSON string).
-  if (record.providerSpecificData != null) {
-    const parsed =
-      typeof record.providerSpecificData === "string"
-        ? parseProviderSpecificData(record.providerSpecificData)
-        : record.providerSpecificData;
-    if (parsed) record.providerSpecificData = encryptProviderSpecificDataSecrets(parsed);
-  }
 
   const existing = selectExistingRow(db, "provider_connections", conn.id);
   const values = mapBackupRecordToColumns(record, columns);
