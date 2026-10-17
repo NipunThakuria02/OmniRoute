@@ -76,6 +76,7 @@ Content-Type: application/json
 | `X-OmniRoute-Session-Id` | Request   | Caller-supplied session/conversation tag (also feeds memory). When present, persisted verbatim to `call_logs.session_tag` for per-session cost attribution (#8249) — never synthesized when absent |
 | `Idempotency-Key`        | Request   | Dedup key (5s window)                                                                                                                                                                              |
 | `X-Request-Id`           | Request   | Alternative dedup key                                                                                                                                                                              |
+| `x-omniroute-connection` | Request   | Pin a single-model request to one provider connection (account) by its id — see [Account pinning per request](#account-pinning-per-request)                                                        |
 | `X-OmniRoute-Cache`      | Response  | `HIT` or `MISS` (non-streaming)                                                                                                                                                                    |
 | `X-OmniRoute-Idempotent` | Response  | `true` if deduplicated                                                                                                                                                                             |
 | `X-OmniRoute-Progress`   | Response  | `enabled` if progress tracking on                                                                                                                                                                  |
@@ -86,6 +87,53 @@ Content-Type: application/json
 | `X-OmniRoute-Decision`   | Response  | Routing trace: `strategy=<name>; provider=<alias>; latency_ms=<n>` (`<name>` is the combo strategy, or `single` for a non-combo request) — always present on completion responses                  |
 
 > Nginx note: if you rely on underscore headers (for example `x_session_id`), enable `underscores_in_headers on;`.
+
+#### Account pinning per request
+
+When a provider has several connections (accounts or keys), OmniRoute normally picks one
+through its account-selection strategy. A request can instead pin one specific connection
+with the `x-omniroute-connection` header:
+
+```bash
+curl http://localhost:20128/v1/chat/completions \
+  -H "Authorization: Bearer <your OmniRoute API key>" \
+  -H "Content-Type: application/json" \
+  -H "x-omniroute-connection: <connection id>" \
+  -d '{"model": "codex/gpt-5.5", "messages": [{"role": "user", "content": "hi"}]}'
+```
+
+- **Where to find the id.** Open the provider page in the dashboard
+  (**Dashboard → Providers → <provider>**) and click the `xxxxxxxx…` id chip on a connection
+  row — it copies the full connection id.
+- **Which requests honor it.** Single-model requests (`provider/model`) on
+  `/v1/chat/completions`, `/v1/messages` and `/v1/responses`. Combos ignore the header: pin
+  an account per combo step through the step's own connection instead.
+- **The pin is strict, not a preference.** The pinned connection is used exclusively. A
+  failure inside the request records the account's cooldown but does **not** rotate to a
+  sibling account of the same provider.
+- **Cooldown and quota release the pin.** While the pinned connection is cooling down,
+  quota-exhausted or blocked by a quota policy, later requests fall back to the provider's
+  other connections, exactly like unpinned traffic.
+- **Unknown or disabled ids fail.** An id that is not in the provider's active pool (deleted,
+  deactivated, or belonging to another provider) leaves no eligible account, so the request
+  fails instead of silently routing elsewhere.
+
+Claude Code sends custom headers through `ANTHROPIC_CUSTOM_HEADERS`. Put it in the `env` block
+of `~/.claude/settings.json`, or in a project-level `.claude/settings.json` to pin a different
+account per project:
+
+```jsonc
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://<your OmniRoute>:20128",
+    "ANTHROPIC_AUTH_TOKEN": "<your OmniRoute API key>",
+    "ANTHROPIC_CUSTOM_HEADERS": "x-omniroute-connection: <connection id>",
+  },
+}
+```
+
+Source: `src/sse/handlers/chat.ts` (header read), `src/sse/services/auth.ts` and
+`src/sse/services/sessionAffinityPin.ts` (pin release and the missing-from-pool check).
 
 > **Cost telemetry headers:** non-streaming success responses also carry the `X-OmniRoute-*` cost-telemetry set — `X-OmniRoute-Response-Cost` (USD, fixed 10 decimals; `0.0000000000` for free/unpriced), `X-OmniRoute-Tokens-In` / `X-OmniRoute-Tokens-Out`, `X-OmniRoute-Model`, `X-OmniRoute-Provider`, `X-OmniRoute-Latency-Ms`, `X-OmniRoute-Cache-Hit`, and `X-OmniRoute-Fallback-Attempts` (only when > 0), plus `X-OmniRoute-Request-Id` and `X-OmniRoute-Version`. These are emitted by chat completions, `/v1/responses`, `/v1/messages`, **and the media endpoints** — `/v1/embeddings`, `/v1/images/generations`, `/v1/audio/speech`, `/v1/audio/transcriptions`, `/v1/rerank`, `/v1/videos/generations`, `/v1/music/generations`, and `/v1/moderations` (always cost `0`). Media cost is computed per modality (per-image, per-second, per-character, per search-unit) when pricing is available, otherwise `0` (fail-open).
 
