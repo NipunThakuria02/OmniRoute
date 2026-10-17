@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Xóa bộ lọc",
     "disableNonPublicModels": "Vô hiệu hóa mô hình không công khai",
     "disableNonPublicModelsDesc": "Từ chối yêu cầu đối với các mô hình không được phát hiện hoặc không được đánh dấu là công khai trong danh mục của nhà cung cấp",
+    "forcedModel": "Mô hình bắt buộc",
+    "forcedModelDesc": "Định tuyến mọi yêu cầu chat dùng khóa này tới mô hình hoặc combo này, bất kể client yêu cầu mô hình nào (hoặc khi không gửi mô hình). Giới hạn mô hình, combo và ngân sách của khóa vẫn được áp dụng.",
+    "forcedModelPlaceholder": "Không bắt buộc: dùng mô hình mà client yêu cầu",
     "normalKeysSection": "Khóa thông thường",
     "quotaKeysSection": "Khóa hạn mức",
     "bypassProviderQuota": "Bỏ qua ngưỡng hạn ngạch nhà cung cấp",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — bộ khung lập trình RLM tự cải tiến hỗ trợ API tương thích OpenAI",
       "warp": "Terminal Warp AI hỗ trợ nhà cung cấp tùy chỉnh",
       "agent-deck": "Trình điều phối đa tác nhân Agent Deck",
-      "5dive": "5dive — hạm đội tác nhân lập trình tự lưu trữ; một hồ sơ xác thực trỏ tất cả về OmniRoute"
+      "5dive": "5dive — hạm đội tác nhân lập trình tự lưu trữ; một hồ sơ xác thực trỏ tất cả về OmniRoute",
+      "zed": "Trình soạn thảo mã Zed — tác nhân tích hợp sẵn qua nhà cung cấp tương thích OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Ẩn hàng hạn mức này",
     "showQuotaRow": "Hiện hàng hạn mức này",
     "hiddenQuotaRowsLabel": "Đã ẩn:",
+    "quotaSpeedTitle": "Tốc độ giải mã gần đây trên tài khoản này ({count} yêu cầu thành công gần nhất)",
+    "quotaSpeedLine": "{model}: {avg} tok/s trung bình · gần nhất {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s trung bình · gần nhất {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Không thể cập nhật hiển thị hạn mức",
     "account": "Tài khoản",
     "modelQuotas": "Hạn ngạch mô hình",

@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Vymazať filtre",
     "disableNonPublicModels": "Zakázať neverejné modely",
     "disableNonPublicModelsDesc": "Odmietnuť požiadavky na modely, ktoré neboli nájdené alebo nie sú v katalógu poskytovateľa označené ako verejné",
+    "forcedModel": "Vynútený model",
+    "forcedModelDesc": "Smeruje každú chatovú požiadavku s týmto kľúčom na tento model alebo kombo bez ohľadu na to, aký model klient požaduje (alebo keď žiadny nepošle). Obmedzenia kľúča na modely, kombá a rozpočet naďalej platia.",
+    "forcedModelPlaceholder": "Nevynútené: použiť model, ktorý klient požaduje",
     "normalKeysSection": "Bežné kľúče",
     "quotaKeysSection": "Kľúče s kvótou",
     "bypassProviderQuota": "Obísť limity kvót poskytovateľa",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — samostatne sa zlepšujúci RLM nástroj na programovanie s podporou poskytovateľov kompatibilných s OpenAI",
       "warp": "AI terminál Warp s podporou vlastného poskytovateľa",
       "agent-deck": "Multi-agentový orchestrátor Agent Deck",
-      "5dive": "5dive — vlastná flotila kódovacích agentov; jeden auth profil nasmeruje všetkých na OmniRoute"
+      "5dive": "5dive — vlastná flotila kódovacích agentov; jeden auth profil nasmeruje všetkých na OmniRoute",
+      "zed": "Editor kódu Zed — vstavaný agent cez poskytovateľa kompatibilného s OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Skryť tento riadok kvóty",
     "showQuotaRow": "Zobraziť tento riadok kvóty",
     "hiddenQuotaRowsLabel": "Skryté:",
+    "quotaSpeedTitle": "Nedávna rýchlosť dekódovania na tomto účte (posledných {count} úspešných požiadaviek)",
+    "quotaSpeedLine": "{model}: {avg} tok/s priemer · posledná {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s priemer · posledná {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Nepodarilo sa aktualizovať viditeľnosť kvóty",
     "account": "účtu",
     "modelQuotas": "Modelové kvóty",

@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "필터 지우기",
     "disableNonPublicModels": "비공개 모델 비활성화",
     "disableNonPublicModelsDesc": "공급자 카탈로그에서 검색되지 않았거나 공개로 표시되지 않은 모델에 대한 요청을 거부합니다",
+    "forcedModel": "강제 모델",
+    "forcedModelDesc": "이 키로 보내는 모든 채팅 요청을 클라이언트가 어떤 모델을 요청하든(또는 모델을 보내지 않더라도) 이 모델이나 콤보로 라우팅합니다. 키의 모델, 콤보 및 예산 제한은 계속 적용됩니다.",
+    "forcedModelPlaceholder": "강제하지 않음: 클라이언트가 요청한 모델 사용",
     "normalKeysSection": "일반 키",
     "quotaKeysSection": "할당량 키",
     "bypassProviderQuota": "공급자 할당량 차단 우회",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — OpenAI 호환 제공업체를 지원하는 자기 개선형 RLM 코딩 하네스",
       "warp": "사용자 정의 제공자 지원 기능이 포함된 Warp AI 터미널",
       "agent-deck": "Agent Deck 다중 에이전트 오케스트레이터",
-      "5dive": "5dive — 자체 호스팅 코딩 에이전트 플릿; 인증 프로필 하나로 전체를 OmniRoute로 연결"
+      "5dive": "5dive — 자체 호스팅 코딩 에이전트 플릿; 인증 프로필 하나로 전체를 OmniRoute로 연결",
+      "zed": "Zed 코드 편집기 — OpenAI 호환 공급자를 통한 내장 에이전트"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "이 할당량 행 숨기기",
     "showQuotaRow": "이 할당량 행 표시",
     "hiddenQuotaRowsLabel": "숨김:",
+    "quotaSpeedTitle": "이 계정의 최근 디코딩 속도 (최근 성공한 요청 {count}개)",
+    "quotaSpeedLine": "{model}: {avg} tok/s 평균 · 최근 {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s 평균 · 최근 {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "할당량 표시 여부 업데이트 실패",
     "account": "계정",
     "modelQuotas": "모델 할당량",

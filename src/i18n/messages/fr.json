@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Effacer les filtres",
     "disableNonPublicModels": "Désactiver les modèles non publics",
     "disableNonPublicModelsDesc": "Rejeter les requêtes pour les modèles qui ne sont pas découverts ou non marqués comme publics dans le catalogue du fournisseur",
+    "forcedModel": "Modèle imposé",
+    "forcedModelDesc": "Achemine chaque requête de chat faite avec cette clé vers ce modèle ou ce combo, quel que soit le modèle demandé par le client (ou s'il n'en envoie aucun). Les limites de modèles, de combos et de budget de la clé s'appliquent toujours.",
+    "forcedModelPlaceholder": "Non imposé : utiliser le modèle demandé par le client",
     "normalKeysSection": "Clés normales",
     "quotaKeysSection": "Clés de quota",
     "bypassProviderQuota": "Contourner les limites de quota du fournisseur",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — environnement de programmation RLM auto-améliorant prenant en charge les fournisseurs compatibles avec OpenAI",
       "warp": "Terminal Warp AI avec prise en charge de fournisseur personnalisé",
       "agent-deck": "Orchestrateur multi-agent Agent Deck",
-      "5dive": "5dive — flotte auto-hébergée d'agents de codage ; un profil d'authentification les pointe tous vers OmniRoute"
+      "5dive": "5dive — flotte auto-hébergée d'agents de codage ; un profil d'authentification les pointe tous vers OmniRoute",
+      "zed": "Éditeur de code Zed — agent intégré via un fournisseur compatible OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Masquer cette ligne de quota",
     "showQuotaRow": "Afficher cette ligne de quota",
     "hiddenQuotaRowsLabel": "Masqué :",
+    "quotaSpeedTitle": "Vitesse de décodage récente sur ce compte ({count} dernières requêtes réussies)",
+    "quotaSpeedLine": "{model}: {avg} tok/s moy. · dernière {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s moy. · dernière {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Échec de la mise à jour de la visibilité du quota",
     "account": "Compte",
     "modelQuotas": "Quotas de modèles",

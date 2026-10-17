@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Neħħi l-filtri",
     "disableNonPublicModels": "Iddiżattiva Mudelli Mhux Pubbliċi",
     "disableNonPublicModelsDesc": "Irrifjuta talbiet għal mudelli li ma jkunux ġew skoperti jew li ma jkunux immarkati bħala pubbliċi fil-katalgu tal-fornitur",
+    "forcedModel": "Mudell infurzat",
+    "forcedModelDesc": "Ibgħat kull talba ta' chat magħmula b'din iċ-ċavetta lejn dan il-mudell jew combo, ikun x'ikun il-mudell li jitlob il-klijent (jew meta ma jibgħat l-ebda wieħed). Il-limiti tal-mudelli, combo u baġit taċ-ċavetta xorta japplikaw.",
+    "forcedModelPlaceholder": "Mhux infurzat: uża l-mudell li jitlob il-klijent",
     "normalKeysSection": "Ċwievet normali",
     "quotaKeysSection": "Ċwievet tal-kwota",
     "bypassProviderQuota": "Aqbeż il-limiti tal-kwota tal-fornitur",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — qafas tal-kodifikazzjoni RLM li jtejjeb lilu nnifsu b’appoġġ għal fornituri kompatibbli ma’ OpenAI",
       "warp": "Terminal Warp AI b’appoġġ għal fornitur personalizzat",
       "agent-deck": "Orkestratur ta’ diversi aġenti Agent Deck",
-      "5dive": "5dive — flotta awtoospitata ta’ aġenti tal-kodifikazzjoni; profil wieħed tal-awtentikazzjoni jidderiġihom kollha lejn OmniRoute"
+      "5dive": "5dive — flotta awtoospitata ta’ aġenti tal-kodifikazzjoni; profil wieħed tal-awtentikazzjoni jidderiġihom kollha lejn OmniRoute",
+      "zed": "Editur tal-kodiċi Zed — aġent integrat permezz ta' fornitur kompatibbli ma' OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Aħbi din ir-ringiela tal-kwota",
     "showQuotaRow": "Uri din ir-ringiela tal-kwota",
     "hiddenQuotaRowsLabel": "Moħbija:",
+    "quotaSpeedTitle": "Veloċità reċenti tad-dekodifikazzjoni fuq dan il-kont (l-aħħar {count} talbiet b'suċċess)",
+    "quotaSpeedLine": "{model}: {avg} tok/s medja · l-aħħar {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s medja · l-aħħar {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Ma setgħetx tiġi aġġornata l-viżibbiltà tal-kwota",
     "account": "Kont",
     "modelQuotas": "Kwoti tal-Mudelli",

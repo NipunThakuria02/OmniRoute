@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "فلٹرز صاف کریں",
     "disableNonPublicModels": "غیر عوامی ماڈلز کو غیر فعال کریں",
     "disableNonPublicModelsDesc": "ان ماڈلز کے لیے درخواستوں کو مسترد کریں جو فراہم کنندہ کے کیٹلاگ میں دریافت نہیں ہوئے یا عوامی کے طور پر نشان زد نہیں ہیں",
+    "forcedModel": "لازمی ماڈل",
+    "forcedModelDesc": "اس کلید سے کی گئی ہر چیٹ درخواست کو اس ماڈل یا کومبو کی طرف بھیجیں، چاہے کلائنٹ کوئی بھی ماڈل مانگے (یا کوئی نہ بھیجے)۔ کلید کی ماڈل، کومبو اور بجٹ کی حدیں پھر بھی لاگو رہتی ہیں۔",
+    "forcedModelPlaceholder": "لازمی نہیں: کلائنٹ کا مانگا ہوا ماڈل استعمال کریں",
     "normalKeysSection": "عام کیز",
     "quotaKeysSection": "کوٹہ کیز",
     "bypassProviderQuota": "فراہم کنندہ کے کوٹہ کی حد کو نظرانداز کریں",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — OpenAI-compatible پرووائیڈر سپورٹ کے ساتھ خود کو بہتر بنانے والا RLM کوڈنگ ہارنس",
       "warp": "کسٹم پرووائیڈر سپورٹ کے ساتھ Warp AI ٹرمینل",
       "agent-deck": "Agent Deck ملٹی ایجنٹ آرکیسٹریٹر",
-      "5dive": "5dive — خود میزبان کوڈنگ ایجنٹس کا بیڑا؛ ایک auth پروفائل ان سب کو OmniRoute کی طرف بھیجتی ہے"
+      "5dive": "5dive — خود میزبان کوڈنگ ایجنٹس کا بیڑا؛ ایک auth پروفائل ان سب کو OmniRoute کی طرف بھیجتی ہے",
+      "zed": "Zed کوڈ ایڈیٹر — OpenAI سے مطابقت رکھنے والے فراہم کنندہ کے ذریعے بلٹ اِن ایجنٹ"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "اس کوٹہ کی قطار کو چھپائیں",
     "showQuotaRow": "اس کوٹہ کی قطار کو دکھائیں",
     "hiddenQuotaRowsLabel": "چھپا ہوا:",
+    "quotaSpeedTitle": "اس اکاؤنٹ پر حالیہ ڈی کوڈ رفتار (آخری {count} کامیاب درخواستیں)",
+    "quotaSpeedLine": "{model}: {avg} tok/s اوسط · آخری {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s اوسط · آخری {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "کوٹہ کی نمائش کو اپ ڈیٹ کرنے میں ناکامی",
     "account": "اکاؤنٹ",
     "modelQuotas": "ماڈل کوٹے",

@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Wyczyść filtry",
     "disableNonPublicModels": "Wyłącz niepubliczne models",
     "disableNonPublicModelsDesc": "Odrzucaj żądania dla models, które nie zostały wykryte lub nie są oznaczone jako publiczne w katalogu provider",
+    "forcedModel": "Wymuszony model",
+    "forcedModelDesc": "Kieruje każde żądanie czatu wykonane tym kluczem do tego modelu lub combo, niezależnie od tego, o jaki model prosi klient (lub gdy nie wysyła żadnego). Limity modeli, combo i budżetu klucza nadal obowiązują.",
+    "forcedModelPlaceholder": "Bez wymuszenia: użyj modelu, o który prosi klient",
     "normalKeysSection": "Zwykłe klucze",
     "quotaKeysSection": "Klucze quota",
     "bypassProviderQuota": "Pomiń limity odcięcia dostawców",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — samodoskonalące się środowisko programistyczne RLM z obsługą dostawców zgodnych z OpenAI",
       "warp": "Terminal Warp AI ze wsparciem dla niestandardowych dostawców",
       "agent-deck": "Orkiestrator wieloagentowy Agent Deck",
-      "5dive": "5dive — samodzielnie hostowana flota agentów kodujących; jeden profil auth kieruje je wszystkie do OmniRoute"
+      "5dive": "5dive — samodzielnie hostowana flota agentów kodujących; jeden profil auth kieruje je wszystkie do OmniRoute",
+      "zed": "Edytor kodu Zed — wbudowany agent przez dostawcę zgodnego z OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Ukryj ten wiersz limitu",
     "showQuotaRow": "Pokaż ten wiersz limitu",
     "hiddenQuotaRowsLabel": "Ukryte:",
+    "quotaSpeedTitle": "Ostatnia szybkość dekodowania na tym koncie (ostatnie {count} udanych żądań)",
+    "quotaSpeedLine": "{model}: {avg} tok/s śr. · ostatnio {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s śr. · ostatnio {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Nie udało się zaktualizować widoczności limitu",
     "account": "Konto",
     "modelQuotas": "Limity modeli",

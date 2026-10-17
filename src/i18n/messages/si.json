@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "පෙරහන් ඉවත් කරන්න",
     "disableNonPublicModels": "පොදු නොවන මාදිලි අක්රිය කරන්න",
     "disableNonPublicModelsDesc": "සපයන්නාගේ නාමාවලියෙහි සොයාගෙන නොමැති හෝ පොදු ලෙස සලකුණු කර නොමැති මාදිලි සඳහා වන ඉල්ලීම් ප්රතික්ෂේප කරන්න",
+    "forcedModel": "බලෙන් යොදන ආකෘතිය",
+    "forcedModelDesc": "මෙම යතුරෙන් කරන සෑම චැට් ඉල්ලීමක්ම, සේවාලාභියා කුමන ආකෘතියක් ඉල්ලුවද (හෝ කිසිවක් නොයැවුවද), මෙම ආකෘතියට හෝ combo එකට යොමු කරන්න. යතුරේ ආකෘති, combo සහ අයවැය සීමා තවමත් අදාළ වේ.",
+    "forcedModelPlaceholder": "බලෙන් යොදා නැත: සේවාලාභියා ඉල්ලන ආකෘතිය භාවිත කරන්න",
     "normalKeysSection": "සාමාන්ය යතුරු",
     "quotaKeysSection": "කෝටා යතුරු",
     "bypassProviderQuota": "සපයන්නාගේ කෝටා කඩඉම් මඟහරින්න",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — OpenAI-අනුකූල සැපයුම්කරු සහාය සහිත ස්වයං-වැඩිදියුණු වන RLM කේතකරණ රාමුව",
       "warp": "අභිරුචි සැපයුම්කරු සහාය සහිත Warp AI ටර්මිනලය",
       "agent-deck": "Agent Deck බහු-නියෝජිත සම්බන්ධීකාරකය",
-      "5dive": "5dive — ස්වයං-සත්කාරක කේතකරණ නියෝජිත සමූහයක්; එක් සත්යාපන පැතිකඩක් ඒ සියල්ල OmniRoute වෙත යොමු කරයි"
+      "5dive": "5dive — ස්වයං-සත්කාරක කේතකරණ නියෝජිත සමූහයක්; එක් සත්යාපන පැතිකඩක් ඒ සියල්ල OmniRoute වෙත යොමු කරයි",
+      "zed": "Zed කේත සංස්කාරකය — OpenAI-අනුකූල සැපයුම්කරුවෙකු හරහා ගොඩනඟන ලද නියෝජිතයා"
     },
     "guides": {
       "cursor": {
@@ -9909,6 +9913,9 @@
     "hideQuotaRow": "මෙම කෝටා පේළිය සඟවන්න",
     "showQuotaRow": "මෙම කෝටා පේළිය පෙන්වන්න",
     "hiddenQuotaRowsLabel": "සඟවා ඇති දෑ:",
+    "quotaSpeedTitle": "මෙම ගිණුමේ මෑත විකේතන වේගය (අවසන් සාර්ථක ඉල්ලීම් {count})",
+    "quotaSpeedLine": "{model}: {avg} tok/s සාමාන්‍ය · අවසන් {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s සාමාන්‍ය · අවසන් {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "කෝටා දෘශ්යතාව යාවත්කාලීන කිරීමට අසමත් විය",
     "account": "ගිණුම",
     "modelQuotas": "මාදිලි කෝටා",

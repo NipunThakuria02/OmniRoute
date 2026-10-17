@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Počisti filtre",
     "disableNonPublicModels": "Onemogoči nejavne modele",
     "disableNonPublicModelsDesc": "Zavrni zahteve za modele, ki niso odkriti ali v katalogu ponudnika niso označeni kot javni",
+    "forcedModel": "Vsiljeni model",
+    "forcedModelDesc": "Vsako zahtevo za klepet s tem ključem usmeri na ta model ali kombinacijo, ne glede na to, kateri model zahteva odjemalec (ali ko ga ne pošlje). Omejitve ključa za modele, kombinacije in proračun še vedno veljajo.",
+    "forcedModelPlaceholder": "Ni vsiljeno: uporabi model, ki ga zahteva odjemalec",
     "normalKeysSection": "Običajni ključi",
     "quotaKeysSection": "Ključi s kvoto",
     "bypassProviderQuota": "Zaobidi omejitve kvot ponudnika",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — samoizboljševalno programsko ogrodje RLM s podporo za ponudnike, združljive z OpenAI",
       "warp": "Warp, terminal z umetno inteligenco in podporo za ponudnike po meri",
       "agent-deck": "Agent Deck, orkestrator več agentov",
-      "5dive": "5dive — samostojno gostovana flota programskih agentov; en profil za preverjanje pristnosti jih vse usmeri v OmniRoute"
+      "5dive": "5dive — samostojno gostovana flota programskih agentov; en profil za preverjanje pristnosti jih vse usmeri v OmniRoute",
+      "zed": "Urejevalnik kode Zed — vgrajeni agent prek ponudnika, združljivega z OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Skrij to vrstico kvote",
     "showQuotaRow": "Prikaži to vrstico kvote",
     "hiddenQuotaRowsLabel": "Skrito:",
+    "quotaSpeedTitle": "Nedavna hitrost dekodiranja v tem računu (zadnjih {count} uspešnih zahtev)",
+    "quotaSpeedLine": "{model}: {avg} tok/s povpr. · zadnja {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s povpr. · zadnja {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Posodobitev vidnosti kvote ni uspela",
     "account": "Račun",
     "modelQuotas": "Kvote modelov",

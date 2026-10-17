@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "I-clear ang mga filter",
     "disableNonPublicModels": "I-disable ang Mga Hindi Pampublikong Modelo",
     "disableNonPublicModelsDesc": "Tanggihan ang mga kahilingan para sa mga modelong hindi natuklasan o hindi minarkahan bilang pampubliko sa catalog ng provider",
+    "forcedModel": "Ipinapatupad na modelo",
+    "forcedModelDesc": "Ipadala ang bawat chat request na ginawa gamit ang key na ito sa modelong ito o combo, anuman ang modelong hinihingi ng client (o kapag wala itong ipinadala). Patuloy na umiiral ang mga limitasyon sa modelo, combo at budget ng key.",
+    "forcedModelPlaceholder": "Hindi ipinapatupad: gamitin ang modelong hinihingi ng client",
     "normalKeysSection": "Mga normal na key",
     "quotaKeysSection": "Mga quota key",
     "bypassProviderQuota": "I-bypass ang mga cutoff ng quota ng provider",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — kusang humuhusay na RLM coding harness na may suporta para sa OpenAI-compatible na provider",
       "warp": "Warp AI terminal na may suporta sa custom provider",
       "agent-deck": "Agent Deck na tagapag-orkestra ng maraming ahente",
-      "5dive": "5dive — self-hosted fleet ng coding agents; isang auth profile ang nagtuturo sa kanilang lahat sa OmniRoute"
+      "5dive": "5dive — self-hosted fleet ng coding agents; isang auth profile ang nagtuturo sa kanilang lahat sa OmniRoute",
+      "zed": "Zed code editor — built-in na agent sa pamamagitan ng provider na compatible sa OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Itago ang row ng quota na ito",
     "showQuotaRow": "Ipakita ang row ng quota na ito",
     "hiddenQuotaRowsLabel": "Nakatago:",
+    "quotaSpeedTitle": "Kamakailang bilis ng decode sa account na ito (huling {count} matagumpay na kahilingan)",
+    "quotaSpeedLine": "{model}: {avg} tok/s karaniwan · huli {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s karaniwan · huli {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Hindi ma-update ang visibility ng quota",
     "account": "Account",
     "modelQuotas": "Mga Modelong Quota",

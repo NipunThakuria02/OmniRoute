@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Filtreleri temizle",
     "disableNonPublicModels": "Herkese Açık Olmayan Modelleri Devre Dışı Bırak",
     "disableNonPublicModelsDesc": "Sağlayıcı kataloğunda keşfedilmemiş veya herkese açık olarak işaretlenmemiş modeller için istekleri reddet",
+    "forcedModel": "Zorunlu model",
+    "forcedModelDesc": "Bu anahtarla yapılan her sohbet isteğini, istemci hangi modeli isterse istesin (veya hiç göndermediğinde) bu modele ya da komboya yönlendirir. Anahtarın model, kombo ve bütçe sınırları yine geçerlidir.",
+    "forcedModelPlaceholder": "Zorunlu değil: istemcinin istediği modeli kullan",
     "normalKeysSection": "Normal anahtarlar",
     "quotaKeysSection": "Kota anahtarları",
     "bypassProviderQuota": "Sağlayıcı kota sınırlarını atla",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — OpenAI uyumlu sağlayıcı desteğine sahip, kendini geliştiren RLM kodlama altyapısı",
       "warp": "Özel sağlayıcı desteğine sahip Warp AI terminali",
       "agent-deck": "Agent Deck çoklu aracı orkestratörü",
-      "5dive": "5dive — kendi sunucunuzda çalışan kodlama aracıları filosu; tek bir auth profili hepsini OmniRoute'a yönlendirir"
+      "5dive": "5dive — kendi sunucunuzda çalışan kodlama aracıları filosu; tek bir auth profili hepsini OmniRoute'a yönlendirir",
+      "zed": "Zed kod düzenleyicisi — OpenAI uyumlu bir sağlayıcı üzerinden yerleşik ajan"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Bu kota satırını gizle",
     "showQuotaRow": "Bu kota satırını göster",
     "hiddenQuotaRowsLabel": "Gizli:",
+    "quotaSpeedTitle": "Bu hesaptaki son kod çözme hızı (son {count} başarılı istek)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ort. · son {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ort. · son {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kota görünürlüğü güncellenemedi",
     "account": "Hesap",
     "modelQuotas": "Model Kotaları",

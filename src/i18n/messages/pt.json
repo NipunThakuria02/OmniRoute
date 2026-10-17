@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Limpar filtros",
     "disableNonPublicModels": "Desativar modelos não públicos",
     "disableNonPublicModelsDesc": "Rejeitar pedidos para modelos que não foram detetados ou não estão marcados como públicos no catálogo do fornecedor",
+    "forcedModel": "Modelo forçado",
+    "forcedModelDesc": "Encaminha todos os pedidos de chat feitos com esta chave para este modelo ou combo, independentemente do modelo que o cliente peça (ou quando não envia nenhum). Os limites de modelos, combos e orçamento da chave continuam a aplicar-se.",
+    "forcedModelPlaceholder": "Não forçado: usar o modelo pedido pelo cliente",
     "normalKeysSection": "Chaves normais",
     "quotaKeysSection": "Chaves de quota",
     "bypassProviderQuota": "Contornar limites de quota do fornecedor",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — ambiente de programação RLM com autoaperfeiçoamento e suporte para fornecedores compatíveis com OpenAI",
       "warp": "Terminal Warp AI com suporte para fornecedor personalizado",
       "agent-deck": "Orquestrador multi-agente Agent Deck",
-      "5dive": "5dive — frota auto-alojada de agentes de codificação; um perfil de autenticação aponta todos para o OmniRoute"
+      "5dive": "5dive — frota auto-alojada de agentes de codificação; um perfil de autenticação aponta todos para o OmniRoute",
+      "zed": "Editor de código Zed — agente integrado através de um fornecedor compatível com OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Ocultar esta linha de quota",
     "showQuotaRow": "Mostrar esta linha de quota",
     "hiddenQuotaRowsLabel": "Oculto:",
+    "quotaSpeedTitle": "Velocidade de descodificação recente nesta conta (últimos {count} pedidos bem-sucedidos)",
+    "quotaSpeedLine": "{model}: {avg} tok/s média · último {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s média · último {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Falha ao atualizar a visibilidade da quota",
     "account": "Conta",
     "modelQuotas": "Cotas de modelo",

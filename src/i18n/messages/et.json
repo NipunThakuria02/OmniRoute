@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Tühjenda filtrid",
     "disableNonPublicModels": "Keela mitteavalikud mudelid",
     "disableNonPublicModelsDesc": "Lükka tagasi päringud mudelitele, mida pole tuvastatud või mis pole teenusepakkuja kataloogis avalikuks märgitud",
+    "forcedModel": "Sunnitud mudel",
+    "forcedModelDesc": "Suunab iga selle võtmega tehtud vestluspäringu sellele mudelile või kombole, olenemata sellest, millist mudelit klient küsib (või kui ta ühtegi ei saada). Võtme mudeli-, kombo- ja eelarvepiirangud kehtivad endiselt.",
+    "forcedModelPlaceholder": "Pole sunnitud: kasuta mudelit, mida klient küsib",
     "normalKeysSection": "Tavavõtmed",
     "quotaKeysSection": "Kvoodivõtmed",
     "bypassProviderQuota": "Eira teenusepakkuja kvoodi katkestuspiiranguid",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — isetäiustuv RLM-i programmeerimisraamistik OpenAI-ga ühilduvate teenusepakkujate toega",
       "warp": "Warp AI-terminal kohandatud teenusepakkuja toega",
       "agent-deck": "Agent Deck mitme agendi orkestreerija",
-      "5dive": "5dive — isemajutatud programmeerimisagentide kogum; üks autentimisprofiil suunab nad kõik OmniRoute'i"
+      "5dive": "5dive — isemajutatud programmeerimisagentide kogum; üks autentimisprofiil suunab nad kõik OmniRoute'i",
+      "zed": "Zedi koodiredaktor — sisseehitatud agent OpenAI-ga ühilduva teenusepakkuja kaudu"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Peida see kvoodirida",
     "showQuotaRow": "Kuva see kvoodirida",
     "hiddenQuotaRowsLabel": "Peidetud:",
+    "quotaSpeedTitle": "Selle konto hiljutine dekodeerimiskiirus (viimased {count} edukat päringut)",
+    "quotaSpeedLine": "{model}: {avg} tok/s keskm. · viimane {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s keskm. · viimane {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kvoodi nähtavuse värskendamine ebaõnnestus",
     "account": "Konto",
     "modelQuotas": "Mudelite kvoodid",

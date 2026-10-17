@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Ryd filtre",
     "disableNonPublicModels": "Deaktiver ikke-offentlige modeller",
     "disableNonPublicModelsDesc": "Afvis anmodninger om modeller, der ikke er registreret eller ikke er markeret som offentlige i udbyderkataloget",
+    "forcedModel": "Gennemtvunget model",
+    "forcedModelDesc": "Send alle chatanmodninger med denne nøgle til denne model eller combo, uanset hvilken model klienten beder om (eller når den ikke sender nogen). Nøglens model-, combo- og budgetgrænser gælder stadig.",
+    "forcedModelPlaceholder": "Ikke gennemtvunget: brug den model, klienten anmoder om",
     "normalKeysSection": "Normale nøgler",
     "quotaKeysSection": "Kvotenøgler",
     "bypassProviderQuota": "Omgå udbyderens kvotegrænser",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — selvforbedrende RLM-kodningsramme med understøttelse af OpenAI-kompatible providere",
       "warp": "Warp AI-terminal med understøttelse af brugerdefineret udbyder",
       "agent-deck": "Agent Deck multi-agent-orkestrator",
-      "5dive": "5dive — selv-hostet flåde af kodningsagenter; én auth-profil peger dem alle mod OmniRoute"
+      "5dive": "5dive — selv-hostet flåde af kodningsagenter; én auth-profil peger dem alle mod OmniRoute",
+      "zed": "Zed-kodeeditor — indbygget agent via en OpenAI-kompatibel udbyder"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Skjul denne kvoterække",
     "showQuotaRow": "Vis denne kvoterække",
     "hiddenQuotaRowsLabel": "Skjult:",
+    "quotaSpeedTitle": "Seneste afkodningshastighed på denne konto (seneste {count} vellykkede anmodninger)",
+    "quotaSpeedLine": "{model}: {avg} tok/s gns. · seneste {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s gns. · seneste {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kunne ikke opdatere kvotesynlighed",
     "account": "Konto",
     "modelQuotas": "Modelkvoter",

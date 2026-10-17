@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Vymazat filtry",
     "disableNonPublicModels": "Zakázat neveřejné modely",
     "disableNonPublicModelsDesc": "Odmítnout požadavky na modely, které nejsou nalezeny nebo nejsou v katalogu poskytovatele označeny jako veřejné",
+    "forcedModel": "Vynucený model",
+    "forcedModelDesc": "Směruje každý chatový požadavek s tímto klíčem na tento model nebo kombo bez ohledu na to, jaký model klient požaduje (nebo když žádný neodešle). Omezení klíče na modely, komba a rozpočet nadále platí.",
+    "forcedModelPlaceholder": "Nevynuceno: použít model, který klient požaduje",
     "normalKeysSection": "Běžné klíče",
     "quotaKeysSection": "Kvótové klíče",
     "bypassProviderQuota": "Obcházet limity kvót poskytovatele",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — sebezdokonalující se programovací prostředí RLM s podporou poskytovatelů kompatibilních s OpenAI",
       "warp": "AI terminál Warp s podporou vlastních poskytovatelů",
       "agent-deck": "Multiagentní orchestrátor Agent Deck",
-      "5dive": "5dive — vlastní flotila kódovacích agentů; jeden auth profil nasměruje všechny na OmniRoute"
+      "5dive": "5dive — vlastní flotila kódovacích agentů; jeden auth profil nasměruje všechny na OmniRoute",
+      "zed": "Editor kódu Zed — vestavěný agent přes poskytovatele kompatibilního s OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Skrýt tento řádek kvóty",
     "showQuotaRow": "Zobrazit tento řádek kvóty",
     "hiddenQuotaRowsLabel": "Skryté:",
+    "quotaSpeedTitle": "Nedávná rychlost dekódování u tohoto účtu (posledních {count} úspěšných požadavků)",
+    "quotaSpeedLine": "{model}: {avg} tok/s průměr · poslední {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s průměr · poslední {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Nepodařilo se aktualizovat viditelnost kvóty",
     "account": "Účet",
     "modelQuotas": "Kvóty Modelu",

@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Обриши филтере",
     "disableNonPublicModels": "Онемогући непубличке моделе",
     "disableNonPublicModelsDesc": "Одбиј захтеве за моделе који нису откривени или нису означени као јавни у каталогу провајдера",
+    "forcedModel": "Наметнути модел",
+    "forcedModelDesc": "Усмерава сваки чет захтев направљен овим кључем на овај модел или комбо, без обзира на то који модел клијент тражи (или када га не пошаље). Ограничења кључа за моделе, комбо и буџет и даље важе.",
+    "forcedModelPlaceholder": "Није наметнуто: користи модел који клијент тражи",
     "normalKeysSection": "Обични кључеви",
     "quotaKeysSection": "Кључеви квоте",
     "bypassProviderQuota": "Заобиђи ограничења квоте провајдера",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — samopoboljšavajući RLM okvir za kodiranje sa podrškom za OpenAI-kompatibilne provajdere",
       "warp": "Warp AI terminal sa podrškom za prilagođene provajdere",
       "agent-deck": "Agent Deck orkestrator za više agenata",
-      "5dive": "5dive — samostalno hostovana flota agenata za kodiranje; jedan profil za autentifikaciju ih sve usmerava na OmniRoute"
+      "5dive": "5dive — samostalno hostovana flota agenata za kodiranje; jedan profil za autentifikaciju ih sve usmerava na OmniRoute",
+      "zed": "Zed уређивач кода — уграђени агент преко OpenAI-компатибилног провајдера"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Сакриј овај ред квоте",
     "showQuotaRow": "Прикажи овај ред квоте",
     "hiddenQuotaRowsLabel": "Скривено:",
+    "quotaSpeedTitle": "Недавна брзина декодирања на овом налогу (последњих {count} успешних захтева)",
+    "quotaSpeedLine": "{model}: {avg} tok/s просек · последња {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s просек · последња {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Ажурирање видљивости квоте није успело",
     "account": "Налог",
     "modelQuotas": "Квоте модела",

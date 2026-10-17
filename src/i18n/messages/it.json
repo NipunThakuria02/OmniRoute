@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Cancella filtri",
     "disableNonPublicModels": "Disabilita modelli non pubblici",
     "disableNonPublicModelsDesc": "Rifiuta le richieste per i modelli non rilevati o non contrassegnati come pubblici nel catalogo del provider",
+    "forcedModel": "Modello imposto",
+    "forcedModelDesc": "Instrada ogni richiesta di chat fatta con questa chiave verso questo modello o combo, qualunque modello chieda il client (o quando non ne invia nessuno). I limiti di modelli, combo e budget della chiave restano validi.",
+    "forcedModelPlaceholder": "Non imposto: usa il modello richiesto dal client",
     "normalKeysSection": "Chiavi normali",
     "quotaKeysSection": "Chiavi di quota",
     "bypassProviderQuota": "Bypassa i limiti di quota del provider",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — framework RLM di programmazione capace di auto-migliorarsi, con supporto per provider compatibili con OpenAI",
       "warp": "Terminale Warp AI con supporto per provider personalizzato",
       "agent-deck": "Orchestratore multi-agente Agent Deck",
-      "5dive": "5dive — flotta self-hosted di agenti di codifica; un profilo di autenticazione li punta tutti su OmniRoute"
+      "5dive": "5dive — flotta self-hosted di agenti di codifica; un profilo di autenticazione li punta tutti su OmniRoute",
+      "zed": "Editor di codice Zed — agente integrato tramite un provider compatibile con OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Nascondi questa riga della quota",
     "showQuotaRow": "Mostra questa riga della quota",
     "hiddenQuotaRowsLabel": "Nascosto:",
+    "quotaSpeedTitle": "Velocità di decodifica recente su questo account (ultime {count} richieste riuscite)",
+    "quotaSpeedLine": "{model}: {avg} tok/s media · ultima {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s media · ultima {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Impossibile aggiornare la visibilità della quota",
     "account": "Account",
     "modelQuotas": "Quote modello",

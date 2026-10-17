@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Filtrləri təmizlə",
     "disableNonPublicModels": "Qeyri-ictimai modelləri deaktiv et",
     "disableNonPublicModelsDesc": "Provayder kataloqunda aşkar edilməmiş və ya ictimai kimi qeyd olunmamış modellər üçün sorğuları rədd et",
+    "forcedModel": "Məcburi model",
+    "forcedModelDesc": "Bu açarla edilən hər söhbət sorğusunu, müştəri hansı modeli istəməsindən asılı olmayaraq (və ya heç birini göndərmədikdə), bu modelə və ya kombinə yönləndirin. Açarın model, kombo və büdcə məhdudiyyətləri yenə də tətbiq olunur.",
+    "forcedModelPlaceholder": "Məcburi deyil: müştərinin istədiyi modeldən istifadə et",
     "normalKeysSection": "Normal açarlar",
     "quotaKeysSection": "Kvota açarları",
     "bypassProviderQuota": "Provayder kvota limitlərini yan keç",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — OpenAI-uyğun provayder dəstəyi ilə özünü təkmilləşdirən RLM kodlaşdırma mühiti",
       "warp": "Fərdi provayder dəstəyinə malik Warp AI terminalı",
       "agent-deck": "Agent Deck çoxagentli orkestratoru",
-      "5dive": "5dive — öz serverinizdə işləyən kodlaşdırma agentləri parkı; bir auth profili hamısını OmniRoute-a yönəldir"
+      "5dive": "5dive — öz serverinizdə işləyən kodlaşdırma agentləri parkı; bir auth profili hamısını OmniRoute-a yönəldir",
+      "zed": "Zed kod redaktoru — OpenAI ilə uyğun provayder vasitəsilə daxili agent"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Bu kvota sətrini gizlət",
     "showQuotaRow": "Bu kvota sətrini göstər",
     "hiddenQuotaRowsLabel": "Gizlədilib:",
+    "quotaSpeedTitle": "Bu hesabda son dekodlama sürəti (son {count} uğurlu sorğu)",
+    "quotaSpeedLine": "{model}: {avg} tok/s orta · son {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s orta · son {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kvota görünürlüyünü yeniləmək mümkün olmadı",
     "account": "Hesab",
     "modelQuotas": "Model kvotaları",

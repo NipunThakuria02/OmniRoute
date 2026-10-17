@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "ማጣሪያዎችን አጽዳ",
     "disableNonPublicModels": "ይፋዊ ያልሆኑ ሞዴሎችን አሰናክል",
     "disableNonPublicModelsDesc": "በአቅራቢው ካታሎግ ውስጥ ያልተገኙ ወይም ይፋዊ እንደሆኑ ምልክት ያልተደረገባቸው ሞዴሎችን የሚጠይቁ ጥያቄዎችን ውድቅ አድርግ",
+    "forcedModel": "የተገደደ ሞዴል",
+    "forcedModelDesc": "በዚህ ቁልፍ የሚደረጉ ሁሉንም የቻት ጥያቄዎች ደንበኛው የትኛውንም ሞዴል ቢጠይቅ (ወይም ምንም ባይልክ) ወደዚህ ሞዴል ወይም ጥምረት ያስተላልፉ። የቁልፉ የሞዴል፣ የጥምረት እና የበጀት ገደቦች አሁንም ይተገበራሉ።",
+    "forcedModelPlaceholder": "አልተገደደም፦ ደንበኛው የሚጠይቀውን ሞዴል ተጠቀም",
     "normalKeysSection": "መደበኛ ቁልፎች",
     "quotaKeysSection": "የኮታ ቁልፎች",
     "bypassProviderQuota": "የአቅራቢ ኮታ ማቋረጫዎችን ማለፍ",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — ራሱን የሚያሻሽል RLM የኮድ ማዕቀፍ፣ ከOpenAI ጋር ተኳኋኝ የሆኑ አቅራቢዎችን የሚደግፍ",
       "warp": "Warp AI ተርሚናል ከብጁ አቅራቢ ድጋፍ ጋር",
       "agent-deck": "Agent Deck የብዙ ወኪሎች አስተባባሪ",
-      "5dive": "5dive — በራስ አገልጋይ ላይ የሚስተናገድ የኮድ ወኪሎች ስብስብ፤ አንድ የማንነት ማረጋገጫ መገለጫ ሁሉንም ወደ OmniRoute ያመራል"
+      "5dive": "5dive — በራስ አገልጋይ ላይ የሚስተናገድ የኮድ ወኪሎች ስብስብ፤ አንድ የማንነት ማረጋገጫ መገለጫ ሁሉንም ወደ OmniRoute ያመራል",
+      "zed": "Zed የኮድ አርታዒ — አብሮ የተሰራ ወኪል በOpenAI-ተኳሃኝ አቅራቢ በኩል"
     },
     "guides": {
       "cursor": {
@@ -9909,6 +9913,9 @@
     "hideQuotaRow": "ይህን የኮታ ረድፍ ደብቅ",
     "showQuotaRow": "ይህን የኮታ ረድፍ አሳይ",
     "hiddenQuotaRowsLabel": "የተደበቀ፦",
+    "quotaSpeedTitle": "በዚህ መለያ ላይ የቅርብ ጊዜ የዲኮድ ፍጥነት (የመጨረሻዎቹ {count} የተሳኩ ጥያቄዎች)",
+    "quotaSpeedLine": "{model}: {avg} tok/s አማካይ · የመጨረሻ {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s አማካይ · የመጨረሻ {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "የኮታ ታይነትን ማዘመን አልተሳካም",
     "account": "መለያ",
     "modelQuotas": "የሞዴል ኮታዎች",

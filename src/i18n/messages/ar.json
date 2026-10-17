@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "مسح المرشحات",
     "disableNonPublicModels": "تعطيل النماذج غير العامة",
     "disableNonPublicModelsDesc": "رفض الطلبات للنماذج غير المكتشفة أو غير المحددة كعامة في كتالوج المزود",
+    "forcedModel": "النموذج المفروض",
+    "forcedModelDesc": "توجيه كل طلب محادثة يتم بهذا المفتاح إلى هذا النموذج أو التركيبة، أيًا كان النموذج الذي يطلبه العميل (أو عندما لا يرسل أي نموذج). تظل حدود النماذج والتركيبات والميزانية الخاصة بالمفتاح سارية.",
+    "forcedModelPlaceholder": "غير مفروض: استخدام النموذج الذي يطلبه العميل",
     "normalKeysSection": "المفاتيح العادية",
     "quotaKeysSection": "مفاتيح الحصص",
     "bypassProviderQuota": "تجاوز حدود حصص المزود",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — بيئة برمجة RLM ذاتية التحسين تدعم موفّري الخدمات المتوافقين مع OpenAI",
       "warp": "طرفية Warp AI مع دعم لمزودي الخدمة المخصصين",
       "agent-deck": "منسق الوكلاء المتعددين Agent Deck",
-      "5dive": "5dive — أسطول ذاتي الاستضافة من وكلاء البرمجة؛ ملف اعتماد واحد يوجّهها جميعًا إلى OmniRoute"
+      "5dive": "5dive — أسطول ذاتي الاستضافة من وكلاء البرمجة؛ ملف اعتماد واحد يوجّهها جميعًا إلى OmniRoute",
+      "zed": "محرر الأكواد Zed — وكيل مدمج عبر مزوّد متوافق مع OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "إخفاء صف الحصة هذا",
     "showQuotaRow": "إظهار صف الحصة هذا",
     "hiddenQuotaRowsLabel": "مخفي:",
+    "quotaSpeedTitle": "سرعة فك الترميز الأخيرة لهذا الحساب (آخر {count} طلبات ناجحة)",
+    "quotaSpeedLine": "{model}: {avg} tok/s متوسط · الأخير {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s متوسط · الأخير {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "فشل تحديث ظهور الحصة",
     "account": "الحساب",
     "modelQuotas": "الحصص النموذجية",

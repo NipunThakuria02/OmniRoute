@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Borrar filtros",
     "disableNonPublicModels": "Deshabilitar modelos no públicos",
     "disableNonPublicModelsDesc": "Rechaza las solicitudes de modelos que no se hayan detectado o que no estén marcados como públicos en el catálogo del proveedor",
+    "forcedModel": "Modelo forzado",
+    "forcedModelDesc": "Enruta cada solicitud de chat hecha con esta clave a este modelo o combo, sin importar qué modelo pida el cliente (o cuando no envíe ninguno). Los límites de modelos, combos y presupuesto de la clave siguen aplicándose.",
+    "forcedModelPlaceholder": "No forzado: usar el modelo que solicita el cliente",
     "normalKeysSection": "Claves normales",
     "quotaKeysSection": "Claves de cuota",
     "bypassProviderQuota": "Omitir los límites de cuota del proveedor",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — entorno de programación RLM con mejora automática y compatibilidad con proveedores compatibles con OpenAI",
       "warp": "Terminal Warp AI compatible con proveedores personalizados",
       "agent-deck": "Orquestador multiagente Agent Deck",
-      "5dive": "5dive — flota autoalojada de agentes de codificación; un perfil de autenticación los apunta todos a OmniRoute"
+      "5dive": "5dive — flota autoalojada de agentes de codificación; un perfil de autenticación los apunta todos a OmniRoute",
+      "zed": "Editor de código Zed — agente integrado mediante un proveedor compatible con OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "Ocultar esta fila de cuota",
     "showQuotaRow": "Mostrar esta fila de cuota",
     "hiddenQuotaRowsLabel": "Ocultas:",
+    "quotaSpeedTitle": "Velocidad de decodificación reciente en esta cuenta (últimas {count} solicitudes correctas)",
+    "quotaSpeedLine": "{model}: {avg} tok/s media · última {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s media · última {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "No se pudo actualizar la visibilidad de la cuota",
     "account": "cuenta",
     "modelQuotas": "Cuotas modelo",

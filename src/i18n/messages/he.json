@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "נקה מסננים",
     "disableNonPublicModels": "השבת מודלים שאינם ציבוריים",
     "disableNonPublicModelsDesc": "דחה בקשות עבור מודלים שלא התגלו או שאינם מסומנים כציבוריים בקטלוג הספק",
+    "forcedModel": "מודל מאולץ",
+    "forcedModelDesc": "ניתוב כל בקשת צ'אט שנעשית עם מפתח זה למודל או לקומבו הזה, בלי קשר למודל שהלקוח מבקש (או כשהוא לא שולח אחד). מגבלות המודלים, הקומבו והתקציב של המפתח עדיין חלות.",
+    "forcedModelPlaceholder": "לא מאולץ: שימוש במודל שהלקוח מבקש",
     "normalKeysSection": "מפתחות רגילים",
     "quotaKeysSection": "מפתחות מכסה",
     "bypassProviderQuota": "עקוף מגבלות מכסה של ספקים",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — מסגרת קידוד מבוססת RLM המשתפרת בעצמה, עם תמיכה בספקים תואמי OpenAI",
       "warp": "מסוף Warp AI עם תמיכה בספק מותאם אישית",
       "agent-deck": "מתזמר מרובה סוכנים Agent Deck",
-      "5dive": "5dive — צי מתארח עצמאית של סוכני קוד; פרופיל אימות אחד מכוון את כולם ל-OmniRoute"
+      "5dive": "5dive — צי מתארח עצמאית של סוכני קוד; פרופיל אימות אחד מכוון את כולם ל-OmniRoute",
+      "zed": "עורך הקוד Zed — סוכן מובנה דרך ספק תואם OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "הסתר שורת מכסה זו",
     "showQuotaRow": "הצג שורת מכסה זו",
     "hiddenQuotaRowsLabel": "מוסתר:",
+    "quotaSpeedTitle": "מהירות פענוח אחרונה בחשבון זה ({count} הבקשות המוצלחות האחרונות)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ממוצע · אחרון {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ממוצע · אחרון {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "עדכון נראות המכסה נכשל",
     "account": "חשבון",
     "modelQuotas": "מכסות דגם",

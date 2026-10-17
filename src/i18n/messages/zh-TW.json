@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "清除篩選",
     "disableNonPublicModels": "停用非公開模型",
     "disableNonPublicModelsDesc": "拒絕對未發現或未標記為公共的模型在提供者目錄中的請求",
+    "forcedModel": "強制模型",
+    "forcedModelDesc": "將使用此金鑰發出的每個聊天請求路由到此模型或組合,無論用戶端請求哪個模型(或未傳送模型時亦同)。該金鑰的模型、組合與預算限制仍然適用。",
+    "forcedModelPlaceholder": "未強制:使用用戶端請求的模型",
     "normalKeysSection": "普通鍵",
     "quotaKeysSection": "配額金鑰",
     "bypassProviderQuota": "繞過提供者配額限制",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — 支援 OpenAI 相容提供者、可自我改進的 RLM 程式設計框架",
       "warp": "Warp AI 終端機，支援自訂提供者",
       "agent-deck": "Agent Deck 多代理協調器",
-      "5dive": "5dive — 自架的編碼代理機群；一個認證設定檔即可將全部指向 OmniRoute"
+      "5dive": "5dive — 自架的編碼代理機群；一個認證設定檔即可將全部指向 OmniRoute",
+      "zed": "Zed 程式碼編輯器 — 透過 OpenAI 相容供應商使用內建代理"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "隱藏此配額列",
     "showQuotaRow": "顯示此配額列",
     "hiddenQuotaRowsLabel": "已隱藏：",
+    "quotaSpeedTitle": "此帳號最近的解碼速度（最近 {count} 次成功請求）",
+    "quotaSpeedLine": "{model}: {avg} tok/s 平均 · 最近 {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s 平均 · 最近 {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "更新配額可見性失敗",
     "account": "帳戶",
     "modelQuotas": "模型配額",

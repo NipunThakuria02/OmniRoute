@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "ఫిల్టర్‌లను తీసివేయండి",
     "disableNonPublicModels": "పబ్లిక్ కాని మోడల్‌లను నిలిపివేయండి",
     "disableNonPublicModelsDesc": "ప్రొవైడర్ కేటలాగ్‌లో కనుగొనబడని లేదా పబ్లిక్‌గా గుర్తించబడని మోడల్‌ల కోసం అభ్యర్థనలను తిరస్కరించండి",
+    "forcedModel": "బలవంతపు మోడల్",
+    "forcedModelDesc": "ఈ కీతో చేసే ప్రతి చాట్ అభ్యర్థనను, క్లయింట్ ఏ మోడల్ అడిగినా (లేదా ఏదీ పంపకపోయినా), ఈ మోడల్ లేదా కాంబోకు పంపండి. కీ యొక్క మోడల్, కాంబో మరియు బడ్జెట్ పరిమితులు ఇంకా వర్తిస్తాయి.",
+    "forcedModelPlaceholder": "బలవంతం లేదు: క్లయింట్ అడిగిన మోడల్‌ను ఉపయోగించండి",
     "normalKeysSection": "సాధారణ కీలు",
     "quotaKeysSection": "కోటా కీలు",
     "bypassProviderQuota": "ప్రొవైడర్ కోటా పరిమితులను దాటవేయండి",
@@ -3009,7 +3012,8 @@
       "prime-agent": "Prime Agent — OpenAI-అనుకూల ప్రొవైడర్ మద్దతుతో స్వయంగా మెరుగుపడే RLM కోడింగ్ హార్నెస్",
       "warp": "కస్టమ్ ప్రొవైడర్ సపోర్ట్‌తో Warp AI టెర్మినల్",
       "agent-deck": "Agent Deck మల్టీ-ఏజెంట్ ఆర్కెస్ట్రేటర్",
-      "5dive": "5dive — స్వీయ-హోస్టెడ్ కోడింగ్ ఏజెంట్ల సముదాయం; ఒక auth ప్రొఫైల్ అన్నింటినీ OmniRoute వైపు మళ్లిస్తుంది"
+      "5dive": "5dive — స్వీయ-హోస్టెడ్ కోడింగ్ ఏజెంట్ల సముదాయం; ఒక auth ప్రొఫైల్ అన్నింటినీ OmniRoute వైపు మళ్లిస్తుంది",
+      "zed": "Zed కోడ్ ఎడిటర్ — OpenAI-అనుకూల ప్రొవైడర్ ద్వారా అంతర్నిర్మిత ఏజెంట్"
     },
     "guides": {
       "cursor": {
@@ -9905,6 +9909,9 @@
     "hideQuotaRow": "ఈ కోటా అడ్డు వరుసను దాచు",
     "showQuotaRow": "ఈ కోటా అడ్డు వరుసను చూపించు",
     "hiddenQuotaRowsLabel": "దాచబడింది:",
+    "quotaSpeedTitle": "ఈ ఖాతాలో ఇటీవలి డీకోడ్ వేగం (చివరి {count} విజయవంతమైన అభ్యర్థనలు)",
+    "quotaSpeedLine": "{model}: {avg} tok/s సగటు · చివరి {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s సగటు · చివరి {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "కోటా దృశ్యమానతను నవీకరించడం విఫలమైంది",
     "account": "ఖాతా",
     "modelQuotas": "మోడల్ కోటాలు",
