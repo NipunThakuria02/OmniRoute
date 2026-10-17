@@ -3,6 +3,7 @@ import { fetchUntrustedRemoteImage } from "@/shared/network/remoteImageFetch";
 import { FetchTimeoutError, fetchWithTimeout } from "@/shared/utils/fetchTimeout";
 import { MUSE_CODE_INFERENCE_USER_AGENT, normalizeMuseBaseUrl } from "../../../config/museCode.ts";
 import { sanitizeErrorMessage } from "../../../utils/error.ts";
+import { toBlobBytes } from "../../imageUpscale/shared.ts";
 
 /**
  * Muse Image (Meta Model API) — OpenAI-compatible image generation and edits on the
@@ -113,6 +114,142 @@ function upstreamErrorMessage(payload: unknown, status: number): string {
   return `Muse Image API returned HTTP ${status}`;
 }
 
+interface MuseRequestOptions {
+  n: number;
+  size?: string;
+  responseFormat?: "url" | "b64_json";
+}
+
+interface MuseRequest {
+  path: string;
+  url: string;
+  headers: Record<string, string>;
+  requestBody: string | FormData;
+}
+
+function readRequestOptions(body: Record<string, unknown>): MuseRequestOptions {
+  const n = typeof body.n === "number" && Number.isInteger(body.n) && body.n > 0 ? body.n : 1;
+  const size = typeof body.size === "string" && body.size ? body.size : undefined;
+  const responseFormat =
+    body.response_format === "url" || body.response_format === "b64_json"
+      ? body.response_format
+      : undefined;
+  return { n, size, responseFormat };
+}
+
+function buildEditsForm(
+  model: string,
+  prompt: string,
+  options: MuseRequestOptions,
+  parts: ImagePart[]
+): FormData {
+  // FormData sets its own multipart boundary — never set Content-Type manually.
+  const form = new FormData();
+  form.append("model", model);
+  form.append("prompt", prompt);
+  form.append("n", String(options.n));
+  if (options.size) form.append("size", options.size);
+  if (options.responseFormat) form.append("response_format", options.responseFormat);
+  parts.forEach((part, index) => {
+    const ext = part.mime.split("/")[1] || "png";
+    form.append(
+      "image",
+      new Blob([toBlobBytes(part.bytes)], { type: part.mime }),
+      `image-${index}.${ext}`
+    );
+  });
+  return form;
+}
+
+function buildMuseRequest(
+  base: string,
+  token: string,
+  model: string,
+  prompt: string,
+  options: MuseRequestOptions,
+  parts: ImagePart[]
+): MuseRequest {
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${token}`,
+    Accept: "application/json",
+    "User-Agent": MUSE_CODE_INFERENCE_USER_AGENT,
+  };
+  if (parts.length > 0) {
+    return {
+      path: "/v1/images/edits",
+      url: `${base}/images/edits`,
+      headers,
+      requestBody: buildEditsForm(model, prompt, options, parts),
+    };
+  }
+  headers["Content-Type"] = "application/json";
+  return {
+    path: "/v1/images/generations",
+    url: `${base}/images/generations`,
+    headers,
+    requestBody: JSON.stringify({
+      model,
+      prompt,
+      n: options.n,
+      ...(options.size ? { size: options.size } : {}),
+      ...(options.responseFormat ? { response_format: options.responseFormat } : {}),
+    }),
+  };
+}
+
+/** Download signed URLs into base64 when the caller asked for `b64_json`. */
+async function inlineSignedUrls(
+  images: MuseImageEntry[],
+  signal?: AbortSignal | null
+): Promise<void> {
+  for (const entry of images) {
+    if (entry.b64_json || !entry.url) continue;
+    const remote = await fetchUntrustedRemoteImage(entry.url, { signal: signal ?? undefined });
+    entry.b64_json = remote.buffer.toString("base64");
+    delete entry.url;
+  }
+}
+
+type MuseFail = (
+  status: number,
+  message: unknown
+) => { success: false; status: number; error: string };
+
+async function sendMuseRequest(
+  request: MuseRequest,
+  options: MuseRequestOptions,
+  signal: AbortSignal | null | undefined,
+  fail: MuseFail
+) {
+  const response = await fetchWithTimeout(request.url, {
+    method: "POST",
+    headers: request.headers,
+    body: request.requestBody,
+    signal,
+    redirect: "error",
+  });
+  const text = await response.text();
+  let payload: unknown = null;
+  try {
+    payload = text ? JSON.parse(text) : null;
+  } catch {
+    return fail(response.ok ? 502 : response.status, "Invalid response from Muse Image API");
+  }
+  if (!response.ok) return fail(response.status, upstreamErrorMessage(payload, response.status));
+
+  const images = normalizeEntries((payload as { data?: unknown } | null)?.data);
+  if (!images.length) return fail(502, "No images returned from Muse Image");
+  if (options.responseFormat === "b64_json") await inlineSignedUrls(images, signal);
+  const created = (payload as { created?: unknown }).created;
+  return {
+    success: true as const,
+    data: {
+      created: typeof created === "number" ? created : Math.floor(Date.now() / 1000),
+      data: images,
+    },
+  };
+}
+
 export async function handleMuseImageGeneration({
   model,
   provider,
@@ -123,18 +260,20 @@ export async function handleMuseImageGeneration({
 }: MuseImageArgs) {
   const startTime = Date.now();
   let path = "/v1/images/generations";
-  const fail = (status: number, message: unknown) => {
-    const error = sanitizeErrorMessage(message);
-    log?.error?.("IMAGE", `Muse Image: ${error}`);
+  const logCall = (entry: Record<string, unknown>) => {
     saveCallLog({
       method: "POST",
       path,
       provider,
       model: `${provider}/${model}`,
-      status,
       duration: Date.now() - startTime,
-      error,
+      ...entry,
     }).catch((err: unknown) => log?.error?.("IMAGE", sanitizeErrorMessage(err)));
+  };
+  const fail: MuseFail = (status, message) => {
+    const error = sanitizeErrorMessage(message);
+    log?.error?.("IMAGE", `Muse Image: ${error}`);
+    logCall({ status, error });
     return { success: false as const, status, error };
   };
 
@@ -150,92 +289,27 @@ export async function handleMuseImageGeneration({
     return fail(400, err instanceof ReferenceImageError ? err.message : err);
   }
 
-  const n = typeof body.n === "number" && Number.isInteger(body.n) && body.n > 0 ? body.n : 1;
-  const size = typeof body.size === "string" && body.size ? body.size : undefined;
-  const responseFormat =
-    body.response_format === "url" || body.response_format === "b64_json"
-      ? body.response_format
-      : undefined;
-  const base = resolveMuseImagesBase(credentials);
-  const headers: Record<string, string> = {
-    Authorization: `Bearer ${token}`,
-    Accept: "application/json",
-    "User-Agent": MUSE_CODE_INFERENCE_USER_AGENT,
-  };
-  let url: string;
-  let requestBody: string | FormData;
-  if (parts.length > 0) {
-    path = "/v1/images/edits";
-    url = `${base}/images/edits`;
-    // FormData sets its own multipart boundary — never set Content-Type manually.
-    const form = new FormData();
-    form.append("model", model);
-    form.append("prompt", prompt);
-    form.append("n", String(n));
-    if (size) form.append("size", size);
-    if (responseFormat) form.append("response_format", responseFormat);
-    parts.forEach((part, index) => {
-      const ext = part.mime.split("/")[1] || "png";
-      form.append("image", new Blob([part.bytes], { type: part.mime }), `image-${index}.${ext}`);
-    });
-    requestBody = form;
-  } else {
-    url = `${base}/images/generations`;
-    headers["Content-Type"] = "application/json";
-    requestBody = JSON.stringify({
-      model,
-      prompt,
-      n,
-      ...(size ? { size } : {}),
-      ...(responseFormat ? { response_format: responseFormat } : {}),
-    });
-  }
+  const options = readRequestOptions(body);
+  const request = buildMuseRequest(
+    resolveMuseImagesBase(credentials),
+    token,
+    model,
+    prompt,
+    options,
+    parts
+  );
+  path = request.path;
 
   try {
-    const response = await fetchWithTimeout(url, {
-      method: "POST",
-      headers,
-      body: requestBody,
-      signal,
-      redirect: "error",
-    });
-    const text = await response.text();
-    let payload: unknown = null;
-    try {
-      payload = text ? JSON.parse(text) : null;
-    } catch {
-      return fail(response.ok ? 502 : response.status, "Invalid response from Muse Image API");
+    const result = await sendMuseRequest(request, options, signal, fail);
+    if (result.success) {
+      logCall({
+        status: 200,
+        requestBody: { model, n: options.n, size: options.size, reference_images: parts.length },
+        responseBody: { images_count: result.data.data.length },
+      });
     }
-    if (!response.ok) return fail(response.status, upstreamErrorMessage(payload, response.status));
-
-    const images = normalizeEntries((payload as { data?: unknown } | null)?.data);
-    if (!images.length) return fail(502, "No images returned from Muse Image");
-    if (responseFormat === "b64_json") {
-      for (const entry of images) {
-        if (entry.b64_json || !entry.url) continue;
-        const remote = await fetchUntrustedRemoteImage(entry.url, { signal: signal ?? undefined });
-        entry.b64_json = remote.buffer.toString("base64");
-        delete entry.url;
-      }
-    }
-    const created = (payload as { created?: unknown }).created;
-    saveCallLog({
-      method: "POST",
-      path,
-      provider,
-      model: `${provider}/${model}`,
-      status: 200,
-      duration: Date.now() - startTime,
-      requestBody: { model, n, size, reference_images: parts.length },
-      responseBody: { images_count: images.length },
-    }).catch((err: unknown) => log?.error?.("IMAGE", sanitizeErrorMessage(err)));
-    return {
-      success: true as const,
-      data: {
-        created: typeof created === "number" ? created : Math.floor(Date.now() / 1000),
-        data: images,
-      },
-    };
+    return result;
   } catch (err: unknown) {
     return fail(err instanceof FetchTimeoutError ? 504 : 502, err);
   }
