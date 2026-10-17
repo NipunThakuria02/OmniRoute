@@ -13,6 +13,7 @@ import { invalidateDbCache, getCachedRawProviderConnections } from "./readCache"
 import { invalidateConnectionUpdate, type UpdateOpts } from "./readCache";
 import { reorderConnections } from "./providers/deletion";
 import { normalizeConnectionProviderSpecificData } from "./providers/providerSpecificData";
+import { ensureProviderSpecificDataSecretsEncrypted } from "./providers/migrations";
 import { bumpProxyConfigGeneration, getSettings } from "./settings";
 import {
   getStoredManagementPassword,
@@ -222,6 +223,7 @@ export async function getRawProviderConnections(
   columns?: string[]
 ) {
   const db = getDbInstance() as unknown as DbLike;
+  ensureProviderSpecificDataSecretsEncrypted(db);
   let selectCols = "*";
   if (columns?.length) {
     const invalidColumns = columns.filter((col) => !PROVIDER_CONNECTIONS_COLUMNS.has(col));
@@ -303,6 +305,7 @@ export function getProviderConnectionsCount(filter: JsonRecord = {}): number {
 
 export async function getProviderConnectionById(id: string) {
   const db = getDbInstance() as unknown as DbLike;
+  ensureProviderSpecificDataSecretsEncrypted(db);
   const row = db.prepare("SELECT * FROM provider_connections WHERE id = ?").get(id);
   if (!row) return null;
 
@@ -453,10 +456,7 @@ function findExistingCookieConnection(
           "SELECT * FROM provider_connections WHERE provider = ? AND auth_type = 'cookie' AND name = ?"
         )
         .get(provider, name) as JsonRecord | undefined) || null;
-    if (
-      byName &&
-      !storedCookieCredentialKey(byName.provider_specific_data)
-    ) {
+    if (byName && !storedCookieCredentialKey(byName.provider_specific_data)) {
       return byName;
     }
   }
