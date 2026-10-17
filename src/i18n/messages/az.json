@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Filtrləri təmizlə",
     "disableNonPublicModels": "Qeyri-ictimai modelləri deaktiv et",
     "disableNonPublicModelsDesc": "Provayder kataloqunda aşkar edilməmiş və ya ictimai kimi qeyd olunmamış modellər üçün sorğuları rədd et",
+    "forcedModel": "Məcburi model",
+    "forcedModelDesc": "Bu açarla edilən hər söhbət sorğusunu, müştəri hansı modeli istəməsindən asılı olmayaraq (və ya heç birini göndərmədikdə), bu modelə və ya kombinə yönləndirin. Açarın model, kombo və büdcə məhdudiyyətləri yenə də tətbiq olunur.",
+    "forcedModelPlaceholder": "Məcburi deyil: müştərinin istədiyi modeldən istifadə et",
     "normalKeysSection": "Normal açarlar",
     "quotaKeysSection": "Kvota açarları",
     "bypassProviderQuota": "Provayder kvota limitlərini yan keç",
@@ -3241,6 +3244,9 @@
     "copilotReloadInstruction": "Sonra VS Code-u yenidən yükləyin və daxiletmə sorğusunda API açarını təyin edin.",
     "wireApiChatCompletions": "Söhbət Tamamlamaları (/chat/tamamlamalar)",
     "wireApiResponses": "Responses API (/cavablar)",
+    "codexModelCatalog": "OmniRoute modellərini Codex-in /model seçicisində göstər",
+    "codexModelCatalogHint": "Quraşdırılmış Codex-in öz model kataloqundan ~/.codex/omniroute-models.json faylını yazır (hər model üçün təxminən 60 KB). Codex-i yenilədikdən sonra yenidən tətbiq edin.",
+    "codexCatalogWarning": "Codex-in /model seçicisi yenilənmədi: OmniRoute quraşdırılmış Codex model kataloqunu oxuya bilmədi.",
     "cliproxyapiActionFailed": "Əməliyyat uğursuz oldu",
     "cliproxyapiActionSucceeded": "Əməliyyat uğurla başa çatdı",
     "cliproxyapiCheckUpdates": "Yeniləmələri Yoxla",
@@ -8241,6 +8247,14 @@
       "terse-cjk": {
         "label": "Yığcam CJK (文言)",
         "description": "Klassik Çin ultra-yığcam üslubu (yalnız Çin dili üçün əlçatandır)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI filtri",
+        "description": "Məqsədi yoxlanmış vizuallar: ümumi qradiyentlər, şablon tərtibatlar və ya işləməyən idarəetmə elementləri yoxdur."
+      },
+      "antislop-copy": {
+        "label": "Antislop mətn və insan filtri",
+        "description": "Dürüst mətn və insanlar üçün qaydalar: Sİ izləri yoxdur, WCAG AA kontrastı, klaviatura, vəziyyətlər, mobil uyğunlaşma."
       }
     },
     "resilienceWaitForCooldown": "Cooldown üçün gözləyin",
@@ -14505,7 +14519,10 @@
     "importing": "İdxal edilir...",
     "apiKeyPlaceholder": "{providerLabel} API açarınızı yapışdırın...",
     "apiKeyStoredDescription": "Uzunmüddətli daşıyıcı etibarnamə kimi şifrələnmiş saxlanılır. Yeniləmə axını yoxdur.",
-    "apiKeyRegionDescription": "Açar üçün AWS bölgəsi (default: us-east-1)",
+    "apiKeyRegionAuto": "Avtomatik aşkarlama (tövsiyə olunur)",
+    "apiKeyRegionUsEast1": "ABŞ Şərq (Şimali Virciniya)",
+    "apiKeyRegionEuCentral1": "Avropa (Frankfurt)",
+    "apiKeyRegionAutoDescription": "Avtomatik aşkarlama əvvəlcə ABŞ Şərqi, sonra Avropanı (Frankfurt) yoxlayır və açarın işlədiyi regionu yadda saxlayır.",
     "validating": "Təsdiqlənir...",
     "validateAndSaveApiKey": "API Açarını Doğrula və Saxla",
     "errorAutoDetect": "Token avtomatik olaraq aşkar edilə bilmədi",
