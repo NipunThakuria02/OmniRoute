@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Dostawca (wszystkie konta współdzieli jeden wyłącznik)",
     "resilienceTokenRefreshScopeConnection": "Połączenie (każde konto ma własny wyłącznik)",
     "resilienceTokenRefreshThreshold": "Liczba błędów przed wstrzymaniem",
-    "resilienceTokenRefreshCooldown": "Pauza po wyzwoleniu"
+    "resilienceTokenRefreshCooldown": "Pauza po wyzwoleniu",
+    "piiMasking": {
+      "title": "Maskowanie danych osobowych",
+      "description": "Wybierz, które rodzaje danych osobowych mają być maskowane, i dodaj własne wzorce. Maskowanie pozostaje wyłączone, dopóki nie włączysz flag funkcji pokazanych poniżej.",
+      "requestFlag": "Maskowanie żądań",
+      "responseFlag": "Oczyszczanie odpowiedzi",
+      "templates": "Szablony",
+      "template": {
+        "minimal": "Minimalny",
+        "standard": "Standardowy",
+        "financial": "Finansowy",
+        "brazilian": "Brazylijski",
+        "usa": "USA",
+        "full": "Pełny"
+      },
+      "builtinTypes": "Typy wbudowane",
+      "types": {
+        "email": "Adresy e-mail",
+        "phone_us": "Numery telefonów w USA",
+        "phone_br": "Brazylijskie numery telefonów",
+        "ssn": "Numery ubezpieczenia społecznego USA",
+        "credit_card": "Numery kart kredytowych",
+        "cpf": "CPF (brazylijski numer podatnika)",
+        "cnpj": "CNPJ (brazylijski numer firmy)",
+        "ip_address": "Adresy IPv4",
+        "ipv6_address": "Adresy IPv6",
+        "aws_key": "Klucze dostępu AWS",
+        "api_key_generic": "Klucze API i tokeny"
+      },
+      "customPatterns": "Własne wzorce",
+      "customPatternsDesc": "Dopasowania są zastępowane przez [CUSTOM_REDACTED]. Maksymalnie {max} wzorców. Wzorce grożące katastrofalnym backtrackingiem są odrzucane.",
+      "typeRegex": "Wyrażenie regularne",
+      "typeWildcard": "Symbol wieloznaczny (* i ?)",
+      "pattern": "Wzorzec",
+      "flags": "Flagi (i, m, s, u)",
+      "sampleText": "Przykładowy tekst do przetestowania wzorca",
+      "test": "Testuj",
+      "testMatches": "Dopasowania: {count}",
+      "testFailed": "Wzorzec odrzucony: {message}",
+      "add": "Dodaj wzorzec",
+      "saved": "Zapisano",
+      "saveFailed": "Nie udało się zapisać: {message}",
+      "statsTitle": "Wykrycia od ponownego uruchomienia",
+      "statsEmpty": "Brak wykryć.",
+      "statsRequest": "Żądania"
+    }
   },
   "contextRtk": {
     "title": "Silnik RTK",

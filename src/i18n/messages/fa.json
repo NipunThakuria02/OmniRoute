@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "ارائه‌دهنده (همه حساب‌ها یک قطع‌کننده مشترک دارند)",
     "resilienceTokenRefreshScopeConnection": "اتصال (هر حساب کلید قطع کننده خود را دارد)",
     "resilienceTokenRefreshThreshold": "تعداد خطاها قبل از توقف",
-    "resilienceTokenRefreshCooldown": "مکث پس از فعال شدن"
+    "resilienceTokenRefreshCooldown": "مکث پس از فعال شدن",
+    "piiMasking": {
+      "title": "پنهان‌سازی داده‌های شخصی",
+      "description": "انتخاب کنید کدام نوع داده‌های شخصی پنهان شوند و الگوهای خود را اضافه کنید. پنهان‌سازی تا زمانی که پرچم‌های ویژگی نمایش‌داده‌شده در زیر را روشن نکنید خاموش می‌ماند.",
+      "requestFlag": "پنهان‌سازی درخواست‌ها",
+      "responseFlag": "پاک‌سازی پاسخ‌ها",
+      "templates": "قالب‌ها",
+      "template": {
+        "minimal": "حداقلی",
+        "standard": "استاندارد",
+        "financial": "مالی",
+        "brazilian": "برزیلی",
+        "usa": "آمریکا",
+        "full": "کامل"
+      },
+      "builtinTypes": "انواع داخلی",
+      "types": {
+        "email": "نشانی‌های ایمیل",
+        "phone_us": "شماره تلفن‌های آمریکا",
+        "phone_br": "شماره تلفن‌های برزیل",
+        "ssn": "شماره‌های تأمین اجتماعی آمریکا",
+        "credit_card": "شماره‌های کارت اعتباری",
+        "cpf": "CPF (شناسه مالیاتی اشخاص در برزیل)",
+        "cnpj": "CNPJ (شناسه شرکت در برزیل)",
+        "ip_address": "نشانی‌های IPv4",
+        "ipv6_address": "نشانی‌های IPv6",
+        "aws_key": "کلیدهای دسترسی AWS",
+        "api_key_generic": "کلیدهای API و توکن‌ها"
+      },
+      "customPatterns": "الگوهای سفارشی",
+      "customPatternsDesc": "موارد منطبق با [CUSTOM_REDACTED] جایگزین می‌شوند. حداکثر {max} الگو. الگوهایی که خطر عقبگرد فاجعه‌بار دارند رد می‌شوند.",
+      "typeRegex": "عبارت باقاعده",
+      "typeWildcard": "نویسه عام (* و ?)",
+      "pattern": "الگو",
+      "flags": "پرچم‌ها (i, m, s, u)",
+      "sampleText": "متن نمونه برای آزمایش الگو",
+      "test": "آزمایش",
+      "testMatches": "تعداد تطابق: {count}",
+      "testFailed": "الگو رد شد: {message}",
+      "add": "افزودن الگو",
+      "saved": "ذخیره شد",
+      "saveFailed": "ذخیره ناموفق بود: {message}",
+      "statsTitle": "شناسایی‌ها از زمان راه‌اندازی مجدد",
+      "statsEmpty": "هنوز موردی شناسایی نشده است.",
+      "statsRequest": "درخواست‌ها"
+    }
   },
   "contextRtk": {
     "title": "موتور RTK",

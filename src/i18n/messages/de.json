@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Anbieter (alle Konten teilen sich einen Unterbrecher)",
     "resilienceTokenRefreshScopeConnection": "Verbindung (jedes Konto hat eigenen Schutzschalter)",
     "resilienceTokenRefreshThreshold": "Fehler vor der Pause",
-    "resilienceTokenRefreshCooldown": "Pause nach Auslösung"
+    "resilienceTokenRefreshCooldown": "Pause nach Auslösung",
+    "piiMasking": {
+      "title": "PII-Maskierung",
+      "description": "Wählen Sie, welche Arten personenbezogener Daten maskiert werden, und fügen Sie eigene Muster hinzu. Die Maskierung bleibt aus, bis Sie die unten angezeigten Feature-Flags aktivieren.",
+      "requestFlag": "Anfrage-Maskierung",
+      "responseFlag": "Antwort-Bereinigung",
+      "templates": "Vorlagen",
+      "template": {
+        "minimal": "Minimal",
+        "standard": "Standard",
+        "financial": "Finanzen",
+        "brazilian": "Brasilien",
+        "usa": "USA",
+        "full": "Vollständig"
+      },
+      "builtinTypes": "Integrierte Typen",
+      "types": {
+        "email": "E-Mail-Adressen",
+        "phone_us": "US-Telefonnummern",
+        "phone_br": "Brasilianische Telefonnummern",
+        "ssn": "US-Sozialversicherungsnummern",
+        "credit_card": "Kreditkartennummern",
+        "cpf": "CPF (brasilianische Steuer-ID)",
+        "cnpj": "CNPJ (brasilianische Firmen-ID)",
+        "ip_address": "IPv4-Adressen",
+        "ipv6_address": "IPv6-Adressen",
+        "aws_key": "AWS-Zugriffsschlüssel",
+        "api_key_generic": "API-Schlüssel und Tokens"
+      },
+      "customPatterns": "Eigene Muster",
+      "customPatternsDesc": "Treffer werden durch [CUSTOM_REDACTED] ersetzt. Bis zu {max} Muster. Muster mit Risiko für katastrophales Backtracking werden abgelehnt.",
+      "typeRegex": "Regulärer Ausdruck",
+      "typeWildcard": "Platzhalter (* und ?)",
+      "pattern": "Muster",
+      "flags": "Flags (i, m, s, u)",
+      "sampleText": "Beispieltext zum Testen des Musters",
+      "test": "Testen",
+      "testMatches": "{count} Treffer",
+      "testFailed": "Muster abgelehnt: {message}",
+      "add": "Muster hinzufügen",
+      "saved": "Gespeichert",
+      "saveFailed": "Speichern fehlgeschlagen: {message}",
+      "statsTitle": "Erkennungen seit dem Neustart",
+      "statsEmpty": "Noch keine Erkennungen.",
+      "statsRequest": "Anfragen"
+    }
   },
   "contextRtk": {
     "title": "RTK-Engine",

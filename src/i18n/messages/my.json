@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "ပေးသွင်းသူ (အကောင့်အားလုံးသည် တစ်ခုတည်းသော ပြတ်တောက်စက်ကို မျှဝေသည်)",
     "resilienceTokenRefreshScopeConnection": "ချိတ်ဆက်မှု (အကောင့်တိုင်းတွင် ၎င်း၏ breaker ရှိသည်)",
     "resilienceTokenRefreshThreshold": "ရပ်တန့်မှုမပြုမီ မအောင်မြင်မှုများ",
-    "resilienceTokenRefreshCooldown": "ချောင်းဆိုးပြီးနောက် အနားယူပါ"
+    "resilienceTokenRefreshCooldown": "ချောင်းဆိုးပြီးနောက် အနားယူပါ",
+    "piiMasking": {
+      "title": "ကိုယ်ရေးဒေတာ ဖုံးကွယ်ခြင်း",
+      "description": "မည်သည့် ကိုယ်ရေးဒေတာ အမျိုးအစားကို ဖုံးကွယ်မည်ကို ရွေးပြီး သင့်ကိုယ်ပိုင်ပုံစံများ ထည့်ပါ။ အောက်တွင်ပြထားသော feature flag များကို ဖွင့်သည်အထိ ဖုံးကွယ်ခြင်း ပိတ်ထားဆဲဖြစ်သည်။",
+      "requestFlag": "တောင်းဆိုမှု ဖုံးကွယ်ခြင်း",
+      "responseFlag": "တုံ့ပြန်မှု သန့်စင်ခြင်း",
+      "templates": "ပုံစံခွက်များ",
+      "template": {
+        "minimal": "အနည်းဆုံး",
+        "standard": "စံ",
+        "financial": "ငွေကြေး",
+        "brazilian": "ဘရာဇီး",
+        "usa": "အမေရိကန်",
+        "full": "အပြည့်အစုံ"
+      },
+      "builtinTypes": "မူလပါဝင်သော အမျိုးအစားများ",
+      "types": {
+        "email": "အီးမေးလ်လိပ်စာများ",
+        "phone_us": "အမေရိကန် ဖုန်းနံပါတ်များ",
+        "phone_br": "ဘရာဇီး ဖုန်းနံပါတ်များ",
+        "ssn": "အမေရိကန် လူမှုဖူလုံရေး နံပါတ်များ",
+        "credit_card": "အကြွေးဝယ်ကတ် နံပါတ်များ",
+        "cpf": "CPF (ဘရာဇီး အခွန်ထမ်း ID)",
+        "cnpj": "CNPJ (ဘရာဇီး ကုမ္ပဏီ ID)",
+        "ip_address": "IPv4 လိပ်စာများ",
+        "ipv6_address": "IPv6 လိပ်စာများ",
+        "aws_key": "AWS ဝင်ရောက်ခွင့် ကီးများ",
+        "api_key_generic": "API ကီးများနှင့် တိုကင်များ"
+      },
+      "customPatterns": "စိတ်ကြိုက် ပုံစံများ",
+      "customPatternsDesc": "ကိုက်ညီမှုများကို [CUSTOM_REDACTED] ဖြင့် အစားထိုးသည်။ ပုံစံ {max} ခုအထိ။ ဆိုးရွားသော backtracking အန္တရာယ်ရှိသော ပုံစံများကို ငြင်းပယ်သည်။",
+      "typeRegex": "Regular expression",
+      "typeWildcard": "Wildcard (* နှင့် ?)",
+      "pattern": "ပုံစံ",
+      "flags": "Flag များ (i, m, s, u)",
+      "sampleText": "ပုံစံကို စမ်းသပ်ရန် နမူနာစာသား",
+      "test": "စမ်းသပ်ရန်",
+      "testMatches": "ကိုက်ညီမှု {count} ခု",
+      "testFailed": "ပုံစံကို ငြင်းပယ်ခဲ့သည်: {message}",
+      "add": "ပုံစံ ထည့်ရန်",
+      "saved": "သိမ်းဆည်းပြီး",
+      "saveFailed": "သိမ်းဆည်း၍ မရပါ: {message}",
+      "statsTitle": "ပြန်စတင်ပြီးနောက် တွေ့ရှိမှုများ",
+      "statsEmpty": "တွေ့ရှိမှု မရှိသေးပါ။",
+      "statsRequest": "တောင်းဆိုမှုများ"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

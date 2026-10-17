@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Poskytovateľ (všetky účty zdieľajú jeden istič)",
     "resilienceTokenRefreshScopeConnection": "Pripojenie (každý účet má vlastný vypínač)",
     "resilienceTokenRefreshThreshold": "Zlyhania pred pozastavením",
-    "resilienceTokenRefreshCooldown": "Pauza po spustení"
+    "resilienceTokenRefreshCooldown": "Pauza po spustení",
+    "piiMasking": {
+      "title": "Maskovanie osobných údajov",
+      "description": "Vyberte, ktoré druhy osobných údajov sa maskujú, a pridajte vlastné vzory. Maskovanie zostáva vypnuté, kým nezapnete príznaky funkcií zobrazené nižšie.",
+      "requestFlag": "Maskovanie požiadaviek",
+      "responseFlag": "Čistenie odpovedí",
+      "templates": "Šablóny",
+      "template": {
+        "minimal": "Minimálna",
+        "standard": "Štandardná",
+        "financial": "Finančná",
+        "brazilian": "Brazílska",
+        "usa": "USA",
+        "full": "Úplná"
+      },
+      "builtinTypes": "Vstavané typy",
+      "types": {
+        "email": "E-mailové adresy",
+        "phone_us": "Telefónne čísla v USA",
+        "phone_br": "Brazílske telefónne čísla",
+        "ssn": "Čísla sociálneho zabezpečenia USA",
+        "credit_card": "Čísla platobných kariet",
+        "cpf": "CPF (brazílske daňové číslo)",
+        "cnpj": "CNPJ (brazílske číslo firmy)",
+        "ip_address": "Adresy IPv4",
+        "ipv6_address": "Adresy IPv6",
+        "aws_key": "Prístupové kľúče AWS",
+        "api_key_generic": "Kľúče API a tokeny"
+      },
+      "customPatterns": "Vlastné vzory",
+      "customPatternsDesc": "Zhody sa nahrádzajú za [CUSTOM_REDACTED]. Najviac {max} vzorov. Vzory s rizikom katastrofického backtrackingu sa odmietajú.",
+      "typeRegex": "Regulárny výraz",
+      "typeWildcard": "Zástupný znak (* a ?)",
+      "pattern": "Vzor",
+      "flags": "Príznaky (i, m, s, u)",
+      "sampleText": "Ukážkový text na otestovanie vzoru",
+      "test": "Otestovať",
+      "testMatches": "Počet zhôd: {count}",
+      "testFailed": "Vzor odmietnutý: {message}",
+      "add": "Pridať vzor",
+      "saved": "Uložené",
+      "saveFailed": "Uloženie zlyhalo: {message}",
+      "statsTitle": "Detekcie od reštartu",
+      "statsEmpty": "Zatiaľ žiadne detekcie.",
+      "statsRequest": "Požiadavky"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

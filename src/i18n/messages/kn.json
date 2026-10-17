@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "ಪೂರೈಕೆದಾರ (ಎಲ್ಲಾ ಖಾತೆಗಳು ಒಂದೇ ಬ್ರೇಕರ್ ಅನ್ನು ಹಂಚಿಕೊಳ್ಳುತ್ತವೆ)",
     "resilienceTokenRefreshScopeConnection": "ಸಂಪರ್ಕ (ಪ್ರತಿ ಖಾತೆಗೂ ತನ್ನದೇ ಆದ ಬ್ರೇಕರ್ ಇದೆ)",
     "resilienceTokenRefreshThreshold": "ವಿರಾಮ ತೆಗೆದುಕೊಳ್ಳುವ ಮೊದಲು ವಿಫಲತೆಗಳು",
-    "resilienceTokenRefreshCooldown": "ಟ್ರಿಪ್ ಆದ ನಂತರ ವಿರಾಮ"
+    "resilienceTokenRefreshCooldown": "ಟ್ರಿಪ್ ಆದ ನಂತರ ವಿರಾಮ",
+    "piiMasking": {
+      "title": "ವೈಯಕ್ತಿಕ ಡೇಟಾ ಮರೆಮಾಚುವಿಕೆ",
+      "description": "ಯಾವ ರೀತಿಯ ವೈಯಕ್ತಿಕ ಡೇಟಾವನ್ನು ಮರೆಮಾಚಬೇಕು ಎಂಬುದನ್ನು ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ನಿಮ್ಮದೇ ಮಾದರಿಗಳನ್ನು ಸೇರಿಸಿ. ಕೆಳಗೆ ತೋರಿಸಿರುವ ಫೀಚರ್ ಫ್ಲ್ಯಾಗ್‌ಗಳನ್ನು ಆನ್ ಮಾಡುವವರೆಗೆ ಮರೆಮಾಚುವಿಕೆ ಆಫ್ ಆಗಿರುತ್ತದೆ.",
+      "requestFlag": "ವಿನಂತಿ ಮರೆಮಾಚುವಿಕೆ",
+      "responseFlag": "ಪ್ರತಿಕ್ರಿಯೆ ಶುದ್ಧೀಕರಣ",
+      "templates": "ಟೆಂಪ್ಲೇಟ್‌ಗಳು",
+      "template": {
+        "minimal": "ಕನಿಷ್ಠ",
+        "standard": "ಪ್ರಮಾಣಿತ",
+        "financial": "ಹಣಕಾಸು",
+        "brazilian": "ಬ್ರೆಜಿಲಿಯನ್",
+        "usa": "ಅಮೆರಿಕ",
+        "full": "ಪೂರ್ಣ"
+      },
+      "builtinTypes": "ಅಂತರ್ನಿರ್ಮಿತ ಪ್ರಕಾರಗಳು",
+      "types": {
+        "email": "ಇಮೇಲ್ ವಿಳಾಸಗಳು",
+        "phone_us": "ಅಮೆರಿಕದ ಫೋನ್ ಸಂಖ್ಯೆಗಳು",
+        "phone_br": "ಬ್ರೆಜಿಲ್ ಫೋನ್ ಸಂಖ್ಯೆಗಳು",
+        "ssn": "ಅಮೆರಿಕದ ಸಾಮಾಜಿಕ ಭದ್ರತಾ ಸಂಖ್ಯೆಗಳು",
+        "credit_card": "ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್ ಸಂಖ್ಯೆಗಳು",
+        "cpf": "CPF (ಬ್ರೆಜಿಲ್ ತೆರಿಗೆದಾರರ ID)",
+        "cnpj": "CNPJ (ಬ್ರೆಜಿಲ್ ಕಂಪನಿ ID)",
+        "ip_address": "IPv4 ವಿಳಾಸಗಳು",
+        "ipv6_address": "IPv6 ವಿಳಾಸಗಳು",
+        "aws_key": "AWS ಪ್ರವೇಶ ಕೀಗಳು",
+        "api_key_generic": "API ಕೀಗಳು ಮತ್ತು ಟೋಕನ್‌ಗಳು"
+      },
+      "customPatterns": "ಕಸ್ಟಮ್ ಮಾದರಿಗಳು",
+      "customPatternsDesc": "ಹೊಂದಾಣಿಕೆಗಳನ್ನು [CUSTOM_REDACTED] ನಿಂದ ಬದಲಾಯಿಸಲಾಗುತ್ತದೆ. ಗರಿಷ್ಠ {max} ಮಾದರಿಗಳು. ವಿನಾಶಕಾರಿ ಬ್ಯಾಕ್‌ಟ್ರ್ಯಾಕಿಂಗ್ ಅಪಾಯವಿರುವ ಮಾದರಿಗಳನ್ನು ತಿರಸ್ಕರಿಸಲಾಗುತ್ತದೆ.",
+      "typeRegex": "ರೆಗ್ಯುಲರ್ ಎಕ್ಸ್‌ಪ್ರೆಶನ್",
+      "typeWildcard": "ವೈಲ್ಡ್‌ಕಾರ್ಡ್ (* ಮತ್ತು ?)",
+      "pattern": "ಮಾದರಿ",
+      "flags": "ಫ್ಲ್ಯಾಗ್‌ಗಳು (i, m, s, u)",
+      "sampleText": "ಮಾದರಿಯನ್ನು ಪರೀಕ್ಷಿಸಲು ಉದಾಹರಣೆ ಪಠ್ಯ",
+      "test": "ಪರೀಕ್ಷಿಸಿ",
+      "testMatches": "{count} ಹೊಂದಾಣಿಕೆಗಳು",
+      "testFailed": "ಮಾದರಿ ತಿರಸ್ಕೃತ: {message}",
+      "add": "ಮಾದರಿ ಸೇರಿಸಿ",
+      "saved": "ಉಳಿಸಲಾಗಿದೆ",
+      "saveFailed": "ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: {message}",
+      "statsTitle": "ಮರುಪ್ರಾರಂಭದ ನಂತರದ ಪತ್ತೆಗಳು",
+      "statsEmpty": "ಇನ್ನೂ ಯಾವುದೇ ಪತ್ತೆ ಇಲ್ಲ.",
+      "statsRequest": "ವಿನಂತಿಗಳು"
+    }
   },
   "contextRtk": {
     "title": "RTK ಎಂಜಿನ್",

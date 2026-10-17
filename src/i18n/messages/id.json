@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Penyedia (semua akun berbagi satu pemutus)",
     "resilienceTokenRefreshScopeConnection": "Koneksi (setiap akun memiliki pemutusnya sendiri)",
     "resilienceTokenRefreshThreshold": "Kegagalan sebelum dijeda",
-    "resilienceTokenRefreshCooldown": "Jeda setelah terpicu"
+    "resilienceTokenRefreshCooldown": "Jeda setelah terpicu",
+    "piiMasking": {
+      "title": "Penyamaran data pribadi",
+      "description": "Pilih jenis data pribadi yang disamarkan dan tambahkan pola Anda sendiri. Penyamaran tetap nonaktif sampai Anda mengaktifkan feature flag yang ditampilkan di bawah.",
+      "requestFlag": "Penyamaran permintaan",
+      "responseFlag": "Sanitasi respons",
+      "templates": "Templat",
+      "template": {
+        "minimal": "Minimal",
+        "standard": "Standar",
+        "financial": "Keuangan",
+        "brazilian": "Brasil",
+        "usa": "AS",
+        "full": "Lengkap"
+      },
+      "builtinTypes": "Jenis bawaan",
+      "types": {
+        "email": "Alamat email",
+        "phone_us": "Nomor telepon AS",
+        "phone_br": "Nomor telepon Brasil",
+        "ssn": "Nomor Jaminan Sosial AS",
+        "credit_card": "Nomor kartu kredit",
+        "cpf": "CPF (ID wajib pajak Brasil)",
+        "cnpj": "CNPJ (ID perusahaan Brasil)",
+        "ip_address": "Alamat IPv4",
+        "ipv6_address": "Alamat IPv6",
+        "aws_key": "Kunci akses AWS",
+        "api_key_generic": "Kunci API dan token"
+      },
+      "customPatterns": "Pola kustom",
+      "customPatternsDesc": "Kecocokan diganti dengan [CUSTOM_REDACTED]. Hingga {max} pola. Pola yang berisiko backtracking katastrofik akan ditolak.",
+      "typeRegex": "Ekspresi reguler",
+      "typeWildcard": "Karakter pengganti (* dan ?)",
+      "pattern": "Pola",
+      "flags": "Flag (i, m, s, u)",
+      "sampleText": "Teks contoh untuk menguji pola",
+      "test": "Uji",
+      "testMatches": "{count} kecocokan",
+      "testFailed": "Pola ditolak: {message}",
+      "add": "Tambah pola",
+      "saved": "Tersimpan",
+      "saveFailed": "Gagal menyimpan: {message}",
+      "statsTitle": "Deteksi sejak dimulai ulang",
+      "statsEmpty": "Belum ada deteksi.",
+      "statsRequest": "Permintaan"
+    }
   },
   "contextRtk": {
     "title": "Mesin RTK",

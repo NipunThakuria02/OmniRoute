@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Nhà cung cấp (tất cả tài khoản dùng chung một cầu chì)",
     "resilienceTokenRefreshScopeConnection": "Kết nối (mỗi tài khoản có cầu chì riêng)",
     "resilienceTokenRefreshThreshold": "Lỗi trước khi tạm dừng",
-    "resilienceTokenRefreshCooldown": "Tạm dừng sau khi kích hoạt"
+    "resilienceTokenRefreshCooldown": "Tạm dừng sau khi kích hoạt",
+    "piiMasking": {
+      "title": "Che giấu dữ liệu cá nhân",
+      "description": "Chọn loại dữ liệu cá nhân nào sẽ được che giấu và thêm mẫu của riêng bạn. Việc che giấu vẫn tắt cho đến khi bạn bật các cờ tính năng hiển thị bên dưới.",
+      "requestFlag": "Che giấu yêu cầu",
+      "responseFlag": "Làm sạch phản hồi",
+      "templates": "Mẫu có sẵn",
+      "template": {
+        "minimal": "Tối thiểu",
+        "standard": "Tiêu chuẩn",
+        "financial": "Tài chính",
+        "brazilian": "Brazil",
+        "usa": "Hoa Kỳ",
+        "full": "Đầy đủ"
+      },
+      "builtinTypes": "Loại tích hợp sẵn",
+      "types": {
+        "email": "Địa chỉ email",
+        "phone_us": "Số điện thoại Hoa Kỳ",
+        "phone_br": "Số điện thoại Brazil",
+        "ssn": "Số an sinh xã hội Hoa Kỳ",
+        "credit_card": "Số thẻ tín dụng",
+        "cpf": "CPF (mã số thuế cá nhân Brazil)",
+        "cnpj": "CNPJ (mã số doanh nghiệp Brazil)",
+        "ip_address": "Địa chỉ IPv4",
+        "ipv6_address": "Địa chỉ IPv6",
+        "aws_key": "Khóa truy cập AWS",
+        "api_key_generic": "Khóa API và token"
+      },
+      "customPatterns": "Mẫu tùy chỉnh",
+      "customPatternsDesc": "Các kết quả khớp được thay bằng [CUSTOM_REDACTED]. Tối đa {max} mẫu. Mẫu có nguy cơ quay lui thảm họa sẽ bị từ chối.",
+      "typeRegex": "Biểu thức chính quy",
+      "typeWildcard": "Ký tự đại diện (* và ?)",
+      "pattern": "Mẫu",
+      "flags": "Cờ (i, m, s, u)",
+      "sampleText": "Văn bản mẫu để thử mẫu",
+      "test": "Thử",
+      "testMatches": "{count} kết quả khớp",
+      "testFailed": "Mẫu bị từ chối: {message}",
+      "add": "Thêm mẫu",
+      "saved": "Đã lưu",
+      "saveFailed": "Không thể lưu: {message}",
+      "statsTitle": "Phát hiện kể từ khi khởi động lại",
+      "statsEmpty": "Chưa có phát hiện nào.",
+      "statsRequest": "Yêu cầu"
+    }
   },
   "contextRtk": {
     "title": "Công cụ RTK",

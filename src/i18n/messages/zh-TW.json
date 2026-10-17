@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "提供者（所有帳戶共用一個斷路器）",
     "resilienceTokenRefreshScopeConnection": "連線（每個帳戶各有自己的斷路器）",
     "resilienceTokenRefreshThreshold": "暫停前的失敗次數",
-    "resilienceTokenRefreshCooldown": "觸發後暫停"
+    "resilienceTokenRefreshCooldown": "觸發後暫停",
+    "piiMasking": {
+      "title": "個人資料遮蔽",
+      "description": "選擇要遮蔽的個人資料類型，並新增你自己的模式。在你開啟下方顯示的功能旗標之前，遮蔽會保持關閉。",
+      "requestFlag": "請求遮蔽",
+      "responseFlag": "回應清理",
+      "templates": "範本",
+      "template": {
+        "minimal": "最小",
+        "standard": "標準",
+        "financial": "金融",
+        "brazilian": "巴西",
+        "usa": "美國",
+        "full": "完整"
+      },
+      "builtinTypes": "內建類型",
+      "types": {
+        "email": "電子郵件地址",
+        "phone_us": "美國電話號碼",
+        "phone_br": "巴西電話號碼",
+        "ssn": "美國社會安全號碼",
+        "credit_card": "信用卡號碼",
+        "cpf": "CPF（巴西個人稅號）",
+        "cnpj": "CNPJ（巴西公司稅號）",
+        "ip_address": "IPv4 位址",
+        "ipv6_address": "IPv6 位址",
+        "aws_key": "AWS 存取金鑰",
+        "api_key_generic": "API 金鑰與權杖"
+      },
+      "customPatterns": "自訂模式",
+      "customPatternsDesc": "符合項目會被替換為 [CUSTOM_REDACTED]。最多 {max} 個模式。具有災難性回溯風險的模式會被拒絕。",
+      "typeRegex": "正規表示式",
+      "typeWildcard": "萬用字元（* 和 ?）",
+      "pattern": "模式",
+      "flags": "旗標（i, m, s, u）",
+      "sampleText": "用來測試模式的範例文字",
+      "test": "測試",
+      "testMatches": "{count} 個符合",
+      "testFailed": "模式遭拒：{message}",
+      "add": "新增模式",
+      "saved": "已儲存",
+      "saveFailed": "無法儲存：{message}",
+      "statsTitle": "自重新啟動以來的偵測",
+      "statsEmpty": "尚無偵測。",
+      "statsRequest": "請求"
+    }
   },
   "contextRtk": {
     "title": "RTK 引擎",

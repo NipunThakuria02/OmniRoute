@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Fornecedor (todas as contas partilham um único disjuntor)",
     "resilienceTokenRefreshScopeConnection": "Ligação (cada conta tem o seu próprio disjuntor)",
     "resilienceTokenRefreshThreshold": "Falhas antes de pausar",
-    "resilienceTokenRefreshCooldown": "Pausa após ativação"
+    "resilienceTokenRefreshCooldown": "Pausa após ativação",
+    "piiMasking": {
+      "title": "Mascaramento de PII",
+      "description": "Escolha que tipos de dados pessoais são mascarados e adicione os seus próprios padrões. O mascaramento fica desligado até ativar as feature flags indicadas abaixo.",
+      "requestFlag": "Mascaramento de pedidos",
+      "responseFlag": "Sanitização de respostas",
+      "templates": "Modelos",
+      "template": {
+        "minimal": "Mínimo",
+        "standard": "Padrão",
+        "financial": "Financeiro",
+        "brazilian": "Brasileiro",
+        "usa": "EUA",
+        "full": "Completo"
+      },
+      "builtinTypes": "Tipos incorporados",
+      "types": {
+        "email": "Endereços de e-mail",
+        "phone_us": "Números de telefone dos EUA",
+        "phone_br": "Números de telefone brasileiros",
+        "ssn": "Números de Segurança Social dos EUA",
+        "credit_card": "Números de cartão de crédito",
+        "cpf": "CPF (contribuinte brasileiro)",
+        "cnpj": "CNPJ (empresa brasileira)",
+        "ip_address": "Endereços IPv4",
+        "ipv6_address": "Endereços IPv6",
+        "aws_key": "Chaves de acesso AWS",
+        "api_key_generic": "Chaves de API e tokens"
+      },
+      "customPatterns": "Padrões personalizados",
+      "customPatternsDesc": "As correspondências são substituídas por [CUSTOM_REDACTED]. Até {max} padrões. Padrões com risco de backtracking catastrófico são recusados.",
+      "typeRegex": "Expressão regular",
+      "typeWildcard": "Caráter universal (* e ?)",
+      "pattern": "Padrão",
+      "flags": "Flags (i, m, s, u)",
+      "sampleText": "Texto de exemplo para testar o padrão",
+      "test": "Testar",
+      "testMatches": "{count} correspondências",
+      "testFailed": "Padrão recusado: {message}",
+      "add": "Adicionar padrão",
+      "saved": "Guardado",
+      "saveFailed": "Não foi possível guardar: {message}",
+      "statsTitle": "Deteções desde o reinício",
+      "statsEmpty": "Ainda sem deteções.",
+      "statsRequest": "Pedidos"
+    }
   },
   "contextRtk": {
     "title": "Motor RTK",

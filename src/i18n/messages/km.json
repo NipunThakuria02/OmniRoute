@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "អ្នកផ្គត់ផ្គង់ (គណនីទាំងអស់ចែករំលែកប៊្រីកឃើរតែមួយ)",
     "resilienceTokenRefreshScopeConnection": "ការតភ្ជាប់ (គណនីនីមួយៗមានឧបករណ៍ផ្ទុះផ្ទាល់ខ្លួន)",
     "resilienceTokenRefreshThreshold": "ការបរាជ័យមុនពេលផ្អាក",
-    "resilienceTokenRefreshCooldown": "ផ្អាកបន្ទាប់ពីដំណើរការ"
+    "resilienceTokenRefreshCooldown": "ផ្អាកបន្ទាប់ពីដំណើរការ",
+    "piiMasking": {
+      "title": "ការលាក់ទិន្នន័យផ្ទាល់ខ្លួន",
+      "description": "ជ្រើសរើសប្រភេទទិន្នន័យផ្ទាល់ខ្លួនដែលត្រូវលាក់ ហើយបន្ថែមលំនាំផ្ទាល់ខ្លួនរបស់អ្នក។ ការលាក់នៅតែបិទ រហូតដល់អ្នកបើកទង់មុខងារដែលបង្ហាញខាងក្រោម។",
+      "requestFlag": "ការលាក់សំណើ",
+      "responseFlag": "ការសម្អាតការឆ្លើយតប",
+      "templates": "គំរូ",
+      "template": {
+        "minimal": "អប្បបរមា",
+        "standard": "ស្តង់ដារ",
+        "financial": "ហិរញ្ញវត្ថុ",
+        "brazilian": "ប្រេស៊ីល",
+        "usa": "សហរដ្ឋអាមេរិក",
+        "full": "ពេញលេញ"
+      },
+      "builtinTypes": "ប្រភេទដែលមានស្រាប់",
+      "types": {
+        "email": "អាសយដ្ឋានអ៊ីមែល",
+        "phone_us": "លេខទូរស័ព្ទសហរដ្ឋអាមេរិក",
+        "phone_br": "លេខទូរស័ព្ទប្រេស៊ីល",
+        "ssn": "លេខសន្តិសុខសង្គមសហរដ្ឋអាមេរិក",
+        "credit_card": "លេខកាតឥណទាន",
+        "cpf": "CPF (លេខសម្គាល់អ្នកបង់ពន្ធប្រេស៊ីល)",
+        "cnpj": "CNPJ (លេខសម្គាល់ក្រុមហ៊ុនប្រេស៊ីល)",
+        "ip_address": "អាសយដ្ឋាន IPv4",
+        "ipv6_address": "អាសយដ្ឋាន IPv6",
+        "aws_key": "កូនសោចូលប្រើ AWS",
+        "api_key_generic": "កូនសោ API និងថូខឹន"
+      },
+      "customPatterns": "លំនាំផ្ទាល់ខ្លួន",
+      "customPatternsDesc": "ការផ្គូផ្គងត្រូវបានជំនួសដោយ [CUSTOM_REDACTED]។ រហូតដល់ {max} លំនាំ។ លំនាំដែលមានហានិភ័យនៃការត្រឡប់ក្រោយមហន្តរាយត្រូវបានបដិសេធ។",
+      "typeRegex": "កន្សោមធម្មតា",
+      "typeWildcard": "តួអក្សរជំនួស (* និង ?)",
+      "pattern": "លំនាំ",
+      "flags": "ទង់ (i, m, s, u)",
+      "sampleText": "អត្ថបទគំរូសម្រាប់សាកល្បងលំនាំ",
+      "test": "សាកល្បង",
+      "testMatches": "ការផ្គូផ្គង {count}",
+      "testFailed": "លំនាំត្រូវបានបដិសេធ៖ {message}",
+      "add": "បន្ថែមលំនាំ",
+      "saved": "បានរក្សាទុក",
+      "saveFailed": "មិនអាចរក្សាទុកបានទេ៖ {message}",
+      "statsTitle": "ការរកឃើញតាំងពីចាប់ផ្ដើមឡើងវិញ",
+      "statsEmpty": "មិនទាន់មានការរកឃើញទេ។",
+      "statsRequest": "សំណើ"
+    }
   },
   "contextRtk": {
     "title": "ម៉ាស៊ីន RTK",

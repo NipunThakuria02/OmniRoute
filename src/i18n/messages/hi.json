@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "प्रदाता (सभी खाते एक ही ब्रेकर साझा करते हैं)",
     "resilienceTokenRefreshScopeConnection": "कनेक्शन (प्रत्येक खाते का अपना ब्रेकर है)",
     "resilienceTokenRefreshThreshold": "रोकने से पहले विफलताएँ",
-    "resilienceTokenRefreshCooldown": "ट्रिप होने के बाद विराम"
+    "resilienceTokenRefreshCooldown": "ट्रिप होने के बाद विराम",
+    "piiMasking": {
+      "title": "व्यक्तिगत डेटा मास्किंग",
+      "description": "चुनें कि किस प्रकार का व्यक्तिगत डेटा मास्क किया जाए और अपने पैटर्न जोड़ें। जब तक आप नीचे दिखाए गए फ़ीचर फ़्लैग चालू नहीं करते, मास्किंग बंद रहती है।",
+      "requestFlag": "अनुरोध मास्किंग",
+      "responseFlag": "प्रतिक्रिया सफ़ाई",
+      "templates": "टेम्पलेट",
+      "template": {
+        "minimal": "न्यूनतम",
+        "standard": "मानक",
+        "financial": "वित्तीय",
+        "brazilian": "ब्राज़ीलियाई",
+        "usa": "अमेरिका",
+        "full": "पूर्ण"
+      },
+      "builtinTypes": "अंतर्निहित प्रकार",
+      "types": {
+        "email": "ईमेल पते",
+        "phone_us": "अमेरिकी फ़ोन नंबर",
+        "phone_br": "ब्राज़ीलियाई फ़ोन नंबर",
+        "ssn": "अमेरिकी सामाजिक सुरक्षा नंबर",
+        "credit_card": "क्रेडिट कार्ड नंबर",
+        "cpf": "CPF (ब्राज़ीलियाई करदाता आईडी)",
+        "cnpj": "CNPJ (ब्राज़ीलियाई कंपनी आईडी)",
+        "ip_address": "IPv4 पते",
+        "ipv6_address": "IPv6 पते",
+        "aws_key": "AWS एक्सेस कुंजियाँ",
+        "api_key_generic": "API कुंजियाँ और टोकन"
+      },
+      "customPatterns": "कस्टम पैटर्न",
+      "customPatternsDesc": "मिलान [CUSTOM_REDACTED] से बदल दिए जाते हैं। अधिकतम {max} पैटर्न। विनाशकारी बैकट्रैकिंग के जोखिम वाले पैटर्न अस्वीकार किए जाते हैं।",
+      "typeRegex": "रेगुलर एक्सप्रेशन",
+      "typeWildcard": "वाइल्डकार्ड (* और ?)",
+      "pattern": "पैटर्न",
+      "flags": "फ़्लैग (i, m, s, u)",
+      "sampleText": "पैटर्न जाँचने के लिए नमूना पाठ",
+      "test": "जाँचें",
+      "testMatches": "{count} मिलान",
+      "testFailed": "पैटर्न अस्वीकृत: {message}",
+      "add": "पैटर्न जोड़ें",
+      "saved": "सहेजा गया",
+      "saveFailed": "सहेजा नहीं जा सका: {message}",
+      "statsTitle": "पुनरारंभ के बाद से पहचान",
+      "statsEmpty": "अभी तक कोई पहचान नहीं।",
+      "statsRequest": "अनुरोध"
+    }
   },
   "contextRtk": {
     "title": "RTK इंजन",

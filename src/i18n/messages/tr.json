@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Sağlayıcı (tüm hesaplar tek bir kesiciyi paylaşır)",
     "resilienceTokenRefreshScopeConnection": "Bağlantı (her hesabın kendi kesici devresi vardır)",
     "resilienceTokenRefreshThreshold": "Duraklatmadan önceki hatalar",
-    "resilienceTokenRefreshCooldown": "Tetiklendikten sonra duraklat"
+    "resilienceTokenRefreshCooldown": "Tetiklendikten sonra duraklat",
+    "piiMasking": {
+      "title": "Kişisel veri maskeleme",
+      "description": "Hangi kişisel veri türlerinin maskeleneceğini seçin ve kendi desenlerinizi ekleyin. Aşağıda gösterilen özellik bayraklarını açana kadar maskeleme kapalı kalır.",
+      "requestFlag": "İstek maskeleme",
+      "responseFlag": "Yanıt temizleme",
+      "templates": "Şablonlar",
+      "template": {
+        "minimal": "Asgari",
+        "standard": "Standart",
+        "financial": "Finansal",
+        "brazilian": "Brezilya",
+        "usa": "ABD",
+        "full": "Tam"
+      },
+      "builtinTypes": "Yerleşik türler",
+      "types": {
+        "email": "E-posta adresleri",
+        "phone_us": "ABD telefon numaraları",
+        "phone_br": "Brezilya telefon numaraları",
+        "ssn": "ABD Sosyal Güvenlik numaraları",
+        "credit_card": "Kredi kartı numaraları",
+        "cpf": "CPF (Brezilya vergi kimlik no.)",
+        "cnpj": "CNPJ (Brezilya şirket kimlik no.)",
+        "ip_address": "IPv4 adresleri",
+        "ipv6_address": "IPv6 adresleri",
+        "aws_key": "AWS erişim anahtarları",
+        "api_key_generic": "API anahtarları ve belirteçler"
+      },
+      "customPatterns": "Özel desenler",
+      "customPatternsDesc": "Eşleşmeler [CUSTOM_REDACTED] ile değiştirilir. En fazla {max} desen. Felaket düzeyinde geri izleme riski taşıyan desenler reddedilir.",
+      "typeRegex": "Düzenli ifade",
+      "typeWildcard": "Joker karakter (* ve ?)",
+      "pattern": "Desen",
+      "flags": "Bayraklar (i, m, s, u)",
+      "sampleText": "Deseni test etmek için örnek metin",
+      "test": "Test et",
+      "testMatches": "{count} eşleşme",
+      "testFailed": "Desen reddedildi: {message}",
+      "add": "Desen ekle",
+      "saved": "Kaydedildi",
+      "saveFailed": "Kaydedilemedi: {message}",
+      "statsTitle": "Yeniden başlatmadan bu yana tespitler",
+      "statsEmpty": "Henüz tespit yok.",
+      "statsRequest": "İstekler"
+    }
   },
   "contextRtk": {
     "title": "RTK Motoru",

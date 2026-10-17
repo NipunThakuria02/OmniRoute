@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "فراہم کنندہ (تمام اکاؤنٹس ایک ہی بریکر کا اشتراک کرتے ہیں)",
     "resilienceTokenRefreshScopeConnection": "کنکشن (ہر اکاؤنٹ کا اپنا بریکر ہوتا ہے)",
     "resilienceTokenRefreshThreshold": "روکنے سے پہلے ناکامیاں",
-    "resilienceTokenRefreshCooldown": "ٹرپ ہونے کے بعد وقفہ"
+    "resilienceTokenRefreshCooldown": "ٹرپ ہونے کے بعد وقفہ",
+    "piiMasking": {
+      "title": "ذاتی ڈیٹا کی پردہ پوشی",
+      "description": "منتخب کریں کہ کس قسم کا ذاتی ڈیٹا چھپایا جائے اور اپنے پیٹرن شامل کریں۔ پردہ پوشی تب تک بند رہتی ہے جب تک آپ نیچے دکھائے گئے فیچر فلیگز آن نہ کریں۔",
+      "requestFlag": "درخواستوں کی پردہ پوشی",
+      "responseFlag": "جوابات کی صفائی",
+      "templates": "سانچے",
+      "template": {
+        "minimal": "کم سے کم",
+        "standard": "معیاری",
+        "financial": "مالیاتی",
+        "brazilian": "برازیلی",
+        "usa": "امریکہ",
+        "full": "مکمل"
+      },
+      "builtinTypes": "بلٹ اِن اقسام",
+      "types": {
+        "email": "ای میل پتے",
+        "phone_us": "امریکی فون نمبر",
+        "phone_br": "برازیلی فون نمبر",
+        "ssn": "امریکی سوشل سیکیورٹی نمبر",
+        "credit_card": "کریڈٹ کارڈ نمبر",
+        "cpf": "CPF (برازیلی ٹیکس دہندہ شناخت)",
+        "cnpj": "CNPJ (برازیلی کمپنی شناخت)",
+        "ip_address": "IPv4 پتے",
+        "ipv6_address": "IPv6 پتے",
+        "aws_key": "AWS رسائی کیز",
+        "api_key_generic": "API کیز اور ٹوکنز"
+      },
+      "customPatterns": "حسب ضرورت پیٹرن",
+      "customPatternsDesc": "مماثلتیں [CUSTOM_REDACTED] سے بدل دی جاتی ہیں۔ زیادہ سے زیادہ {max} پیٹرن۔ تباہ کن بیک ٹریکنگ کے خطرے والے پیٹرن مسترد کیے جاتے ہیں۔",
+      "typeRegex": "ریگولر ایکسپریشن",
+      "typeWildcard": "وائلڈ کارڈ (* اور ?)",
+      "pattern": "پیٹرن",
+      "flags": "فلیگز (i, m, s, u)",
+      "sampleText": "پیٹرن جانچنے کے لیے نمونہ متن",
+      "test": "جانچیں",
+      "testMatches": "مماثلتیں: {count}",
+      "testFailed": "پیٹرن مسترد: {message}",
+      "add": "پیٹرن شامل کریں",
+      "saved": "محفوظ ہو گیا",
+      "saveFailed": "محفوظ نہیں ہو سکا: {message}",
+      "statsTitle": "دوبارہ شروع ہونے کے بعد سے نشاندہیاں",
+      "statsEmpty": "ابھی تک کوئی نشاندہی نہیں۔",
+      "statsRequest": "درخواستیں"
+    }
   },
   "contextRtk": {
     "title": "RTK انجن",

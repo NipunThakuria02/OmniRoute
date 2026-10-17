@@ -62,6 +62,7 @@ import { getGitHubUsage, formatGitHubQuotaSnapshot, inferGitHubPlanName } from "
 import { getCrofUsage } from "./usage/crof.ts";
 import { getClinepassUsage } from "./usage/clinepass.ts";
 import { getNanoGptUsage } from "./usage/nanogpt.ts";
+import { getNanUsage } from "./usage/nan.ts";
 import { getApmixUsage } from "./usage/apmix.ts";
 import { getQoderUsage, parseQoderUserStatusUsage } from "./usage/qoder.ts";
 // Re-exported para o teste qoder-usage-quota (importa parseQoderUserStatusUsage de services/usage).
@@ -212,6 +213,8 @@ export async function getUsageForProvider(
       return await getQwenTokenPlanUsage(id || "", apiKey || "", providerSpecificData);
     case "nanogpt":
       return await getNanoGptUsage(apiKey || "");
+    case "nan":
+      return await getNanUsage(apiKey || "");
     case "apmix":
       return await getApmixUsage(apiKey || "");
     case "deepseek":

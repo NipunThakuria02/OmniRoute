@@ -987,8 +987,13 @@ async function postHandler(request: Request, _context?: unknown) {
     );
   }
 
-  // Antigravity Gemini Image-to-Image editing support
-  if (providerConfig?.format === "gemini-image" || parsed.provider === "antigravity") {
+  // Antigravity Gemini Image-to-Image editing support; Muse Image (muse-code) edits ride
+  // the same handleImageGeneration path, which posts imageBytes to Meta's /images/edits.
+  if (
+    providerConfig?.format === "gemini-image" ||
+    providerConfig?.format === "muse-image" ||
+    parsed.provider === "antigravity"
+  ) {
     const credentials = await getProviderCredentialsWithQuotaPreflight(
       parsed.provider,
       null,

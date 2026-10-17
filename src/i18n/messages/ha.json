@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Mai bayarwa (duk asusuna raba ɗaya mai katsewa)",
     "resilienceTokenRefreshScopeConnection": "Muhuji (kowane asusu na da na'sa na musu)",
     "resilienceTokenRefreshThreshold": "Kuskuren kafin tsayawa",
-    "resilienceTokenRefreshCooldown": "Huta bayan kuskuro"
+    "resilienceTokenRefreshCooldown": "Huta bayan kuskuro",
+    "piiMasking": {
+      "title": "Ɓoye bayanan sirri",
+      "description": "Zaɓi irin bayanan sirri da za a ɓoye kuma ka ƙara naka tsarin. Ɓoyewa za ta kasance a kashe har sai ka kunna tutocin fasali da aka nuna a ƙasa.",
+      "requestFlag": "Ɓoye buƙatu",
+      "responseFlag": "Tsabtace amsoshi",
+      "templates": "Samfura",
+      "template": {
+        "minimal": "Mafi ƙaranci",
+        "standard": "Na yau da kullum",
+        "financial": "Na kuɗi",
+        "brazilian": "Na Brazil",
+        "usa": "Amurka",
+        "full": "Cikakke"
+      },
+      "builtinTypes": "Nau'ikan da aka gina",
+      "types": {
+        "email": "Adiresoshin imel",
+        "phone_us": "Lambobin wayar Amurka",
+        "phone_br": "Lambobin wayar Brazil",
+        "ssn": "Lambobin Tsaron Jama'a na Amurka",
+        "credit_card": "Lambobin katin bashi",
+        "cpf": "CPF (lambar mai biyan haraji ta Brazil)",
+        "cnpj": "CNPJ (lambar kamfani ta Brazil)",
+        "ip_address": "Adiresoshin IPv4",
+        "ipv6_address": "Adiresoshin IPv6",
+        "aws_key": "Maɓallan shiga na AWS",
+        "api_key_generic": "Maɓallan API da alamomi"
+      },
+      "customPatterns": "Tsare-tsaren al'ada",
+      "customPatternsDesc": "Ana maye gurbin abubuwan da suka dace da [CUSTOM_REDACTED]. Har zuwa tsari {max}. Ana ƙin tsare-tsaren da ke da haɗarin koma-baya mai muni.",
+      "typeRegex": "Bayanin tsari na yau da kullum",
+      "typeWildcard": "Alamar maye (* da ?)",
+      "pattern": "Tsari",
+      "flags": "Tutoci (i, m, s, u)",
+      "sampleText": "Rubutun misali don gwada tsarin",
+      "test": "Gwada",
+      "testMatches": "Daidaito: {count}",
+      "testFailed": "An ƙi tsarin: {message}",
+      "add": "Ƙara tsari",
+      "saved": "An adana",
+      "saveFailed": "Ba a iya adanawa ba: {message}",
+      "statsTitle": "Ganowa tun sake farawa",
+      "statsEmpty": "Babu ganowa tukuna.",
+      "statsRequest": "Buƙatu"
+    }
   },
   "contextRtk": {
     "title": "Injin RTK",

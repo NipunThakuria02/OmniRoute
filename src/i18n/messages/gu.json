@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "પ્રદાતા (બધા ખાતાઓ એક જ બ્રેકર શેર કરે છે)",
     "resilienceTokenRefreshScopeConnection": "કનેક્શન (દરેક એકાઉન્ટનું પોતાનું બ્રેકર છે)",
     "resilienceTokenRefreshThreshold": "થંભાવતા પહેલાં નિષ્ફળતાઓ",
-    "resilienceTokenRefreshCooldown": "ટ્રિપ થયા પછી વિરામ"
+    "resilienceTokenRefreshCooldown": "ટ્રિપ થયા પછી વિરામ",
+    "piiMasking": {
+      "title": "વ્યક્તિગત ડેટા માસ્કિંગ",
+      "description": "કયા પ્રકારનો વ્યક્તિગત ડેટા માસ્ક કરવો તે પસંદ કરો અને તમારા પોતાના પેટર્ન ઉમેરો. નીચે બતાવેલા ફીચર ફ્લેગ ચાલુ ન કરો ત્યાં સુધી માસ્કિંગ બંધ રહે છે.",
+      "requestFlag": "વિનંતી માસ્કિંગ",
+      "responseFlag": "પ્રતિસાદ સફાઈ",
+      "templates": "નમૂનાઓ",
+      "template": {
+        "minimal": "ન્યૂનતમ",
+        "standard": "પ્રમાણભૂત",
+        "financial": "નાણાકીય",
+        "brazilian": "બ્રાઝિલિયન",
+        "usa": "યુએસએ",
+        "full": "સંપૂર્ણ"
+      },
+      "builtinTypes": "બિલ્ટ-ઇન પ્રકારો",
+      "types": {
+        "email": "ઇમેઇલ સરનામાં",
+        "phone_us": "યુએસ ફોન નંબર",
+        "phone_br": "બ્રાઝિલના ફોન નંબર",
+        "ssn": "યુએસ સામાજિક સુરક્ષા નંબર",
+        "credit_card": "ક્રેડિટ કાર્ડ નંબર",
+        "cpf": "CPF (બ્રાઝિલિયન કરદાતા ID)",
+        "cnpj": "CNPJ (બ્રાઝિલિયન કંપની ID)",
+        "ip_address": "IPv4 સરનામાં",
+        "ipv6_address": "IPv6 સરનામાં",
+        "aws_key": "AWS ઍક્સેસ કી",
+        "api_key_generic": "API કી અને ટોકન"
+      },
+      "customPatterns": "કસ્ટમ પેટર્ન",
+      "customPatternsDesc": "મેળ [CUSTOM_REDACTED] થી બદલાય છે. વધુમાં વધુ {max} પેટર્ન. વિનાશક બેકટ્રેકિંગના જોખમવાળા પેટર્ન નકારવામાં આવે છે.",
+      "typeRegex": "રેગ્યુલર એક્સપ્રેશન",
+      "typeWildcard": "વાઇલ્ડકાર્ડ (* અને ?)",
+      "pattern": "પેટર્ન",
+      "flags": "ફ્લેગ (i, m, s, u)",
+      "sampleText": "પેટર્ન ચકાસવા માટે નમૂના લખાણ",
+      "test": "ચકાસો",
+      "testMatches": "{count} મેળ",
+      "testFailed": "પેટર્ન નકારાયો: {message}",
+      "add": "પેટર્ન ઉમેરો",
+      "saved": "સાચવ્યું",
+      "saveFailed": "સાચવી શકાયું નહીં: {message}",
+      "statsTitle": "પુનઃપ્રારંભ પછીની શોધો",
+      "statsEmpty": "હજી કોઈ શોધ નથી.",
+      "statsRequest": "વિનંતીઓ"
+    }
   },
   "contextRtk": {
     "title": "RTK એન્જિન",

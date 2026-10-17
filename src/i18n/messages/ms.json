@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Penyedia (semua akaun berkongsi satu pemutus)",
     "resilienceTokenRefreshScopeConnection": "Sambungan (setiap akaun mempunyai pemutus litar sendiri)",
     "resilienceTokenRefreshThreshold": "Kegagalan sebelum menjeda",
-    "resilienceTokenRefreshCooldown": "Jeda selepas terpicu"
+    "resilienceTokenRefreshCooldown": "Jeda selepas terpicu",
+    "piiMasking": {
+      "title": "Penyamaran data peribadi",
+      "description": "Pilih jenis data peribadi yang disamarkan dan tambah corak anda sendiri. Penyamaran kekal dimatikan sehingga anda menghidupkan bendera ciri yang dipaparkan di bawah.",
+      "requestFlag": "Penyamaran permintaan",
+      "responseFlag": "Sanitasi respons",
+      "templates": "Templat",
+      "template": {
+        "minimal": "Minimum",
+        "standard": "Standard",
+        "financial": "Kewangan",
+        "brazilian": "Brazil",
+        "usa": "AS",
+        "full": "Penuh"
+      },
+      "builtinTypes": "Jenis terbina dalam",
+      "types": {
+        "email": "Alamat e-mel",
+        "phone_us": "Nombor telefon AS",
+        "phone_br": "Nombor telefon Brazil",
+        "ssn": "Nombor Keselamatan Sosial AS",
+        "credit_card": "Nombor kad kredit",
+        "cpf": "CPF (ID pembayar cukai Brazil)",
+        "cnpj": "CNPJ (ID syarikat Brazil)",
+        "ip_address": "Alamat IPv4",
+        "ipv6_address": "Alamat IPv6",
+        "aws_key": "Kunci akses AWS",
+        "api_key_generic": "Kunci API dan token"
+      },
+      "customPatterns": "Corak tersuai",
+      "customPatternsDesc": "Padanan digantikan dengan [CUSTOM_REDACTED]. Sehingga {max} corak. Corak yang berisiko penjejakan undur katastrofik akan ditolak.",
+      "typeRegex": "Ungkapan nalar",
+      "typeWildcard": "Aksara kad bebas (* dan ?)",
+      "pattern": "Corak",
+      "flags": "Bendera (i, m, s, u)",
+      "sampleText": "Teks contoh untuk menguji corak",
+      "test": "Uji",
+      "testMatches": "{count} padanan",
+      "testFailed": "Corak ditolak: {message}",
+      "add": "Tambah corak",
+      "saved": "Disimpan",
+      "saveFailed": "Tidak dapat menyimpan: {message}",
+      "statsTitle": "Pengesanan sejak dimulakan semula",
+      "statsEmpty": "Belum ada pengesanan.",
+      "statsRequest": "Permintaan"
+    }
   },
   "contextRtk": {
     "title": "Enjin RTK",

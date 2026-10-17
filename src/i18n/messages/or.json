@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "ପ୍ରୋଭାଇଡର (ସମସ୍ତ ଖାତା ଗୋଟିଏ ବ୍ରେକର ଅଂଶୀଦାର କରନ୍ତି)",
     "resilienceTokenRefreshScopeConnection": "ସଂଯୋଗ (ପ୍ରତ୍ୟେକ ଖାତା ନିଜର ଏକ ବ୍ରେକର ରଖେ)",
     "resilienceTokenRefreshThreshold": "ବିରତି ଦେବା ପୂର୍ବରୁ ବିଫଳତା",
-    "resilienceTokenRefreshCooldown": "ଟ୍ରିପ୍ ପରେ ବିରତି ନିଅନ୍ତୁ"
+    "resilienceTokenRefreshCooldown": "ଟ୍ରିପ୍ ପରେ ବିରତି ନିଅନ୍ତୁ",
+    "piiMasking": {
+      "title": "ବ୍ୟକ୍ତିଗତ ତଥ୍ୟ ମାସ୍କିଂ",
+      "description": "କେଉଁ ପ୍ରକାରର ବ୍ୟକ୍ତିଗତ ତଥ୍ୟ ମାସ୍କ ହେବ ତାହା ବାଛନ୍ତୁ ଏବଂ ନିଜର ପ୍ୟାଟର୍ନ ଯୋଗ କରନ୍ତୁ। ତଳେ ଦେଖାଯାଇଥିବା ଫିଚର ଫ୍ଲାଗ ଚାଲୁ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ମାସ୍କିଂ ବନ୍ଦ ରହେ।",
+      "requestFlag": "ଅନୁରୋଧ ମାସ୍କିଂ",
+      "responseFlag": "ପ୍ରତିକ୍ରିୟା ପରିଷ୍କାର",
+      "templates": "ଟେମ୍ପଲେଟ୍",
+      "template": {
+        "minimal": "ସର୍ବନିମ୍ନ",
+        "standard": "ମାନକ",
+        "financial": "ଆର୍ଥିକ",
+        "brazilian": "ବ୍ରାଜିଲୀୟ",
+        "usa": "ଯୁକ୍ତରାଷ୍ଟ୍ର",
+        "full": "ସମ୍ପୂର୍ଣ୍ଣ"
+      },
+      "builtinTypes": "ଅନ୍ତର୍ନିର୍ମିତ ପ୍ରକାର",
+      "types": {
+        "email": "ଇମେଲ୍ ଠିକଣା",
+        "phone_us": "ଯୁକ୍ତରାଷ୍ଟ୍ର ଫୋନ୍ ନମ୍ବର",
+        "phone_br": "ବ୍ରାଜିଲ୍ ଫୋନ୍ ନମ୍ବର",
+        "ssn": "ଯୁକ୍ତରାଷ୍ଟ୍ର ସାମାଜିକ ସୁରକ୍ଷା ନମ୍ବର",
+        "credit_card": "କ୍ରେଡିଟ୍ କାର୍ଡ ନମ୍ବର",
+        "cpf": "CPF (ବ୍ରାଜିଲ୍ କରଦାତା ID)",
+        "cnpj": "CNPJ (ବ୍ରାଜିଲ୍ କମ୍ପାନୀ ID)",
+        "ip_address": "IPv4 ଠିକଣା",
+        "ipv6_address": "IPv6 ଠିକଣା",
+        "aws_key": "AWS ପ୍ରବେଶ କି",
+        "api_key_generic": "API କି ଏବଂ ଟୋକେନ୍"
+      },
+      "customPatterns": "କଷ୍ଟମ୍ ପ୍ୟାଟର୍ନ",
+      "customPatternsDesc": "ମେଳଗୁଡ଼ିକ [CUSTOM_REDACTED] ଦ୍ୱାରା ବଦଳାଯାଏ। ସର୍ବାଧିକ {max}ଟି ପ୍ୟାଟର୍ନ। ବିପର୍ଯ୍ୟୟକାରୀ ବ୍ୟାକଟ୍ରାକିଂ ବିପଦ ଥିବା ପ୍ୟାଟର୍ନ ପ୍ରତ୍ୟାଖ୍ୟାନ କରାଯାଏ।",
+      "typeRegex": "ରେଗୁଲାର୍ ଏକ୍ସପ୍ରେସନ୍",
+      "typeWildcard": "ୱାଇଲ୍ଡକାର୍ଡ (* ଏବଂ ?)",
+      "pattern": "ପ୍ୟାଟର୍ନ",
+      "flags": "ଫ୍ଲାଗ୍ (i, m, s, u)",
+      "sampleText": "ପ୍ୟାଟର୍ନ ପରୀକ୍ଷା ପାଇଁ ନମୁନା ପାଠ୍ୟ",
+      "test": "ପରୀକ୍ଷା କରନ୍ତୁ",
+      "testMatches": "{count}ଟି ମେଳ",
+      "testFailed": "ପ୍ୟାଟର୍ନ ପ୍ରତ୍ୟାଖ୍ୟାତ: {message}",
+      "add": "ପ୍ୟାଟର୍ନ ଯୋଗ କରନ୍ତୁ",
+      "saved": "ସଞ୍ଚୟ ହେଲା",
+      "saveFailed": "ସଞ୍ଚୟ ହୋଇପାରିଲା ନାହିଁ: {message}",
+      "statsTitle": "ପୁନଃଆରମ୍ଭ ପରଠାରୁ ଚିହ୍ନଟ",
+      "statsEmpty": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଚିହ୍ନଟ ନାହିଁ।",
+      "statsRequest": "ଅନୁରୋଧ"
+    }
   },
   "contextRtk": {
     "title": "RTK ଇଞ୍ଜିନ୍",

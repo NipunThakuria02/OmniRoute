@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Provider (all accounts share one breaker)",
     "resilienceTokenRefreshScopeConnection": "Connection (each account has its own breaker)",
     "resilienceTokenRefreshThreshold": "Failures before pausing",
-    "resilienceTokenRefreshCooldown": "Pause after tripping"
+    "resilienceTokenRefreshCooldown": "Pause after tripping",
+    "piiMasking": {
+      "title": "PII masking",
+      "description": "Choose which kinds of personal data are masked and add your own patterns. Masking stays off until you turn on the feature flags shown below.",
+      "requestFlag": "Request masking",
+      "responseFlag": "Response sanitization",
+      "templates": "Templates",
+      "template": {
+        "minimal": "Minimal",
+        "standard": "Standard",
+        "financial": "Financial",
+        "brazilian": "Brazilian",
+        "usa": "USA",
+        "full": "Full"
+      },
+      "builtinTypes": "Built-in types",
+      "types": {
+        "email": "Email addresses",
+        "phone_us": "US phone numbers",
+        "phone_br": "Brazilian phone numbers",
+        "ssn": "US Social Security numbers",
+        "credit_card": "Credit card numbers",
+        "cpf": "CPF (Brazilian taxpayer ID)",
+        "cnpj": "CNPJ (Brazilian company ID)",
+        "ip_address": "IPv4 addresses",
+        "ipv6_address": "IPv6 addresses",
+        "aws_key": "AWS access keys",
+        "api_key_generic": "API keys and tokens"
+      },
+      "customPatterns": "Custom patterns",
+      "customPatternsDesc": "Matches are replaced with [CUSTOM_REDACTED]. Up to {max} patterns. Patterns that risk catastrophic backtracking are refused.",
+      "typeRegex": "Regular expression",
+      "typeWildcard": "Wildcard (* and ?)",
+      "pattern": "Pattern",
+      "flags": "Flags (i, m, s, u)",
+      "sampleText": "Sample text to test the pattern against",
+      "test": "Test",
+      "testMatches": "{count} matches",
+      "testFailed": "Pattern rejected: {message}",
+      "add": "Add pattern",
+      "saved": "Saved",
+      "saveFailed": "Could not save: {message}",
+      "statsTitle": "Detections since restart",
+      "statsEmpty": "No detections yet.",
+      "statsRequest": "Requests"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

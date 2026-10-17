@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "ప్రొవైడర్ (అన్ని ఖాతాలు ఒకే బ్రేకర్‌ను పంచుకుంటాయి)",
     "resilienceTokenRefreshScopeConnection": "కనెక్షన్ (ప్రతి ఖాతాకు దాని సొంత బ్రేకర్ ఉంటుంది)",
     "resilienceTokenRefreshThreshold": "నిలిపివేయడానికి ముందు వైఫల్యాలు",
-    "resilienceTokenRefreshCooldown": "తావు తర్వాత విరామం"
+    "resilienceTokenRefreshCooldown": "తావు తర్వాత విరామం",
+    "piiMasking": {
+      "title": "వ్యక్తిగత డేటా మాస్కింగ్",
+      "description": "ఏ రకమైన వ్యక్తిగత డేటాను మాస్క్ చేయాలో ఎంచుకుని, మీ స్వంత ప్యాటర్న్‌లను జోడించండి. క్రింద చూపిన ఫీచర్ ఫ్లాగ్‌లను ఆన్ చేసే వరకు మాస్కింగ్ ఆఫ్‌లోనే ఉంటుంది.",
+      "requestFlag": "అభ్యర్థన మాస్కింగ్",
+      "responseFlag": "ప్రతిస్పందన శుద్ధి",
+      "templates": "టెంప్లేట్‌లు",
+      "template": {
+        "minimal": "కనిష్ఠ",
+        "standard": "ప్రామాణిక",
+        "financial": "ఆర్థిక",
+        "brazilian": "బ్రెజిలియన్",
+        "usa": "అమెరికా",
+        "full": "పూర్తి"
+      },
+      "builtinTypes": "అంతర్నిర్మిత రకాలు",
+      "types": {
+        "email": "ఈమెయిల్ చిరునామాలు",
+        "phone_us": "అమెరికా ఫోన్ నంబర్లు",
+        "phone_br": "బ్రెజిల్ ఫోన్ నంబర్లు",
+        "ssn": "అమెరికా సామాజిక భద్రతా నంబర్లు",
+        "credit_card": "క్రెడిట్ కార్డ్ నంబర్లు",
+        "cpf": "CPF (బ్రెజిల్ పన్ను చెల్లింపుదారు ID)",
+        "cnpj": "CNPJ (బ్రెజిల్ కంపెనీ ID)",
+        "ip_address": "IPv4 చిరునామాలు",
+        "ipv6_address": "IPv6 చిరునామాలు",
+        "aws_key": "AWS యాక్సెస్ కీలు",
+        "api_key_generic": "API కీలు మరియు టోకెన్‌లు"
+      },
+      "customPatterns": "అనుకూల ప్యాటర్న్‌లు",
+      "customPatternsDesc": "సరిపోలికలు [CUSTOM_REDACTED] తో భర్తీ చేయబడతాయి. గరిష్ఠంగా {max} ప్యాటర్న్‌లు. విపత్కర బ్యాక్‌ట్రాకింగ్ ప్రమాదం ఉన్న ప్యాటర్న్‌లు తిరస్కరించబడతాయి.",
+      "typeRegex": "రెగ్యులర్ ఎక్స్‌ప్రెషన్",
+      "typeWildcard": "వైల్డ్‌కార్డ్ (* మరియు ?)",
+      "pattern": "ప్యాటర్న్",
+      "flags": "ఫ్లాగ్‌లు (i, m, s, u)",
+      "sampleText": "ప్యాటర్న్‌ను పరీక్షించడానికి నమూనా వచనం",
+      "test": "పరీక్షించు",
+      "testMatches": "{count} సరిపోలికలు",
+      "testFailed": "ప్యాటర్న్ తిరస్కరించబడింది: {message}",
+      "add": "ప్యాటర్న్ జోడించు",
+      "saved": "సేవ్ అయింది",
+      "saveFailed": "సేవ్ చేయలేకపోయాం: {message}",
+      "statsTitle": "పునఃప్రారంభం నుండి గుర్తింపులు",
+      "statsEmpty": "ఇంకా గుర్తింపులు లేవు.",
+      "statsRequest": "అభ్యర్థనలు"
+    }
   },
   "contextRtk": {
     "title": "RTK ఇంజిన్",

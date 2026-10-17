@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Πάροχος (όλοι οι λογαριασμοί μοιράζονται έναν διακόπτη)",
     "resilienceTokenRefreshScopeConnection": "Σύνδεση (κάθε λογαριασμός έχει τον δικό του διακόπτη)",
     "resilienceTokenRefreshThreshold": "Αποτυχίες πριν από την παύση",
-    "resilienceTokenRefreshCooldown": "Παύση μετά την ενεργοποίηση"
+    "resilienceTokenRefreshCooldown": "Παύση μετά την ενεργοποίηση",
+    "piiMasking": {
+      "title": "Απόκρυψη προσωπικών δεδομένων",
+      "description": "Επιλέξτε ποιοι τύποι προσωπικών δεδομένων αποκρύπτονται και προσθέστε δικά σας μοτίβα. Η απόκρυψη παραμένει ανενεργή μέχρι να ενεργοποιήσετε τις σημαίες λειτουργιών που φαίνονται παρακάτω.",
+      "requestFlag": "Απόκρυψη αιτημάτων",
+      "responseFlag": "Εξυγίανση αποκρίσεων",
+      "templates": "Πρότυπα",
+      "template": {
+        "minimal": "Ελάχιστο",
+        "standard": "Τυπικό",
+        "financial": "Οικονομικό",
+        "brazilian": "Βραζιλιάνικο",
+        "usa": "ΗΠΑ",
+        "full": "Πλήρες"
+      },
+      "builtinTypes": "Ενσωματωμένοι τύποι",
+      "types": {
+        "email": "Διευθύνσεις email",
+        "phone_us": "Τηλέφωνα ΗΠΑ",
+        "phone_br": "Τηλέφωνα Βραζιλίας",
+        "ssn": "Αριθμοί κοινωνικής ασφάλισης ΗΠΑ",
+        "credit_card": "Αριθμοί πιστωτικών καρτών",
+        "cpf": "CPF (ΑΦΜ φυσικού προσώπου Βραζιλίας)",
+        "cnpj": "CNPJ (αριθμός εταιρείας Βραζιλίας)",
+        "ip_address": "Διευθύνσεις IPv4",
+        "ipv6_address": "Διευθύνσεις IPv6",
+        "aws_key": "Κλειδιά πρόσβασης AWS",
+        "api_key_generic": "Κλειδιά API και tokens"
+      },
+      "customPatterns": "Προσαρμοσμένα μοτίβα",
+      "customPatternsDesc": "Οι αντιστοιχίες αντικαθίστανται με [CUSTOM_REDACTED]. Έως {max} μοτίβα. Μοτίβα με κίνδυνο καταστροφικής οπισθοδρόμησης απορρίπτονται.",
+      "typeRegex": "Κανονική έκφραση",
+      "typeWildcard": "Χαρακτήρας μπαλαντέρ (* και ?)",
+      "pattern": "Μοτίβο",
+      "flags": "Σημαίες (i, m, s, u)",
+      "sampleText": "Δείγμα κειμένου για δοκιμή του μοτίβου",
+      "test": "Δοκιμή",
+      "testMatches": "Αντιστοιχίες: {count}",
+      "testFailed": "Το μοτίβο απορρίφθηκε: {message}",
+      "add": "Προσθήκη μοτίβου",
+      "saved": "Αποθηκεύτηκε",
+      "saveFailed": "Η αποθήκευση απέτυχε: {message}",
+      "statsTitle": "Εντοπισμοί από την επανεκκίνηση",
+      "statsEmpty": "Δεν υπάρχουν ακόμη εντοπισμοί.",
+      "statsRequest": "Αιτήματα"
+    }
   },
   "contextRtk": {
     "title": "Μηχανή RTK",

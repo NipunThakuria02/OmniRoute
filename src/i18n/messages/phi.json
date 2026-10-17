@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Provider (lahat ng mga account ay nagbabahagi ng iisang breaker)",
     "resilienceTokenRefreshScopeConnection": "Koneksyon (bawat account ay may sariling breaker)",
     "resilienceTokenRefreshThreshold": "Mga kabiguan bago magpahinto",
-    "resilienceTokenRefreshCooldown": "Magpahinga pagkatapos ma-trigger"
+    "resilienceTokenRefreshCooldown": "Magpahinga pagkatapos ma-trigger",
+    "piiMasking": {
+      "title": "Pagtatakip ng personal na datos",
+      "description": "Piliin kung aling uri ng personal na datos ang tatakpan at magdagdag ng sarili mong mga pattern. Mananatiling naka-off ang pagtatakip hangga't hindi mo ini-on ang mga feature flag na nakikita sa ibaba.",
+      "requestFlag": "Pagtatakip ng request",
+      "responseFlag": "Paglilinis ng tugon",
+      "templates": "Mga template",
+      "template": {
+        "minimal": "Pinakamaliit",
+        "standard": "Karaniwan",
+        "financial": "Pampinansiyal",
+        "brazilian": "Pang-Brazil",
+        "usa": "Estados Unidos",
+        "full": "Kumpleto"
+      },
+      "builtinTypes": "Mga built-in na uri",
+      "types": {
+        "email": "Mga email address",
+        "phone_us": "Mga numero ng telepono sa US",
+        "phone_br": "Mga numero ng telepono sa Brazil",
+        "ssn": "Mga numero ng Social Security sa US",
+        "credit_card": "Mga numero ng credit card",
+        "cpf": "CPF (tax ID ng indibidwal sa Brazil)",
+        "cnpj": "CNPJ (ID ng kumpanya sa Brazil)",
+        "ip_address": "Mga IPv4 address",
+        "ipv6_address": "Mga IPv6 address",
+        "aws_key": "Mga access key ng AWS",
+        "api_key_generic": "Mga API key at token"
+      },
+      "customPatterns": "Mga custom na pattern",
+      "customPatternsDesc": "Ang mga tugma ay papalitan ng [CUSTOM_REDACTED]. Hanggang {max} pattern. Tinatanggihan ang mga pattern na may panganib ng sakunang backtracking.",
+      "typeRegex": "Regular expression",
+      "typeWildcard": "Wildcard (* at ?)",
+      "pattern": "Pattern",
+      "flags": "Mga flag (i, m, s, u)",
+      "sampleText": "Halimbawang teksto para subukan ang pattern",
+      "test": "Subukan",
+      "testMatches": "{count} tugma",
+      "testFailed": "Tinanggihan ang pattern: {message}",
+      "add": "Magdagdag ng pattern",
+      "saved": "Na-save",
+      "saveFailed": "Hindi ma-save: {message}",
+      "statsTitle": "Mga natukoy mula nang mag-restart",
+      "statsEmpty": "Wala pang natukoy.",
+      "statsRequest": "Mga request"
+    }
   },
   "contextRtk": {
     "title": "Engine ng RTK",

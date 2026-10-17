@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Pružalac (svi nalozi dijele jedan prekidač)",
     "resilienceTokenRefreshScopeConnection": "Veza (svaki nalog ima vlastiti prekidač)",
     "resilienceTokenRefreshThreshold": "Neuspjesi prije pauze",
-    "resilienceTokenRefreshCooldown": "Pauza nakon aktiviranja"
+    "resilienceTokenRefreshCooldown": "Pauza nakon aktiviranja",
+    "piiMasking": {
+      "title": "Maskiranje ličnih podataka",
+      "description": "Odaberite koje se vrste ličnih podataka maskiraju i dodajte vlastite uzorke. Maskiranje ostaje isključeno dok ne uključite zastavice funkcija prikazane ispod.",
+      "requestFlag": "Maskiranje zahtjeva",
+      "responseFlag": "Čišćenje odgovora",
+      "templates": "Šabloni",
+      "template": {
+        "minimal": "Minimalni",
+        "standard": "Standardni",
+        "financial": "Finansijski",
+        "brazilian": "Brazilski",
+        "usa": "SAD",
+        "full": "Potpuni"
+      },
+      "builtinTypes": "Ugrađeni tipovi",
+      "types": {
+        "email": "Adrese e-pošte",
+        "phone_us": "Brojevi telefona u SAD-u",
+        "phone_br": "Brazilski brojevi telefona",
+        "ssn": "Brojevi socijalnog osiguranja SAD-a",
+        "credit_card": "Brojevi kreditnih kartica",
+        "cpf": "CPF (brazilski poreski broj)",
+        "cnpj": "CNPJ (brazilski broj firme)",
+        "ip_address": "IPv4 adrese",
+        "ipv6_address": "IPv6 adrese",
+        "aws_key": "AWS pristupni ključevi",
+        "api_key_generic": "API ključevi i tokeni"
+      },
+      "customPatterns": "Prilagođeni uzorci",
+      "customPatternsDesc": "Podudaranja se zamjenjuju sa [CUSTOM_REDACTED]. Najviše {max} uzoraka. Uzorci s rizikom od katastrofalnog vraćanja se odbijaju.",
+      "typeRegex": "Regularni izraz",
+      "typeWildcard": "Džoker znak (* i ?)",
+      "pattern": "Uzorak",
+      "flags": "Zastavice (i, m, s, u)",
+      "sampleText": "Primjer teksta za testiranje uzorka",
+      "test": "Testiraj",
+      "testMatches": "Podudaranja: {count}",
+      "testFailed": "Uzorak je odbijen: {message}",
+      "add": "Dodaj uzorak",
+      "saved": "Sačuvano",
+      "saveFailed": "Čuvanje nije uspjelo: {message}",
+      "statsTitle": "Otkrivanja od ponovnog pokretanja",
+      "statsEmpty": "Još nema otkrivanja.",
+      "statsRequest": "Zahtjevi"
+    }
   },
   "contextRtk": {
     "title": "RTK pogon",

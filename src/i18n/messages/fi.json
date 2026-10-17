@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Palveluntarjoaja (kaikki tilit jakavat yhden katkaisijan)",
     "resilienceTokenRefreshScopeConnection": "Yhteys (jokaisella tilillä on oma katkaisija)",
     "resilienceTokenRefreshThreshold": "Virheitä ennen tauottamista",
-    "resilienceTokenRefreshCooldown": "Tauko laukeamisen jälkeen"
+    "resilienceTokenRefreshCooldown": "Tauko laukeamisen jälkeen",
+    "piiMasking": {
+      "title": "Henkilötietojen peittäminen",
+      "description": "Valitse, minkä tyyppiset henkilötiedot peitetään, ja lisää omia malleja. Peittäminen on pois päältä, kunnes otat käyttöön alla näkyvät ominaisuusliput.",
+      "requestFlag": "Pyyntöjen peittäminen",
+      "responseFlag": "Vastausten puhdistus",
+      "templates": "Pohjat",
+      "template": {
+        "minimal": "Suppea",
+        "standard": "Vakio",
+        "financial": "Talous",
+        "brazilian": "Brasilia",
+        "usa": "Yhdysvallat",
+        "full": "Täysi"
+      },
+      "builtinTypes": "Sisäänrakennetut tyypit",
+      "types": {
+        "email": "Sähköpostiosoitteet",
+        "phone_us": "Yhdysvaltalaiset puhelinnumerot",
+        "phone_br": "Brasilialaiset puhelinnumerot",
+        "ssn": "Yhdysvaltain sosiaaliturvatunnukset",
+        "credit_card": "Luottokorttien numerot",
+        "cpf": "CPF (Brasilian verotunniste)",
+        "cnpj": "CNPJ (Brasilian yritystunniste)",
+        "ip_address": "IPv4-osoitteet",
+        "ipv6_address": "IPv6-osoitteet",
+        "aws_key": "AWS-käyttöavaimet",
+        "api_key_generic": "API-avaimet ja tunnisteet"
+      },
+      "customPatterns": "Omat mallit",
+      "customPatternsDesc": "Osumat korvataan merkinnällä [CUSTOM_REDACTED]. Enintään {max} mallia. Mallit, joissa on katastrofaalisen takaisinjäljityksen riski, hylätään.",
+      "typeRegex": "Säännöllinen lauseke",
+      "typeWildcard": "Jokerimerkki (* ja ?)",
+      "pattern": "Malli",
+      "flags": "Liput (i, m, s, u)",
+      "sampleText": "Esimerkkiteksti mallin testaamiseen",
+      "test": "Testaa",
+      "testMatches": "Osumia: {count}",
+      "testFailed": "Malli hylättiin: {message}",
+      "add": "Lisää malli",
+      "saved": "Tallennettu",
+      "saveFailed": "Tallennus epäonnistui: {message}",
+      "statsTitle": "Havainnot uudelleenkäynnistyksen jälkeen",
+      "statsEmpty": "Ei vielä havaintoja.",
+      "statsRequest": "Pyynnöt"
+    }
   },
   "contextRtk": {
     "title": "RTK Engine",

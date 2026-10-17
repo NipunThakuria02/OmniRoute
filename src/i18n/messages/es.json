@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "Proveedor (todas las cuentas comparten un cortacircuitos)",
     "resilienceTokenRefreshScopeConnection": "Conexión (cada cuenta tiene su propio disyuntor)",
     "resilienceTokenRefreshThreshold": "Fallos antes de pausar",
-    "resilienceTokenRefreshCooldown": "Pausa tras activarse"
+    "resilienceTokenRefreshCooldown": "Pausa tras activarse",
+    "piiMasking": {
+      "title": "Enmascaramiento de PII",
+      "description": "Elige qué tipos de datos personales se enmascaran y añade tus propios patrones. El enmascaramiento permanece desactivado hasta que actives las feature flags que se muestran abajo.",
+      "requestFlag": "Enmascaramiento de solicitudes",
+      "responseFlag": "Saneamiento de respuestas",
+      "templates": "Plantillas",
+      "template": {
+        "minimal": "Mínima",
+        "standard": "Estándar",
+        "financial": "Financiera",
+        "brazilian": "Brasileña",
+        "usa": "EE. UU.",
+        "full": "Completa"
+      },
+      "builtinTypes": "Tipos integrados",
+      "types": {
+        "email": "Direcciones de correo electrónico",
+        "phone_us": "Teléfonos de EE. UU.",
+        "phone_br": "Teléfonos brasileños",
+        "ssn": "Números de Seguro Social de EE. UU.",
+        "credit_card": "Números de tarjeta de crédito",
+        "cpf": "CPF (identificación fiscal brasileña)",
+        "cnpj": "CNPJ (identificación de empresa brasileña)",
+        "ip_address": "Direcciones IPv4",
+        "ipv6_address": "Direcciones IPv6",
+        "aws_key": "Claves de acceso de AWS",
+        "api_key_generic": "Claves de API y tokens"
+      },
+      "customPatterns": "Patrones personalizados",
+      "customPatternsDesc": "Las coincidencias se reemplazan por [CUSTOM_REDACTED]. Hasta {max} patrones. Se rechazan los patrones con riesgo de backtracking catastrófico.",
+      "typeRegex": "Expresión regular",
+      "typeWildcard": "Comodín (* y ?)",
+      "pattern": "Patrón",
+      "flags": "Indicadores (i, m, s, u)",
+      "sampleText": "Texto de ejemplo para probar el patrón",
+      "test": "Probar",
+      "testMatches": "{count} coincidencias",
+      "testFailed": "Patrón rechazado: {message}",
+      "add": "Añadir patrón",
+      "saved": "Guardado",
+      "saveFailed": "No se pudo guardar: {message}",
+      "statsTitle": "Detecciones desde el reinicio",
+      "statsEmpty": "Aún no hay detecciones.",
+      "statsRequest": "Solicitudes"
+    }
   },
   "contextRtk": {
     "title": "Motor RTK",

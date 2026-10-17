@@ -8817,7 +8817,52 @@
     "resilienceTokenRefreshScopeProvider": "المزوّد (جميع الحسابات تشترك في قاطع واحد)",
     "resilienceTokenRefreshScopeConnection": "الاتصال (لكل حساب قاطع خاص به)",
     "resilienceTokenRefreshThreshold": "عدد الفشل قبل الإيقاف",
-    "resilienceTokenRefreshCooldown": "الوقفة بعد التفعيل"
+    "resilienceTokenRefreshCooldown": "الوقفة بعد التفعيل",
+    "piiMasking": {
+      "title": "إخفاء البيانات الشخصية",
+      "description": "اختر أنواع البيانات الشخصية التي يتم إخفاؤها وأضف أنماطك الخاصة. يبقى الإخفاء متوقفًا حتى تفعّل علامات الميزات الظاهرة أدناه.",
+      "requestFlag": "إخفاء الطلبات",
+      "responseFlag": "تنقية الاستجابات",
+      "templates": "القوالب",
+      "template": {
+        "minimal": "أدنى",
+        "standard": "قياسي",
+        "financial": "مالي",
+        "brazilian": "برازيلي",
+        "usa": "الولايات المتحدة",
+        "full": "كامل"
+      },
+      "builtinTypes": "الأنواع المضمّنة",
+      "types": {
+        "email": "عناوين البريد الإلكتروني",
+        "phone_us": "أرقام الهواتف الأمريكية",
+        "phone_br": "أرقام الهواتف البرازيلية",
+        "ssn": "أرقام الضمان الاجتماعي الأمريكية",
+        "credit_card": "أرقام بطاقات الائتمان",
+        "cpf": "CPF (الرقم الضريبي البرازيلي للأفراد)",
+        "cnpj": "CNPJ (رقم الشركات البرازيلي)",
+        "ip_address": "عناوين IPv4",
+        "ipv6_address": "عناوين IPv6",
+        "aws_key": "مفاتيح وصول AWS",
+        "api_key_generic": "مفاتيح API والرموز المميزة"
+      },
+      "customPatterns": "أنماط مخصصة",
+      "customPatternsDesc": "تُستبدل المطابقات بـ [CUSTOM_REDACTED]. حتى {max} نمطًا. تُرفض الأنماط المعرّضة لخطر التراجع الكارثي.",
+      "typeRegex": "تعبير نمطي",
+      "typeWildcard": "حرف بدل (* و ?)",
+      "pattern": "النمط",
+      "flags": "العلامات (i, m, s, u)",
+      "sampleText": "نص تجريبي لاختبار النمط",
+      "test": "اختبار",
+      "testMatches": "عدد المطابقات: {count}",
+      "testFailed": "تم رفض النمط: {message}",
+      "add": "إضافة نمط",
+      "saved": "تم الحفظ",
+      "saveFailed": "تعذّر الحفظ: {message}",
+      "statsTitle": "الاكتشافات منذ إعادة التشغيل",
+      "statsEmpty": "لا توجد اكتشافات بعد.",
+      "statsRequest": "الطلبات"
+    }
   },
   "contextRtk": {
     "title": "محرك آر تي كيه",
