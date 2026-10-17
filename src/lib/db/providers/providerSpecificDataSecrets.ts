@@ -4,6 +4,14 @@
  *
  * Do not blanket-encrypt the JSON object: workspace/identity fields are queried
  * by SQLite and must remain readable. Unknown fields remain unchanged.
+ *
+ * This is the ONE list for every consumer: encryptConnectionFields /
+ * decryptConnectionFields (src/lib/db/encryption.ts), the lazy connection views,
+ * the first-use sweep of legacy plaintext rows (./migrations.ts), the provider API
+ * response sanitizer (src/lib/providers/requestDefaults.ts — strips these fields,
+ * masks `extraApiKeys` like `apiKey`) and the compliance audit summary
+ * (src/lib/compliance/providerAudit.ts). A field added here is covered on every side;
+ * tests/unit/provider-specific-data-secrets-drift.test.ts iterates the list.
  */
 export const PROVIDER_SPECIFIC_SECRET_FIELDS = [
   "consoleApiKey",
@@ -39,21 +47,131 @@ export const PROVIDER_SPECIFIC_SECRET_FIELDS = [
   "openCodeGoAuthCookie",
   "opencodeGoAuthCookie",
   "authCookie",
+  // The key-rotation pool: a LIST of full upstream API keys. Every entry is
+  // enveloped (see mapProviderSpecificDataSecrets); the dashboard shows and
+  // edits the list, so the API returns it masked exactly like `apiKey`.
+  "extraApiKeys",
+  // Short-lived provider sub-tokens that refresh / mint flows write back into
+  // the metadata object (open-sse/executors/ghe-copilot.ts,
+  // open-sse/services/tokenRefresh/providers/museCode.ts + kiro.ts,
+  // open-sse/executors/lmarena.ts).
+  "copilotToken",
+  "dcaToken",
+  "clientSecret",
+  "recaptchaV3Token",
+  // Web-session providers keep the browser session under these keys
+  // (src/shared/providers/webSessionCredentials.ts → storageKeys). Identity and
+  // display fields of those providers (uuid, uid, sid, deviceId, userId, email,
+  // projectId, space ids, …) are not credentials and stay queryable.
+  "cookie",
+  "cookies",
+  "storageState",
+  "origins",
+  "token",
+  "token_v2",
+  "userToken",
+  "access_token",
+  "refresh_token",
+  "jwt",
+  "sso",
+  "sso-rw",
+  "session",
+  "session-token",
+  "sessionCookie",
+  "sessionKey",
+  "sessionid",
+  "__Secure-next-auth.session-token",
+  "__Secure-authjs.session-token",
+  "__Secure-better-auth.session_token",
+  "__Secure-1PSID",
+  "__Secure-1PSIDTS",
+  "__client",
+  "__session",
+  "__vercel_session",
+  "app-config-uuid",
+  "hy_token",
+  "hf-chat",
+  "p-b",
+  "kimi-auth",
+  "duckai",
+  "chatglm_session",
+  "manus_session",
+  "ecto_1_sess",
+  "abra_sess",
+  "convex-session-id",
+  "convexSessionId",
+  "nt_session",
+  "si_ses_id",
+  "ttwid",
+  "arena-auth-prod-v1",
+  "arena-auth-prod-v1.0",
+  "arena-auth-prod-v1.1",
+  "maxaiAccessToken",
+  "ucCookies",
+  "ucClientCookie",
+  "clientCookie",
 ] as const;
 
-/** Return a fresh object only if a recognized secret field actually changes. */
-export function mapProviderSpecificDataSecrets(
-  data: unknown,
-  transform: (secret: string, field: (typeof PROVIDER_SPECIFIC_SECRET_FIELDS)[number]) =>
-    string | null | undefined
+/**
+ * Not credentials at rest, but never echoed to a client or written to an audit record:
+ * the transient ChatGPT Web (Codex) handles, the system-managed Codex fingerprint seed
+ * (mirrors sub2api stripping `codex_fingerprint_seed`) and the runtime-only Codex
+ * identity carriers (in-memory per request, never persisted). The server-side
+ * partial-update merge keeps them alive without the client round-tripping them.
+ */
+export const PROVIDER_SPECIFIC_RESPONSE_ONLY_FIELDS = [
+  "runtimeKey",
+  "validationId",
+  "codexFingerprintSeed",
+  "codexClientIdentity",
+  "codexOriginalIdentityHeaders",
+  "codexTurnStateEcho",
+] as const;
+
+export type ProviderSpecificSecretField = (typeof PROVIDER_SPECIFIC_SECRET_FIELDS)[number];
+
+type SecretTransform = (
+  secret: string,
+  field: ProviderSpecificSecretField
+) => string | null | undefined;
+
+/**
+ * Apply `transform` to one declared value: a string, or each string entry of a list
+ * (the `extraApiKeys` pool). Returns the input itself when nothing changed, so callers
+ * can skip the copy. A list entry that transforms to null/undefined is DROPPED — an
+ * undecryptable token must never be forwarded upstream as if it were a key — while
+ * non-string / empty entries and non-string, non-list values pass through untouched.
+ */
+function mapSecretValue(
+  value: unknown,
+  field: ProviderSpecificSecretField,
+  transform: SecretTransform
 ): unknown {
+  if (typeof value === "string") return value ? transform(value, field) : value;
+  if (!Array.isArray(value)) return value;
+  let changed = false;
+  const next: unknown[] = [];
+  for (const entry of value) {
+    if (typeof entry !== "string" || !entry) {
+      next.push(entry);
+      continue;
+    }
+    const mapped = transform(entry, field);
+    if (mapped !== entry) changed = true;
+    if (mapped === null || mapped === undefined) continue;
+    next.push(mapped);
+  }
+  return changed ? next : value;
+}
+
+/** Return a fresh object only if a recognized secret field actually changes. */
+export function mapProviderSpecificDataSecrets(data: unknown, transform: SecretTransform): unknown {
   if (!data || typeof data !== "object" || Array.isArray(data)) return data;
   const original = data as Record<string, unknown>;
   let updated: Record<string, unknown> | null = null;
   for (const field of PROVIDER_SPECIFIC_SECRET_FIELDS) {
     const secret = original[field];
-    if (typeof secret !== "string" || !secret) continue;
-    const value = transform(secret, field);
+    const value = mapSecretValue(secret, field, transform);
     if (value !== secret) {
       updated ??= { ...original };
       updated[field] = value;
