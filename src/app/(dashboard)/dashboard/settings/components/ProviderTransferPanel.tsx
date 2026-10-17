@@ -70,15 +70,28 @@ function StatusLine({ status }: { status: Status }) {
   );
 }
 
-function ExportView({ entries, loadError }: { entries: CatalogEntry[]; loadError: string }) {
+async function downloadResponseFile(res: Response, fallbackName: string): Promise<void> {
+  const blob = await res.blob();
+  const match = (res.headers.get("Content-Disposition") || "").match(/filename="?([^"]+)"?/);
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = match?.[1] || fallbackName;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function AccountPicker({
+  entries,
+  selected,
+  onSelectedChange,
+}: {
+  entries: CatalogEntry[];
+  selected: Set<string>;
+  onSelectedChange: (next: Set<string>) => void;
+}) {
   const t = useTranslations("providerTransfer");
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [passphrase, setPassphrase] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [acknowledged, setAcknowledged] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const [status, setStatus] = useState<Status>({ type: "", message: "" });
 
   const visible = useMemo(() => {
     if (!query.trim()) return entries;
@@ -90,51 +103,14 @@ function ExportView({ entries, loadError }: { entries: CatalogEntry[]; loadError
   }, [entries, query]);
 
   const toggle = (id: string) => {
-    setSelected((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  const tooShort = passphrase.length < MIN_TRANSFER_PASSPHRASE_LENGTH;
-  const mismatch = confirm.length > 0 && confirm !== passphrase;
-  const canExport = selected.size > 0 && !tooShort && confirm === passphrase && acknowledged;
-
-  const handleExport = async () => {
-    setBusy(true);
-    setStatus({ type: "", message: "" });
-    try {
-      const res = await postJson("/api/settings/transfer/export", {
-        connectionIds: [...selected],
-        passphrase,
-        acknowledgeCredentialExport: true,
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setStatus({ type: "error", message: extractApiErrorMessage(data, t("exportFailed")) });
-        return;
-      }
-      const blob = await res.blob();
-      const match = (res.headers.get("Content-Disposition") || "").match(/filename="?([^"]+)"?/);
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = match?.[1] || "omniroute-provider-transfer.json";
-      link.click();
-      URL.revokeObjectURL(url);
-      setStatus({ type: "success", message: t("exportDone", { count: selected.size }) });
-    } catch {
-      setStatus({ type: "error", message: t("exportFailed") });
-    } finally {
-      setBusy(false);
-    }
+    const next = new Set(selected);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    onSelectedChange(next);
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      {loadError && <StatusLine status={{ type: "error", message: loadError }} />}
+    <>
       <Input
         value={query}
         onChange={(e) => setQuery(e.target.value)}
@@ -146,11 +122,11 @@ function ExportView({ entries, loadError }: { entries: CatalogEntry[]; loadError
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => setSelected(new Set([...selected, ...visible.map((e) => e.id)]))}
+          onClick={() => onSelectedChange(new Set([...selected, ...visible.map((e) => e.id)]))}
         >
           {t("selectAll")}
         </Button>
-        <Button variant="ghost" size="sm" onClick={() => setSelected(new Set())}>
+        <Button variant="ghost" size="sm" onClick={() => onSelectedChange(new Set())}>
           {t("clearSelection")}
         </Button>
       </div>
@@ -171,12 +147,31 @@ function ExportView({ entries, loadError }: { entries: CatalogEntry[]; loadError
           </div>
         ))}
       </div>
+    </>
+  );
+}
+
+function PassphraseFields({
+  passphrase,
+  confirm,
+  onPassphraseChange,
+  onConfirmChange,
+}: {
+  passphrase: string;
+  confirm: string;
+  onPassphraseChange: (value: string) => void;
+  onConfirmChange: (value: string) => void;
+}) {
+  const t = useTranslations("providerTransfer");
+  const mismatch = confirm.length > 0 && confirm !== passphrase;
+  return (
+    <>
       <Input
         type="password"
         autoComplete="new-password"
         label={t("passphrase")}
         value={passphrase}
-        onChange={(e) => setPassphrase(e.target.value)}
+        onChange={(e) => onPassphraseChange(e.target.value)}
         hint={t("passphraseHint", { min: MIN_TRANSFER_PASSPHRASE_LENGTH })}
       />
       <Input
@@ -184,8 +179,57 @@ function ExportView({ entries, loadError }: { entries: CatalogEntry[]; loadError
         autoComplete="new-password"
         label={t("passphraseConfirm")}
         value={confirm}
-        onChange={(e) => setConfirm(e.target.value)}
+        onChange={(e) => onConfirmChange(e.target.value)}
         error={mismatch ? t("passphraseMismatch") : undefined}
+      />
+    </>
+  );
+}
+
+function ExportView({ entries, loadError }: { entries: CatalogEntry[]; loadError: string }) {
+  const t = useTranslations("providerTransfer");
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [passphrase, setPassphrase] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [acknowledged, setAcknowledged] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [status, setStatus] = useState<Status>({ type: "", message: "" });
+
+  const tooShort = passphrase.length < MIN_TRANSFER_PASSPHRASE_LENGTH;
+  const canExport = selected.size > 0 && !tooShort && confirm === passphrase && acknowledged;
+
+  const handleExport = async () => {
+    setBusy(true);
+    setStatus({ type: "", message: "" });
+    try {
+      const res = await postJson("/api/settings/transfer/export", {
+        connectionIds: [...selected],
+        passphrase,
+        acknowledgeCredentialExport: true,
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setStatus({ type: "error", message: extractApiErrorMessage(data, t("exportFailed")) });
+        return;
+      }
+      await downloadResponseFile(res, "omniroute-provider-transfer.json");
+      setStatus({ type: "success", message: t("exportDone", { count: selected.size }) });
+    } catch {
+      setStatus({ type: "error", message: t("exportFailed") });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-3">
+      {loadError && <StatusLine status={{ type: "error", message: loadError }} />}
+      <AccountPicker entries={entries} selected={selected} onSelectedChange={setSelected} />
+      <PassphraseFields
+        passphrase={passphrase}
+        confirm={confirm}
+        onPassphraseChange={setPassphrase}
+        onConfirmChange={setConfirm}
       />
       <p className="text-xs text-amber-600 dark:text-amber-400">{t("oauthWarning")}</p>
       <Checkbox
@@ -261,34 +305,10 @@ function PlanRows({
   );
 }
 
-function ImportView() {
-  const t = useTranslations("providerTransfer");
-  const [bundle, setBundle] = useState<unknown>(null);
-  const [fileName, setFileName] = useState("");
-  const [passphrase, setPassphrase] = useState("");
-  const [plan, setPlan] = useState<Plan | null>(null);
-  const [decisions, setDecisions] = useState<Record<string, ProviderTransferAction>>({});
+/** POST helper shared by the preview and import steps: tracks busy + status. */
+function useTransferRequest() {
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<Status>({ type: "", message: "" });
-
-  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    setPlan(null);
-    setDecisions({});
-    setStatus({ type: "", message: "" });
-    if (!file) return;
-    try {
-      const parsed = JSON.parse(await file.text());
-      if (parsed?.format !== PROVIDER_TRANSFER_FORMAT) throw new Error("format");
-      setBundle(parsed);
-      setFileName(file.name);
-    } catch {
-      setBundle(null);
-      setFileName("");
-      setStatus({ type: "error", message: t("invalidFile") });
-    }
-  };
 
   const run = async (url: string, body: unknown, fallback: string) => {
     setBusy(true);
@@ -307,6 +327,103 @@ function ImportView() {
     } finally {
       setBusy(false);
     }
+  };
+
+  return { busy, status, setStatus, run };
+}
+
+function PlanReview({
+  plan,
+  decisions,
+  onDecision,
+  busy,
+  onImport,
+}: {
+  plan: Plan;
+  decisions: Record<string, ProviderTransferAction>;
+  onDecision: (key: string, action: ProviderTransferAction) => void;
+  busy: boolean;
+  onImport: () => void;
+}) {
+  const t = useTranslations("providerTransfer");
+  return (
+    <>
+      <p className="text-xs text-text-muted">
+        {t("summary", {
+          connections: plan.summary.providerConnections,
+          nodes: plan.summary.providerNodes,
+        })}
+      </p>
+      <div className="max-h-72 overflow-y-auto rounded-lg border border-border/50 divide-y divide-border/40">
+        <PlanRows items={plan.providerNodes} decisions={decisions} onChange={onDecision} />
+        <PlanRows items={plan.providerConnections} decisions={decisions} onChange={onDecision} />
+      </div>
+      <div>
+        <Button variant="primary" size="sm" loading={busy} onClick={onImport}>
+          {t("importButton")}
+        </Button>
+      </div>
+    </>
+  );
+}
+
+function appliedCounts(data: unknown): { connections: number; nodes: number; skipped: number } {
+  const applied = (data as { applied?: Record<string, number> }).applied || {};
+  return {
+    connections: applied.providerConnections ?? 0,
+    nodes: applied.providerNodes ?? 0,
+    skipped: applied.skipped ?? 0,
+  };
+}
+
+/** Parse a picked transfer file; null when it is not JSON or not a transfer bundle. */
+async function readTransferFile(file: File): Promise<unknown> {
+  try {
+    const parsed = JSON.parse(await file.text());
+    return parsed?.format === PROVIDER_TRANSFER_FORMAT ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function FileChooser({
+  label,
+  onChange,
+}: {
+  label: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <label className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-md border border-border px-3 py-1.5 text-sm">
+      <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
+        upload_file
+      </span>
+      {label}
+      <input type="file" accept=".json" className="hidden" onChange={onChange} />
+    </label>
+  );
+}
+
+function ImportView() {
+  const t = useTranslations("providerTransfer");
+  const [bundle, setBundle] = useState<unknown>(null);
+  const [fileName, setFileName] = useState("");
+  const [passphrase, setPassphrase] = useState("");
+  const [plan, setPlan] = useState<Plan | null>(null);
+  const [decisions, setDecisions] = useState<Record<string, ProviderTransferAction>>({});
+  const { busy, status, setStatus, run } = useTransferRequest();
+
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    setPlan(null);
+    setDecisions({});
+    setStatus({ type: "", message: "" });
+    if (!file) return;
+    const parsed = await readTransferFile(file);
+    setBundle(parsed);
+    setFileName(parsed ? file.name : "");
+    if (!parsed) setStatus({ type: "error", message: t("invalidFile") });
   };
 
   const handlePreview = async () => {
@@ -328,16 +445,8 @@ function ImportView() {
       t("importFailed")
     );
     if (!data) return;
-    const applied = (data as { applied: Record<string, number> }).applied || {};
     setPlan(null);
-    setStatus({
-      type: "success",
-      message: t("importSuccess", {
-        connections: applied.providerConnections ?? 0,
-        nodes: applied.providerNodes ?? 0,
-        skipped: applied.skipped ?? 0,
-      }),
-    });
+    setStatus({ type: "success", message: t("importSuccess", appliedCounts(data)) });
   };
 
   const setDecision = (key: string, action: ProviderTransferAction) =>
@@ -345,13 +454,7 @@ function ImportView() {
 
   return (
     <div className="flex flex-col gap-3">
-      <label className="inline-flex w-fit cursor-pointer items-center gap-2 rounded-md border border-border px-3 py-1.5 text-sm">
-        <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-          upload_file
-        </span>
-        {fileName || t("chooseFile")}
-        <input type="file" accept=".json" className="hidden" onChange={handleFile} />
-      </label>
+      <FileChooser label={fileName || t("chooseFile")} onChange={handleFile} />
       <Input
         type="password"
         autoComplete="off"
@@ -371,27 +474,13 @@ function ImportView() {
         </Button>
       </div>
       {plan && (
-        <>
-          <p className="text-xs text-text-muted">
-            {t("summary", {
-              connections: plan.summary.providerConnections,
-              nodes: plan.summary.providerNodes,
-            })}
-          </p>
-          <div className="max-h-72 overflow-y-auto rounded-lg border border-border/50 divide-y divide-border/40">
-            <PlanRows items={plan.providerNodes} decisions={decisions} onChange={setDecision} />
-            <PlanRows
-              items={plan.providerConnections}
-              decisions={decisions}
-              onChange={setDecision}
-            />
-          </div>
-          <div>
-            <Button variant="primary" size="sm" loading={busy} onClick={handleImport}>
-              {t("importButton")}
-            </Button>
-          </div>
-        </>
+        <PlanReview
+          plan={plan}
+          decisions={decisions}
+          onDecision={setDecision}
+          busy={busy}
+          onImport={handleImport}
+        />
       )}
       <StatusLine status={status} />
     </div>

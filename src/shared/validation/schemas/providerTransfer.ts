@@ -92,5 +92,3 @@ export const providerTransferImportSchema = z.object({
     )
     .default({}),
 });
-
-export type ProviderTransferImportBody = z.infer<typeof providerTransferImportSchema>;

@@ -307,7 +307,7 @@ export async function exportProviderTransferBundle(input: {
     throw new ProviderTransferInputError("One or more selected provider accounts no longer exist");
   }
 
-  const providerConnections = selected.map((connection) => ({
+  const providerConnections: JsonRecord[] = selected.map((connection) => ({
     sourceId: String(connection.id),
     ...toPortableConnection(connection),
   }));
@@ -413,49 +413,66 @@ export function findMatchingConnection(
   const byId = candidates.find((connection) => connection.id === source.sourceId);
   if (byId) return byId;
 
+  return (
+    findByEmail(candidates, source) ||
+    candidates.find((connection) => sharesCredential(connection, source)) ||
+    findByWebSession(candidates, source, provider) ||
+    findByApiKeyName(candidates, source, provider) ||
+    findByCodexAccount(candidates, source, provider) ||
+    null
+  );
+}
+
+function findByEmail(candidates: JsonRecord[], source: JsonRecord): JsonRecord | undefined {
   const email = str(source.email);
-  if (email) {
-    const byEmail = candidates.find(
-      (connection) =>
-        connection.authType === source.authType &&
-        str(connection.email) === email &&
-        discriminatorsAgree(connection, source)
-    );
-    if (byEmail) return byEmail;
-  }
+  if (!email) return undefined;
+  return candidates.find(
+    (connection) =>
+      connection.authType === source.authType &&
+      str(connection.email) === email &&
+      discriminatorsAgree(connection, source)
+  );
+}
 
-  const byCredential = candidates.find((connection) => sharesCredential(connection, source));
-  if (byCredential) return byCredential;
-
+function findByWebSession(
+  candidates: JsonRecord[],
+  source: JsonRecord,
+  provider: string
+): JsonRecord | undefined {
   const sessionKey = webSessionCredentialKey(specificData(source));
-  if (sessionKey && (source.authType === "cookie" || isWebCookieProviderId(provider))) {
-    const bySession = candidates.find(
-      (connection) => webSessionCredentialKey(specificData(connection)) === sessionKey
-    );
-    if (bySession) return bySession;
-  }
+  if (!sessionKey) return undefined;
+  if (source.authType !== "cookie" && !isWebCookieProviderId(provider)) return undefined;
+  return candidates.find(
+    (connection) => webSessionCredentialKey(specificData(connection)) === sessionKey
+  );
+}
 
+function findByApiKeyName(
+  candidates: JsonRecord[],
+  source: JsonRecord,
+  provider: string
+): JsonRecord | undefined {
   const name = str(source.name);
-  if (source.authType === "apikey" && name && !isWebCookieProviderId(provider)) {
-    const byName = candidates.find(
-      (connection) => connection.authType === "apikey" && str(connection.name) === name
-    );
-    if (byName) return byName;
-  }
+  if (source.authType !== "apikey" || !name || isWebCookieProviderId(provider)) return undefined;
+  return candidates.find(
+    (connection) => connection.authType === "apikey" && str(connection.name) === name
+  );
+}
 
+function findByCodexAccount(
+  candidates: JsonRecord[],
+  source: JsonRecord,
+  provider: string
+): JsonRecord | undefined {
   const chatgptUserId = str(specificData(source).chatgptUserId);
-  if (provider === "codex" && chatgptUserId) {
-    const workspaceId = str(specificData(source).workspaceId);
-    return (
-      candidates.find(
-        (connection) =>
-          connection.authType === "oauth" &&
-          str(specificData(connection).chatgptUserId) === chatgptUserId &&
-          str(specificData(connection).workspaceId) === workspaceId
-      ) || null
-    );
-  }
-  return null;
+  if (provider !== "codex" || !chatgptUserId) return undefined;
+  const workspaceId = str(specificData(source).workspaceId);
+  return candidates.find(
+    (connection) =>
+      connection.authType === "oauth" &&
+      str(specificData(connection).chatgptUserId) === chatgptUserId &&
+      str(specificData(connection).workspaceId) === workspaceId
+  );
 }
 
 function statusFor(target: JsonRecord | null, sameContent: boolean): TransferItemStatus {
@@ -514,7 +531,7 @@ export function planProviderTransfer(
   const connectionItems = payload.providerConnections.map((original): TransferPlanItem => {
     const sourceId = String(original.sourceId);
     const provider = nodePlan.remap.get(String(original.provider)) || String(original.provider);
-    const source = { ...original, provider };
+    const source: JsonRecord = { ...original, provider };
     const supported = isTransferableProvider(provider, availableNodeIds);
     const target = supported ? findMatchingConnection(existing.connections, source) : null;
     const same =
@@ -604,6 +621,57 @@ function resolveDecisions(
   return resolved;
 }
 
+function recordSkipped(item: TransferPlanItem, result: TransferApplyResult): void {
+  result.applied.skipped++;
+  result.items.push({ key: item.key, outcome: "skipped" });
+}
+
+async function applyNodeItem(
+  item: TransferPlanItem,
+  action: ProviderTransferAction | undefined,
+  nodesById: Map<string, JsonRecord>,
+  result: TransferApplyResult
+): Promise<void> {
+  const source = toPortableNode(nodesById.get(item.sourceId) || {});
+  if (action === "add") {
+    await createProviderNode({ id: item.sourceId, ...source });
+  } else if (action === "replace" && item.targetId) {
+    await updateProviderNode(item.targetId, { customHeaders: null, ...source });
+  } else {
+    recordSkipped(item, result);
+    return;
+  }
+  result.applied.providerNodes++;
+  result.items.push({ key: item.key, outcome: action === "add" ? "added" : "replaced" });
+}
+
+async function applyConnectionItem(
+  item: TransferPlanItem,
+  action: ProviderTransferAction | undefined,
+  connectionsById: Map<string, JsonRecord>,
+  existingConnectionIds: Set<string>,
+  result: TransferApplyResult
+): Promise<void> {
+  const source = {
+    ...toPortableConnection(connectionsById.get(item.sourceId) || {}),
+    provider: item.provider,
+  };
+  if (action === "add") {
+    const created = (await createProviderConnection({ ...source, isActive: true })) || {};
+    const merged = existingConnectionIds.has(String(created.id));
+    result.writes.push({ outcome: merged ? "updated" : "created", connection: created });
+    result.items.push({ key: item.key, outcome: merged ? "merged" : "added" });
+  } else if (action === "replace" && item.targetId) {
+    const updated = (await updateProviderConnection(item.targetId, source)) || {};
+    result.writes.push({ outcome: "updated", connection: updated });
+    result.items.push({ key: item.key, outcome: "replaced" });
+  } else {
+    recordSkipped(item, result);
+    return;
+  }
+  result.applied.providerConnections++;
+}
+
 export async function applyProviderTransfer(
   bundle: ProviderTransferBundle,
   passphrase: string,
@@ -628,45 +696,20 @@ export async function applyProviderTransfer(
 
   const nodesById = new Map(payload.providerNodes.map((node) => [String(node.sourceId), node]));
   for (const item of plan.providerNodes) {
-    const action = resolved.get(item.key);
-    const source = toPortableNode(nodesById.get(item.sourceId) || {});
-    if (action === "add") {
-      await createProviderNode({ id: item.sourceId, ...source });
-    } else if (action === "replace" && item.targetId) {
-      await updateProviderNode(item.targetId, { customHeaders: null, ...source });
-    } else {
-      result.applied.skipped++;
-      result.items.push({ key: item.key, outcome: "skipped" });
-      continue;
-    }
-    result.applied.providerNodes++;
-    result.items.push({ key: item.key, outcome: action === "add" ? "added" : "replaced" });
+    await applyNodeItem(item, resolved.get(item.key), nodesById, result);
   }
 
   const connectionsById = new Map(
     payload.providerConnections.map((connection) => [String(connection.sourceId), connection])
   );
   for (const item of plan.providerConnections) {
-    const action = resolved.get(item.key);
-    const source = {
-      ...toPortableConnection(connectionsById.get(item.sourceId) || {}),
-      provider: item.provider,
-    };
-    if (action === "add") {
-      const created = (await createProviderConnection({ ...source, isActive: true })) || {};
-      const merged = existingConnectionIds.has(String(created.id));
-      result.writes.push({ outcome: merged ? "updated" : "created", connection: created });
-      result.items.push({ key: item.key, outcome: merged ? "merged" : "added" });
-    } else if (action === "replace" && item.targetId) {
-      const updated = (await updateProviderConnection(item.targetId, source)) || {};
-      result.writes.push({ outcome: "updated", connection: updated });
-      result.items.push({ key: item.key, outcome: "replaced" });
-    } else {
-      result.applied.skipped++;
-      result.items.push({ key: item.key, outcome: "skipped" });
-      continue;
-    }
-    result.applied.providerConnections++;
+    await applyConnectionItem(
+      item,
+      resolved.get(item.key),
+      connectionsById,
+      existingConnectionIds,
+      result
+    );
   }
   return result;
 }
