@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — sistem RLM de programare cu auto-îmbunătățire și compatibilitate cu furnizori compatibili cu OpenAI",
       "warp": "Terminal Warp AI cu suport pentru furnizori personalizați",
       "agent-deck": "Orchestrator multi-agent Agent Deck",
-      "5dive": "5dive — flotă auto-găzduită de agenți de codare; un profil de autentificare îi îndreaptă pe toți către OmniRoute"
+      "5dive": "5dive — flotă auto-găzduită de agenți de codare; un profil de autentificare îi îndreaptă pe toți către OmniRoute",
+      "zed": "Editorul de cod Zed — agent integrat printr-un furnizor compatibil cu OpenAI"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "Dezactivați conexiunea",
     "enableConnection": "Activați conexiunea",
     "reauthenticateConnection": "Re-autentificați această conexiune",
+    "verifyAccount": "Verifică contul",
+    "verifyAccountHint": "Google solicită verificarea acestui cont. Deschide linkul, finalizează verificarea, apoi încearcă din nou.",
     "proxyConfig": "Configurare proxy",
     "aliasExistsAlert": "Aliasul „{alias}” există deja. Vă rugăm să utilizați un alt model sau să editați alias-ul existent.",
     "aliasInputPlaceholder": "numele aliasului",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "Ascunde acest rând de cotă",
     "showQuotaRow": "Afișează acest rând de cotă",
     "hiddenQuotaRowsLabel": "Ascuns:",
+    "quotaSpeedTitle": "Viteza recentă de decodare pe acest cont (ultimele {count} cereri reușite)",
+    "quotaSpeedLine": "{model}: {avg} tok/s medie · ultima {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s medie · ultima {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Nu s-a putut actualiza vizibilitatea cotei",
     "account": "Cont",
     "modelQuotas": "Cote model",

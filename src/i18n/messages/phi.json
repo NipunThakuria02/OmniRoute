@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — kusang humuhusay na RLM coding harness na may suporta para sa OpenAI-compatible na provider",
       "warp": "Warp AI terminal na may suporta sa custom provider",
       "agent-deck": "Agent Deck na tagapag-orkestra ng maraming ahente",
-      "5dive": "5dive — self-hosted fleet ng coding agents; isang auth profile ang nagtuturo sa kanilang lahat sa OmniRoute"
+      "5dive": "5dive — self-hosted fleet ng coding agents; isang auth profile ang nagtuturo sa kanilang lahat sa OmniRoute",
+      "zed": "Zed code editor — built-in na agent sa pamamagitan ng provider na compatible sa OpenAI"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "Huwag paganahin ang koneksyon",
     "enableConnection": "Paganahin ang koneksyon",
     "reauthenticateConnection": "Muling patotohanan ang koneksyong ito",
+    "verifyAccount": "I-verify ang account",
+    "verifyAccountHint": "Hinihingi ng Google na i-verify mo ang account na ito. Buksan ang link, tapusin ang pagsusuri, saka subukang muli.",
     "proxyConfig": "Configuration ng proxy",
     "aliasExistsAlert": "Umiiral na ang alyas na \"{alias}\". Mangyaring gumamit ng ibang modelo o i-edit ang kasalukuyang alias.",
     "aliasInputPlaceholder": "pangalan ng alias",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "Itago ang row ng quota na ito",
     "showQuotaRow": "Ipakita ang row ng quota na ito",
     "hiddenQuotaRowsLabel": "Nakatago:",
+    "quotaSpeedTitle": "Kamakailang bilis ng decode sa account na ito (huling {count} matagumpay na kahilingan)",
+    "quotaSpeedLine": "{model}: {avg} tok/s karaniwan · huli {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s karaniwan · huli {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Hindi ma-update ang visibility ng quota",
     "account": "Account",
     "modelQuotas": "Mga Modelong Quota",

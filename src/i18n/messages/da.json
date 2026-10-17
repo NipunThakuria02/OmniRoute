@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — selvforbedrende RLM-kodningsramme med understøttelse af OpenAI-kompatible providere",
       "warp": "Warp AI-terminal med understøttelse af brugerdefineret udbyder",
       "agent-deck": "Agent Deck multi-agent-orkestrator",
-      "5dive": "5dive — selv-hostet flåde af kodningsagenter; én auth-profil peger dem alle mod OmniRoute"
+      "5dive": "5dive — selv-hostet flåde af kodningsagenter; én auth-profil peger dem alle mod OmniRoute",
+      "zed": "Zed-kodeeditor — indbygget agent via en OpenAI-kompatibel udbyder"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "Deaktiver forbindelse",
     "enableConnection": "Aktiver forbindelse",
     "reauthenticateConnection": "Genautentificer denne forbindelse",
+    "verifyAccount": "Bekræft konto",
+    "verifyAccountHint": "Google kræver, at du bekræfter denne konto. Åbn linket, gennemfør kontrollen, og prøv igen.",
     "proxyConfig": "Proxy konfiguration",
     "aliasExistsAlert": "Aliaset \"{alias}\" findes allerede. Brug venligst en anden model, eller rediger eksisterende alias.",
     "aliasInputPlaceholder": "aliasnavn",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "Skjul denne kvoterække",
     "showQuotaRow": "Vis denne kvoterække",
     "hiddenQuotaRowsLabel": "Skjult:",
+    "quotaSpeedTitle": "Seneste afkodningshastighed på denne konto (seneste {count} vellykkede anmodninger)",
+    "quotaSpeedLine": "{model}: {avg} tok/s gns. · seneste {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s gns. · seneste {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kunne ikke opdatere kvotesynlighed",
     "account": "Konto",
     "modelQuotas": "Modelkvoter",

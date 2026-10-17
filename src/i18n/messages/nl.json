@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — zelfverbeterende RLM-codeeromgeving met ondersteuning voor OpenAI-compatibele providers",
       "warp": "Warp AI-terminal met ondersteuning voor aangepaste providers",
       "agent-deck": "Agent Deck multi-agent-orchestrator",
-      "5dive": "5dive — zelf gehoste vloot van codeeragents; één auth-profiel wijst ze allemaal naar OmniRoute"
+      "5dive": "5dive — zelf gehoste vloot van codeeragents; één auth-profiel wijst ze allemaal naar OmniRoute",
+      "zed": "Zed-code-editor — ingebouwde agent via een OpenAI-compatibele provider"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "Verbinding uitschakelen",
     "enableConnection": "Verbinding inschakelen",
     "reauthenticateConnection": "Authenticeer deze verbinding opnieuw",
+    "verifyAccount": "Account verifiëren",
+    "verifyAccountHint": "Google vereist dat je dit account verifieert. Open de link, rond de controle af en probeer het opnieuw.",
     "proxyConfig": "Proxy-configuratie",
     "aliasExistsAlert": "Alias \"{alias}\" bestaat al. Gebruik een ander model of bewerk de bestaande alias.",
     "aliasInputPlaceholder": "aliasnaam",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "Deze quotarij verbergen",
     "showQuotaRow": "Deze quotarij tonen",
     "hiddenQuotaRowsLabel": "Verborgen:",
+    "quotaSpeedTitle": "Recente decodeersnelheid op dit account (laatste {count} geslaagde verzoeken)",
+    "quotaSpeedLine": "{model}: {avg} tok/s gem. · laatste {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s gem. · laatste {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Bijwerken van quotazichtbaarheid mislukt",
     "account": "Rekening",
     "modelQuotas": "Modelquota",

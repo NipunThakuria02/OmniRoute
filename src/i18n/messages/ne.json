@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-सङ्गत प्रदायक समर्थनसहितको आफैँ सुधार हुने RLM कोडिङ हार्नेस",
       "warp": "कस्टम प्रदायक समर्थनसहितको Warp AI टर्मिनल",
       "agent-deck": "Agent Deck बहु-एजेन्ट संयोजक",
-      "5dive": "5dive — स्व-होस्ट गरिएको कोडिङ एजेन्टहरूको समूह; एउटै प्रमाणीकरण प्रोफाइलले ती सबैलाई OmniRoute तर्फ निर्देशित गर्छ"
+      "5dive": "5dive — स्व-होस्ट गरिएको कोडिङ एजेन्टहरूको समूह; एउटै प्रमाणीकरण प्रोफाइलले ती सबैलाई OmniRoute तर्फ निर्देशित गर्छ",
+      "zed": "Zed कोड सम्पादक — OpenAI-अनुकूल प्रदायक मार्फत बिल्ट-इन एजेन्ट"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "जडान असक्षम गर्नुहोस्",
     "enableConnection": "जडान सक्षम गर्नुहोस्",
     "reauthenticateConnection": "यो जडान पुनः प्रमाणीकरण गर्नुहोस्",
+    "verifyAccount": "खाता प्रमाणित गर्नुहोस्",
+    "verifyAccountHint": "Google ले यो खाता प्रमाणित गर्न भनेको छ। लिङ्क खोल्नुहोस्, जाँच पूरा गर्नुहोस्, अनि फेरि प्रयास गर्नुहोस्।",
     "proxyConfig": "प्रोक्सी कन्फिगरेसन",
     "aliasExistsAlert": "उपनाम \"{alias}\" पहिले नै अवस्थित छ। कृपया फरक मोडेल प्रयोग गर्नुहोस् वा विद्यमान उपनाम सम्पादन गर्नुहोस्।",
     "aliasInputPlaceholder": "उपनामको नाम",
@@ -9862,6 +9865,9 @@
     "hideQuotaRow": "यो कोटा पङ्क्ति लुकाउनुहोस्",
     "showQuotaRow": "यो कोटा पङ्क्ति देखाउनुहोस्",
     "hiddenQuotaRowsLabel": "लुकाइएको:",
+    "quotaSpeedTitle": "यस खातामा हालको डिकोड गति (अन्तिम {count} सफल अनुरोधहरू)",
+    "quotaSpeedLine": "{model}: {avg} tok/s औसत · अन्तिम {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s औसत · अन्तिम {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "कोटा दृश्यता अद्यावधिक गर्न असफल भयो",
     "account": "खाता",
     "modelQuotas": "मोडेल कोटाहरू",

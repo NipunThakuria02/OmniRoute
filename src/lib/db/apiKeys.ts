@@ -26,6 +26,11 @@ import { resolveModelAlias } from "@omniroute/open-sse/services/modelDeprecation
 import { getProviderAlias, resolveProviderId } from "@/shared/constants/providers";
 import { isSelfLoopBearer, selfLoopKeyOverrides } from "./apiKeys/selfLoopKey";
 import {
+  backfillApiKeySecretsAtRest,
+  decryptApiKeySecret,
+  encryptApiKeySecret,
+} from "./apiKeys/secretAtRest";
+import {
   findPublishedModel,
   isDeniedUnderCanonicalProvider,
   isPublishedModelHidden,
@@ -431,11 +436,30 @@ function ensureApiKeysColumns(db: ApiKeysDbLike) {
 
   try {
     ensureApiKeyFallbackColumns(db);
+    // Legacy rows (plaintext secret, key_hash NULL) are hashed and encrypted in place here,
+    // before the first lookup, so the hash-only auth below keeps accepting them.
+    backfillApiKeySecretsAtRest(db);
     _schemaChecked = true;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.warn("[DB] Failed to verify api_keys schema:", message);
   }
+}
+
+/**
+ * Hash-only lookup for the auth hot path — the plaintext column is never matched or
+ * decrypted. A miss re-runs the legacy backfill once (cheap: it selects only rows that
+ * still lack a hash or sit in plaintext) so a row written by an older writer or a restore
+ * after module init still resolves on its first use.
+ */
+function lookupByKeyHash<TRow>(
+  db: ApiKeysDbLike,
+  statement: StatementLike<TRow>,
+  hashedKey: string
+): TRow | undefined {
+  const row = statement.get(hashedKey);
+  if (row) return row;
+  return backfillApiKeySecretsAtRest(db) > 0 ? statement.get(hashedKey) : undefined;
 }
 
 let _stmtDb: ApiKeysDbLike | null = null;
@@ -455,10 +479,10 @@ function getPreparedStatements(db: ApiKeysDbLike): ApiKeysStatements {
     _stmtGetAllKeys = db.prepare<ApiKeyRow>("SELECT * FROM api_keys ORDER BY created_at");
     _stmtGetKeyById = db.prepare<ApiKeyRow>("SELECT * FROM api_keys WHERE id = ?");
     _stmtValidateKey = db.prepare<JsonRecord>(
-      "SELECT id, expires_at, revoked_at, is_active, is_banned FROM api_keys WHERE key = ? OR key_hash = ?"
+      "SELECT id, expires_at, revoked_at, is_active, is_banned FROM api_keys WHERE key_hash = ?"
     );
     _stmtGetKeyMetadata = db.prepare<ApiKeyRow>(
-      "SELECT id, name, machine_id, model_access_mode, allowed_models, blocked_models, allowed_combos, allowed_connections, allowed_quotas, no_log, auto_resolve, is_active, access_schedule, max_requests_per_day, max_requests_per_minute, throttle_delay_ms, max_sessions, revoked_at, expires_at, ip_allowlist, scopes, rate_limits, is_banned, key_hash, allowed_endpoints, stream_default_mode, cache_default_mode, codex_service_mode, disable_non_public_models, allow_usage_command, usage_limit_enabled, daily_usage_limit_usd, weekly_usage_limit_usd, chaos_mode_enabled, compression_enabled, allow_auto_combos, catalog_scope, proxy_id FROM api_keys WHERE key = ? OR key_hash = ?"
+      "SELECT id, name, machine_id, model_access_mode, allowed_models, blocked_models, allowed_combos, allowed_connections, allowed_quotas, no_log, auto_resolve, is_active, access_schedule, max_requests_per_day, max_requests_per_minute, throttle_delay_ms, max_sessions, revoked_at, expires_at, ip_allowlist, scopes, rate_limits, is_banned, key_hash, allowed_endpoints, stream_default_mode, cache_default_mode, codex_service_mode, disable_non_public_models, allow_usage_command, usage_limit_enabled, daily_usage_limit_usd, weekly_usage_limit_usd, chaos_mode_enabled, compression_enabled, allow_auto_combos, catalog_scope, proxy_id FROM api_keys WHERE key_hash = ?"
     );
     _stmtInsertKey = db.prepare(
       "INSERT INTO api_keys (id, name, key, machine_id, model_access_mode, allowed_models, allowed_combos, allowed_connections, no_log, created_at, key_prefix, key_hash, scopes, expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -499,6 +523,8 @@ export async function getApiKeys(limit?: number, offset?: number) {
   }
   return rows.map((row) => {
     const camelRow = toRecord(rowToCamel(row)) as ApiKeyView;
+    // Raw secret for the operator-only JSON export and internal probes; stored encrypted.
+    camelRow.key = decryptApiKeySecret(camelRow.key);
     camelRow.modelAccessMode = parseModelAccessMode(
       camelRow.modelAccessMode,
       camelRow.allowedModels
@@ -644,6 +670,8 @@ export async function getApiKeyById(id: string) {
   const row = stmt.getKeyById.get(id);
   if (!row) return null;
   const camelRow = toRecord(rowToCamel(row)) as ApiKeyView;
+  // Raw secret for the admin reveal route and by-id consumers; stored encrypted.
+  camelRow.key = decryptApiKeySecret(camelRow.key);
   camelRow.modelAccessMode = parseModelAccessMode(camelRow.modelAccessMode, camelRow.allowedModels);
   camelRow.allowedModels = parseAllowedModels(camelRow.allowedModels);
   camelRow.blockedModels = parseAllowedModels(camelRow.blockedModels);
@@ -730,10 +758,12 @@ export async function createApiKey(
   };
 
   const stmt = getPreparedStatements(db);
+  // The secret is stored through the enc:v1: envelope (reversible for the admin reveal and
+  // the operator export); auth matches key_hash only. See apiKeys/secretAtRest.ts.
   stmt.insertKey.run(
     apiKey.id,
     apiKey.name,
-    apiKey.key,
+    encryptApiKeySecret(apiKey.key),
     apiKey.machineId,
     apiKey.modelAccessMode,
     JSON.stringify(apiKey.allowedModels),
@@ -768,7 +798,7 @@ export async function regenerateApiKey(id: string) {
   const updateStmt = db.prepare(
     "UPDATE api_keys SET key = ?, key_hash = ?, key_prefix = ? WHERE id = ?"
   );
-  updateStmt.run(newKey, newHash, newPrefix, id);
+  updateStmt.run(encryptApiKeySecret(newKey), newHash, newPrefix, id);
 
   // Invalidate all caches
   clearApiKeyCaches();
@@ -1292,7 +1322,7 @@ export async function validateApiKey(key: string | null | undefined) {
 
   const db = getDbInstance() as ApiKeysDbLike;
   const stmt = getPreparedStatements(db);
-  const row = stmt.validateKey.get(key, hashedKey) as JsonRecord | undefined;
+  const row = lookupByKeyHash(db, stmt.validateKey, hashedKey);
 
   if (!row) return false;
 
@@ -1430,7 +1460,7 @@ export async function getApiKeyMetadata(
 
   const db = getDbInstance() as ApiKeysDbLike;
   const stmt = getPreparedStatements(db);
-  const row = stmt.getKeyMetadata.get(key, hashedKey);
+  const row = lookupByKeyHash(db, stmt.getKeyMetadata, hashedKey);
 
   if (!row) return null;
 

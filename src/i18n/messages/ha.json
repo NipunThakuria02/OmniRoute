@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — tsarin RLM na shirye-shirye mai inganta kansa tare da goyon bayan masu samarwa masu dacewa da OpenAI",
       "warp": "Terminal na Warp AI tare da goyon bayan mai samarwa na musamman",
       "agent-deck": "Mai tsara ayyukan wakilai da yawa na Agent Deck",
-      "5dive": "5dive — rundunar wakilan shirye-shirye da ake ɗaukar nauyinsu da kai; bayanin martabar tantancewa guda ɗaya yana karkatar da su duka zuwa OmniRoute"
+      "5dive": "5dive — rundunar wakilan shirye-shirye da ake ɗaukar nauyinsu da kai; bayanin martabar tantancewa guda ɗaya yana karkatar da su duka zuwa OmniRoute",
+      "zed": "Editan lamba na Zed — wakili na ciki ta hanyar mai bayarwa mai dacewa da OpenAI"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "Kashe haɗin",
     "enableConnection": "Kunna haɗin",
     "reauthenticateConnection": "Sake tantance wannan haɗin",
+    "verifyAccount": "Tabbatar da asusu",
+    "verifyAccountHint": "Google na buƙatar ka tabbatar da wannan asusu. Buɗe hanyar haɗin, kammala tabbatarwa, sannan sake gwadawa.",
     "proxyConfig": "Tsarin proxy",
     "aliasExistsAlert": "Alias \"{alias}\" ya riga ya wanzu. Da fatan za a yi amfani da wani samfuri daban ko a gyara alias ɗin da ke akwai.",
     "aliasInputPlaceholder": "sunan alias",
@@ -9862,6 +9865,9 @@
     "hideQuotaRow": "Ɓoye wannan layin iyakar amfani",
     "showQuotaRow": "Nuna wannan layin iyakar amfani",
     "hiddenQuotaRowsLabel": "Ɓoyayyu:",
+    "quotaSpeedTitle": "Saurin fassarar kwanan nan a wannan asusu (buƙatu {count} na ƙarshe da suka yi nasara)",
+    "quotaSpeedLine": "{model}: {avg} tok/s matsakaici · na ƙarshe {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s matsakaici · na ƙarshe {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "An kasa sabunta ko za a nuna iyakar amfani",
     "account": "Asusu",
     "modelQuotas": "Iyakokin Samfura",

@@ -12,6 +12,7 @@ import {
 import { maybeReactivateAfterExplicitProbe } from "../services/explicitInactiveProbe";
 import { connectionHasExtraKeys } from "@omniroute/open-sse/services/apiKeyRotator.ts";
 import { clearRequestRejectedStreak } from "@omniroute/open-sse/services/requestRejectedStreak.ts";
+import { clearAntigravityVerificationUrl } from "@omniroute/open-sse/handlers/chatCore/antigravityVerificationState.ts";
 import { createBuiltinAutoCombo } from "@omniroute/open-sse/services/autoCombo/builtinCatalog.ts";
 import * as log from "../utils/logger";
 import { updateProviderCredentials } from "../services/tokenRefresh";
@@ -549,6 +550,11 @@ export async function executeChatWithBreaker({
               // Only a real success ends the per-request refusal streak (#12859).
               if (credentials.connectionId) clearRequestRejectedStreak(credentials.connectionId);
               await clearAccountError(credentials.connectionId, credentials);
+              await clearAntigravityVerificationUrl(
+                provider,
+                credentials.connectionId,
+                credentials.providerSpecificData
+              );
               await maybeReactivateAfterExplicitProbe({
                 connectionId: credentials.connectionId,
                 reactivatedFromInactive: credentials.reactivatedFromInactive,

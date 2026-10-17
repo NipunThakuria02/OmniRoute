@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — creat códaithe RLM a fhéinfheabhsaíonn, le tacaíocht do sholáthraithe atá comhoiriúnach le OpenAI",
       "warp": "teirminéal AI Warp le tacaíocht do sholáthraí saincheaptha",
       "agent-deck": "comhordaitheoir ilghníomhairí Agent Deck",
-      "5dive": "5dive — cabhlach féinóstáilte de ghníomhairí códaithe; díríonn próifíl fíordheimhnithe amháin iad go léir ar OmniRoute"
+      "5dive": "5dive — cabhlach féinóstáilte de ghníomhairí códaithe; díríonn próifíl fíordheimhnithe amháin iad go léir ar OmniRoute",
+      "zed": "Eagarthóir cóid Zed — gníomhaire ionsuite trí sholáthraí atá comhoiriúnach le OpenAI"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "Díchumasaigh nasc",
     "enableConnection": "Cumasaigh nasc",
     "reauthenticateConnection": "Athfhíordheimhnigh an nasc seo",
+    "verifyAccount": "Fíoraigh an cuntas",
+    "verifyAccountHint": "Éilíonn Google go bhfíorófá an cuntas seo. Oscail an nasc, críochnaigh an seiceáil, agus bain triail eile as.",
     "proxyConfig": "Cumraíocht seachfhreastalaí",
     "aliasExistsAlert": "Tá alias \"{alias}\" ann cheana. Úsáid samhail eile nó cuir alias atá ann cheana in eagar.",
     "aliasInputPlaceholder": "ainm alias",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "Folaigh an ró cuóta seo",
     "showQuotaRow": "Taispeáin an ró cuóta seo",
     "hiddenQuotaRowsLabel": "Folaithe:",
+    "quotaSpeedTitle": "Luas díchódaithe le déanaí ar an gcuntas seo (na {count} iarratas rathúla is déanaí)",
+    "quotaSpeedLine": "{model}: {avg} tok/s meán · is déanaí {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s meán · is déanaí {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Theip ar infheictheacht an chuóta a nuashonrú",
     "account": "Cuntas",
     "modelQuotas": "Cuótaí Múnla",

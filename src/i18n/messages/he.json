@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — מסגרת קידוד מבוססת RLM המשתפרת בעצמה, עם תמיכה בספקים תואמי OpenAI",
       "warp": "מסוף Warp AI עם תמיכה בספק מותאם אישית",
       "agent-deck": "מתזמר מרובה סוכנים Agent Deck",
-      "5dive": "5dive — צי מתארח עצמאית של סוכני קוד; פרופיל אימות אחד מכוון את כולם ל-OmniRoute"
+      "5dive": "5dive — צי מתארח עצמאית של סוכני קוד; פרופיל אימות אחד מכוון את כולם ל-OmniRoute",
+      "zed": "עורך הקוד Zed — סוכן מובנה דרך ספק תואם OpenAI"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "השבת את החיבור",
     "enableConnection": "אפשר חיבור",
     "reauthenticateConnection": "אימות מחדש את החיבור הזה",
+    "verifyAccount": "אמת חשבון",
+    "verifyAccountHint": "Google דורשת לאמת את החשבון הזה. פתח את הקישור, השלם את הבדיקה ונסה שוב.",
     "proxyConfig": "תצורת פרוקסי",
     "aliasExistsAlert": "הכינוי \"{alias}\" כבר קיים. אנא השתמש בדגם אחר או ערוך כינוי קיים.",
     "aliasInputPlaceholder": "שם כינוי",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "הסתר שורת מכסה זו",
     "showQuotaRow": "הצג שורת מכסה זו",
     "hiddenQuotaRowsLabel": "מוסתר:",
+    "quotaSpeedTitle": "מהירות פענוח אחרונה בחשבון זה ({count} הבקשות המוצלחות האחרונות)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ממוצע · אחרון {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ממוצע · אחרון {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "עדכון נראות המכסה נכשל",
     "account": "חשבון",
     "modelQuotas": "מכסות דגם",
