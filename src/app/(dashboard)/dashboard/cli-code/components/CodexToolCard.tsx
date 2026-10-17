@@ -33,7 +33,8 @@ export default function CodexToolCard({
   const [modelMappings, setModelMappings] = useState<Record<string, string>>({});
   const [reasoningEffort, setReasoningEffort] = useState("xhigh");
   const [wireApi, setWireApi] = useState("responses");
-  const [writeModelCatalog, setWriteModelCatalog] = useState(true);
+  // Opt-in: the catalog file is ~60 KB per model (MBs with a large catalog) in ~/.codex.
+  const [writeModelCatalog, setWriteModelCatalog] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTarget, setModalTarget] = useState<string | null>(null); // null = default model, string = mapping key
   const [modelAliases, setModelAliases] = useState({});

@@ -114,25 +114,25 @@ const renderCard = async (applyResponse: Record<string, unknown>) => {
 };
 
 describe("CodexToolCard model catalog", () => {
-  it("asks for the Codex model catalog by default and can opt out", async () => {
+  it("does not ask for the Codex model catalog by default and can opt in", async () => {
     const { container, posts } = await renderCard({ success: true });
-    expect(catalogCheckbox(container)?.checked).toBe(true);
+    expect(catalogCheckbox(container)?.checked).toBe(false);
 
     await act(async () => {
       applyButton(container)!.click();
     });
     await waitFor(() => posts.length === 1);
-    expect(posts[0].modelCatalog).toBe(true);
+    expect(posts[0].modelCatalog).toBe(false);
 
     await act(async () => {
       catalogCheckbox(container)!.click();
     });
-    expect(catalogCheckbox(container)?.checked).toBe(false);
+    expect(catalogCheckbox(container)?.checked).toBe(true);
     await act(async () => {
       applyButton(container)!.click();
     });
     await waitFor(() => posts.length === 2);
-    expect(posts[1].modelCatalog).toBe(false);
+    expect(posts[1].modelCatalog).toBe(true);
   });
 
   it("shows a warning, not an error, when Apply succeeds without the catalog", async () => {

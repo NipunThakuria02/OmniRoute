@@ -165,6 +165,19 @@ test("POST without modelCatalog leaves Codex's catalog untouched", async () => {
   assert.equal(await exists(SEEN_CODEX_HOME), false, "codex must not be spawned");
 });
 
+test("POST with modelCatalog: false leaves Codex's catalog untouched", async () => {
+  await freshCodexDir();
+  process.env.CLI_CODEX_BIN = FAKE_CODEX_OK;
+
+  const response = await post({ modelCatalog: false });
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.catalogPath, undefined);
+  assert.doesNotMatch(await fs.readFile(CONFIG_PATH, "utf8"), /model_catalog_json/);
+  assert.equal(await exists(CATALOG_PATH), false);
+  assert.equal(await exists(SEEN_CODEX_HOME), false, "codex must not be spawned");
+});
+
 test("POST fails open with catalogWarning when Codex cannot dump its catalog", async () => {
   await freshCodexDir();
   process.env.CLI_CODEX_BIN = FAKE_CODEX_BROKEN;
