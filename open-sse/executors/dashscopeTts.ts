@@ -50,7 +50,7 @@ function resolveSpeechSynthesizerUrl(
     : `${mediaBaseUrl}${SPEECH_SYNTHESIZER_PATH}`;
 }
 
-function audioResponse(audio: Uint8Array): Response {
+function audioResponse(audio: Uint8Array<ArrayBuffer>): Response {
   return new Response(audio, {
     status: 200,
     headers: { ...CORS_HEADERS, "Content-Type": "audio/mpeg" },
