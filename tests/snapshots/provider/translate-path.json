@@ -1762,6 +1762,29 @@
       "stream": "https://inference.dahl.global/v1/chat/completions"
     }
   },
+  "daoxe": {
+    "format": "openai",
+    "headers": {
+      "apiKey": {
+        "Accept": "text/event-stream",
+        "Authorization": "Bearer <TOK>",
+        "Content-Type": "application/json"
+      },
+      "nonStream": {
+        "Authorization": "Bearer <TOK>",
+        "Content-Type": "application/json"
+      },
+      "oauth": {
+        "Accept": "text/event-stream",
+        "Authorization": "Bearer <TOK>",
+        "Content-Type": "application/json"
+      }
+    },
+    "url": {
+      "nonStream": "https://api.daoxe.com/v1/chat/completions",
+      "stream": "https://api.daoxe.com/v1/chat/completions"
+    }
+  },
   "databricks": {
     "format": "openai",
     "headers": {
@@ -4297,6 +4320,29 @@
     "url": {
       "nonStream": "https://api.naga.ac/v1/chat/completions",
       "stream": "https://api.naga.ac/v1/chat/completions"
+    }
+  },
+  "nan": {
+    "format": "openai",
+    "headers": {
+      "apiKey": {
+        "Accept": "text/event-stream",
+        "Authorization": "Bearer <TOK>",
+        "Content-Type": "application/json"
+      },
+      "nonStream": {
+        "Authorization": "Bearer <TOK>",
+        "Content-Type": "application/json"
+      },
+      "oauth": {
+        "Accept": "text/event-stream",
+        "Authorization": "Bearer <TOK>",
+        "Content-Type": "application/json"
+      }
+    },
+    "url": {
+      "nonStream": "https://api.nan.builders/v1/chat/completions",
+      "stream": "https://api.nan.builders/v1/chat/completions"
     }
   },
   "nanogpt": {
