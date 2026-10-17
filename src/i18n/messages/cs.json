@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — sebezdokonalující se programovací prostředí RLM s podporou poskytovatelů kompatibilních s OpenAI",
       "warp": "AI terminál Warp s podporou vlastních poskytovatelů",
       "agent-deck": "Multiagentní orchestrátor Agent Deck",
-      "5dive": "5dive — vlastní flotila kódovacích agentů; jeden auth profil nasměruje všechny na OmniRoute"
+      "5dive": "5dive — vlastní flotila kódovacích agentů; jeden auth profil nasměruje všechny na OmniRoute",
+      "zed": "Editor kódu Zed — vestavěný agent přes poskytovatele kompatibilního s OpenAI"
     },
     "guides": {
       "cursor": {

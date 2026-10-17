@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — önfejlesztő RLM kódolási keretrendszer OpenAI-kompatibilis szolgáltatók támogatásával",
       "warp": "Warp AI terminál egyéni szolgáltató támogatásával",
       "agent-deck": "Agent Deck többágenses orkesztrátor",
-      "5dive": "5dive — saját üzemeltetésű kódolóügynök-flotta; egyetlen auth profil mindet az OmniRoute-ra irányítja"
+      "5dive": "5dive — saját üzemeltetésű kódolóügynök-flotta; egyetlen auth profil mindet az OmniRoute-ra irányítja",
+      "zed": "Zed kódszerkesztő — beépített ágens OpenAI-kompatibilis szolgáltatón keresztül"
     },
     "guides": {
       "cursor": {

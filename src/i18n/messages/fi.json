@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — itseään kehittävä RLM-koodauskehys, joka tukee OpenAI-yhteensopivia palveluntarjoajia",
       "warp": "Warp AI -terminaali mukautetun palveluntarjoajan tuella",
       "agent-deck": "Agent Deck -moniagenttiorkestraattori",
-      "5dive": "5dive — itse isännöity koodausagenttien laivue; yksi auth-profiili ohjaa ne kaikki OmniRouteen"
+      "5dive": "5dive — itse isännöity koodausagenttien laivue; yksi auth-profiili ohjaa ne kaikki OmniRouteen",
+      "zed": "Zed-koodieditori — sisäänrakennettu agentti OpenAI-yhteensopivan palveluntarjoajan kautta"
     },
     "guides": {
       "cursor": {

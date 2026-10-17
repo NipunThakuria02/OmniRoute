@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — kusang humuhusay na RLM coding harness na may suporta para sa OpenAI-compatible na provider",
       "warp": "Warp AI terminal na may suporta sa custom provider",
       "agent-deck": "Agent Deck na tagapag-orkestra ng maraming ahente",
-      "5dive": "5dive — self-hosted fleet ng coding agents; isang auth profile ang nagtuturo sa kanilang lahat sa OmniRoute"
+      "5dive": "5dive — self-hosted fleet ng coding agents; isang auth profile ang nagtuturo sa kanilang lahat sa OmniRoute",
+      "zed": "Zed code editor — built-in na agent sa pamamagitan ng provider na compatible sa OpenAI"
     },
     "guides": {
       "cursor": {

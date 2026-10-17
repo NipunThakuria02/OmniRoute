@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — 支援 OpenAI 相容提供者、可自我改進的 RLM 程式設計框架",
       "warp": "Warp AI 終端機，支援自訂提供者",
       "agent-deck": "Agent Deck 多代理協調器",
-      "5dive": "5dive — 自架的編碼代理機群；一個認證設定檔即可將全部指向 OmniRoute"
+      "5dive": "5dive — 自架的編碼代理機群；一個認證設定檔即可將全部指向 OmniRoute",
+      "zed": "Zed 程式碼編輯器 — 透過 OpenAI 相容供應商使用內建代理"
     },
     "guides": {
       "cursor": {

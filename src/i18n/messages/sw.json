@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — mfumo wa uandishi wa msimbo wa RLM unaojiboresha wenye usaidizi wa watoa huduma wanaooana na OpenAI",
       "warp": "Terminal ya Warp AI yenye usaidizi wa mtoa huduma maalum",
       "agent-deck": "Mratibu wa mawakala wengi wa Agent Deck",
-      "5dive": "5dive — kundi la mawakala wa uandishi wa msimbo unaojipangisha; wasifu mmoja wa auth huwaelekeza wote kwa OmniRoute"
+      "5dive": "5dive — kundi la mawakala wa uandishi wa msimbo unaojipangisha; wasifu mmoja wa auth huwaelekeza wote kwa OmniRoute",
+      "zed": "Kihariri cha msimbo cha Zed — wakala aliyejengewa ndani kupitia mtoa huduma anayeendana na OpenAI"
     },
     "guides": {
       "cursor": {

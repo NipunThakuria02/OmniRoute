@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — sistem RLM de programare cu auto-îmbunătățire și compatibilitate cu furnizori compatibili cu OpenAI",
       "warp": "Terminal Warp AI cu suport pentru furnizori personalizați",
       "agent-deck": "Orchestrator multi-agent Agent Deck",
-      "5dive": "5dive — flotă auto-găzduită de agenți de codare; un profil de autentificare îi îndreaptă pe toți către OmniRoute"
+      "5dive": "5dive — flotă auto-găzduită de agenți de codare; un profil de autentificare îi îndreaptă pe toți către OmniRoute",
+      "zed": "Editorul de cod Zed — agent integrat printr-un furnizor compatibil cu OpenAI"
     },
     "guides": {
       "cursor": {

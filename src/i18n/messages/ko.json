@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI 호환 제공업체를 지원하는 자기 개선형 RLM 코딩 하네스",
       "warp": "사용자 정의 제공자 지원 기능이 포함된 Warp AI 터미널",
       "agent-deck": "Agent Deck 다중 에이전트 오케스트레이터",
-      "5dive": "5dive — 자체 호스팅 코딩 에이전트 플릿; 인증 프로필 하나로 전체를 OmniRoute로 연결"
+      "5dive": "5dive — 자체 호스팅 코딩 에이전트 플릿; 인증 프로필 하나로 전체를 OmniRoute로 연결",
+      "zed": "Zed 코드 편집기 — OpenAI 호환 공급자를 통한 내장 에이전트"
     },
     "guides": {
       "cursor": {

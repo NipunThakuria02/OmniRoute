@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — harness de codificação RLM autoevolutivo com suporte a API compatível com OpenAI",
       "warp": "Terminal de IA Warp com suporte a provedor personalizado",
       "agent-deck": "Orquestrador multi-agente Agent Deck",
-      "5dive": "5dive — frota auto-hospedada de agentes de codificação; um perfil de autenticação aponta todos para o OmniRoute"
+      "5dive": "5dive — frota auto-hospedada de agentes de codificação; um perfil de autenticação aponta todos para o OmniRoute",
+      "zed": "Editor de código Zed — agente nativo por meio de um provedor compatível com OpenAI"
     },
     "guides": {
       "cursor": {

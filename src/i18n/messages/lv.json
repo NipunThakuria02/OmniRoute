@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — sevi pilnveidojošs RLM kodēšanas rīks ar OpenAI saderīgu pakalpojumu sniedzēju atbalstu",
       "warp": "Warp AI terminālis ar pielāgotu pakalpojumu sniedzēju atbalstu",
       "agent-deck": "Agent Deck vairāku aģentu orķestrētājs",
-      "5dive": "5dive — pašmitināta kodēšanas aģentu flote; viens autentifikācijas profils tos visus novirza uz OmniRoute"
+      "5dive": "5dive — pašmitināta kodēšanas aģentu flote; viens autentifikācijas profils tos visus novirza uz OmniRoute",
+      "zed": "Zed koda redaktors — iebūvēts aģents, izmantojot ar OpenAI saderīgu nodrošinātāju"
     },
     "guides": {
       "cursor": {

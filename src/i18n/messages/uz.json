@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-mos provayderlarni qo‘llab-quvvatlaydigan, o‘zini o‘zi takomillashtiruvchi RLM dasturlash muhiti",
       "warp": "Maxsus provayderlarni qo‘llab-quvvatlaydigan Warp AI terminali",
       "agent-deck": "Agent Deck ko‘p agentli orkestratori",
-      "5dive": "5dive — o‘z serverida joylashtiriladigan dasturlash agentlari floti; bitta autentifikatsiya profili ularning barchasini OmniRoute’ga yo‘naltiradi"
+      "5dive": "5dive — o‘z serverida joylashtiriladigan dasturlash agentlari floti; bitta autentifikatsiya profili ularning barchasini OmniRoute’ga yo‘naltiradi",
+      "zed": "Zed kod muharriri — OpenAI bilan mos provayder orqali o'rnatilgan agent"
     },
     "guides": {
       "cursor": {

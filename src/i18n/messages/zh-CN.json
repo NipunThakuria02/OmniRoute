@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — 支持 OpenAI 兼容提供者的自我改进型 RLM 编码工具框架",
       "warp": "支持自定义提供者的 Warp AI 终端",
       "agent-deck": "Agent Deck 多智能体编排器",
-      "5dive": "5dive — 自托管的编码智能体集群；一个认证配置即可将全部指向 OmniRoute"
+      "5dive": "5dive — 自托管的编码智能体集群；一个认证配置即可将全部指向 OmniRoute",
+      "zed": "Zed 代码编辑器 — 通过 OpenAI 兼容提供商使用内置智能体"
     },
     "guides": {
       "cursor": {

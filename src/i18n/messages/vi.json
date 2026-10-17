@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — bộ khung lập trình RLM tự cải tiến hỗ trợ API tương thích OpenAI",
       "warp": "Terminal Warp AI hỗ trợ nhà cung cấp tùy chỉnh",
       "agent-deck": "Trình điều phối đa tác nhân Agent Deck",
-      "5dive": "5dive — hạm đội tác nhân lập trình tự lưu trữ; một hồ sơ xác thực trỏ tất cả về OmniRoute"
+      "5dive": "5dive — hạm đội tác nhân lập trình tự lưu trữ; một hồ sơ xác thực trỏ tất cả về OmniRoute",
+      "zed": "Trình soạn thảo mã Zed — tác nhân tích hợp sẵn qua nhà cung cấp tương thích OpenAI"
     },
     "guides": {
       "cursor": {

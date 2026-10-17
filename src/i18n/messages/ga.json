@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — creat códaithe RLM a fhéinfheabhsaíonn, le tacaíocht do sholáthraithe atá comhoiriúnach le OpenAI",
       "warp": "teirminéal AI Warp le tacaíocht do sholáthraí saincheaptha",
       "agent-deck": "comhordaitheoir ilghníomhairí Agent Deck",
-      "5dive": "5dive — cabhlach féinóstáilte de ghníomhairí códaithe; díríonn próifíl fíordheimhnithe amháin iad go léir ar OmniRoute"
+      "5dive": "5dive — cabhlach féinóstáilte de ghníomhairí códaithe; díríonn próifíl fíordheimhnithe amháin iad go léir ar OmniRoute",
+      "zed": "Eagarthóir cóid Zed — gníomhaire ionsuite trí sholáthraí atá comhoiriúnach le OpenAI"
     },
     "guides": {
       "cursor": {

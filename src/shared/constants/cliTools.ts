@@ -710,6 +710,49 @@ aider --openai-api-base "{{baseUrl}}" --model "{{model}}"`,
     defaultCommand: "crush",
   },
 
+  /** Zed editor's built-in agent via an OpenAI-compatible provider (`omniroute setup-zed`). */
+  zed: {
+    id: "zed",
+    name: "Zed",
+    image: "/providers/zed-hosted.svg",
+    color: "#084CCF",
+    description: "Zed code editor — built-in agent through an OpenAI-compatible provider",
+    docsUrl: "https://zed.dev/docs/ai/llm-providers#openai-api-compatible",
+    configType: "guide",
+    category: "code",
+    vendor: "Zed Industries",
+    acpSpawnable: false,
+    baseUrlSupport: "full",
+    guideSteps: [
+      { step: 1, title: "Install Zed", desc: "Download Zed from zed.dev" },
+      { step: 2, title: "API Key", type: "apiKeySelector" },
+      { step: 3, title: "Base URL", value: "{{baseUrl}}", copyable: true },
+      { step: 4, title: "Select Model", type: "modelSelector" },
+    ],
+    codeBlock: {
+      language: "json",
+      code: `// ~/.config/zed/settings.json — or run: omniroute setup-zed
+{
+  "language_models": {
+    "openai_compatible": {
+      "omniroute": {
+        "api_url": "{{baseUrl}}",
+        "available_models": [
+          { "name": "{{model}}", "display_name": "{{model}}", "max_tokens": 200000 }
+        ]
+      }
+    }
+  }
+}`,
+    },
+    notes: [
+      {
+        type: "info",
+        text: "Zed reads the key from the OMNIROUTE_API_KEY environment variable and never stores it in settings.json. Export it, then start Zed from that shell.",
+      },
+    ],
+  },
+
   // ── Agent entries ─────────────────────────────────────────────────────────
 
   /** ★ Added by plan 14 (CLI Pages Redesign) — 2026-05-27 */

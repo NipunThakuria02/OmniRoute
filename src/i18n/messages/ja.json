@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI互換プロバイダーをサポートする自己改善型RLMコーディングハーネス",
       "warp": "カスタムプロバイダーをサポートするWarp AIターミナル",
       "agent-deck": "Agent Deckマルチエージェントオーケストレーター",
-      "5dive": "5dive — セルフホスト型のコーディングエージェント群。1つの認証プロファイルで全体をOmniRouteに向けます"
+      "5dive": "5dive — セルフホスト型のコーディングエージェント群。1つの認証プロファイルで全体をOmniRouteに向けます",
+      "zed": "Zed コードエディター — OpenAI 互換プロバイダー経由の内蔵エージェント"
     },
     "guides": {
       "cursor": {

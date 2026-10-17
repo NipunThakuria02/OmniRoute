@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — kerangka kerja coding RLM yang dapat meningkatkan diri dengan dukungan penyedia yang kompatibel dengan OpenAI",
       "warp": "Terminal AI Warp dengan dukungan penyedia kustom",
       "agent-deck": "Orkestrator multi-agen Agent Deck",
-      "5dive": "5dive — armada agen coding yang di-host sendiri; satu profil auth mengarahkan semuanya ke OmniRoute"
+      "5dive": "5dive — armada agen coding yang di-host sendiri; satu profil auth mengarahkan semuanya ke OmniRoute",
+      "zed": "Editor kode Zed — agen bawaan melalui penyedia yang kompatibel dengan OpenAI"
     },
     "guides": {
       "cursor": {

@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI uyumlu sağlayıcı desteğine sahip, kendini geliştiren RLM kodlama altyapısı",
       "warp": "Özel sağlayıcı desteğine sahip Warp AI terminali",
       "agent-deck": "Agent Deck çoklu aracı orkestratörü",
-      "5dive": "5dive — kendi sunucunuzda çalışan kodlama aracıları filosu; tek bir auth profili hepsini OmniRoute'a yönlendirir"
+      "5dive": "5dive — kendi sunucunuzda çalışan kodlama aracıları filosu; tek bir auth profili hepsini OmniRoute'a yönlendirir",
+      "zed": "Zed kod düzenleyicisi — OpenAI uyumlu bir sağlayıcı üzerinden yerleşik ajan"
     },
     "guides": {
       "cursor": {

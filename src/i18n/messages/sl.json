@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — samoizboljševalno programsko ogrodje RLM s podporo za ponudnike, združljive z OpenAI",
       "warp": "Warp, terminal z umetno inteligenco in podporo za ponudnike po meri",
       "agent-deck": "Agent Deck, orkestrator več agentov",
-      "5dive": "5dive — samostojno gostovana flota programskih agentov; en profil za preverjanje pristnosti jih vse usmeri v OmniRoute"
+      "5dive": "5dive — samostojno gostovana flota programskih agentov; en profil za preverjanje pristnosti jih vse usmeri v OmniRoute",
+      "zed": "Urejevalnik kode Zed — vgrajeni agent prek ponudnika, združljivega z OpenAI"
     },
     "guides": {
       "cursor": {

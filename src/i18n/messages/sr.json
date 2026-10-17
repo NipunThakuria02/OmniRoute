@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — samopoboljšavajući RLM okvir za kodiranje sa podrškom za OpenAI-kompatibilne provajdere",
       "warp": "Warp AI terminal sa podrškom za prilagođene provajdere",
       "agent-deck": "Agent Deck orkestrator za više agenata",
-      "5dive": "5dive — samostalno hostovana flota agenata za kodiranje; jedan profil za autentifikaciju ih sve usmerava na OmniRoute"
+      "5dive": "5dive — samostalno hostovana flota agenata za kodiranje; jedan profil za autentifikaciju ih sve usmerava na OmniRoute",
+      "zed": "Zed уређивач кода — уграђени агент преко OpenAI-компатибилног провајдера"
     },
     "guides": {
       "cursor": {

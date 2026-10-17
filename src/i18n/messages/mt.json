@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — qafas tal-kodifikazzjoni RLM li jtejjeb lilu nnifsu b’appoġġ għal fornituri kompatibbli ma’ OpenAI",
       "warp": "Terminal Warp AI b’appoġġ għal fornitur personalizzat",
       "agent-deck": "Orkestratur ta’ diversi aġenti Agent Deck",
-      "5dive": "5dive — flotta awtoospitata ta’ aġenti tal-kodifikazzjoni; profil wieħed tal-awtentikazzjoni jidderiġihom kollha lejn OmniRoute"
+      "5dive": "5dive — flotta awtoospitata ta’ aġenti tal-kodifikazzjoni; profil wieħed tal-awtentikazzjoni jidderiġihom kollha lejn OmniRoute",
+      "zed": "Editur tal-kodiċi Zed — aġent integrat permezz ta' fornitur kompatibbli ma' OpenAI"
     },
     "guides": {
       "cursor": {

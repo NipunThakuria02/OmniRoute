@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — selvforbedrende RLM-kodningsramme med understøttelse af OpenAI-kompatible providere",
       "warp": "Warp AI-terminal med understøttelse af brugerdefineret udbyder",
       "agent-deck": "Agent Deck multi-agent-orkestrator",
-      "5dive": "5dive — selv-hostet flåde af kodningsagenter; én auth-profil peger dem alle mod OmniRoute"
+      "5dive": "5dive — selv-hostet flåde af kodningsagenter; én auth-profil peger dem alle mod OmniRoute",
+      "zed": "Zed-kodeeditor — indbygget agent via en OpenAI-kompatibel udbyder"
     },
     "guides": {
       "cursor": {

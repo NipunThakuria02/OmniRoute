@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — self-improving RLM coding harness with OpenAI-compatible provider support",
       "warp": "Warp AI terminal with custom provider support",
       "agent-deck": "Agent Deck multi-agent orchestrator",
-      "5dive": "5dive — self-hosted fleet of coding agents; one auth profile points them all at OmniRoute"
+      "5dive": "5dive — self-hosted fleet of coding agents; one auth profile points them all at OmniRoute",
+      "zed": "Zed code editor — built-in agent through an OpenAI-compatible provider"
     },
     "guides": {
       "cursor": {

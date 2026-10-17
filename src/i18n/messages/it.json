@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — framework RLM di programmazione capace di auto-migliorarsi, con supporto per provider compatibili con OpenAI",
       "warp": "Terminale Warp AI con supporto per provider personalizzato",
       "agent-deck": "Orchestratore multi-agente Agent Deck",
-      "5dive": "5dive — flotta self-hosted di agenti di codifica; un profilo di autenticazione li punta tutti su OmniRoute"
+      "5dive": "5dive — flotta self-hosted di agenti di codifica; un profilo di autenticazione li punta tutti su OmniRoute",
+      "zed": "Editor di codice Zed — agente integrato tramite un provider compatibile con OpenAI"
     },
     "guides": {
       "cursor": {
