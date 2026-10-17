@@ -10,77 +10,77 @@ _آخری بار اپ ڈیٹ کیا گیا: 2026-06-28_
 
 ## انتظامی خلاصہ
 
-OmniRoute ایک مقامی AI روٹنگ گیٹ وے اور ڈیش بورڈ ہے جو Next.js پر بنایا گیا ہے۔
-یہ ایک واحد OpenAI-ہم آہنگ endpoint (`/v1/*`) فراہم کرتا ہے اور ترجمے، fallback، token refresh، اور استعمال کی نگرانی کے ساتھ ٹریفک کو متعدد upstream providers کے درمیان route کرتا ہے۔
+OmniRoute، Next.js پر مبنی ایک مقامی AI روٹنگ گیٹ وے اور ڈیش بورڈ ہے۔
+یہ ایک واحد OpenAI-مطابق اینڈ پوائنٹ (`/v1/*`) فراہم کرتا ہے اور ترجمے، فال بیک، ٹوکن ریفریش، اور استعمال کی ٹریکنگ کے ساتھ ٹریفک کو متعدد اپ اسٹریم فراہم کنندگان کے درمیان روٹ کرتا ہے۔
 
 بنیادی صلاحیتیں:
 
-- CLI/tools کے لیے OpenAI-ہم آہنگ API سطح (372 providers، 150 executor modules)
-- مختلف provider formats کے درمیان request/response کا ترجمہ
-- Model combo fallback (کثیر-model سلسلہ)
-- `compositeTiers` کے مطابق runtime ترتیب کے ساتھ منظم combo steps (`provider + model + connection`)
-- Account-level fallback (ہر provider کے لیے متعدد accounts)
-- مرکزی chat path میں quota preflight اور quota سے باخبر P2C account selection
-- OAuth + API-key provider connection management (27 OAuth provider modules)
-- `/v1/embeddings` کے ذریعے embedding generation (18 providers)
-- `/v1/images/generations` کے ذریعے image generation (10+ providers، 20+ models)
-- `/v1/audio/transcriptions` کے ذریعے audio transcription (18 providers)
-- `/v1/audio/speech` کے ذریعے text-to-speech (24 built-in providers)
-- `/v1/videos/generations` کے ذریعے video generation (ComfyUI + SD WebUI)
-- `/v1/music/generations` کے ذریعے music generation (ComfyUI)
-- `/v1/search` کے ذریعے web search (20 providers)
-- `/v1/moderations` کے ذریعے moderations
-- `/v1/rerank` کے ذریعے reranking
-- استدلالی models کے لیے think tag parsing (``)
-- OpenAI SDK کی سخت مطابقت کے لیے response sanitization
-- مختلف providers کے درمیان مطابقت کے لیے role normalization (developer→system، system→user)
-- Structured output conversion (json_schema → Gemini responseSchema)
-- providers، keys، aliases، combos، settings، اور pricing کے لیے مقامی persistence (122 DB modules)
-- استعمال/لاگت کی نگرانی اور request logging
-- متعدد devices/state کی مطابقت پذیری کے لیے اختیاری cloud sync
-- API رسائی کے کنٹرول کے لیے IP allowlist/blocklist
-- Thinking budget management (passthrough/auto/custom/adaptive)
-- Global system prompt injection
-- Session tracking اور fingerprinting
-- provider کے مخصوص profiles کے ساتھ ہر account کے لیے بہتر rate limiting
-- provider کی لچک کے لیے circuit breaker pattern
-- mutex locking کے ساتھ anti-thundering herd تحفظ
-- signature پر مبنی request deduplication cache
-- Domain layer: cost rules، fallback policy، lockout policy
-- Context Relay: account rotation کے تسلسل کے لیے session handoff summaries
-- Domain state persistence (fallbacks، budgets، lockouts، اور circuit breakers کے لیے SQLite write-through cache)
-- مرکزی request evaluation کے لیے policy engine (lockout → budget → fallback)
-- p50/p95/p99 latency aggregation کے ساتھ request telemetry
-- `combo_execution_key` / `combo_step_id` کے ذریعے combo target telemetry اور تاریخی combo target health
-- ابتدا سے انتہا تک tracing کے لیے Correlation ID (X-Request-Id)
-- ہر API key کے لیے opt-out کے ساتھ compliance audit logging
-- LLM معیار کی یقین دہانی کے لیے eval framework
-- حقیقی وقت کے provider circuit breaker status کے ساتھ health dashboard
-- MCP Server (110 tools) جس میں 3 transports شامل ہیں (stdio/SSE/Streamable HTTP)
-- A2A Server (JSON-RPC 2.0 + SSE) جس میں skills اور task lifecycle شامل ہیں
-- Memory system (extraction، injection، retrieval، summarization)
-- Skills system (registry، executor، sandbox، built-in skills)
-- certificate management اور DNS handling کے ساتھ MITM proxy
-- Prompt injection guard middleware
-- Caveman، RTK، stacked pipelines، compression combos، language packs، اور analytics کے ساتھ prompt compression pipeline
-- ACP (Agent Communication Protocol) registry
-- Modular OAuth providers (`src/lib/oauth/providers/` کے تحت 22 انفرادی modules)
-- Uninstall/full-uninstall scripts
-- OAuth environment repair action
-- OpenAI-ہم آہنگ WS clients کے لیے WebSocket bridge (`/v1/ws`)
-- Sync token management (اجرا/تنسیخ، ETag-versioned config bundle download)
-- GLM Thinking (`glmt`) بطور first-class provider preset
-- Hybrid token counting (تخمینی fallback کے ساتھ provider-side `/messages/count_tokens`)
-- Model alias auto-seeding (آغاز کے وقت 30+ cross-proxy dialect normalizations)
-- SSRF guard، private URL blocking، اور قابلِ ترتیب retry کے ساتھ محفوظ outbound fetch
-- قابلِ ترتیب `requestRetry` اور `maxRetryIntervalSec` کے ساتھ cooldown سے باخبر chat retries
-- آغاز کے وقت Zod کے ساتھ runtime environment validation
-- pagination، provider CRUD events، اور SSRF-blocked validation logging کے ساتھ compliance audit v2
+- CLI/ٹولز کے لیے OpenAI-مطابق API سطح (373 فراہم کنندگان، 150 ایگزیکیوٹر ماڈیولز)
+- فراہم کنندگان کے فارمیٹس کے درمیان درخواست/جواب کا ترجمہ
+- ماڈل کومبو فال بیک (متعدد ماڈلز کی ترتیب)
+- `compositeTiers` کے ذریعے رن ٹائم ترتیب کے ساتھ منظم کومبو مراحل (`provider + model + connection`)
+- اکاؤنٹ کی سطح پر فال بیک (ہر فراہم کنندہ کے لیے متعدد اکاؤنٹس)
+- مرکزی چیٹ پاتھ میں کوٹہ پری فلائٹ اور کوٹے سے باخبر P2C اکاؤنٹ انتخاب
+- OAuth + API-key فراہم کنندہ کنکشن کا انتظام (27 OAuth فراہم کنندہ ماڈیولز)
+- `/v1/embeddings` کے ذریعے ایمبیڈنگز کی تخلیق (18 فراہم کنندگان)
+- `/v1/images/generations` کے ذریعے تصاویر کی تخلیق (10+ فراہم کنندگان، 20+ ماڈلز)
+- `/v1/audio/transcriptions` کے ذریعے آڈیو ٹرانسکرپشن (18 فراہم کنندگان)
+- `/v1/audio/speech` کے ذریعے متن سے آواز کی تخلیق (24 بلٹ اِن فراہم کنندگان)
+- `/v1/videos/generations` کے ذریعے ویڈیو کی تخلیق (ComfyUI + SD WebUI)
+- `/v1/music/generations` کے ذریعے موسیقی کی تخلیق (ComfyUI)
+- `/v1/search` کے ذریعے ویب تلاش (20 فراہم کنندگان)
+- `/v1/moderations` کے ذریعے مواد کی جانچ
+- `/v1/rerank` کے ذریعے دوبارہ درجہ بندی
+- استدلالی ماڈلز کے لیے تھنک ٹیگ کی پارسنگ (``)
+- OpenAI SDK کے ساتھ سخت مطابقت کے لیے جوابات کی صفائی
+- مختلف فراہم کنندگان کے درمیان مطابقت کے لیے کرداروں کی نارملائزیشن (developer→system، system→user)
+- منظم آؤٹ پٹ کی تبدیلی (json_schema → Gemini responseSchema)
+- فراہم کنندگان، کلیدوں، عرفی ناموں، کومبوز، ترتیبات، اور قیمتوں کے لیے مقامی مستقل ذخیرہ (122 DB ماڈیولز)
+- استعمال/لاگت کی ٹریکنگ اور درخواستوں کی لاگنگ
+- متعدد ڈیوائسز/حالت کی ہم وقت سازی کے لیے اختیاری کلاؤڈ سنک
+- API رسائی کے کنٹرول کے لیے IP اجازت فہرست/بلاک فہرست
+- تھنکنگ بجٹ کا انتظام (پاس تھرو/خودکار/حسبِ ضرورت/موافق)
+- گلوبل سسٹم پرامپٹ کا اندراج
+- سیشن ٹریکنگ اور فنگر پرنٹنگ
+- فراہم کنندہ سے مخصوص پروفائلز کے ساتھ فی اکاؤنٹ بہتر شرح کی تحدید
+- فراہم کنندگان کی لچک کے لیے سرکٹ بریکر پیٹرن
+- میوٹیکس لاکنگ کے ساتھ اچانک بیک وقت درخواستوں کے ہجوم سے تحفظ
+- دستخط پر مبنی درخواستوں کی نقل ہٹانے کا کیش
+- ڈومین لیئر: لاگت کے قواعد، فال بیک پالیسی، لاک آؤٹ پالیسی
+- Context Relay: اکاؤنٹ روٹیشن کے دوران تسلسل کے لیے سیشن ہینڈ آف کے خلاصے
+- ڈومین حالت کا مستقل ذخیرہ (فال بیکس، بجٹس، لاک آؤٹس، اور سرکٹ بریکرز کے لیے SQLite رائٹ تھرو کیش)
+- مرکزی درخواست جانچ کے لیے پالیسی انجن (لاک آؤٹ → بجٹ → فال بیک)
+- p50/p95/p99 تاخیر کی مجموعی پیمائش کے ساتھ درخواست ٹیلی میٹری
+- `combo_execution_key` / `combo_step_id` کے ذریعے کومبو ہدف کی ٹیلی میٹری اور تاریخی کومبو ہدف کی صحت
+- ابتدا سے انتہا تک ٹریسنگ کے لیے کوریلیشن ID (X-Request-Id)
+- ہر API کلید کے لیے آپٹ آؤٹ کے ساتھ تعمیلی آڈٹ لاگنگ
+- LLM معیار کی یقین دہانی کے لیے ایویلیوایشن فریم ورک
+- فراہم کنندہ کے سرکٹ بریکر کی حقیقی وقت کی حالت کے ساتھ صحت کا ڈیش بورڈ
+- MCP Server (110 ٹولز) مع 3 ٹرانسپورٹس (stdio/SSE/Streamable HTTP)
+- A2A Server (JSON-RPC 2.0 + SSE) مع مہارتیں اور ٹاسک لائف سائیکل
+- میموری سسٹم (اخذ، اندراج، بازیافت، تلخیص)
+- مہارتوں کا نظام (رجسٹری، ایگزیکیوٹر، سینڈ باکس، بلٹ اِن مہارتیں)
+- سرٹیفکیٹ کے انتظام اور DNS ہینڈلنگ کے ساتھ MITM پراکسی
+- پرامپٹ انجیکشن گارڈ مڈل ویئر
+- Caveman، RTK، اسٹیکڈ پائپ لائنز، کمپریشن کومبوز، لینگویج پیکس، اور تجزیات کے ساتھ پرامپٹ کمپریشن پائپ لائن
+- ACP (Agent Communication Protocol) رجسٹری
+- ماڈیولر OAuth فراہم کنندگان (`src/lib/oauth/providers/` کے تحت 22 انفرادی ماڈیولز)
+- اَن انسٹال/مکمل اَن انسٹال اسکرپٹس
+- OAuth ماحول کی مرمت کا عمل
+- OpenAI-مطابق WS کلائنٹس کے لیے WebSocket برج (`/v1/ws`)
+- سنک ٹوکن کا انتظام (اجرا/منسوخی، ETag-ورژن شدہ کنفیگریشن بنڈل ڈاؤن لوڈ)
+- GLM Thinking (`glmt`) کا فرسٹ کلاس فراہم کنندہ پری سیٹ
+- ہائبرڈ ٹوکن گنتی (تخمینی فال بیک کے ساتھ فراہم کنندہ کی جانب `/messages/count_tokens`)
+- ماڈل عرفی ناموں کی خودکار سیڈنگ (اسٹارٹ اپ پر 30+ کراس پراکسی ڈائلیکٹ نارملائزیشنز)
+- SSRF گارڈ، نجی URL بلاکنگ، اور قابل ترتیب دوبارہ کوشش کے ساتھ محفوظ آؤٹ باؤنڈ فیچ
+- قابل ترتیب `requestRetry` اور `maxRetryIntervalSec` کے ساتھ کول ڈاؤن سے باخبر چیٹ کی دوبارہ کوششیں
+- اسٹارٹ اپ پر Zod کے ساتھ رن ٹائم ماحول کی توثیق
+- صفحہ بندی، فراہم کنندہ CRUD ایونٹس، اور SSRF سے بلاک شدہ توثیق کی لاگنگ کے ساتھ تعمیلی آڈٹ v2
 
-بنیادی runtime model:
+بنیادی رن ٹائم ماڈل:
 
-- `src/app/api/*` کے تحت Next.js app routes، dashboard APIs اور compatibility APIs دونوں کو نافذ کرتے ہیں
-- `src/sse/*` + `open-sse/*` میں موجود مشترکہ SSE/routing core، provider execution، translation، streaming، fallback، اور usage کو سنبھالتا ہے
+- `src/app/api/*` کے تحت Next.js ایپ روٹس، ڈیش بورڈ APIs اور مطابقتی APIs دونوں نافذ کرتے ہیں
+- `src/sse/*` + `open-sse/*` میں مشترکہ SSE/روٹنگ کور فراہم کنندہ کی عمل درآمد، ترجمہ، اسٹریمنگ، فال بیک، اور استعمال کو سنبھالتا ہے
 
 ## حوالہ جاتی خاکے
 

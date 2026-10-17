@@ -13,15 +13,15 @@ _Senast uppdaterad: 2026-06-28_
 OmniRoute är en lokal AI-routinggateway och kontrollpanel byggd med Next.js.
 Den tillhandahåller en enda OpenAI-kompatibel slutpunkt (`/v1/*`) och dirigerar trafik mellan flera uppströmsleverantörer med översättning, reservväxling, tokenförnyelse och användningsspårning.
 
-Huvudfunktioner:
+Centrala funktioner:
 
-- OpenAI-kompatibelt API-gränssnitt för CLI/verktyg (372 leverantörer, 150 exekveringsmoduler)
-- Översättning av förfrågningar/svar mellan leverantörsformat
-- Reservväxling med modellkombinationer (sekvenser med flera modeller)
+- OpenAI-kompatibel API-yta för CLI/verktyg (373 leverantörer, 150 exekveringsmoduler)
+- Översättning av förfrågningar och svar mellan leverantörsformat
+- Reservväxling för modellkombinationer (sekvens med flera modeller)
 - Strukturerade kombinationssteg (`provider + model + connection`) med körningsordning baserad på `compositeTiers`
 - Reservväxling på kontonivå (flera konton per leverantör)
 - Förhandskontroll av kvoter och kvotmedvetet P2C-kontoval i huvudflödet för chatt
-- Hantering av leverantörsanslutningar via OAuth + API-nycklar (27 OAuth-leverantörsmoduler)
+- Hantering av leverantörsanslutningar via OAuth och API-nycklar (27 OAuth-leverantörsmoduler)
 - Generering av inbäddningar via `/v1/embeddings` (18 leverantörer)
 - Bildgenerering via `/v1/images/generations` (10+ leverantörer, 20+ modeller)
 - Ljudtranskribering via `/v1/audio/transcriptions` (18 leverantörer)
@@ -30,57 +30,57 @@ Huvudfunktioner:
 - Musikgenerering via `/v1/music/generations` (ComfyUI)
 - Webbsökning via `/v1/search` (20 leverantörer)
 - Moderering via `/v1/moderations`
-- Omrankning via `/v1/rerank`
-- Tolkning av Think-taggar (``) för resonemangsmodeller
+- Omrangordning via `/v1/rerank`
+- Parsning av Think-taggar (``) för resonerande modeller
 - Sanering av svar för strikt kompatibilitet med OpenAI SDK
 - Rollnormalisering (developer→system, system→user) för kompatibilitet mellan leverantörer
 - Konvertering av strukturerade utdata (json_schema → Gemini responseSchema)
-- Lokal persistens för leverantörer, nycklar, alias, kombinationer, inställningar och prissättning (122 DB-moduler)
-- Spårning av användning/kostnader och loggning av förfrågningar
+- Lokal persistens för leverantörer, nycklar, alias, kombinationer, inställningar och prissättning (122 databasmoduler)
+- Spårning av användning och kostnader samt loggning av förfrågningar
 - Valfri molnsynkronisering för synkronisering av tillstånd mellan flera enheter
-- Lista över tillåtna/blockerade IP-adresser för åtkomstkontroll till API:et
-- Hantering av resonemangsbudget (direkt vidarebefordran/automatisk/anpassad/adaptiv)
+- Tillåtelse- och blockeringslistor för IP-adresser för åtkomstkontroll till API:et
+- Hantering av beräkningsbudget (vidarebefordran/automatisk/anpassad/adaptiv)
 - Global injicering av systemprompt
-- Sessionsspårning och fingeravtrycksidentifiering
+- Sessionsspårning och fingeravtryck
 - Förbättrad hastighetsbegränsning per konto med leverantörsspecifika profiler
-- Kretsbrytarmönster för ökad leverantörsrobusthet
-- Skydd mot anhopning av samtidiga förfrågningar med mutex-låsning
+- Kretsbrytarmönster för leverantörsresiliens
+- Skydd mot anropsstormar med mutex-låsning
 - Signaturbaserad cache för deduplicering av förfrågningar
-- Domänlager: kostnadsregler, reservväxlingspolicy, utelåsningspolicy
-- Context Relay: sammanfattningar vid sessionsöverlämning för kontinuitet vid kontorotation
-- Persistens av domäntillstånd (SQLite-cache med direkt skrivning för reservväxlingar, budgetar, utelåsningar och kretsbrytare)
-- Policymotor för centraliserad utvärdering av förfrågningar (utelåsning → budget → reservväxling)
-- Telemetri för förfrågningar med aggregering av p50/p95/p99-latens
+- Domänlager: kostnadsregler, reservväxlingspolicy och utlåsningspolicy
+- Context Relay: sammanfattningar för sessionsöverlämning som säkerställer kontinuitet vid kontorotation
+- Persistens av domäntillstånd (SQLite-cache med direktgenomskrivning för reservväxlingar, budgetar, utlåsningar och kretsbrytare)
+- Policymotor för centraliserad utvärdering av förfrågningar (utlåsning → budget → reservväxling)
+- Telemetri för förfrågningar med aggregering av p50-/p95-/p99-latens
 - Telemetri för kombinationsmål och historisk status för kombinationsmål via `combo_execution_key` / `combo_step_id`
 - Korrelations-ID (X-Request-Id) för heltäckande spårning
-- Granskningsloggning för regelefterlevnad med möjlighet att välja bort per API-nyckel
+- Loggning för regelefterlevnadsgranskning med möjlighet att välja bort per API-nyckel
 - Utvärderingsramverk för kvalitetssäkring av LLM:er
-- Hälsokontrollpanel med leverantörernas kretsbrytarstatus i realtid
+- Hälsokontrollpanel med status i realtid för leverantörernas kretsbrytare
 - MCP-server (110 verktyg) med 3 transporter (stdio/SSE/Streamable HTTP)
-- A2A-server (JSON-RPC 2.0 + SSE) med färdigheter och uppgiftslivscykel
-- Minnessystem (extrahering, injicering, hämtning, sammanfattning)
-- Färdighetssystem (register, exekverare, sandlåda, inbyggda färdigheter)
+- A2A-server (JSON-RPC 2.0 + SSE) med färdigheter och livscykel för uppgifter
+- Minnessystem (extrahering, injicering, hämtning och sammanfattning)
+- Färdighetssystem (register, exekverare, sandlåda och inbyggda färdigheter)
 - MITM-proxy med certifikathantering och DNS-hantering
 - Middleware som skyddar mot promptinjektion
 - Pipeline för promptkomprimering med Caveman, RTK, staplade pipelines, komprimeringskombinationer, språkpaket och analys
 - ACP-register (Agent Communication Protocol)
-- Modulära OAuth-leverantörer (22 individuella moduler under `src/lib/oauth/providers/`)
+- Modulära OAuth-leverantörer (22 enskilda moduler under `src/lib/oauth/providers/`)
 - Skript för avinstallation/fullständig avinstallation
 - Åtgärd för reparation av OAuth-miljön
 - WebSocket-brygga för OpenAI-kompatibla WS-klienter (`/v1/ws`)
-- Hantering av synkroniseringstoken (utfärdande/återkallande, nedladdning av ETag-versionshanterat konfigurationspaket)
-- GLM Thinking (`glmt`) som fullvärdig förinställning för leverantörer
-- Hybridbaserad tokenräkning (leverantörsbaserad `/messages/count_tokens` med uppskattning som reservlösning)
+- Hantering av synkroniseringstoken (utfärdande/återkallande och nedladdning av ETag-versionshanterade konfigurationspaket)
+- GLM Thinking (`glmt`) som fullvärdig förinställning för leverantör
+- Hybridbaserad tokenräkning (leverantörssidan `/messages/count_tokens` med uppskattning som reserv)
 - Automatisk initiering av modellalias (30+ normaliseringar mellan proxydialekter vid start)
 - Säker utgående hämtning med SSRF-skydd, blockering av privata URL:er och konfigurerbara återförsök
-- Cooldown-medvetna återförsök för chatt med konfigurerbara `requestRetry` och `maxRetryIntervalSec`
+- Nedkylningsmedvetna återförsök för chatt med konfigurerbara `requestRetry` och `maxRetryIntervalSec`
 - Validering av körningsmiljön med Zod vid start
-- Granskning för regelefterlevnad v2 med sidindelning, CRUD-händelser för leverantörer och valideringsloggning av SSRF-blockeringar
+- Regelefterlevnadsgranskning v2 med sidnumrering, CRUD-händelser för leverantörer och valideringsloggning för blockerad SSRF
 
 Primär körningsmodell:
 
-- Next.js-apprutter under `src/app/api/*` implementerar både API:er för kontrollpanelen och kompatibilitets-API:er
-- En gemensam SSE-/routingkärna i `src/sse/*` + `open-sse/*` hanterar leverantörsexekvering, översättning, strömning, reservväxling och användning
+- Next.js-appens routes under `src/app/api/*` implementerar både API:er för kontrollpanelen och kompatibilitets-API:er
+- En delad SSE-/routingkärna i `src/sse/*` + `open-sse/*` hanterar leverantörsexekvering, översättning, strömning, reservväxling och användning
 
 ## Referensdiagram
 

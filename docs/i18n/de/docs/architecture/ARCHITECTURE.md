@@ -11,76 +11,76 @@ _Zuletzt aktualisiert: 2026-06-28_
 ## Zusammenfassung
 
 OmniRoute ist ein lokales KI-Routing-Gateway mit Dashboard, das auf Next.js basiert.
-Es stellt einen einzelnen OpenAI-kompatiblen Endpunkt (`/v1/*`) bereit und leitet Datenverkehr mit Übersetzung, Fallback, Token-Aktualisierung und Nutzungsverfolgung an mehrere Upstream-Anbieter weiter.
+Es stellt einen einzigen OpenAI-kompatiblen Endpunkt (`/v1/*`) bereit und leitet Datenverkehr mit Übersetzung, Fallback, Token-Aktualisierung und Nutzungsverfolgung an mehrere Upstream-Anbieter weiter.
 
 Kernfunktionen:
 
-- OpenAI-kompatible API-Oberfläche für CLI/Tools (372 Anbieter, 150 Ausführungsmodule)
-- Übersetzung von Anfragen und Antworten zwischen Anbieterformaten
-- Modell-Combo-Fallback (Sequenz aus mehreren Modellen)
-- Strukturierte Combo-Schritte (`provider + model + connection`) mit Laufzeitsortierung nach `compositeTiers`
+- OpenAI-kompatible API-Oberfläche für CLI/Tools (373 Anbieter, 150 Executor-Module)
+- Übersetzung von Anfragen und Antworten zwischen verschiedenen Anbieterformaten
+- Modellkombinations-Fallback (Sequenz aus mehreren Modellen)
+- Strukturierte Kombinationsschritte (`provider + model + connection`) mit Laufzeitsortierung nach `compositeTiers`
 - Fallback auf Kontoebene (mehrere Konten pro Anbieter)
-- Vorabprüfung des Kontingents und kontingentbewusste P2C-Kontoauswahl im primären Chat-Pfad
+- Vorabprüfung des Kontingents und kontingentbewusste P2C-Kontoauswahl im zentralen Chat-Ablauf
 - Verwaltung von OAuth- und API-Schlüssel-Anbieterverbindungen (27 OAuth-Anbietermodule)
-- Generierung von Embeddings über `/v1/embeddings` (18 Anbieter)
-- Bildgenerierung über `/v1/images/generations` (mehr als 10 Anbieter, mehr als 20 Modelle)
+- Erstellung von Embeddings über `/v1/embeddings` (18 Anbieter)
+- Bilderzeugung über `/v1/images/generations` (mehr als 10 Anbieter, mehr als 20 Modelle)
 - Audiotranskription über `/v1/audio/transcriptions` (18 Anbieter)
-- Text-to-Speech über `/v1/audio/speech` (24 integrierte Anbieter)
-- Videogenerierung über `/v1/videos/generations` (ComfyUI + SD WebUI)
-- Musikgenerierung über `/v1/music/generations` (ComfyUI)
+- Text-zu-Sprache über `/v1/audio/speech` (24 integrierte Anbieter)
+- Videoerzeugung über `/v1/videos/generations` (ComfyUI + SD WebUI)
+- Musikerzeugung über `/v1/music/generations` (ComfyUI)
 - Websuche über `/v1/search` (20 Anbieter)
-- Moderationen über `/v1/moderations`
-- Neugewichtung über `/v1/rerank`
-- Analyse von Think-Tags (``) für Reasoning-Modelle
-- Bereinigung von Antworten für strikte Kompatibilität mit dem OpenAI SDK
+- Moderation über `/v1/moderations`
+- Neusortierung über `/v1/rerank`
+- Parsing von Think-Tags (``) für Reasoning-Modelle
+- Bereinigung von Antworten zur strikten Kompatibilität mit dem OpenAI SDK
 - Rollennormalisierung (developer→system, system→user) für anbieterübergreifende Kompatibilität
 - Konvertierung strukturierter Ausgaben (json_schema → Gemini responseSchema)
-- Lokale Persistenz für Anbieter, Schlüssel, Aliasse, Combos, Einstellungen und Preise (122 DB-Module)
+- Lokale Persistenz für Anbieter, Schlüssel, Aliasse, Kombinationen, Einstellungen und Preise (122 DB-Module)
 - Verfolgung von Nutzung und Kosten sowie Protokollierung von Anfragen
 - Optionale Cloud-Synchronisierung für die geräteübergreifende Synchronisierung von Zuständen
-- IP-Zulassungs- und Sperrliste für die API-Zugriffskontrolle
+- IP-Zulassungs- und Sperrlisten für die API-Zugriffskontrolle
 - Verwaltung des Thinking-Budgets (Passthrough/automatisch/benutzerdefiniert/adaptiv)
-- Globale Einbindung eines System-Prompts
+- Globale Einbindung von System-Prompts
 - Sitzungsverfolgung und Fingerprinting
 - Erweiterte Ratenbegrenzung pro Konto mit anbieterspezifischen Profilen
 - Circuit-Breaker-Muster für höhere Ausfallsicherheit der Anbieter
-- Schutz vor Thundering-Herd-Problemen durch Mutex-Sperren
+- Schutz vor dem Thundering-Herd-Problem durch Mutex-Sperren
 - Signaturbasierter Cache zur Deduplizierung von Anfragen
 - Domänenschicht: Kostenregeln, Fallback-Richtlinie, Sperrrichtlinie
-- Context Relay: Zusammenfassungen zur Sitzungsübergabe für Kontinuität bei der Kontorotation
+- Context Relay: Zusammenfassungen zur Sitzungsübergabe, um bei Kontorotationen die Kontinuität zu gewährleisten
 - Persistenz des Domänenzustands (SQLite-Write-Through-Cache für Fallbacks, Budgets, Sperren und Circuit Breaker)
-- Richtlinien-Engine zur zentralen Auswertung von Anfragen (Sperre → Budget → Fallback)
-- Anfrage-Telemetrie mit Aggregation der Latenzen p50/p95/p99
-- Telemetrie für Combo-Ziele und historischer Zustand von Combo-Zielen über `combo_execution_key` / `combo_step_id`
+- Richtlinien-Engine zur zentralisierten Auswertung von Anfragen (Sperre → Budget → Fallback)
+- Anfragetelemetrie mit Aggregation der Latenzen p50/p95/p99
+- Telemetrie für Kombinationsziele und historischer Zustand von Kombinationszielen über `combo_execution_key` / `combo_step_id`
 - Korrelations-ID (X-Request-Id) für End-to-End-Tracing
 - Compliance-Audit-Protokollierung mit Opt-out pro API-Schlüssel
-- Evaluierungsframework für die Qualitätssicherung von LLMs
+- Evaluierungs-Framework zur Qualitätssicherung von LLMs
 - Zustands-Dashboard mit Echtzeitstatus der Anbieter-Circuit-Breaker
-- MCP-Server (110 Tools) mit 3 Transportarten (stdio/SSE/Streamable HTTP)
-- A2A-Server (JSON-RPC 2.0 + SSE) mit Skills und Aufgabenlebenszyklus
+- MCP-Server (110 Tools) mit 3 Transportmechanismen (stdio/SSE/Streamable HTTP)
+- A2A-Server (JSON-RPC 2.0 + SSE) mit Fähigkeiten und Aufgabenlebenszyklus
 - Speichersystem (Extraktion, Einbindung, Abruf, Zusammenfassung)
-- Skills-System (Registry, Executor, Sandbox, integrierte Skills)
+- Fähigkeitensystem (Registry, Executor, Sandbox, integrierte Fähigkeiten)
 - MITM-Proxy mit Zertifikatsverwaltung und DNS-Verarbeitung
 - Middleware zum Schutz vor Prompt-Injection
-- Pipeline zur Prompt-Komprimierung mit Caveman, RTK, gestapelten Pipelines, Komprimierungs-Combos, Sprachpaketen und Analysen
+- Pipeline zur Prompt-Komprimierung mit Caveman, RTK, gestapelten Pipelines, Komprimierungskombinationen, Sprachpaketen und Analysen
 - ACP-Registry (Agent Communication Protocol)
 - Modulare OAuth-Anbieter (22 einzelne Module unter `src/lib/oauth/providers/`)
 - Skripte zur Deinstallation und vollständigen Deinstallation
 - Aktion zur Reparatur der OAuth-Umgebung
 - WebSocket-Bridge für OpenAI-kompatible WS-Clients (`/v1/ws`)
-- Verwaltung von Synchronisierungstoken (Ausstellung/Widerruf, Download eines ETag-versionierten Konfigurationspakets)
+- Verwaltung von Synchronisierungs-Token (Ausstellung/Widerruf, Download ETag-versionierter Konfigurationspakete)
 - GLM Thinking (`glmt`) als vollwertige Anbietervoreinstellung
-- Hybride Token-Zählung (anbieterseitiges `/messages/count_tokens` mit Schätzung als Fallback)
-- Automatische Initialisierung von Modell-Aliassen (mehr als 30 Normalisierungen zwischen Proxy-Dialekten beim Start)
+- Hybride Token-Zählung (anbieterseitiges `/messages/count_tokens` mit Schätzungs-Fallback)
+- Automatische Initialisierung von Modellaliasen (mehr als 30 Normalisierungen zwischen Proxy-Dialekten beim Start)
 - Sicherer ausgehender Abruf mit SSRF-Schutz, Blockierung privater URLs und konfigurierbaren Wiederholungsversuchen
 - Cooldown-bewusste Wiederholungsversuche für Chats mit konfigurierbarem `requestRetry` und `maxRetryIntervalSec`
 - Validierung der Laufzeitumgebung mit Zod beim Start
-- Compliance-Audit v2 mit Paginierung, CRUD-Ereignissen für Anbieter und Protokollierung von durch SSRF blockierten Validierungen
+- Compliance-Audit v2 mit Paginierung, CRUD-Ereignissen für Anbieter und Protokollierung von Validierungen, die durch den SSRF-Schutz blockiert wurden
 
 Primäres Laufzeitmodell:
 
 - Next.js-App-Routen unter `src/app/api/*` implementieren sowohl Dashboard-APIs als auch Kompatibilitäts-APIs
-- Ein gemeinsam genutzter SSE-/Routing-Kern in `src/sse/*` + `open-sse/*` übernimmt die Anbieterausführung, Übersetzung, das Streaming, Fallbacks und die Nutzung
+- Ein gemeinsam genutzter SSE-/Routing-Kern in `src/sse/*` + `open-sse/*` übernimmt Anbieterausführung, Übersetzung, Streaming, Fallback und Nutzung
 
 ## Referenzdiagramme
 

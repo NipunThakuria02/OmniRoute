@@ -11,76 +11,76 @@ _Ilisasishwa mara ya mwisho: 2026-06-28_
 ## Muhtasari wa Kiutendaji
 
 OmniRoute ni lango la ndani la uelekezaji wa AI na dashibodi iliyojengwa kwa Next.js.
-Hutoa endpoint moja inayooana na OpenAI (`/v1/*`) na kuelekeza trafiki kupitia watoa huduma wengi wa upstream huku ikitoa ubadilishaji, fallback, uonyeshaji upya wa tokeni na ufuatiliaji wa matumizi.
+Inatoa endpoint moja inayooana na OpenAI (`/v1/*`) na kuelekeza trafiki kwenye watoa huduma wengi wa nje huku ikitekeleza utafsiri, urejeshaji mbadala, uonyeshaji upya wa tokeni na ufuatiliaji wa matumizi.
 
 Uwezo mkuu:
 
-- Kiolesura cha API kinachooana na OpenAI kwa CLI/zana (watoa huduma 372, moduli 150 za utekelezaji)
-- Ubadilishaji wa maombi/majibu kati ya miundo ya watoa huduma
-- Fallback ya mchanganyiko wa modeli (mfuatano wa modeli nyingi)
-- Hatua zilizopangiliwa za mchanganyiko (`provider + model + connection`) zenye upangaji wakati wa utekelezaji kwa kutumia `compositeTiers`
-- Fallback katika kiwango cha akaunti (akaunti nyingi kwa kila mtoa huduma)
-- Ukaguzi wa awali wa mgao na uteuzi wa akaunti wa P2C unaozingatia mgao katika njia kuu ya gumzo
+- Kiolesura cha API kinachooana na OpenAI kwa CLI/zana (watoa huduma 373, moduli 150 za utekelezaji)
+- Utafsiri wa maombi/majibu kati ya miundo ya watoa huduma
+- Urejeshaji mbadala wa mchanganyiko wa modeli (mfuatano wa modeli nyingi)
+- Hatua zilizopangwa za mchanganyiko (`provider + model + connection`) zenye upangaji wakati wa utekelezaji kupitia `compositeTiers`
+- Urejeshaji mbadala katika kiwango cha akaunti (akaunti nyingi kwa kila mtoa huduma)
+- Ukaguzi wa awali wa kiasi kinachoruhusiwa na uteuzi wa akaunti wa P2C unaozingatia kiasi hicho katika njia kuu ya mazungumzo
 - Usimamizi wa miunganisho ya watoa huduma kupitia OAuth + ufunguo wa API (moduli 27 za watoa huduma wa OAuth)
-- Utengenezaji wa embeddings kupitia `/v1/embeddings` (watoa huduma 18)
-- Utengenezaji wa picha kupitia `/v1/images/generations` (watoa huduma 10+, modeli 20+)
+- Uzalishaji wa upachikaji kupitia `/v1/embeddings` (watoa huduma 18)
+- Uzalishaji wa picha kupitia `/v1/images/generations` (watoa huduma 10+, modeli 20+)
 - Unukuzi wa sauti kupitia `/v1/audio/transcriptions` (watoa huduma 18)
-- Ubadilishaji wa maandishi kuwa matamshi kupitia `/v1/audio/speech` (watoa huduma 24 waliojengewa ndani)
-- Utengenezaji wa video kupitia `/v1/videos/generations` (ComfyUI + SD WebUI)
-- Utengenezaji wa muziki kupitia `/v1/music/generations` (ComfyUI)
+- Ubadilishaji wa maandishi kuwa usemi kupitia `/v1/audio/speech` (watoa huduma 24 waliojengewa ndani)
+- Uzalishaji wa video kupitia `/v1/videos/generations` (ComfyUI + SD WebUI)
+- Uzalishaji wa muziki kupitia `/v1/music/generations` (ComfyUI)
 - Utafutaji wa wavuti kupitia `/v1/search` (watoa huduma 20)
-- Ukaguzi wa maudhui kupitia `/v1/moderations`
-- Upangaji upya wa matokeo kupitia `/v1/rerank`
-- Uchanganuzi wa lebo za fikra (``) kwa modeli za ureasonishaji
-- Usafishaji wa majibu kwa ajili ya uoanifu mkali na OpenAI SDK
+- Udhibiti wa maudhui kupitia `/v1/moderations`
+- Upangaji upya wa viwango kupitia `/v1/rerank`
+- Uchanganuzi wa lebo za kufikiri (``) kwa modeli za kutoa hoja
+- Usafishaji wa majibu kwa uoanifu kamili na OpenAI SDK
 - Usawazishaji wa majukumu (developer→system, system→user) kwa uoanifu kati ya watoa huduma
-- Ubadilishaji wa matokeo yaliyopangiliwa (json_schema → Gemini responseSchema)
-- Uhifadhi wa ndani wa watoa huduma, funguo, lakabu, michanganyiko, mipangilio na bei (moduli 122 za DB)
-- Ufuatiliaji wa matumizi/gharama na uwekaji kumbukumbu wa maombi
-- Usawazishaji wa hiari wa wingu kwa vifaa vingi/usawazishaji wa hali
+- Ubadilishaji wa matokeo yaliyopangwa (json_schema → Gemini responseSchema)
+- Uhifadhi wa ndani kwa watoa huduma, funguo, lakabu, michanganyiko, mipangilio na bei (moduli 122 za DB)
+- Ufuatiliaji wa matumizi/gharama na uwekaji kumbukumbu za maombi
+- Usawazishaji wa hiari wa wingu kwa ajili ya kusawazisha vifaa vingi/hali
 - Orodha ya IP zinazoruhusiwa/zilizozuiwa kwa udhibiti wa ufikiaji wa API
-- Usimamizi wa bajeti ya kufikiri (passthrough/auto/custom/adaptive)
+- Usimamizi wa bajeti ya kufikiri (kupitisha moja kwa moja/otomatiki/maalum/inayobadilika)
 - Uingizaji wa kidokezo cha mfumo cha kimataifa
-- Ufuatiliaji wa vipindi na utambuzi kwa alama ya kipekee
-- Uzuiaji ulioboreshwa wa kiwango kwa kila akaunti wenye wasifu mahususi wa watoa huduma
-- Muundo wa circuit breaker kwa ajili ya uthabiti wa watoa huduma
-- Ulinzi dhidi ya msongamano wa maombi ya wakati mmoja kwa kufunga kwa mutex
-- Akiba ya kuondoa marudio ya maombi kwa kutumia saini
-- Tabaka la kikoa: kanuni za gharama, sera ya fallback, sera ya lockout
-- Context Relay: muhtasari wa makabidhiano ya vipindi kwa mwendelezo wakati wa kuzungusha akaunti
-- Uhifadhi wa hali ya kikoa (akiba ya SQLite ya write-through kwa fallbacks, bajeti, lockouts na circuit breakers)
-- Injini ya sera kwa tathmini ya maombi iliyowekwa kati (lockout → budget → fallback)
-- Telemetria ya maombi yenye ujumuishaji wa latency ya p50/p95/p99
-- Telemetria ya malengo ya mchanganyiko na historia ya afya ya malengo ya mchanganyiko kupitia `combo_execution_key` / `combo_step_id`
-- Kitambulisho cha uhusiano (X-Request-Id) kwa ufuatiliaji kutoka mwanzo hadi mwisho
-- Uwekaji kumbukumbu wa ukaguzi wa uzingatiaji wenye chaguo la kujiondoa kwa kila ufunguo wa API
+- Ufuatiliaji wa vipindi na utambuzi kwa alama za kipekee
+- Uwekaji mipaka ulioboreshwa wa kasi kwa kila akaunti wenye wasifu mahususi kwa kila mtoa huduma
+- Muundo wa kikatiza saketi kwa uthabiti wa watoa huduma
+- Ulinzi dhidi ya maombi mengi ya ghafla kwa kutumia ufungaji wa mutex
+- Akiba ya kuondoa marudio ya maombi kulingana na sahihi
+- Safu ya kikoa: kanuni za gharama, sera ya urejeshaji mbadala, sera ya kufungiwa nje
+- Context Relay: mihtasari ya kukabidhi vipindi kwa ajili ya mwendelezo wakati wa kubadilisha akaunti
+- Uhifadhi wa hali ya kikoa (akiba ya SQLite ya kuandika moja kwa moja kwa urejeshaji mbadala, bajeti, kufungiwa nje na vikatiza saketi)
+- Injini ya sera kwa tathmini ya maombi iliyoratibiwa (kufungiwa nje → bajeti → urejeshaji mbadala)
+- Telemetria ya maombi yenye ujumlishaji wa ucheleweshaji wa p50/p95/p99
+- Telemetria ya lengwa la mchanganyiko na historia ya afya ya lengwa la mchanganyiko kupitia `combo_execution_key` / `combo_step_id`
+- Kitambulisho cha ulinganishaji (X-Request-Id) kwa ufuatiliaji wa mwanzo hadi mwisho
+- Uwekaji kumbukumbu za ukaguzi wa uzingatiaji wenye chaguo la kujiondoa kwa kila ufunguo wa API
 - Mfumo wa tathmini kwa uhakikisho wa ubora wa LLM
-- Dashibodi ya afya yenye hali ya wakati halisi ya circuit breaker ya watoa huduma
-- Seva ya MCP (zana 110) yenye njia 3 za usafirishaji (stdio/SSE/Streamable HTTP)
-- Seva ya A2A (JSON-RPC 2.0 + SSE) yenye ujuzi na mzunguko wa maisha wa kazi
+- Dashibodi ya afya yenye hali ya wakati halisi ya vikatiza saketi vya watoa huduma
+- MCP Server (zana 110) yenye njia 3 za usafirishaji (stdio/SSE/Streamable HTTP)
+- A2A Server (JSON-RPC 2.0 + SSE) yenye ujuzi na mzunguko wa maisha wa kazi
 - Mfumo wa kumbukumbu (uchimbaji, uingizaji, urejeshaji, ufupishaji)
-- Mfumo wa ujuzi (rejesta, kitekelezaji, sandbox, ujuzi uliojengewa ndani)
+- Mfumo wa ujuzi (sajili, kitekelezaji, sandbox, ujuzi uliojengewa ndani)
 - Proksi ya MITM yenye usimamizi wa vyeti na ushughulikiaji wa DNS
-- Middleware ya ulinzi dhidi ya uingizaji hasidi wa vidokezo
-- Mchakato wa kubana vidokezo wenye Caveman, RTK, michakato iliyopangwa kwa tabaka, michanganyiko ya ubanaji, vifurushi vya lugha na uchanganuzi
-- Rejesta ya ACP (Agent Communication Protocol)
+- Middleware ya ulinzi dhidi ya uingizaji wa vidokezo hasidi
+- Mkondo wa ubanaji wa vidokezo wenye Caveman, RTK, mikondo iliyopangwa kwa safu, michanganyiko ya ubanaji, vifurushi vya lugha na uchanganuzi
+- Sajili ya ACP (Agent Communication Protocol)
 - Watoa huduma wa OAuth wa kimoduli (moduli 22 mahususi chini ya `src/lib/oauth/providers/`)
-- Hati za kuondoa usakinishaji/kuondoa usakinishaji kikamilifu
+- Hati za kuondoa/usafishaji kamili
 - Kitendo cha kurekebisha mazingira ya OAuth
 - Daraja la WebSocket kwa wateja wa WS wanaooana na OpenAI (`/v1/ws`)
-- Usimamizi wa tokeni za usawazishaji (kutoa/kubatilisha, kupakua kifurushi cha usanidi chenye matoleo ya ETag)
-- GLM Thinking (`glmt`) kama usanidi awali wa mtoa huduma wa daraja la kwanza
-- Kuhesabu tokeni kwa mseto (`/messages/count_tokens` upande wa mtoa huduma, ikiwa na fallback ya ukadiriaji)
-- Uanzishaji wa kiotomatiki wa lakabu za modeli (usawazishaji 30+ wa lahaja kati ya proksi wakati wa kuanzisha)
-- Fetch salama ya outbound yenye ulinzi wa SSRF, kuzuia URL za faragha na majaribio upya yanayoweza kusanidiwa
-- Majaribio upya ya gumzo yanayozingatia kipindi cha kusubiri, yenye `requestRetry` na `maxRetryIntervalSec` zinazoweza kusanidiwa
-- Uthibitishaji wa mazingira ya runtime kwa kutumia Zod wakati wa kuanzisha
-- Ukaguzi wa uzingatiaji v2 wenye ugawaji wa kurasa, matukio ya CRUD ya watoa huduma na uwekaji kumbukumbu wa uthibitishaji uliozuiwa na SSRF
+- Usimamizi wa tokeni za usawazishaji (utoaji/ubatilishaji, upakuaji wa kifurushi cha usanidi chenye matoleo ya ETag)
+- GLM Thinking (`glmt`) kama mpangilio tayari wa mtoa huduma wa kiwango cha kwanza
+- Uhesabuji mseto wa tokeni (`/messages/count_tokens` wa upande wa mtoa huduma wenye makadirio ya akiba)
+- Uanzishaji otomatiki wa lakabu za modeli (usawazishaji 30+ wa lahaja kati ya proksi wakati wa kuanza)
+- Uletaji salama wa data ya nje wenye ulinzi wa SSRF, uzuiaji wa URL za faragha na majaribio yanayoweza kusanidiwa
+- Majaribio mapya ya mazungumzo yanayozingatia kipindi cha kusubiri, yenye `requestRetry` na `maxRetryIntervalSec` zinazoweza kusanidiwa
+- Uthibitishaji wa mazingira ya wakati wa utekelezaji kwa kutumia Zod wakati wa kuanza
+- Ukaguzi wa uzingatiaji v2 wenye ugawaji wa kurasa, matukio ya CRUD ya watoa huduma na uwekaji kumbukumbu za uthibitishaji uliozuiwa na SSRF
 
-Modeli kuu ya runtime:
+Modeli kuu ya utekelezaji:
 
 - Njia za programu ya Next.js chini ya `src/app/api/*` hutekeleza API za dashibodi na API za uoanifu
-- Kiini cha pamoja cha SSE/uelekezaji katika `src/sse/*` + `open-sse/*` hushughulikia utekelezaji wa watoa huduma, ubadilishaji, utiririshaji, fallback na matumizi
+- Kiini cha pamoja cha SSE/uelekezaji katika `src/sse/*` + `open-sse/*` hushughulikia utekelezaji wa watoa huduma, utafsiri, utiririshaji, urejeshaji mbadala na matumizi
 
 ## Michoro ya Marejeleo
 

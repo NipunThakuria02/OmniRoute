@@ -10,12 +10,12 @@ _Kemas kini terakhir: 2026-06-28_
 
 ## Ringkasan Eksekutif
 
-OmniRoute ialah gerbang penghalaan AI setempat dan papan pemuka yang dibina berasaskan Next.js.
+OmniRoute ialah gerbang penghalaan AI tempatan dan papan pemuka yang dibina menggunakan Next.js.
 Ia menyediakan satu titik akhir yang serasi dengan OpenAI (`/v1/*`) dan menghalakan trafik merentasi berbilang penyedia huluan dengan terjemahan, sandaran, penyegaran token dan penjejakan penggunaan.
 
 Keupayaan teras:
 
-- Permukaan API yang serasi dengan OpenAI untuk CLI/alat (372 penyedia, 150 modul pelaksana)
+- Permukaan API yang serasi dengan OpenAI untuk CLI/alat (373 penyedia, 150 modul pelaksana)
 - Terjemahan permintaan/respons merentasi format penyedia
 - Sandaran kombo model (jujukan berbilang model)
 - Langkah kombo berstruktur (`provider + model + connection`) dengan susunan masa jalan berdasarkan `compositeTiers`
@@ -25,43 +25,43 @@ Keupayaan teras:
 - Penjanaan pembenaman melalui `/v1/embeddings` (18 penyedia)
 - Penjanaan imej melalui `/v1/images/generations` (10+ penyedia, 20+ model)
 - Transkripsi audio melalui `/v1/audio/transcriptions` (18 penyedia)
-- Teks kepada pertuturan melalui `/v1/audio/speech` (24 penyedia terbina dalam)
+- Teks ke pertuturan melalui `/v1/audio/speech` (24 penyedia terbina dalam)
 - Penjanaan video melalui `/v1/videos/generations` (ComfyUI + SD WebUI)
 - Penjanaan muzik melalui `/v1/music/generations` (ComfyUI)
 - Carian web melalui `/v1/search` (20 penyedia)
-- Penyederhanaan kandungan melalui `/v1/moderations`
+- Penyederhanaan melalui `/v1/moderations`
 - Penyusunan semula kedudukan melalui `/v1/rerank`
-- Penghuraian teg pemikiran (``) untuk model penaakulan
-- Pembersihan respons untuk keserasian ketat dengan OpenAI SDK
+- Penghuraian tag pemikiran (``) untuk model penaakulan
+- Sanitasi respons untuk keserasian ketat dengan OpenAI SDK
 - Penormalan peranan (developer→system, system→user) untuk keserasian merentas penyedia
 - Penukaran output berstruktur (json_schema → Gemini responseSchema)
 - Penyimpanan setempat untuk penyedia, kunci, alias, kombo, tetapan dan harga (122 modul DB)
 - Penjejakan penggunaan/kos dan pengelogan permintaan
 - Penyegerakan awan pilihan untuk penyegerakan berbilang peranti/keadaan
-- Senarai IP yang dibenarkan/disekat untuk kawalan akses API
-- Pengurusan bajet pemikiran (laluan terus/automatik/tersuai/adaptif)
-- Suntikan gesaan sistem global
+- Senarai dibenarkan/senarai disekat IP untuk kawalan akses API
+- Pengurusan belanjawan pemikiran (laluan terus/automatik/tersuai/adaptif)
+- Penyuntikan gesaan sistem global
 - Penjejakan sesi dan pencapjarian
 - Pengehadan kadar dipertingkat bagi setiap akaun dengan profil khusus penyedia
 - Corak pemutus litar untuk daya tahan penyedia
-- Perlindungan daripada lonjakan permintaan serentak dengan penguncian mutex
+- Perlindungan anti-deruman serentak dengan penguncian mutex
 - Cache penyahduplikasian permintaan berasaskan tandatangan
-- Lapisan domain: peraturan kos, dasar sandaran, dasar sekatan
+- Lapisan domain: peraturan kos, dasar sandaran, dasar penguncian
 - Context Relay: ringkasan penyerahan sesi untuk kesinambungan penggiliran akaun
-- Penyimpanan keadaan domain (cache tulis terus SQLite untuk sandaran, bajet, sekatan dan pemutus litar)
-- Enjin dasar untuk penilaian permintaan berpusat (sekatan → bajet → sandaran)
+- Penyimpanan keadaan domain (cache tulis tembus SQLite untuk sandaran, belanjawan, penguncian dan pemutus litar)
+- Enjin dasar untuk penilaian permintaan berpusat (penguncian → belanjawan → sandaran)
 - Telemetri permintaan dengan pengagregatan kependaman p50/p95/p99
 - Telemetri sasaran kombo dan sejarah kesihatan sasaran kombo melalui `combo_execution_key` / `combo_step_id`
 - ID korelasi (X-Request-Id) untuk penjejakan hujung ke hujung
-- Pengelogan audit pematuhan dengan pilihan untuk tidak menyertai bagi setiap kunci API
+- Pengelogan audit pematuhan dengan pilihan tarik diri bagi setiap kunci API
 - Rangka kerja penilaian untuk jaminan kualiti LLM
 - Papan pemuka kesihatan dengan status pemutus litar penyedia masa nyata
 - Pelayan MCP (110 alat) dengan 3 pengangkutan (stdio/SSE/Streamable HTTP)
-- Pelayan A2A (JSON-RPC 2.0 + SSE) dengan kemahiran dan kitar hayat tugas
-- Sistem memori (pengekstrakan, suntikan, pengambilan, peringkasan)
+- Pelayan A2A (JSON-RPC 2.0 + SSE) dengan kemahiran dan kitaran hayat tugas
+- Sistem memori (pengekstrakan, penyuntikan, perolehan semula, peringkasan)
 - Sistem kemahiran (daftar, pelaksana, kotak pasir, kemahiran terbina dalam)
 - Proksi MITM dengan pengurusan sijil dan pengendalian DNS
-- Perisian tengah pengawal suntikan gesaan
+- Perisian tengah perlindungan penyuntikan gesaan
 - Saluran pemampatan gesaan dengan Caveman, RTK, saluran bertindan, kombo pemampatan, pek bahasa dan analitik
 - Daftar ACP (Agent Communication Protocol)
 - Penyedia OAuth modular (22 modul individu di bawah `src/lib/oauth/providers/`)
@@ -69,17 +69,17 @@ Keupayaan teras:
 - Tindakan pembaikan persekitaran OAuth
 - Jambatan WebSocket untuk klien WS yang serasi dengan OpenAI (`/v1/ws`)
 - Pengurusan token penyegerakan (pengeluaran/pembatalan, muat turun berkas konfigurasi berversi ETag)
-- Pratetap penyedia kelas pertama GLM Thinking (`glmt`)
-- Pengiraan token hibrid (`/messages/count_tokens` pada sisi penyedia dengan anggaran sebagai sandaran)
-- Penyemaian automatik alias model (30+ penormalan dialek merentas proksi semasa permulaan)
-- Pengambilan keluar yang selamat dengan pengawal SSRF, penyekatan URL peribadi dan percubaan semula boleh dikonfigurasi
-- Percubaan semula sembang yang mengambil kira tempoh bertenang dengan `requestRetry` dan `maxRetryIntervalSec` boleh dikonfigurasi
-- Pengesahan persekitaran masa jalan dengan Zod semasa permulaan
-- Audit pematuhan v2 dengan penghalamanan, peristiwa CRUD penyedia dan pengelogan pengesahan yang disekat SSRF
+- GLM Thinking (`glmt`) sebagai pratetap penyedia kelas pertama
+- Pengiraan token hibrid (`/messages/count_tokens` pada sisi penyedia dengan sandaran anggaran)
+- Penyemaian automatik alias model (30+ penormalan dialek merentas proksi ketika permulaan)
+- Pengambilan keluar yang selamat dengan perlindungan SSRF, penyekatan URL peribadi dan percubaan semula boleh dikonfigurasikan
+- Percubaan semula sembang yang mengambil kira tempoh bertenang dengan `requestRetry` dan `maxRetryIntervalSec` yang boleh dikonfigurasikan
+- Pengesahan persekitaran masa jalan dengan Zod ketika permulaan
+- Audit pematuhan v2 dengan penomboran halaman, peristiwa CRUD penyedia dan pengelogan pengesahan yang disekat SSRF
 
 Model masa jalan utama:
 
-- Laluan aplikasi Next.js di bawah `src/app/api/*` melaksanakan API papan pemuka dan API keserasian
+- Laluan aplikasi Next.js di bawah `src/app/api/*` melaksanakan kedua-dua API papan pemuka dan API keserasian
 - Teras SSE/penghalaan dikongsi dalam `src/sse/*` + `open-sse/*` mengendalikan pelaksanaan penyedia, terjemahan, penstriman, sandaran dan penggunaan
 
 ## Rajah Rujukan

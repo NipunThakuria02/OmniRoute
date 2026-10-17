@@ -8,79 +8,79 @@
 
 _An sabunta na ƙarshe: 2026-06-28_
 
-## Taƙaitaccen Bayani na Zartarwa
+## Taƙaitaccen Bayanin Gudanarwa
 
-OmniRoute wata ƙofar karkatar da AI ta cikin gida ce tare da dashboard, wadda aka gina bisa Next.js.
-Tana samar da endpoint guda ɗaya mai dacewa da OpenAI (`/v1/*`) kuma tana karkatar da zirga-zirga tsakanin upstream providers da yawa tare da fassara, fallback, sabunta token, da bin diddigin amfani.
+OmniRoute wata ƙofar sarrafa zirga-zirgar AI ta cikin gida ce tare da dashboard, wadda aka gina bisa Next.js.
+Tana samar da endpoint guda ɗaya mai dacewa da OpenAI (`/v1/*`) sannan tana rarraba zirga-zirga zuwa masu samarwa na upstream da yawa tare da fassara, fallback, sabunta token, da bin diddigin amfani.
 
-Muhimman ƙarfin aiki:
+Manyan ƙwarewa:
 
-- API surface mai dacewa da OpenAI don CLI/tools (providers 372, executor modules 150)
-- Fassarar request/response tsakanin tsarin providers
-- Model combo fallback (jerin models da yawa)
-- Matakan combo masu tsari (`provider + model + connection`) tare da jera lokacin aiki ta `compositeTiers`
-- Fallback a matakin account (accounts da yawa ga kowane provider)
-- Binciken quota tun kafin aiki da zaɓin account na P2C mai la'akari da quota a babbar hanyar chat
-- Gudanar da haɗin provider ta OAuth + API-key (OAuth provider modules 27)
-- Samar da embeddings ta `/v1/embeddings` (providers 18)
-- Samar da hotuna ta `/v1/images/generations` (providers 10+, models 20+)
-- Juya sauti zuwa rubutu ta `/v1/audio/transcriptions` (providers 18)
-- Juya rubutu zuwa magana ta `/v1/audio/speech` (built-in providers 24)
+- API mai dacewa da OpenAI don CLI/kayan aiki (masu samarwa 373, modules na executor 150)
+- Fassarar buƙata/amsa tsakanin tsarin masu samarwa
+- Fallback na haɗin models (jerin models da yawa)
+- Tsararrun matakan haɗi (`provider + model + connection`) tare da jera lokacin aiki ta `compositeTiers`
+- Fallback na matakin account (accounts da yawa ga kowane mai samarwa)
+- Binciken quota kafin aiwatarwa da zaɓin account na P2C mai la'akari da quota a babbar hanyar chat
+- Gudanar da haɗin masu samarwa ta OAuth + API-key (modules 27 na masu samar da OAuth)
+- Samar da embeddings ta `/v1/embeddings` (masu samarwa 18)
+- Samar da hotuna ta `/v1/images/generations` (masu samarwa 10+, models 20+)
+- Rubuta sauti zuwa rubutu ta `/v1/audio/transcriptions` (masu samarwa 18)
+- Sauya rubutu zuwa magana ta `/v1/audio/speech` (masu samarwa 24 da aka gina a ciki)
 - Samar da bidiyo ta `/v1/videos/generations` (ComfyUI + SD WebUI)
 - Samar da kiɗa ta `/v1/music/generations` (ComfyUI)
-- Binciken yanar gizo ta `/v1/search` (providers 20)
-- Moderations ta `/v1/moderations`
-- Sake jera sakamako ta `/v1/rerank`
-- Tantance think tag (``) don reasoning models
-- Tsabtace response domin tsananin dacewa da OpenAI SDK
-- Daidaita role (developer→system, system→user) domin dacewa tsakanin providers
-- Sauya structured output (json_schema → Gemini responseSchema)
-- Adanawa a cikin gida don providers, keys, aliases, combos, settings, pricing (DB modules 122)
-- Bin diddigin amfani/kuɗi da rubuta bayanan requests
-- Cloud sync na zaɓi don daidaita na'urori da yawa/state
+- Binciken yanar gizo ta `/v1/search` (masu samarwa 20)
+- Tace abun ciki ta `/v1/moderations`
+- Sake tsara matsayi ta `/v1/rerank`
+- Nazarin alamar tunani (``) don models na yin tunani
+- Tsabtace amsa don tsauraran dacewa da OpenAI SDK
+- Daidaita roles (developer→system, system→user) don dacewa tsakanin masu samarwa
+- Sauya tsararren fitarwa (json_schema → Gemini responseSchema)
+- Adanawa na cikin gida don masu samarwa, keys, aliases, combos, settings, pricing (modules na DB 122)
+- Bin diddigin amfani/farashi da yin rajistar buƙatu
+- Sync na cloud na zaɓi don daidaita na'urori da yawa/state
 - IP allowlist/blocklist don sarrafa damar shiga API
-- Gudanar da thinking budget (passthrough/auto/custom/adaptive)
-- Saka global system prompt
-- Bin diddigin sessions da fingerprinting
-- Ingantaccen rate limiting na kowane account tare da profiles na musamman ga provider
-- Tsarin circuit breaker don juriyar provider
+- Gudanar da kasafin tunani (passthrough/auto/custom/adaptive)
+- Shigar da global system prompt
+- Bin diddigin session da fingerprinting
+- Ingantaccen rate limiting na kowane account tare da profiles na musamman ga kowane mai samarwa
+- Tsarin circuit breaker don juriya ga matsalolin masu samarwa
 - Kariya daga anti-thundering herd ta amfani da mutex locking
-- Cache na kawar da maimaitattun requests bisa signature
-- Domain layer: ƙa'idojin kuɗi, fallback policy, lockout policy
-- Context Relay: taƙaitaccen bayanin miƙa session don ci gaba yayin juyawar account
-- Adana domain state (SQLite write-through cache don fallbacks, budgets, lockouts, circuit breakers)
-- Policy engine don tantance requests a wuri guda (lockout → budget → fallback)
-- Request telemetry tare da tara latency na p50/p95/p99
-- Combo target telemetry da tarihin lafiyar combo target ta `combo_execution_key` / `combo_step_id`
-- Correlation ID (X-Request-Id) don bin diddigi daga farko har ƙarshe
-- Compliance audit logging tare da damar opt-out ga kowane API key
-- Eval framework don tabbatar da ingancin LLM
-- Health dashboard tare da matsayin circuit breaker na provider a ainihin lokaci
-- MCP Server (tools 110) tare da transports 3 (stdio/SSE/Streamable HTTP)
+- Cache na kawar da maimaitattun buƙatu bisa signature
+- Layer na domain: ƙa'idojin farashi, manufofin fallback, manufofin lockout
+- Context Relay: taƙaitattun bayanan miƙa session don ci gaba yayin sauya account
+- Adana state na domain (SQLite write-through cache don fallbacks, budgets, lockouts, circuit breakers)
+- Policy engine don kimanta buƙatu a tsakiya (lockout → budget → fallback)
+- Telemetry na buƙatu tare da tara latency na p50/p95/p99
+- Telemetry na combo target da tarihin lafiyar combo target ta `combo_execution_key` / `combo_step_id`
+- Correlation ID (X-Request-Id) don bin sawu daga farko zuwa ƙarshe
+- Rajistar binciken bin ƙa'idoji tare da damar opt-out ga kowane API key
+- Tsarin eval don tabbatar da ingancin LLM
+- Dashboard na lafiya tare da halin circuit breaker na masu samarwa a ainihin lokaci
+- MCP Server (kayan aiki 110) tare da hanyoyin sufuri 3 (stdio/SSE/Streamable HTTP)
 - A2A Server (JSON-RPC 2.0 + SSE) tare da skills da tsarin rayuwar task
 - Tsarin memory (extraction, injection, retrieval, summarization)
 - Tsarin skills (registry, executor, sandbox, built-in skills)
-- MITM proxy tare da sarrafa certificates da DNS
-- Prompt injection guard middleware
-- Prompt compression pipeline tare da Caveman, RTK, stacked pipelines, compression combos, language packs, da analytics
-- ACP (Agent Communication Protocol) registry
-- Modular OAuth providers (modules guda 22 a ƙarƙashin `src/lib/oauth/providers/`)
+- MITM proxy tare da sarrafa certificate da DNS
+- Middleware na kariya daga prompt injection
+- Pipeline na matse prompt tare da Caveman, RTK, stacked pipelines, compression combos, language packs, da analytics
+- Registry na ACP (Agent Communication Protocol)
+- Masu samar da OAuth masu tsarin modules (modules guda 22 ƙarƙashin `src/lib/oauth/providers/`)
 - Scripts na uninstall/full-uninstall
-- OAuth environment repair action
-- WebSocket bridge don WS clients masu dacewa da OpenAI (`/v1/ws`)
-- Gudanar da sync token (issue/revoke, sauke config bundle mai ETag-versioning)
-- GLM Thinking (`glmt`) a matsayin cikakken provider preset
-- Hybrid token counting (na gefen provider `/messages/count_tokens` tare da estimation fallback)
-- Shuka model aliases ta atomatik (daidaita cross-proxy dialect sama da 30 lokacin farawa)
-- Amintaccen outbound fetch tare da SSRF guard, hana private URLs, da retry mai daidaitawa
-- Chat retries masu la'akari da cooldown tare da `requestRetry` da `maxRetryIntervalSec` masu daidaitawa
-- Tabbatar da runtime environment da Zod lokacin farawa
-- Compliance audit v2 tare da pagination, provider CRUD events, da rubuta bayanan validation da SSRF ya toshe
+- Aikin gyara environment na OAuth
+- Gadar WebSocket don clients na WS masu dacewa da OpenAI (`/v1/ws`)
+- Gudanar da sync token (bayarwa/soke, sauke config bundle mai version ta ETag)
+- GLM Thinking (`glmt`) a matsayin preset na mai samarwa na cikakken matsayi
+- Ƙididdigar token ta hybrid (ta gefen mai samarwa `/messages/count_tokens` tare da estimation fallback)
+- Shuka model aliases ta atomatik (daidaita dialects na cross-proxy 30+ yayin farawa)
+- Amintaccen outbound fetch tare da kariyar SSRF, hana private URLs, da retry mai iya daidaitawa
+- Sake gwada chat mai la'akari da cooldown tare da `requestRetry` da `maxRetryIntervalSec` masu iya daidaitawa
+- Tabbatar da runtime environment da Zod yayin farawa
+- Binciken bin ƙa'idoji v2 tare da pagination, abubuwan da suka faru na provider CRUD, da rajistar tabbatarwa da SSRF ya hana
 
 Babban tsarin runtime:
 
-- Next.js app routes da ke ƙarƙashin `src/app/api/*` suna aiwatar da dashboard APIs da compatibility APIs
-- Cibiyar SSE/routing ta bai ɗaya a `src/sse/*` + `open-sse/*` tana kula da aiwatar da provider, fassara, streaming, fallback, da amfani
+- Hanyoyin app na Next.js ƙarƙashin `src/app/api/*` suna aiwatar da duka APIs na dashboard da APIs na dacewa
+- Cibiyar SSE/routing da ake rabawa a `src/sse/*` + `open-sse/*` tana kula da aiwatar da masu samarwa, fassara, streaming, fallback, da amfani
 
 ## Zanen Bayani
 

@@ -8,20 +8,20 @@
 
 _Nazadnje posodobljeno: 2026-06-28_
 
-## Povzetek za vodstvo
+## Povzetek
 
-OmniRoute je lokalni prehod za usmerjanje umetne inteligence in nadzorna plošča, zgrajena na Next.js.
-Zagotavlja enotno končno točko, združljivo z OpenAI (`/v1/*`), ter usmerja promet med več nadrejenimi ponudniki s prevajanjem, nadomestnimi možnostmi, osveževanjem žetonov in spremljanjem uporabe.
+OmniRoute je lokalni prehod in nadzorna plošča za usmerjanje umetne inteligence, zgrajena na Next.js.
+Zagotavlja enotno končno točko, združljivo z OpenAI (`/v1/*`), ter usmerja promet med več ponudniki v zaledju s prevajanjem, nadomestnimi možnostmi, osveževanjem žetonov in spremljanjem uporabe.
 
-Ključne zmožnosti:
+Ključne zmogljivosti:
 
-- Površina API-ja, združljiva z OpenAI, za CLI/orodja (372 ponudnikov, 150 izvajalnih modulov)
-- Prevajanje zahtev in odgovorov med oblikami ponudnikov
-- Nadomestno izvajanje kombinacij modelov (zaporedje več modelov)
-- Strukturirani koraki kombinacij (`provider + model + connection`) z določanjem vrstnega reda med izvajanjem prek `compositeTiers`
-- Nadomestno izvajanje na ravni računa (več računov na ponudnika)
-- Predhodno preverjanje kvote in izbira računa P2C ob upoštevanju kvote v glavni poti klepeta
-- Upravljanje povezav ponudnikov prek OAuth in ključev API (27 modulov ponudnikov OAuth)
+- Površina API-ja, združljiva z OpenAI, za orodja CLI in druga orodja (373 ponudnikov, 150 izvajalnih modulov)
+- Prevajanje zahtev in odgovorov med formati ponudnikov
+- Nadomestne možnosti kombinacij modelov (zaporedje več modelov)
+- Strukturirani koraki kombinacij (`provider + model + connection`) z izvajanjem po vrstnem redu `compositeTiers`
+- Nadomestne možnosti na ravni računov (več računov na ponudnika)
+- Predhodno preverjanje kvot in izbira računov P2C z upoštevanjem kvot v glavni poti klepeta
+- Upravljanje povezav s ponudniki prek OAuth in ključev API (27 modulov ponudnikov OAuth)
 - Ustvarjanje vdelav prek `/v1/embeddings` (18 ponudnikov)
 - Ustvarjanje slik prek `/v1/images/generations` (več kot 10 ponudnikov, več kot 20 modelov)
 - Prepisovanje zvoka prek `/v1/audio/transcriptions` (18 ponudnikov)
@@ -31,56 +31,56 @@ Ključne zmožnosti:
 - Spletno iskanje prek `/v1/search` (20 ponudnikov)
 - Moderiranje prek `/v1/moderations`
 - Ponovno razvrščanje prek `/v1/rerank`
-- Razčlenjevanje oznak za razmišljanje (``) za modele sklepanja
+- Razčlenjevanje oznak razmišljanja (``) za modele sklepanja
 - Čiščenje odgovorov za strogo združljivost z OpenAI SDK
 - Normalizacija vlog (developer→system, system→user) za združljivost med ponudniki
 - Pretvorba strukturiranega izhoda (json_schema → Gemini responseSchema)
 - Lokalna trajna hramba ponudnikov, ključev, vzdevkov, kombinacij, nastavitev in cen (122 modulov zbirke podatkov)
-- Spremljanje uporabe/stroškov in beleženje zahtev
-- Izbirna sinhronizacija z oblakom za sinhronizacijo med več napravami oziroma sinhronizacijo stanja
+- Spremljanje uporabe in stroškov ter beleženje zahtev
+- Izbirna sinhronizacija v oblaku za sinhronizacijo stanja med več napravami
 - Seznam dovoljenih/blokiranih naslovov IP za nadzor dostopa do API-ja
-- Upravljanje proračuna za razmišljanje (posredovanje/samodejno/prilagojeno/prilagodljivo)
+- Upravljanje proračuna za razmišljanje (neposredno posredovanje/samodejno/po meri/prilagodljivo)
 - Globalno vstavljanje sistemskega poziva
 - Spremljanje sej in ustvarjanje prstnih odtisov
-- Izboljšano omejevanje hitrosti na posamezni račun s profili, značilnimi za ponudnike
+- Izboljšeno omejevanje hitrosti na ravni posameznega računa s profili, specifičnimi za ponudnika
 - Vzorec odklopnika za odpornost ponudnikov
-- Zaščita pred stampedom zahtev z zaklepanjem prek mutexov
-- Predpomnilnik za deduplikacijo zahtev na podlagi podpisov
-- Domenska plast: pravila stroškov, pravilnik nadomestnega izvajanja, pravilnik zaklepanja
+- Zaščita pred stampedom zahtev z zaklepanjem z mutexi
+- Predpomnilnik za odstranjevanje podvojenih zahtev na podlagi podpisov
+- Domenska plast: pravila stroškov, pravilnik nadomestnih možnosti, pravilnik zaklepanja
 - Context Relay: povzetki predaje sej za ohranjanje kontinuitete pri menjavi računov
-- Trajna hramba stanja domene (predpomnilnik SQLite s takojšnjim zapisovanjem za nadomestne možnosti, proračune, zaklepanja in odklopnike)
+- Trajna hramba domenskega stanja (prepisovalni predpomnilnik SQLite za nadomestne možnosti, proračune, zaklepanja in odklopnike)
 - Mehanizem pravilnikov za centralizirano vrednotenje zahtev (zaklepanje → proračun → nadomestna možnost)
 - Telemetrija zahtev z združevanjem zakasnitev p50/p95/p99
-- Telemetrija ciljev kombinacij in zgodovina zdravja ciljev kombinacij prek `combo_execution_key` / `combo_step_id`
+- Telemetrija ciljev kombinacij in zgodovinsko stanje ciljev kombinacij prek `combo_execution_key` / `combo_step_id`
 - ID korelacije (X-Request-Id) za sledenje od začetka do konca
-- Revizijsko beleženje skladnosti z možnostjo izključitve za posamezni ključ API
-- Ogrodje za vrednotenje za zagotavljanje kakovosti LLM-jev
-- Nadzorna plošča zdravja s stanjem odklopnikov ponudnikov v realnem času
-- Strežnik MCP (110 orodij) s 3 načini prenosa (stdio/SSE/Streamable HTTP)
+- Revizijsko beleženje skladnosti z možnostjo izključitve za posamezen ključ API
+- Ogrodje za vrednotenje zagotavljanja kakovosti LLM
+- Nadzorna plošča stanja s sprotnim prikazom stanja odklopnikov ponudnikov
+- Strežnik MCP (110 orodij) s 3 prenosi (stdio/SSE/Streamable HTTP)
 - Strežnik A2A (JSON-RPC 2.0 + SSE) z veščinami in življenjskim ciklom opravil
-- Pomnilniški sistem (izluščanje, vstavljanje, pridobivanje, povzemanje)
+- Sistem pomnilnika (izluščenje, vstavljanje, pridobivanje, povzemanje)
 - Sistem veščin (register, izvajalnik, peskovnik, vgrajene veščine)
 - Posredniški strežnik MITM z upravljanjem potrdil in obravnavo DNS
-- Vmesna programska oprema za zaščito pred vbrizgavanjem pozivov
-- Cevovod za stiskanje pozivov s Caveman, RTK, sestavljenimi cevovodi, kombinacijami stiskanja, jezikovnimi paketi in analitiko
+- Vmesna programska oprema za zaščito pred vstavljanjem pozivov
+- Cevovod za stiskanje pozivov z orodji Caveman, RTK, naloženimi cevovodi, kombinacijami stiskanja, jezikovnimi paketi in analitiko
 - Register ACP (Agent Communication Protocol)
 - Modularni ponudniki OAuth (22 posameznih modulov v `src/lib/oauth/providers/`)
 - Skripti za odstranitev/popolno odstranitev
 - Dejanje za popravilo okolja OAuth
 - Most WebSocket za odjemalce WS, združljive z OpenAI (`/v1/ws`)
-- Upravljanje sinhronizacijskih žetonov (izdajanje/preklic, prenos konfiguracijskega svežnja z različicami ETag)
+- Upravljanje sinhronizacijskih žetonov (izdaja/preklic, prenos konfiguracijskega svežnja z različicami ETag)
 - GLM Thinking (`glmt`) kot prvovrstna prednastavitev ponudnika
-- Hibridno štetje žetonov (štetje na strani ponudnika prek `/messages/count_tokens` z nadomestnim ocenjevanjem)
+- Hibridno štetje žetonov (ponudnikova končna točka `/messages/count_tokens` z nadomestnim ocenjevanjem)
 - Samodejno začetno ustvarjanje vzdevkov modelov (več kot 30 normalizacij narečij med posredniškimi strežniki ob zagonu)
-- Varno odhodno pridobivanje z zaščito pred SSRF, blokiranjem zasebnih URL-jev in nastavljivim ponavljanjem
-- Ponovni poskusi klepeta, ki upoštevajo obdobje ohlajanja, z nastavljivima `requestRetry` in `maxRetryIntervalSec`
-- Preverjanje okolja izvajanja z Zod ob zagonu
+- Varno odhodno pridobivanje z zaščito pred SSRF, blokiranjem zasebnih URL-jev in nastavljivim ponavljanjem poskusov
+- Ponovni poskusi klepeta z upoštevanjem obdobja ohlajanja in nastavljivima `requestRetry` ter `maxRetryIntervalSec`
+- Preverjanje izvajalnega okolja z Zod ob zagonu
 - Revizija skladnosti v2 s stranjenjem, dogodki CRUD ponudnikov in beleženjem preverjanj, blokiranih zaradi SSRF
 
-Primarni model izvajanja:
+Primarni izvajalni model:
 
 - Poti aplikacije Next.js v `src/app/api/*` izvajajo tako API-je nadzorne plošče kot združljivostne API-je
-- Skupno jedro SSE/usmerjanja v `src/sse/*` + `open-sse/*` obravnava izvajanje ponudnikov, prevajanje, pretočno prenašanje, nadomestno izvajanje in uporabo
+- Skupno jedro SSE/usmerjanja v `src/sse/*` + `open-sse/*` obravnava izvajanje pri ponudnikih, prevajanje, pretočno prenašanje, nadomestne možnosti in uporabo
 
 ## Referenčni diagrami
 

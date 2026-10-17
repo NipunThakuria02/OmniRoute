@@ -15,11 +15,11 @@ Den tilbyr ett enkelt OpenAI-kompatibelt endepunkt (`/v1/*`) og ruter trafikk p�
 
 Kjernefunksjoner:
 
-- OpenAI-kompatibelt API-grensesnitt for CLI/verktøy (372 leverandører, 150 eksekveringsmoduler)
+- OpenAI-kompatibelt API-grensesnitt for CLI/verktøy (373 leverandører, 150 eksekveringsmoduler)
 - Oversettelse av forespørsler/svar mellom leverandørformater
-- Reservehåndtering med modellkombinasjoner (sekvens med flere modeller)
+- Reserveløsning med modellkombinasjoner (sekvens med flere modeller)
 - Strukturerte kombinasjonstrinn (`provider + model + connection`) med kjøretidsrekkefølge basert på `compositeTiers`
-- Reservehåndtering på kontonivå (flere kontoer per leverandør)
+- Reserveløsning på kontonivå (flere kontoer per leverandør)
 - Forhåndskontroll av kvoter og kvotebevisst P2C-kontovalg i hovedflyten for chat
 - Administrasjon av leverandørtilkoblinger med OAuth + API-nøkkel (27 OAuth-leverandørmoduler)
 - Generering av innebygginger via `/v1/embeddings` (18 leverandører)
@@ -31,51 +31,51 @@ Kjernefunksjoner:
 - Nettsøk via `/v1/search` (20 leverandører)
 - Moderering via `/v1/moderations`
 - Omrangering via `/v1/rerank`
-- Tolkning av tenkemarkører (``) for resonneringsmodeller
+- Tolking av tenketagger (``) for resonneringsmodeller
 - Rensing av svar for streng kompatibilitet med OpenAI SDK
 - Normalisering av roller (developer→system, system→user) for kompatibilitet på tvers av leverandører
 - Konvertering av strukturerte utdata (json_schema → Gemini responseSchema)
-- Lokal persistens for leverandører, nøkler, aliaser, kombinasjoner, innstillinger og priser (122 databasemoduler)
+- Lokal persistens for leverandører, nøkler, aliaser, kombinasjoner, innstillinger og priser (122 DB-moduler)
 - Registrering av bruk/kostnader og logging av forespørsler
 - Valgfri skysynkronisering for synkronisering av tilstand mellom flere enheter
 - Tillatelsesliste/blokkeringsliste for IP-adresser til tilgangskontroll for API-et
-- Administrasjon av tankebudsjett (videresending/automatisk/egendefinert/adaptivt)
-- Global innsetting av systemledetekst
+- Administrasjon av tenkebudsjett (direkteoverføring/automatisk/egendefinert/adaptivt)
+- Global injisering av systeminstruks
 - Øktsporing og fingeravtrykksidentifisering
 - Forbedret hastighetsbegrensning per konto med leverandørspesifikke profiler
-- Kretsbrytermønster for robusthet mot leverandørfeil
-- Beskyttelse mot samtidige forespørselsstormer med mutekslåsing
-- Signaturbasert dedupliseringsbuffer for forespørsler
+- Kretsbrytermønster for robusthet hos leverandører
+- Beskyttelse mot samtidige masseforespørsler med mutex-låsing
+- Signaturbasert hurtigbuffer for deduplisering av forespørsler
 - Domenelag: kostnadsregler, reservepolicy, utestengingspolicy
-- Context Relay: sammendrag for overlevering av økter for å bevare kontinuitet ved kontorotasjon
-- Persistens av domenetilstand (SQLite-gjennomskrivingsbuffer for reserver, budsjetter, utestenginger og kretsbrytere)
-- Policymotor for sentralisert evaluering av forespørsler (utestenging → budsjett → reserve)
+- Context Relay: sammendrag for overlevering av økter for å opprettholde kontinuitet ved kontorotasjon
+- Persistens av domenetilstand (SQLite-hurtigbuffer med gjennomskriving for reserveløsninger, budsjetter, utestenginger og kretsbrytere)
+- Policymotor for sentralisert evaluering av forespørsler (utestenging → budsjett → reserveløsning)
 - Forespørselstelemetri med aggregering av p50/p95/p99-latens
 - Telemetri for kombinasjonsmål og historisk tilstand for kombinasjonsmål via `combo_execution_key` / `combo_step_id`
 - Korrelasjons-ID (X-Request-Id) for ende-til-ende-sporing
-- Samsvarsrevisjonslogging med mulighet for bortvalg per API-nøkkel
+- Revisjonslogging for samsvar med mulighet for reservasjon per API-nøkkel
 - Evalueringsrammeverk for kvalitetssikring av LLM-er
 - Tilstandskontrollpanel med sanntidsstatus for leverandørenes kretsbrytere
-- MCP-server (110 verktøy) med 3 transportmekanismer (stdio/SSE/Streamable HTTP)
+- MCP-server (110 verktøy) med 3 transporter (stdio/SSE/strømmbar HTTP)
 - A2A-server (JSON-RPC 2.0 + SSE) med ferdigheter og oppgavelivssyklus
-- Minnesystem (uttrekking, innsetting, gjenfinning og oppsummering)
-- Ferdighetssystem (register, eksekvering, sandkasse og innebygde ferdigheter)
+- Minnesystem (uttrekking, injisering, gjenfinning, oppsummering)
+- Ferdighetssystem (register, eksekveringsmotor, sandkasse, innebygde ferdigheter)
 - MITM-proxy med sertifikatadministrasjon og DNS-håndtering
-- Mellomvare for beskyttelse mot ledetekstinjeksjon
-- Pipeline for ledetekstkomprimering med Caveman, RTK, stablede pipelines, komprimeringskombinasjoner, språkpakker og analyse
+- Mellomvare for beskyttelse mot instruksjonsinjeksjon
+- Pipeline for instruksjonskomprimering med Caveman, RTK, stablede pipelines, komprimeringskombinasjoner, språkpakker og analyse
 - ACP-register (Agent Communication Protocol)
 - Modulære OAuth-leverandører (22 individuelle moduler under `src/lib/oauth/providers/`)
 - Skript for avinstallering/fullstendig avinstallering
-- Handling for reparasjon av OAuth-miljøet
+- Handling for reparasjon av OAuth-miljø
 - WebSocket-bro for OpenAI-kompatible WS-klienter (`/v1/ws`)
-- Administrasjon av synkroniseringstokener (utstedelse/tilbakekalling og nedlasting av ETag-versjonert konfigurasjonspakke)
-- GLM Thinking (`glmt`) som førsteklasses leverandørforhåndsinnstilling
-- Hybrid tokenopptelling (`/messages/count_tokens` hos leverandøren med estimering som reserve)
-- Automatisk oppretting av modellaliaser (30+ normaliseringer mellom proxy-dialekter ved oppstart)
+- Administrasjon av synkroniseringstokener (utstedelse/tilbakekalling, nedlasting av ETag-versjonert konfigurasjonspakke)
+- GLM Thinking (`glmt`) som fullverdig leverandørforhåndsinnstilling
+- Hybrid tokenopptelling (leverandørsiden `/messages/count_tokens` med estimat som reserveløsning)
+- Automatisk oppretting av modellaliaser (30+ normaliseringer på tvers av proxy-dialekter ved oppstart)
 - Sikker utgående henting med SSRF-beskyttelse, blokkering av private URL-er og konfigurerbare nye forsøk
 - Nedkjølingsbevisste nye chatforsøk med konfigurerbare `requestRetry` og `maxRetryIntervalSec`
-- Validering av kjøretidsmiljøet med Zod ved oppstart
-- Samsvarsrevisjon v2 med paginering, CRUD-hendelser for leverandører og logging av SSRF-blokkert validering
+- Validering av kjøretidsmiljø med Zod ved oppstart
+- Samsvarsrevisjon v2 med paginering, CRUD-hendelser for leverandører og logging av validering blokkert av SSRF
 
 Primær kjøretidsmodell:
 

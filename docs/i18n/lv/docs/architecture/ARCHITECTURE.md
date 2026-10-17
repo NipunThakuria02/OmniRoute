@@ -8,22 +8,22 @@
 
 _Pēdējoreiz atjaunināts: 2026-06-28_
 
-## Kopsavilkums vadībai
+## Kopsavilkums
 
-OmniRoute ir lokāla AI maršrutēšanas vārteja un informācijas panelis, kas izveidots uz Next.js bāzes.
-Tas nodrošina vienotu ar OpenAI saderīgu galapunktu (`/v1/*`) un maršrutē datplūsmu starp vairākiem augšupējiem pakalpojumu sniedzējiem, veicot formātu pārveidošanu, atkāpšanos, pilnvaru atsvaidzināšanu un lietojuma uzskaiti.
+OmniRoute ir lokāla MI maršrutēšanas vārteja un informācijas panelis, kas izveidots, izmantojot Next.js.
+Tas nodrošina vienotu ar OpenAI saderīgu galapunktu (`/v1/*`) un maršrutē datplūsmu starp vairākiem augšupējiem pakalpojumu sniedzējiem, veicot formātu pārveidošanu, pārslēgšanos kļūmes gadījumā, pilnvaru atsvaidzināšanu un lietojuma uzskaiti.
 
 Galvenās iespējas:
 
-- Ar OpenAI saderīga API saskarne CLI/rīkiem (372 pakalpojumu sniedzēji, 150 izpildītāju moduļi)
-- Pieprasījumu/atbilžu formātu pārveidošana starp pakalpojumu sniedzējiem
-- Modeļu kombināciju atkāpšanās mehānisms (vairāku modeļu secība)
-- Strukturēti kombināciju soļi (`provider + model + connection`) ar izpildlaika secību, ko nosaka `compositeTiers`
-- Atkāpšanās konta līmenī (vairāki konti katram pakalpojumu sniedzējam)
-- Kvotu iepriekšēja pārbaude un kvotas ņemoša vērā P2C konta atlase galvenajā tērzēšanas ceļā
+- Ar OpenAI saderīga API saskarne CLI/rīkiem (373 pakalpojumu sniedzēji, 150 izpildītāju moduļi)
+- Pieprasījumu/atbilžu pārveidošana starp pakalpojumu sniedzēju formātiem
+- Modeļu kombināciju pārslēgšana kļūmes gadījumā (vairāku modeļu secība)
+- Strukturēti kombināciju soļi (`provider + model + connection`) ar izpildlaika secību pēc `compositeTiers`
+- Konta līmeņa pārslēgšana kļūmes gadījumā (vairāki konti katram pakalpojumu sniedzējam)
+- Kvotu iepriekšēja pārbaude un kvotas ņemoša vērā P2C konta atlase galvenajā tērzēšanas plūsmā
 - OAuth un API atslēgu pakalpojumu sniedzēju savienojumu pārvaldība (27 OAuth pakalpojumu sniedzēju moduļi)
 - Iegultņu ģenerēšana, izmantojot `/v1/embeddings` (18 pakalpojumu sniedzēji)
-- Attēlu ģenerēšana, izmantojot `/v1/images/generations` (10+ pakalpojumu sniedzēji, 20+ modeļi)
+- Attēlu ģenerēšana, izmantojot `/v1/images/generations` (vairāk nekā 10 pakalpojumu sniedzēji, vairāk nekā 20 modeļi)
 - Audio transkribēšana, izmantojot `/v1/audio/transcriptions` (18 pakalpojumu sniedzēji)
 - Teksta pārvēršana runā, izmantojot `/v1/audio/speech` (24 iebūvēti pakalpojumu sniedzēji)
 - Video ģenerēšana, izmantojot `/v1/videos/generations` (ComfyUI + SD WebUI)
@@ -33,35 +33,35 @@ Galvenās iespējas:
 - Rezultātu pārkārtošana, izmantojot `/v1/rerank`
 - Domāšanas tagu parsēšana (``) spriešanas modeļiem
 - Atbilžu sanitizēšana stingrai saderībai ar OpenAI SDK
-- Lomu normalizēšana (developer→system, system→user) dažādu pakalpojumu sniedzēju savstarpējai saderībai
-- Strukturētās izvades pārveidošana (json_schema → Gemini responseSchema)
+- Lomu normalizēšana (developer→system, system→user) pakalpojumu sniedzēju savstarpējai saderībai
+- Strukturētas izvades pārveidošana (json_schema → Gemini responseSchema)
 - Pakalpojumu sniedzēju, atslēgu, aizstājvārdu, kombināciju, iestatījumu un cenu lokāla pastāvīga glabāšana (122 DB moduļi)
 - Lietojuma/izmaksu uzskaite un pieprasījumu žurnalēšana
-- Neobligāta mākoņa sinhronizācija vairāku ierīču/stāvokļa sinhronizācijai
-- IP atļauto/bloķēto adrešu saraksti API piekļuves kontrolei
-- Domāšanas budžeta pārvaldība (tieša nodošana/automātisks/pielāgots/adaptīvs)
+- Papildu mākoņsinhronizācija vairāku ierīču/stāvokļa sinhronizācijai
+- IP atļauto/bloķēto adrešu saraksts API piekļuves kontrolei
+- Domāšanas budžeta pārvaldība (tieša pārsūtīšana/automātiska/pielāgota/adaptīva)
 - Globālās sistēmas uzvednes ievietošana
 - Sesiju izsekošana un digitālo nospiedumu veidošana
 - Uzlabota ātruma ierobežošana katram kontam ar pakalpojumu sniedzējiem specifiskiem profiliem
 - Ķēdes pārtraucēja modelis pakalpojumu sniedzēju noturībai
 - Aizsardzība pret vienlaicīgu pieprasījumu lavīnu, izmantojot mutex bloķēšanu
-- Uz parakstiem balstīta pieprasījumu dublikātu novēršanas kešatmiņa
-- Domēna slānis: izmaksu noteikumi, atkāpšanās politika, bloķēšanas politika
-- Context Relay: sesiju nodošanas kopsavilkumi nepārtrauktības saglabāšanai kontu rotācijas laikā
-- Domēna stāvokļa pastāvīga glabāšana (SQLite tūlītējās ierakstīšanas kešatmiņa atkāpšanās stāvokļiem, budžetiem, bloķējumiem un ķēdes pārtraucējiem)
-- Politiku dzinis centralizētai pieprasījumu izvērtēšanai (bloķēšana → budžets → atkāpšanās)
+- Uz parakstiem balstīta pieprasījumu dublēšanās novēršanas kešatmiņa
+- Domēna slānis: izmaksu kārtulas, pārslēgšanās kļūmes gadījumā politika, bloķēšanas politika
+- Konteksta pārraide: sesiju nodošanas kopsavilkumi nepārtrauktības saglabāšanai kontu rotācijas laikā
+- Domēna stāvokļa pastāvīga glabāšana (SQLite tiešās ierakstīšanas kešatmiņa pārslēgšanās gadījumiem, budžetiem, bloķējumiem un ķēdes pārtraucējiem)
+- Politiku dzinis centralizētai pieprasījumu izvērtēšanai (bloķēšana → budžets → pārslēgšanās kļūmes gadījumā)
 - Pieprasījumu telemetrija ar p50/p95/p99 latentuma apkopošanu
-- Kombināciju mērķu telemetrija un vēsturiskie kombināciju mērķu veselības dati, izmantojot `combo_execution_key` / `combo_step_id`
+- Kombināciju mērķu telemetrija un kombināciju mērķu vēsturiskie darbspējas dati, izmantojot `combo_execution_key` / `combo_step_id`
 - Korelācijas ID (X-Request-Id) pilna ceļa izsekošanai
 - Atbilstības audita žurnalēšana ar iespēju to atspējot katrai API atslēgai
 - Novērtēšanas ietvars LLM kvalitātes nodrošināšanai
-- Veselības informācijas panelis ar pakalpojumu sniedzēju ķēdes pārtraucēju statusu reāllaikā
-- MCP serveris (110 rīki) ar 3 transportiem (stdio/SSE/Streamable HTTP)
-- A2A serveris (JSON-RPC 2.0 + SSE) ar prasmēm un uzdevumu dzīves ciklu
-- Atmiņas sistēma (izgūšana, ievietošana, meklēšana, apkopošana)
-- Prasmju sistēma (reģistrs, izpildītājs, smilškaste, iebūvētas prasmes)
+- Darbspējas informācijas panelis ar pakalpojumu sniedzēju ķēdes pārtraucēju statusu reāllaikā
+- MCP Server (110 rīki) ar 3 transportiem (stdio/SSE/Streamable HTTP)
+- A2A Server (JSON-RPC 2.0 + SSE) ar prasmēm un uzdevumu dzīves ciklu
+- Atmiņas sistēma (izguve, ievietošana, izgūšana, apkopošana)
+- Prasmju sistēma (reģistrs, izpildītājs, smilškaste, iebūvētās prasmes)
 - MITM starpniekserveris ar sertifikātu pārvaldību un DNS apstrādi
-- Uzvedņu ievadīšanas aizsardzības starpprogrammatūra
+- Uzvedņu injekciju aizsardzības starpprogrammatūra
 - Uzvedņu saspiešanas konveijers ar Caveman, RTK, sakrautiem konveijeriem, saspiešanas kombinācijām, valodu pakotnēm un analītiku
 - ACP (Agent Communication Protocol) reģistrs
 - Modulāri OAuth pakalpojumu sniedzēji (22 atsevišķi moduļi zem `src/lib/oauth/providers/`)
@@ -69,18 +69,18 @@ Galvenās iespējas:
 - OAuth vides labošanas darbība
 - WebSocket tilts ar OpenAI saderīgiem WS klientiem (`/v1/ws`)
 - Sinhronizācijas pilnvaru pārvaldība (izsniegšana/atsaukšana, ar ETag versijota konfigurācijas komplekta lejupielāde)
-- GLM Thinking (`glmt`) kā pilnvērtīgs pakalpojumu sniedzēja priekšiestatījums
-- Hibrīda marķieru skaitīšana (pakalpojumu sniedzēja puses `/messages/count_tokens` ar atkāpšanos uz aplēsi)
-- Modeļu aizstājvārdu automātiska sākotnējā izveide (30+ starpniekserveru dialektu normalizācijas palaišanas laikā)
-- Droša izejošā izgūšana ar SSRF aizsardzību, privāto URL bloķēšanu un konfigurējamu atkārtotu mēģināšanu
-- Atdzišanas periodu ņemoši vērā tērzēšanas atkārtotie mēģinājumi ar konfigurējamiem `requestRetry` un `maxRetryIntervalSec`
+- GLM Thinking (`glmt`) kā pilntiesīgs pakalpojumu sniedzēja priekšiestatījums
+- Hibrīda pilnvarvienību skaitīšana (pakalpojumu sniedzēja puses `/messages/count_tokens` ar rezerves aplēses mehānismu)
+- Modeļu aizstājvārdu automātiska sākotnējā aizpildīšana (vairāk nekā 30 starpniekserveru dialektu normalizācijas palaišanas laikā)
+- Droša izejošā datu izgūšana ar SSRF aizsardzību, privāto URL bloķēšanu un konfigurējamiem atkārtotiem mēģinājumiem
+- Tērzēšanas atkārtotie mēģinājumi, kas ņem vērā nogaidīšanas periodu, ar konfigurējamiem `requestRetry` un `maxRetryIntervalSec`
 - Izpildlaika vides validācija ar Zod palaišanas laikā
-- Atbilstības audits v2 ar lapošanu, pakalpojumu sniedzēju CRUD notikumiem un SSRF bloķētas validācijas žurnalēšanu
+- Atbilstības audits v2 ar lappušu dalījumu, pakalpojumu sniedzēju CRUD notikumiem un SSRF bloķēšanas validācijas žurnalēšanu
 
 Primārais izpildlaika modelis:
 
 - Next.js lietotnes maršruti zem `src/app/api/*` īsteno gan informācijas paneļa API, gan saderības API
-- Kopīgs SSE/maršrutēšanas kodols `src/sse/*` + `open-sse/*` apstrādā pakalpojumu sniedzēju izpildi, formātu pārveidošanu, straumēšanu, atkāpšanos un lietojumu
+- Kopīgs SSE/maršrutēšanas kodols `src/sse/*` un `open-sse/*` apstrādā pakalpojumu sniedzēju izpildi, formātu pārveidošanu, straumēšanu, pārslēgšanos kļūmes gadījumā un lietojumu
 
 ## Atsauces diagrammas
 
