@@ -3244,6 +3244,9 @@
     "copilotReloadInstruction": "Soʻng VS Code’ni qayta yuklang va kiritish soʻrovida API kalitini kiriting.",
     "wireApiChatCompletions": "Chat yakunlari (/chat/completions)",
     "wireApiResponses": "Javoblar API’si (/responses)",
+    "codexModelCatalog": "OmniRoute modellarini Codex /model tanlagichida ko'rsatish",
+    "codexModelCatalogHint": "O'rnatilgan Codex'ning o'z model katalogidan ~/.codex/omniroute-models.json faylini yozadi (har bir model uchun taxminan 60 KB). Codex'ni yangilagandan keyin qayta qo'llang.",
+    "codexCatalogWarning": "Codex /model tanlagichi yangilanmadi: OmniRoute o'rnatilgan Codex model katalogini o'qiy olmadi.",
     "cliproxyapiActionFailed": "Amal bajarilmadi",
     "cliproxyapiActionSucceeded": "Amal muvaffaqiyatli bajarildi",
     "cliproxyapiCheckUpdates": "Yangilanishlarni tekshirish",
@@ -8244,6 +8247,14 @@
       "terse-cjk": {
         "label": "Ixcham CJK (文言)",
         "description": "Klassik xitoycha oʻta ixcham uslub (faqat xitoy tili uchun mavjud)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI filtri",
+        "description": "Maqsadi tekshirilgan vizuallar: umumiy gradiyentlar, shablon maketlar yoki ishlamaydigan boshqaruv elementlari yo'q."
+      },
+      "antislop-copy": {
+        "label": "Antislop matn va inson filtri",
+        "description": "Halol matn va odamlar uchun qoidalar: SI izlari yo'q, WCAG AA kontrasti, klaviatura, holatlar, mobil qayta joylashuv."
       }
     },
     "resilienceWaitForCooldown": "Sovish davri tugashini kutish",
@@ -14553,7 +14564,10 @@
     "importing": "Import qilinmoqda...",
     "apiKeyPlaceholder": "{providerLabel} API kalitingizni joylashtiring...",
     "apiKeyStoredDescription": "Uzoq muddat amal qiluvchi bearer hisob ma’lumoti sifatida shifrlangan holda saqlanadi. Yangilash jarayoni mavjud emas.",
-    "apiKeyRegionDescription": "Kalit uchun AWS hududi (standart: us-east-1)",
+    "apiKeyRegionAuto": "Avtomatik aniqlash (tavsiya etiladi)",
+    "apiKeyRegionUsEast1": "AQSh Sharq (Shimoliy Virjiniya)",
+    "apiKeyRegionEuCentral1": "Yevropa (Frankfurt)",
+    "apiKeyRegionAutoDescription": "Avtomatik aniqlash avval AQSh Sharqni, keyin Yevropani (Frankfurt) sinab ko‘radi va kalit ishlaydigan mintaqani saqlaydi.",
     "validating": "Tekshirilmoqda...",
     "validateAndSaveApiKey": "API kalitini tekshirish va saqlash",
     "errorAutoDetect": "Tokenni avtomatik aniqlab bo‘lmadi",

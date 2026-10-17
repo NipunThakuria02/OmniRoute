@@ -3244,6 +3244,9 @@
     "copilotReloadInstruction": "Seejärel laadige VS Code uuesti ja määrake sisestusviibas API-võti.",
     "wireApiChatCompletions": "Vestluse lõpuleviimised (/chat/completions)",
     "wireApiResponses": "Vastuste API (/responses)",
+    "codexModelCatalog": "Näita OmniRoute'i mudeleid Codexi /model valijas",
+    "codexModelCatalogHint": "Kirjutab ~/.codex/omniroute-models.json paigaldatud Codexi enda mudelikataloogist (umbes 60 KB mudeli kohta). Rakenda uuesti pärast Codexi uuendamist.",
+    "codexCatalogWarning": "Codexi /model valijat ei uuendatud: OmniRoute ei saanud paigaldatud Codexi mudelikataloogi lugeda.",
     "cliproxyapiActionFailed": "Toiming nurjus",
     "cliproxyapiActionSucceeded": "Toiming õnnestus",
     "cliproxyapiCheckUpdates": "Kontrolli värskendusi",
@@ -8244,6 +8247,14 @@
       "terse-cjk": {
         "label": "Napp CJK (文言)",
         "description": "Ülinapp klassikalise hiina keele stiil (saadaval ainult hiina keele jaoks)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI-filter",
+        "description": "Eesmärgipõhiselt kontrollitud visuaalid: ei mingeid üldisi gradiente, mallipaigutusi ega surnud juhtelemente."
+      },
+      "antislop-copy": {
+        "label": "Antislop teksti- ja inimfilter",
+        "description": "Aus tekst ja reeglid inimeste jaoks: ilma tehisintellekti jälgedeta, WCAG AA kontrast, klaviatuur, olekud, mobiilne ümberpaigutus."
       }
     },
     "resilienceWaitForCooldown": "Oota jahtumisaja lõppu",
@@ -14553,7 +14564,10 @@
     "importing": "Importimine...",
     "apiKeyPlaceholder": "Kleepige oma {providerLabel} API-võti...",
     "apiKeyStoredDescription": "Salvestatakse krüpteeritult pikaajalise esitaja mandaadina. Värskendamisvoog puudub.",
-    "apiKeyRegionDescription": "Võtme AWS-i piirkond (vaikimisi: us-east-1)",
+    "apiKeyRegionAuto": "Automaatne tuvastamine (soovitatav)",
+    "apiKeyRegionUsEast1": "USA ida (Põhja-Virginia)",
+    "apiKeyRegionEuCentral1": "Euroopa (Frankfurt)",
+    "apiKeyRegionAutoDescription": "Automaatne tuvastamine proovib esmalt USA ida, seejärel Euroopa (Frankfurt) piirkonda ja salvestab piirkonna, kus võti töötab.",
     "validating": "Valideerimine...",
     "validateAndSaveApiKey": "Valideeri ja salvesta API-võti",
     "errorAutoDetect": "Luba ei õnnestunud automaatselt tuvastada",

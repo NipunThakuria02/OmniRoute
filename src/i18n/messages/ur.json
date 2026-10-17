@@ -3244,6 +3244,9 @@
     "copilotReloadInstruction": "پھر VS Code کو دوبارہ لوڈ کریں اور ان پٹ پرامپٹ میں API key سیٹ کریں۔",
     "wireApiChatCompletions": "چیٹ کی تکمیل (/چیٹ/کمپلیشنز)",
     "wireApiResponses": "Responses API (/responses)",
+    "codexModelCatalog": "Codex کے ‎/model پِکر میں OmniRoute ماڈلز دکھائیں",
+    "codexModelCatalogHint": "انسٹال شدہ Codex کے اپنے ماڈل کیٹلاگ سے ~/.codex/omniroute-models.json لکھتا ہے (فی ماڈل تقریباً 60 KB)۔ Codex اپ گریڈ کرنے کے بعد دوبارہ لاگو کریں۔",
+    "codexCatalogWarning": "Codex کا ‎/model پِکر اپ ڈیٹ نہیں ہوا: OmniRoute انسٹال شدہ Codex کا ماڈل کیٹلاگ نہیں پڑھ سکا۔",
     "cliproxyapiActionFailed": "عمل ناکام ہوگیا",
     "cliproxyapiActionSucceeded": "عمل کامیاب ہوا",
     "cliproxyapiCheckUpdates": "اپ ڈیٹس چیک کریں",
@@ -8244,6 +8247,14 @@
       "terse-cjk": {
         "label": "مختصر CJK (文言)",
         "description": "کلاسیکی چینی انتہائی مختصر انداز (صرف چینی زبان کے لیے دستیاب ہے)۔"
+      },
+      "antislop-ui": {
+        "label": "Antislop UI فلٹر",
+        "description": "مقصد کی جانچ شدہ بصری عناصر: کوئی عام گریڈینٹ، ٹیمپلیٹ لے آؤٹ یا بےکار کنٹرول نہیں۔"
+      },
+      "antislop-copy": {
+        "label": "Antislop متن اور انسانی فلٹر",
+        "description": "دیانت دار متن اور لوگوں کے لیے اصول: AI کے آثار نہیں، WCAG AA کنٹراسٹ، کی بورڈ، حالتیں، موبائل ری فلو۔"
       }
     },
     "resilienceWaitForCooldown": "کولڈاؤن کا انتظار کریں۔",
@@ -14553,7 +14564,10 @@
     "importing": "درآمد ہو رہا ہے...",
     "apiKeyPlaceholder": "اپنی {providerLabel} API کلید پیسٹ کریں...",
     "apiKeyStoredDescription": "طویل مدتی بیئرر اسناد کے طور پر محفوظ کردہ خفیہ کردہ۔ کوئی ریفریش فلو نہیں ہے۔",
-    "apiKeyRegionDescription": "کیز کے لیے AWS علاقہ (ڈیفالٹ: us-east-1)",
+    "apiKeyRegionAuto": "خودکار طور پر شناخت کریں (تجویز کردہ)",
+    "apiKeyRegionUsEast1": "امریکہ مشرق (شمالی ورجینیا)",
+    "apiKeyRegionEuCentral1": "یورپ (فرینکفرٹ)",
+    "apiKeyRegionAutoDescription": "خودکار شناخت پہلے امریکہ مشرق، پھر یورپ (فرینکفرٹ) آزماتی ہے اور وہ ریجن محفوظ کرتی ہے جہاں کلید کام کرتی ہے۔",
     "validating": "جانچ رہے ہیں...",
     "validateAndSaveApiKey": "API کی کلید کی توثیق کریں اور محفوظ کریں",
     "errorAutoDetect": "ٹوکین خودکار طور پر شناخت نہیں کیا جا سکا",

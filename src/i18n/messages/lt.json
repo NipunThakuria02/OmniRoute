@@ -3244,6 +3244,9 @@
     "copilotReloadInstruction": "Tada iš naujo įkelkite VS Code ir nustatykite API raktą įvesties lauke.",
     "wireApiChatCompletions": "Pokalbių užbaigimai (/chat/completions)",
     "wireApiResponses": "Atsakymų API (/responses)",
+    "codexModelCatalog": "Rodyti OmniRoute modelius Codex /model parinkiklyje",
+    "codexModelCatalogHint": "Įrašo ~/.codex/omniroute-models.json iš įdiegto Codex modelių katalogo (apie 60 KB vienam modeliui). Atnaujinę Codex pritaikykite iš naujo.",
+    "codexCatalogWarning": "Codex /model parinkiklis neatnaujintas: OmniRoute nepavyko perskaityti įdiegto Codex modelių katalogo.",
     "cliproxyapiActionFailed": "Veiksmas nepavyko",
     "cliproxyapiActionSucceeded": "Veiksmas pavyko",
     "cliproxyapiCheckUpdates": "Tikrinti atnaujinimus",
@@ -8244,6 +8247,14 @@
       "terse-cjk": {
         "label": "Lakoniška CJK (文言)",
         "description": "Itin lakoniškas klasikinės kinų kalbos stilius (galimas tik kinų kalbai)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI filtras",
+        "description": "Tikslo patikrinti vizualai: jokių šabloninių gradientų, šabloninių maketų ar neveikiančių valdiklių."
+      },
+      "antislop-copy": {
+        "label": "Antislop teksto ir žmonių filtras",
+        "description": "Sąžiningas tekstas ir taisyklės žmonėms: be DI požymių, WCAG AA kontrastas, klaviatūra, būsenos, mobilusis perdėstymas."
       }
     },
     "resilienceWaitForCooldown": "Laukti atvėsimo laikotarpio pabaigos",
@@ -14553,7 +14564,10 @@
     "importing": "Importuojama...",
     "apiKeyPlaceholder": "Įklijuokite savo {providerLabel} API raktą...",
     "apiKeyStoredDescription": "Saugomas užšifruotas kaip ilgalaikis „Bearer“ tipo prieigos kredencialas. Atnaujinimo procesas nenumatytas.",
-    "apiKeyRegionDescription": "Rakto AWS regionas (numatytasis: us-east-1)",
+    "apiKeyRegionAuto": "Automatinis aptikimas (rekomenduojama)",
+    "apiKeyRegionUsEast1": "JAV rytai (Šiaurės Virdžinija)",
+    "apiKeyRegionEuCentral1": "Europa (Frankfurtas)",
+    "apiKeyRegionAutoDescription": "Automatinis aptikimas pirmiausia bando JAV rytus, tada Europą (Frankfurtą), ir išsaugo regioną, kuriame raktas veikia.",
     "validating": "Tikrinama...",
     "validateAndSaveApiKey": "Patikrinti ir išsaugoti API raktą",
     "errorAutoDetect": "Nepavyko automatiškai aptikti prieigos rakto",

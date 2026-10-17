@@ -3244,6 +3244,9 @@
     "copilotReloadInstruction": "Pēc tam pārlādējiet VS Code un ievades uzvednē iestatiet API atslēgu.",
     "wireApiChatCompletions": "Tērzēšanas pabeigšana (/chat/completions)",
     "wireApiResponses": "Atbilžu API (/responses)",
+    "codexModelCatalog": "Rādīt OmniRoute modeļus Codex /model atlasītājā",
+    "codexModelCatalogHint": "Ieraksta ~/.codex/omniroute-models.json no instalētā Codex paša modeļu kataloga (aptuveni 60 KB uz modeli). Pēc Codex atjaunināšanas lietojiet vēlreiz.",
+    "codexCatalogWarning": "Codex /model atlasītājs netika atjaunināts: OmniRoute neizdevās nolasīt instalētā Codex modeļu katalogu.",
     "cliproxyapiActionFailed": "Darbība neizdevās",
     "cliproxyapiActionSucceeded": "Darbība veiksmīga",
     "cliproxyapiCheckUpdates": "Pārbaudīt atjauninājumu pieejamību",
@@ -8244,6 +8247,14 @@
       "terse-cjk": {
         "label": "Lakonisks CJK (文言)",
         "description": "Klasiskās ķīniešu valodas īpaši lakonisks stils (pieejams tikai ķīniešu valodai)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI filtrs",
+        "description": "Vizuāļi ar pārbaudītu mērķi: bez vispārīgiem gradientiem, veidņu izkārtojumiem vai nedarbīgām vadīklām."
+      },
+      "antislop-copy": {
+        "label": "Antislop teksta un cilvēku filtrs",
+        "description": "Godīgs teksts un noteikumi cilvēkiem: bez MI pazīmēm, WCAG AA kontrasts, tastatūra, stāvokļi, mobilā pārkārtošana."
       }
     },
     "resilienceWaitForCooldown": "Gaidīt nogaidīšanas perioda beigas",
@@ -14553,7 +14564,10 @@
     "importing": "Notiek importēšana...",
     "apiKeyPlaceholder": "Ielīmējiet savu {providerLabel} API atslēgu...",
     "apiKeyStoredDescription": "Tā tiek glabāta šifrētā veidā kā ilglaicīga nesējpilnvara. Atsvaidzināšanas procesa nav.",
-    "apiKeyRegionDescription": "AWS reģions atslēgai (noklusējums: us-east-1)",
+    "apiKeyRegionAuto": "Automātiska noteikšana (ieteicams)",
+    "apiKeyRegionUsEast1": "ASV austrumi (Ziemeļvirdžīnija)",
+    "apiKeyRegionEuCentral1": "Eiropa (Frankfurte)",
+    "apiKeyRegionAutoDescription": "Automātiskā noteikšana vispirms izmēģina ASV austrumus, pēc tam Eiropu (Frankfurte) un saglabā reģionu, kurā atslēga darbojas.",
     "validating": "Notiek validēšana...",
     "validateAndSaveApiKey": "Validēt un saglabāt API atslēgu",
     "errorAutoDetect": "Pilnvaru neizdevās automātiski noteikt",

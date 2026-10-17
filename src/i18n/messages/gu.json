@@ -3244,6 +3244,9 @@
     "copilotReloadInstruction": "પછી VS Code ફરીથી લોડ કરો અને ઇનપુટ પ્રોમ્પ્ટમાં API કી સેટ કરો.",
     "wireApiChatCompletions": "ચેટ પૂર્ણતા (/ચેટ/પૂર્ણતા)",
     "wireApiResponses": "પ્રતિભાવ API (/પ્રતિસાદો)",
+    "codexModelCatalog": "Codex ના /model પિકરમાં OmniRoute મોડલ્સ બતાવો",
+    "codexModelCatalogHint": "ઇન્સ્ટોલ કરેલા Codex ના પોતાના મોડલ કેટલોગમાંથી ~/.codex/omniroute-models.json લખે છે (દરેક મોડલ માટે આશરે 60 KB). Codex અપગ્રેડ કર્યા પછી ફરીથી લાગુ કરો.",
+    "codexCatalogWarning": "Codex નો /model પિકર અપડેટ થયો નથી: OmniRoute ઇન્સ્ટોલ કરેલા Codex મોડલ કેટલોગને વાંચી શક્યું નથી.",
     "cliproxyapiActionFailed": "ક્રિયા નિષ્ફળ ગઈ",
     "cliproxyapiActionSucceeded": "ક્રિયા સફળ થઈ ગઈ",
     "cliproxyapiCheckUpdates": "અપડેટ્સ તપાસો",
@@ -8244,6 +8247,14 @@
       "terse-cjk": {
         "label": "સંક્ષિપ્ત CJK (文言)",
         "description": "ક્લાસિકલ-ચાઇનીઝ અલ્ટ્રા-સંક્ષિપ્ત શૈલી (ફક્ત ચાઇનીઝ માટે ઉપલબ્ધ)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI ફિલ્ટર",
+        "description": "હેતુ-ચકાસાયેલ વિઝ્યુઅલ: કોઈ સામાન્ય ગ્રેડિયન્ટ, ટેમ્પલેટ લેઆઉટ કે નકામા કંટ્રોલ નહીં."
+      },
+      "antislop-copy": {
+        "label": "Antislop કોપી અને માનવ ફિલ્ટર",
+        "description": "પ્રામાણિક કોપી અને લોકો માટેના નિયમો: AIના નિશાન નહીં, WCAG AA કોન્ટ્રાસ્ટ, કીબોર્ડ, સ્થિતિઓ, મોબાઇલ રિફ્લો."
       }
     },
     "resilienceWaitForCooldown": "કૂલડાઉન માટે રાહ જુઓ",
@@ -14553,7 +14564,10 @@
     "importing": "આયાત કરી રહ્યા છીએ...",
     "apiKeyPlaceholder": "તમારો {providerLabel} API કી પેસ્ટ કરો...",
     "apiKeyStoredDescription": "લાંબા સમય સુધી ચાલનારા બેરર ક્રેડેંશિયલ તરીકે સંગ્રહિત એન્ક્રિપ્ટેડ. રિફ્રેશ ફ્લો નથી.",
-    "apiKeyRegionDescription": "કી માટે AWS પ્રદેશ (ડિફોલ્ટ: us-east-1)",
+    "apiKeyRegionAuto": "આપમેળે શોધો (ભલામણ કરેલ)",
+    "apiKeyRegionUsEast1": "યુએસ ઈસ્ટ (ઉત્તર વર્જિનિયા)",
+    "apiKeyRegionEuCentral1": "યુરોપ (ફ્રેન્કફર્ટ)",
+    "apiKeyRegionAutoDescription": "આપમેળે શોધ પહેલા યુએસ ઈસ્ટ, પછી યુરોપ (ફ્રેન્કફર્ટ) અજમાવે છે અને જ્યાં કી કામ કરે છે તે પ્રદેશ સાચવે છે.",
     "validating": "માન્યતા કરી રહ્યા છીએ...",
     "validateAndSaveApiKey": "API કી માન્ય કરો અને સાચવો",
     "errorAutoDetect": "ટોકન આપોઆપ ઓળખી શક્યું નથી",

@@ -3244,6 +3244,9 @@
     "copilotReloadInstruction": "След това рестартирайте VS Code и задайте API ключа в полето за въвеждане.",
     "wireApiChatCompletions": "Завършвания на чат (/chat/completions)",
     "wireApiResponses": "API за отговори (/отговори)",
+    "codexModelCatalog": "Показване на моделите на OmniRoute в избора /model на Codex",
+    "codexModelCatalogHint": "Записва ~/.codex/omniroute-models.json от собствения каталог с модели на инсталирания Codex (около 60 KB на модел). Приложете отново след обновяване на Codex.",
+    "codexCatalogWarning": "Изборът /model на Codex не беше обновен: OmniRoute не успя да прочете каталога с модели на инсталирания Codex.",
     "cliproxyapiActionFailed": "Действието не успя",
     "cliproxyapiActionSucceeded": "Действието беше успешно",
     "cliproxyapiCheckUpdates": "Провери актуализации",
@@ -8244,6 +8247,14 @@
       "terse-cjk": {
         "label": "Сбит CJK (文言)",
         "description": "Класически китайски ултра-сбит стил (наличен само за китайски)."
+      },
+      "antislop-ui": {
+        "label": "Antislop филтър за UI",
+        "description": "Визуални елементи с проверена цел: без шаблонни градиенти, шаблонни оформления или неработещи контроли."
+      },
+      "antislop-copy": {
+        "label": "Antislop филтър за текст и хора",
+        "description": "Честен текст и правила за хората: без следи от ИИ, контраст WCAG AA, клавиатура, състояния, мобилно преподреждане."
       }
     },
     "resilienceWaitForCooldown": "Изчакайте Cooldown",
@@ -14553,7 +14564,10 @@
     "importing": "Импортиране...",
     "apiKeyPlaceholder": "Поставете вашия {providerLabel} API ключ...",
     "apiKeyStoredDescription": "Съхранено криптирано като дългосрочен носител на удостоверение. Няма поток за обновяване.",
-    "apiKeyRegionDescription": "AWS регион за ключа (по подразбиране: us-east-1)",
+    "apiKeyRegionAuto": "Автоматично откриване (препоръчително)",
+    "apiKeyRegionUsEast1": "САЩ Изток (Северна Вирджиния)",
+    "apiKeyRegionEuCentral1": "Европа (Франкфурт)",
+    "apiKeyRegionAutoDescription": "Автоматичното откриване първо опитва САЩ Изток, след това Европа (Франкфурт), и запазва региона, в който ключът работи.",
     "validating": "Валидиране...",
     "validateAndSaveApiKey": "Валидирайте и запазете API ключа",
     "errorAutoDetect": "Не можа да открие токена автоматично",
