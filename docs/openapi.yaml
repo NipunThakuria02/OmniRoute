@@ -2379,9 +2379,18 @@ paths:
     post:
       tags: [Provider Nodes]
       summary: Create provider node
+      description: >-
+        Optional `providerIdSuffix` (letters, digits, `-`, `_`, `.`; max 64; must start with a
+        letter or digit) replaces the random UUID in the generated node id
+        (`openai-compatible-<apiType>-<suffix>`, `anthropic-compatible-<suffix>`,
+        `anthropic-compatible-cc-<suffix>`). Blank keeps the UUID.
       responses:
         "201":
           description: Created node
+        "400":
+          description: Validation failure (including an invalid providerIdSuffix)
+        "409":
+          description: A provider node with the resulting id already exists
 
   /api/provider-nodes/{id}:
     patch:
