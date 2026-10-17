@@ -592,6 +592,14 @@ function convertClaudeMessage(msg, preserveCacheControl = false) {
             resultContent = JSON.stringify(block.content);
           }
 
+          // The OpenAI tool role has no is_error field (strict upstreams reject
+          // unknown message fields): keep the failure visible with a marker.
+          if (block.is_error === true) {
+            resultContent = resultContent
+              ? `[tool_error: true]\n${resultContent}`
+              : "[tool_error: true]";
+          }
+
           toolResults.push({
             role: "tool",
             tool_call_id: block.tool_use_id,
