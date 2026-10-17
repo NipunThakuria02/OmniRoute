@@ -3012,7 +3012,8 @@
       "prime-agent": "Prime Agent — מסגרת קידוד מבוססת RLM המשתפרת בעצמה, עם תמיכה בספקים תואמי OpenAI",
       "warp": "מסוף Warp AI עם תמיכה בספק מותאם אישית",
       "agent-deck": "מתזמר מרובה סוכנים Agent Deck",
-      "5dive": "5dive — צי מתארח עצמאית של סוכני קוד; פרופיל אימות אחד מכוון את כולם ל-OmniRoute"
+      "5dive": "5dive — צי מתארח עצמאית של סוכני קוד; פרופיל אימות אחד מכוון את כולם ל-OmniRoute",
+      "zed": "עורך הקוד Zed — סוכן מובנה דרך ספק תואם OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9863,6 +9864,9 @@
     "hideQuotaRow": "הסתר שורת מכסה זו",
     "showQuotaRow": "הצג שורת מכסה זו",
     "hiddenQuotaRowsLabel": "מוסתר:",
+    "quotaSpeedTitle": "מהירות פענוח אחרונה בחשבון זה ({count} הבקשות המוצלחות האחרונות)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ממוצע · אחרון {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ממוצע · אחרון {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "עדכון נראות המכסה נכשל",
     "account": "חשבון",
     "modelQuotas": "מכסות דגם",

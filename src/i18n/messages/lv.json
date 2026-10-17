@@ -3012,7 +3012,8 @@
       "prime-agent": "Prime Agent — sevi pilnveidojošs RLM kodēšanas rīks ar OpenAI saderīgu pakalpojumu sniedzēju atbalstu",
       "warp": "Warp AI terminālis ar pielāgotu pakalpojumu sniedzēju atbalstu",
       "agent-deck": "Agent Deck vairāku aģentu orķestrētājs",
-      "5dive": "5dive — pašmitināta kodēšanas aģentu flote; viens autentifikācijas profils tos visus novirza uz OmniRoute"
+      "5dive": "5dive — pašmitināta kodēšanas aģentu flote; viens autentifikācijas profils tos visus novirza uz OmniRoute",
+      "zed": "Zed koda redaktors — iebūvēts aģents, izmantojot ar OpenAI saderīgu nodrošinātāju"
     },
     "guides": {
       "cursor": {
@@ -9863,6 +9864,9 @@
     "hideQuotaRow": "Slēpt šo kvotas rindu",
     "showQuotaRow": "Rādīt šo kvotas rindu",
     "hiddenQuotaRowsLabel": "Slēptās:",
+    "quotaSpeedTitle": "Nesenais dekodēšanas ātrums šajā kontā (pēdējie {count} veiksmīgie pieprasījumi)",
+    "quotaSpeedLine": "{model}: {avg} tok/s vid. · pēdējais {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s vid. · pēdējais {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Neizdevās atjaunināt kvotas redzamību",
     "account": "Konts",
     "modelQuotas": "Modeļu kvotas",

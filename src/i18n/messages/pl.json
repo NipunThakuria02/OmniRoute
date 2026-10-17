@@ -3012,7 +3012,8 @@
       "prime-agent": "Prime Agent — samodoskonalące się środowisko programistyczne RLM z obsługą dostawców zgodnych z OpenAI",
       "warp": "Terminal Warp AI ze wsparciem dla niestandardowych dostawców",
       "agent-deck": "Orkiestrator wieloagentowy Agent Deck",
-      "5dive": "5dive — samodzielnie hostowana flota agentów kodujących; jeden profil auth kieruje je wszystkie do OmniRoute"
+      "5dive": "5dive — samodzielnie hostowana flota agentów kodujących; jeden profil auth kieruje je wszystkie do OmniRoute",
+      "zed": "Edytor kodu Zed — wbudowany agent przez dostawcę zgodnego z OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9863,6 +9864,9 @@
     "hideQuotaRow": "Ukryj ten wiersz limitu",
     "showQuotaRow": "Pokaż ten wiersz limitu",
     "hiddenQuotaRowsLabel": "Ukryte:",
+    "quotaSpeedTitle": "Ostatnia szybkość dekodowania na tym koncie (ostatnie {count} udanych żądań)",
+    "quotaSpeedLine": "{model}: {avg} tok/s śr. · ostatnio {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s śr. · ostatnio {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Nie udało się zaktualizować widoczności limitu",
     "account": "Konto",
     "modelQuotas": "Limity modeli",

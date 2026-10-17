@@ -3012,7 +3012,8 @@
       "prime-agent": "Prime Agent — itseään kehittävä RLM-koodauskehys, joka tukee OpenAI-yhteensopivia palveluntarjoajia",
       "warp": "Warp AI -terminaali mukautetun palveluntarjoajan tuella",
       "agent-deck": "Agent Deck -moniagenttiorkestraattori",
-      "5dive": "5dive — itse isännöity koodausagenttien laivue; yksi auth-profiili ohjaa ne kaikki OmniRouteen"
+      "5dive": "5dive — itse isännöity koodausagenttien laivue; yksi auth-profiili ohjaa ne kaikki OmniRouteen",
+      "zed": "Zed-koodieditori — sisäänrakennettu agentti OpenAI-yhteensopivan palveluntarjoajan kautta"
     },
     "guides": {
       "cursor": {
@@ -9863,6 +9864,9 @@
     "hideQuotaRow": "Piilota tämä kiintiörivi",
     "showQuotaRow": "Näytä tämä kiintiörivi",
     "hiddenQuotaRowsLabel": "Piilotettu:",
+    "quotaSpeedTitle": "Tämän tilin viimeaikainen dekoodausnopeus (viimeiset {count} onnistunutta pyyntöä)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ka. · viimeisin {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ka. · viimeisin {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kiintiön näkyvyyden päivittäminen epäonnistui",
     "account": "Tili",
     "modelQuotas": "Mallikiintiöt",
