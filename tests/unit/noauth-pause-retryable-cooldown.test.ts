@@ -18,6 +18,8 @@ process.env.API_KEY_SECRET = "test-noauth-pause-secret";
 
 const core = await import("../../src/lib/db/core.ts");
 const auth = await import("../../src/sse/services/auth.ts");
+const { handleNoCredentials } = await import("../../src/sse/handlers/chatHelpers.ts");
+const { checkFallbackError } = await import("../../open-sse/services/accountFallback.ts");
 const { noteOpencodeFreeTierSkip, clearOpencodeFreeTierSkips, getOpencodeFreeTierSkipRemainingMs } =
   await import("../../open-sse/services/opencodeFreeTierSkip.ts");
 const { pauseCooldownIfPaused } = await import("../../src/sse/services/noAuthModelCooldown.ts");
@@ -78,15 +80,39 @@ test("builder returns a connection-scoped 429 envelope near the end of the pause
   );
 });
 
-test("excluded noauth connection keeps returning null during a pause", async () => {
+test("an unrelated Free pause does not bypass exclusion of a live noauth connection", async () => {
   noteOpencodeFreeTierSkip(PROVIDER);
-  const result = await auth.getProviderCredentials(PROVIDER, "noauth", null, MODEL);
+  const baseline = await auth.getProviderCredentials(
+    "uncloseai",
+    null,
+    null,
+    "Lorbus/Qwen3.6-27B-int4-AutoRound"
+  );
+  assert.equal(baseline?.connectionId, "noauth");
+  const result = await auth.getProviderCredentials(
+    "uncloseai",
+    "noauth",
+    null,
+    "Lorbus/Qwen3.6-27B-int4-AutoRound"
+  );
   assert.equal(result, null);
 });
 
-test("restricted allowlist keeps returning null during a pause", async () => {
+test("an unrelated Free pause does not bypass a live noauth connection allowlist", async () => {
   noteOpencodeFreeTierSkip(PROVIDER);
-  const result = await auth.getProviderCredentials(PROVIDER, null, ["conn-other"], MODEL);
+  const baseline = await auth.getProviderCredentials(
+    "uncloseai",
+    null,
+    null,
+    "Lorbus/Qwen3.6-27B-int4-AutoRound"
+  );
+  assert.equal(baseline?.connectionId, "noauth");
+  const result = await auth.getProviderCredentials(
+    "uncloseai",
+    null,
+    ["conn-other"],
+    "Lorbus/Qwen3.6-27B-int4-AutoRound"
+  );
   assert.equal(result, null);
 });
 
@@ -106,4 +132,51 @@ test("storage returns to its starting size after pauses expire", () => {
     assert.equal(getOpencodeFreeTierSkipRemainingMs(`opencode-${i}`, start + 51), null);
   }
   assert.equal(getOpencodeFreeTierSkipRemainingMs(PROVIDER, start + 51), null);
+});
+
+test("pause cooldown maps to a 429 with Retry-After on a fresh attempt", async () => {
+  noteOpencodeFreeTierSkip(PROVIDER);
+  const credentials = pauseCooldownIfPaused(PROVIDER, "noauth");
+  const res = handleNoCredentials(credentials, null, PROVIDER, MODEL, null, null);
+  assert.equal(res.status, 429);
+  assert.ok(res.headers.get("Retry-After"), "429 carries Retry-After");
+  const body = (await res.json()) as { error: { code?: string } };
+  assert.notEqual(body.error.code, "model_cooldown");
+});
+
+test("pause cooldown on a retried attempt documents the inherited status", async () => {
+  noteOpencodeFreeTierSkip(PROVIDER);
+  const credentials = pauseCooldownIfPaused(PROVIDER, "noauth");
+  const res = handleNoCredentials(credentials, null, PROVIDER, MODEL, null, 500);
+  assert.equal(res.status, 500);
+});
+
+test("combo: paused target answers a retryable 429 and selection passes to the next target", async () => {
+  noteOpencodeFreeTierSkip(PROVIDER);
+  const pausedTarget = pauseCooldownIfPaused(PROVIDER, "noauth");
+  assert.ok(pausedTarget?.allRateLimited, "paused combo target must answer a cooldown, not null");
+  assert.equal(pausedTarget?.lastErrorCode, 429);
+  const pausedRes = handleNoCredentials(pausedTarget, null, PROVIDER, MODEL, null, null, [], true);
+  assert.equal(pausedRes.status, 429);
+  assert.ok(pausedRes.headers.get("Retry-After"), "paused combo target carries Retry-After");
+  const pausedBody = (await pausedRes.json()) as { error?: { message?: string } };
+  assert.ok(
+    typeof pausedBody.error?.message === "string" &&
+      pausedBody.error.message.includes("refusal pause"),
+    "paused combo target names the refusal pause"
+  );
+  const retryAfterMs = Date.parse(pausedTarget?.retryAfter ?? "") - Date.now();
+  assert.ok(
+    retryAfterMs > 0 && retryAfterMs <= 3 * 60 * 1000 + 2000,
+    `paused combo target Retry-After near the pause end, not a full 180 s wait (${retryAfterMs}ms)`
+  );
+  const fallback = checkFallbackError(
+    pausedRes.status,
+    pausedBody.error?.message ?? "",
+    0,
+    null,
+    PROVIDER,
+    pausedRes.headers
+  );
+  assert.equal(fallback.shouldFallback, true);
 });
