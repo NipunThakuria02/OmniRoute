@@ -1,10 +1,8 @@
-import { isModelAllowedForKey } from "@/lib/db/apiKeys";
-import { resolveEnforcedPolicyKey } from "@/shared/utils/apiKeyPolicy";
-import { checkResolvedModelPermission } from "@/shared/utils/resolvedModelAccess";
+import { resolveModelFallbackAuthorization } from "@/shared/utils/modelFallbackAuthorization";
 import {
   STANDARD_REASONING_EFFORTS,
   EXTENDED_REASONING_EFFORTS,
-} from "@/shared/reasoning/reasoningRoutingEfforts";
+} from "../config/reasoningEfforts.ts";
 import { getRegistryEntry } from "../config/providerRegistry.ts";
 import { getHeader, normalizeHeaders } from "../utils/headers.ts";
 import { getRegisteredProviderEffortBaseModelId } from "../utils/registeredEffortVariants.ts";
@@ -62,29 +60,11 @@ export async function getRequestModelFamily(
   const request = new Request("http://localhost/api/v1/chat/completions", {
     headers: normalizeHeaders(policy.headers),
   });
-  let apiKey: string | null;
-  try {
-    const enforced = await resolveEnforcedPolicyKey(request);
-    if (enforced.selfLoopScope.rejection) return [current];
-    apiKey = enforced.apiKey;
-  } catch {
-    return [current];
-  }
-  if (!apiKey && !policy.hasApiKeyMetadata) return [current, ...candidates];
+  const isAllowed = await resolveModelFallbackAuthorization(request, !!policy.hasApiKeyMetadata);
   const permitted: string[] = [];
   for (const candidate of candidates) {
     const qualified = candidate.includes("/") ? candidate : `${provider}/${candidate}`;
-    const permission = await checkResolvedModelPermission(
-      {
-        hasApiKeyMetadata: true,
-        apiKey,
-        // A grant for the original model must not authorize a different fallback.
-        requestedModel: qualified,
-        resolvedModel: qualified,
-      },
-      isModelAllowedForKey
-    );
-    if (permission === "allowed") permitted.push(candidate);
+    if (await isAllowed(qualified)) permitted.push(candidate);
   }
   return [current, ...permitted];
 }

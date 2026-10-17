@@ -20,9 +20,8 @@ import {
 } from "./errorClassifier.ts";
 import { getRegistryEntry } from "../config/providerRegistry.ts";
 import { isModelSelectable } from "./modelLifecycle.ts";
-import { getHiddenModelsByProvider } from "../../src/lib/db/models";
 import { isModelLocked } from "./accountFallback.ts";
-import { isComboModelVisible } from "./combo/comboVisibility.ts";
+import { createComboModelVisibility } from "./combo/comboVisibility.ts";
 
 // ── Model Family Definitions ─────────────────────────────────────────────────
 
@@ -315,7 +314,7 @@ function isFamilyFallbackCandidateEligible(
   provider: string,
   candidate: string,
   connectionId: string,
-  hiddenModelsByProvider: ReturnType<typeof getHiddenModelsByProvider>
+  isVisible: ReturnType<typeof createComboModelVisibility>
 ): boolean {
   const parsedCandidate = parseModel(candidate);
   const candidateModel = parsedCandidate.model || candidate;
@@ -325,7 +324,7 @@ function isFamilyFallbackCandidateEligible(
     ? parsedCandidate.provider || provider
     : provider;
   return (
-    isComboModelVisible(candidate, visibilityProvider, hiddenModelsByProvider) &&
+    isVisible(candidate, visibilityProvider) &&
     !isModelLocked(provider, connectionId, candidateModel)
   );
 }
@@ -339,7 +338,7 @@ export function isFamilyFallbackEligible(
     provider,
     candidate,
     connectionId,
-    getHiddenModelsByProvider()
+    createComboModelVisibility()
   );
 }
 
@@ -356,17 +355,12 @@ export function getNextEligibleFamilyFallback(
   const resolved = resolveProviderFamilyCandidates(currentModel, providerHint);
   if (!resolved) return null;
 
-  const hiddenModelsByProvider = getHiddenModelsByProvider();
+  const isVisible = createComboModelVisibility();
   for (const candidate of resolved.candidates) {
     if (wasCandidateTried(candidate, resolved.provider, triedModels)) continue;
     const fallbackModel = `${resolved.outputPrefix}${candidate}`;
     if (
-      isFamilyFallbackCandidateEligible(
-        resolved.provider,
-        fallbackModel,
-        connectionId,
-        hiddenModelsByProvider
-      )
+      isFamilyFallbackCandidateEligible(resolved.provider, fallbackModel, connectionId, isVisible)
     ) {
       return fallbackModel;
     }
@@ -400,16 +394,11 @@ export function getEligibleModelFamily(
   const resolved = resolveProviderFamilyCandidates(model, providerHint);
   if (!resolved) return [model];
 
-  const hiddenModelsByProvider = getHiddenModelsByProvider();
+  const isVisible = createComboModelVisibility();
   const candidates = resolved.candidates
     .map((candidate) => `${resolved.outputPrefix}${candidate}`)
     .filter((candidate) =>
-      isFamilyFallbackCandidateEligible(
-        resolved.provider,
-        candidate,
-        connectionId,
-        hiddenModelsByProvider
-      )
+      isFamilyFallbackCandidateEligible(resolved.provider, candidate, connectionId, isVisible)
     );
   return [model, ...candidates];
 }
