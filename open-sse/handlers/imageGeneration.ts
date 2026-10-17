@@ -72,6 +72,7 @@ import { handleAlibabaImageGeneration } from "./imageGeneration/providers/alibab
 import { handleAiHordeImageGeneration } from "./imageGeneration/providers/aihorde.ts";
 import * as codexImages from "./imageGeneration/providers/codexImages.ts";
 import { handleZenmuxImageGeneration } from "./imageGeneration/providers/zenmux.ts";
+import { handleMuseImageGeneration } from "./imageGeneration/providers/museImage.ts";
 import { handleBlackForestLabsImageGeneration } from "./imageGeneration/providers/blackForestLabs.ts";
 import {
   fanOutSingleImageCalls,
@@ -541,6 +542,23 @@ export async function handleImageGeneration({
       credentials,
       log,
       signal,
+    });
+  }
+
+  if (providerConfig.format === "muse-image") {
+    return handleMuseImageGeneration({
+      model,
+      provider,
+      body,
+      credentials,
+      log,
+      signal,
+      deps: {
+        saveCallLog,
+        fetchRemoteImage: fetchUntrustedRemoteImage,
+        fetchWithTimeout,
+        isTimeoutError: (err) => err instanceof FetchTimeoutError,
+      },
     });
   }
 
