@@ -2470,6 +2470,9 @@
     "emptyFilterClear": "Rensa filter",
     "disableNonPublicModels": "Inaktivera icke-offentliga modeller",
     "disableNonPublicModelsDesc": "Avvisa begäranden för modeller som inte har upptäckts eller inte är markerade som offentliga i leverantörskatalogen",
+    "forcedModel": "Påtvingad modell",
+    "forcedModelDesc": "Skicka varje chattförfrågan med den här nyckeln till den här modellen eller kombinationen, oavsett vilken modell klienten begär (eller när den inte skickar någon). Nyckelns modell-, kombinations- och budgetgränser gäller fortfarande.",
+    "forcedModelPlaceholder": "Inte påtvingad: använd modellen som klienten begär",
     "normalKeysSection": "Normala nycklar",
     "quotaKeysSection": "Kvotnycklar",
     "bypassProviderQuota": "Kringgå leverantörens kvotgränser",
@@ -3241,6 +3244,9 @@
     "copilotReloadInstruction": "Ladda sedan om VS Code och ange API-nyckeln i inmatningsfältet.",
     "wireApiChatCompletions": "Chattavslut (/chat/kompletteringar)",
     "wireApiResponses": "Svars-API (/responses)",
+    "codexModelCatalog": "Visa OmniRoute-modeller i Codex /model-väljare",
+    "codexModelCatalogHint": "Skriver ~/.codex/omniroute-models.json utifrån den installerade Codex egen modellkatalog (cirka 60 KB per modell). Tillämpa igen efter att du uppgraderat Codex.",
+    "codexCatalogWarning": "Codex /model-väljare uppdaterades inte: OmniRoute kunde inte läsa den installerade Codex modellkatalog.",
     "cliproxyapiActionFailed": "Åtgärden misslyckades",
     "cliproxyapiActionSucceeded": "Åtgärden lyckades",
     "cliproxyapiCheckUpdates": "Kontrollera uppdateringar",
@@ -8241,6 +8247,14 @@
       "terse-cjk": {
         "label": "Kortfattad CJK (文言)",
         "description": "Klassisk kinesisk ultrakortfattad stil (endast tillgänglig för kinesiska)."
+      },
+      "antislop-ui": {
+        "label": "Antislop UI-filter",
+        "description": "Syftestestade visuella element: inga generiska övertoningar, mallayouter eller döda kontroller."
+      },
+      "antislop-copy": {
+        "label": "Antislop text- och människofilter",
+        "description": "Ärlig text och regler för människor: inga AI-tecken, WCAG AA-kontrast, tangentbord, tillstånd, mobil omflödning."
       }
     },
     "resilienceWaitForCooldown": "Vänta på nedkylning",
@@ -14505,7 +14519,10 @@
     "importing": "Importerar...",
     "apiKeyPlaceholder": "Klistra in din {providerLabel} API-nyckel...",
     "apiKeyStoredDescription": "Lagrad krypterad som en långlivad bärartoken. Det finns ingen uppdateringsflöde.",
-    "apiKeyRegionDescription": "AWS-region för nyckeln (standard: us-east-1)",
+    "apiKeyRegionAuto": "Identifiera automatiskt (rekommenderas)",
+    "apiKeyRegionUsEast1": "USA Öst (N. Virginia)",
+    "apiKeyRegionEuCentral1": "Europa (Frankfurt)",
+    "apiKeyRegionAutoDescription": "Automatisk identifiering provar först USA Öst, sedan Europa (Frankfurt), och sparar regionen där nyckeln fungerar.",
     "validating": "Validerar...",
     "validateAndSaveApiKey": "Validera och Spara API-nyckel",
     "errorAutoDetect": "Kunde inte automatiskt upptäcka token",

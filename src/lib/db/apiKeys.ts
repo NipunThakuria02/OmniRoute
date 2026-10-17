@@ -68,6 +68,7 @@ import {
   parseCompressionEnabled,
   parseAllowAutoCombos,
   parseCatalogScope,
+  parseForcedModel,
   parseModelAccessMode,
 } from "./apiKeys/rowParsers";
 import {
@@ -145,6 +146,7 @@ interface ApiKeyMetadata {
   compressionEnabled: boolean;
   allowAutoCombos: boolean;
   catalogScope: "all" | "combos" | "models";
+  forcedModel: string | null;
 }
 
 interface ApiKeyRow extends JsonRecord {
@@ -198,6 +200,8 @@ interface ApiKeyRow extends JsonRecord {
   allowAutoCombos?: unknown;
   catalog_scope?: unknown;
   catalogScope?: unknown;
+  forced_model?: unknown;
+  forcedModel?: unknown;
 }
 
 interface StatementLike<TRow = unknown> {
@@ -251,6 +255,7 @@ interface ApiKeyView extends JsonRecord {
   compressionEnabled: boolean;
   allowAutoCombos: boolean;
   catalogScope: "all" | "combos" | "models";
+  forcedModel: string | null;
 }
 
 // LRU cache for API key validation (valid keys only)
@@ -482,7 +487,7 @@ function getPreparedStatements(db: ApiKeysDbLike): ApiKeysStatements {
       "SELECT id, expires_at, revoked_at, is_active, is_banned FROM api_keys WHERE key_hash = ?"
     );
     _stmtGetKeyMetadata = db.prepare<ApiKeyRow>(
-      "SELECT id, name, machine_id, model_access_mode, allowed_models, blocked_models, allowed_combos, allowed_connections, allowed_quotas, no_log, auto_resolve, is_active, access_schedule, max_requests_per_day, max_requests_per_minute, throttle_delay_ms, max_sessions, revoked_at, expires_at, ip_allowlist, scopes, rate_limits, is_banned, key_hash, allowed_endpoints, stream_default_mode, cache_default_mode, codex_service_mode, disable_non_public_models, allow_usage_command, usage_limit_enabled, daily_usage_limit_usd, weekly_usage_limit_usd, chaos_mode_enabled, compression_enabled, allow_auto_combos, catalog_scope, proxy_id FROM api_keys WHERE key_hash = ?"
+      "SELECT id, name, machine_id, model_access_mode, allowed_models, blocked_models, allowed_combos, allowed_connections, allowed_quotas, no_log, auto_resolve, is_active, access_schedule, max_requests_per_day, max_requests_per_minute, throttle_delay_ms, max_sessions, revoked_at, expires_at, ip_allowlist, scopes, rate_limits, is_banned, key_hash, allowed_endpoints, stream_default_mode, cache_default_mode, codex_service_mode, disable_non_public_models, allow_usage_command, usage_limit_enabled, daily_usage_limit_usd, weekly_usage_limit_usd, chaos_mode_enabled, compression_enabled, allow_auto_combos, catalog_scope, forced_model, proxy_id FROM api_keys WHERE key_hash = ?"
     );
     _stmtInsertKey = db.prepare(
       "INSERT INTO api_keys (id, name, key, machine_id, model_access_mode, allowed_models, allowed_combos, allowed_connections, no_log, created_at, key_prefix, key_hash, scopes, expires_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -557,6 +562,7 @@ export async function getApiKeys(limit?: number, offset?: number) {
     );
     camelRow.allowAutoCombos = parseAllowAutoCombos((camelRow as JsonRecord).allowAutoCombos);
     camelRow.catalogScope = parseCatalogScope((camelRow as JsonRecord).catalogScope);
+    camelRow.forcedModel = parseForcedModel((camelRow as JsonRecord).forcedModel);
     Object.assign(camelRow, parseApiKeyUsageLimitFields(camelRow));
     if (typeof camelRow.id === "string" && camelRow.id.length > 0) {
       setNoLog(camelRow.id, camelRow.noLog === true);
@@ -701,6 +707,7 @@ export async function getApiKeyById(id: string) {
   );
   camelRow.allowAutoCombos = parseAllowAutoCombos((camelRow as JsonRecord).allowAutoCombos);
   camelRow.catalogScope = parseCatalogScope((camelRow as JsonRecord).catalogScope);
+  camelRow.forcedModel = parseForcedModel((camelRow as JsonRecord).forcedModel);
   Object.assign(camelRow, parseApiKeyUsageLimitFields(camelRow));
   if (typeof camelRow.id === "string" && camelRow.id.length > 0) {
     setNoLog(camelRow.id, camelRow.noLog === true);
@@ -832,7 +839,8 @@ export async function updateApiKeyPermissions(
     normalized.allowedQuotas !== undefined ||
     normalized.disableNonPublicModels !== undefined ||
     normalized.allowAutoCombos !== undefined ||
-    normalized.catalogScope !== undefined;
+    normalized.catalogScope !== undefined ||
+    normalized.forcedModel !== undefined;
 
   if (
     normalized.name === undefined &&
@@ -865,6 +873,7 @@ export async function updateApiKeyPermissions(
     normalized.compressionEnabled === undefined &&
     normalized.allowAutoCombos === undefined &&
     normalized.catalogScope === undefined &&
+    normalized.forcedModel === undefined &&
     !hasUsageLimitUpdate(normalized as Record<string, unknown>)
   ) {
     return false;
@@ -905,6 +914,7 @@ export async function updateApiKeyPermissions(
     compressionEnabled?: number;
     allowAutoCombos?: number;
     catalogScope?: string;
+    forcedModel?: string | null;
   } = { id };
 
   if (normalized.name !== undefined) {
@@ -1029,6 +1039,11 @@ export async function updateApiKeyPermissions(
   if (normalized.catalogScope !== undefined) {
     updates.push("catalog_scope = @catalogScope");
     params.catalogScope = normalized.catalogScope;
+  }
+
+  if (normalized.forcedModel !== undefined) {
+    updates.push("forced_model = @forcedModel");
+    params.forcedModel = parseForcedModel(normalized.forcedModel);
   }
 
   appendUsageLimitUpdates(normalized as Record<string, unknown>, updates, params);
@@ -1447,6 +1462,7 @@ export async function getApiKeyMetadata(
       compressionEnabled: true,
       allowAutoCombos: true,
       catalogScope: "all",
+      forcedModel: null,
       ...selfLoopKeyOverrides(key),
     };
   }
@@ -1544,6 +1560,7 @@ export async function getApiKeyMetadata(
     catalogScope: parseCatalogScope(
       (record as JsonRecord).catalog_scope ?? (record as JsonRecord).catalogScope
     ),
+    forcedModel: parseForcedModel(record.forced_model ?? record.forcedModel),
     ...parseApiKeyUsageLimitFields(record as JsonRecord),
   };
 
