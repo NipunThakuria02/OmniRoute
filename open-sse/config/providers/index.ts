@@ -288,6 +288,7 @@ import { seekaiProvider } from "./registry/seekai/index.ts";
 import { tokenmarketProvider } from "./registry/tokenmarket/index.ts";
 import { twinmindProvider } from "./registry/twinmind/index.ts";
 import { syntxProvider } from "./registry/syntx/index.ts";
+import { daoxeProvider } from "./registry/daoxe/index.ts";
 
 export const REGISTRY: Record<string, RegistryEntry> = {
   aimlapi: aimlapiProvider,
@@ -580,4 +581,5 @@ export const REGISTRY: Record<string, RegistryEntry> = {
   tokenmarket: tokenmarketProvider,
   twinmind: twinmindProvider,
   syntx: syntxProvider,
+  daoxe: daoxeProvider,
 };
