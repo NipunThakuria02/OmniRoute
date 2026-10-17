@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-ਅਨੁਕੂਲ ਪ੍ਰੋਵਾਈਡਰ ਸਹਾਇਤਾ ਵਾਲਾ ਸਵੈ-ਸੁਧਾਰਸ਼ੀਲ RLM ਕੋਡਿੰਗ ਹਾਰਨੈੱਸ",
       "warp": "ਕਸਟਮ ਪ੍ਰੋਵਾਈਡਰ ਸਹਾਇਤਾ ਵਾਲਾ Warp AI ਟਰਮੀਨਲ",
       "agent-deck": "Agent Deck ਮਲਟੀ-ਏਜੰਟ ਆਰਕੈਸਟਰੇਟਰ",
-      "5dive": "5dive — ਕੋਡਿੰਗ ਏਜੰਟਾਂ ਦਾ ਸਵੈ-ਹੋਸਟ ਕੀਤਾ ਫਲੀਟ; ਇੱਕ ਪ੍ਰਮਾਣੀਕਰਨ ਪ੍ਰੋਫ਼ਾਈਲ ਉਹਨਾਂ ਸਭ ਨੂੰ OmniRoute ਵੱਲ ਨਿਰਦੇਸ਼ਿਤ ਕਰਦਾ ਹੈ"
+      "5dive": "5dive — ਕੋਡਿੰਗ ਏਜੰਟਾਂ ਦਾ ਸਵੈ-ਹੋਸਟ ਕੀਤਾ ਫਲੀਟ; ਇੱਕ ਪ੍ਰਮਾਣੀਕਰਨ ਪ੍ਰੋਫ਼ਾਈਲ ਉਹਨਾਂ ਸਭ ਨੂੰ OmniRoute ਵੱਲ ਨਿਰਦੇਸ਼ਿਤ ਕਰਦਾ ਹੈ",
+      "zed": "Zed ਕੋਡ ਐਡੀਟਰ — OpenAI-ਅਨੁਕੂਲ ਪ੍ਰਦਾਤਾ ਰਾਹੀਂ ਬਿਲਟ-ਇਨ ਏਜੰਟ"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "ਕਨੈਕਸ਼ਨ ਅਸਮਰੱਥ ਕਰੋ",
     "enableConnection": "ਕਨੈਕਸ਼ਨ ਸਮਰੱਥ ਕਰੋ",
     "reauthenticateConnection": "ਇਸ ਕਨੈਕਸ਼ਨ ਨੂੰ ਮੁੜ ਪ੍ਰਮਾਣਿਤ ਕਰੋ",
+    "verifyAccount": "ਖਾਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+    "verifyAccountHint": "Google ਇਸ ਖਾਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਕਹਿੰਦਾ ਹੈ। ਲਿੰਕ ਖੋਲ੍ਹੋ, ਜਾਂਚ ਪੂਰੀ ਕਰੋ, ਫਿਰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
     "proxyConfig": "ਪ੍ਰਾਕਸੀ ਸੰਰਚਨਾ",
     "aliasExistsAlert": "ਉਪਨਾਮ \"{alias}\" ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੋਈ ਵੱਖਰਾ ਮਾਡਲ ਵਰਤੋ ਜਾਂ ਮੌਜੂਦਾ ਉਪਨਾਮ ਸੰਪਾਦਿਤ ਕਰੋ।",
     "aliasInputPlaceholder": "ਉਪਨਾਮ",
@@ -9862,6 +9865,9 @@
     "hideQuotaRow": "ਇਹ ਕੋਟਾ ਕਤਾਰ ਲੁਕਾਓ",
     "showQuotaRow": "ਇਹ ਕੋਟਾ ਕਤਾਰ ਦਿਖਾਓ",
     "hiddenQuotaRowsLabel": "ਲੁਕਵੇਂ:",
+    "quotaSpeedTitle": "ਇਸ ਖਾਤੇ 'ਤੇ ਹਾਲੀਆ ਡੀਕੋਡ ਗਤੀ (ਆਖਰੀ {count} ਸਫਲ ਬੇਨਤੀਆਂ)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ਔਸਤ · ਆਖਰੀ {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ਔਸਤ · ਆਖਰੀ {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "ਕੋਟੇ ਦੀ ਦਿੱਖ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ",
     "account": "ਖਾਤਾ",
     "modelQuotas": "ਮਾਡਲ ਕੋਟੇ",

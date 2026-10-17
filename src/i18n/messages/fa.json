@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — بستر کدنویسی خودبهبودگر RLM با پشتیبانی از ارائهدهندهٔ سازگار با OpenAI",
       "warp": "ترمینال هوش مصنوعی Warp با پشتیبانی از ارائه‌دهنده سفارشی",
       "agent-deck": "ارکستراتور چندعاملی Agent Deck",
-      "5dive": "5dive — ناوگان خودمیزبان از عامل‌های کدنویسی؛ یک پروفایل احراز هویت همه را به OmniRoute هدایت می‌کند"
+      "5dive": "5dive — ناوگان خودمیزبان از عامل‌های کدنویسی؛ یک پروفایل احراز هویت همه را به OmniRoute هدایت می‌کند",
+      "zed": "ویرایشگر کد Zed — عامل داخلی از طریق ارائه‌دهنده سازگار با OpenAI"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "غیرفعال کردن اتصال",
     "enableConnection": "فعال کردن اتصال",
     "reauthenticateConnection": "احراز هویت مجدد برای این اتصال",
+    "verifyAccount": "تأیید حساب",
+    "verifyAccountHint": "Google از شما می‌خواهد این حساب را تأیید کنید. پیوند را باز کنید، بررسی را کامل کنید و دوباره تلاش کنید.",
     "proxyConfig": "پیکربندی پروکسی",
     "aliasExistsAlert": "نام مستعار «{alias}» از قبل وجود دارد. لطفاً از مدل دیگری استفاده کنید یا نام مستعار موجود را ویرایش کنید.",
     "aliasInputPlaceholder": "نام مستعار",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "پنهان کردن این ردیف سهمیه",
     "showQuotaRow": "نمایش این ردیف سهمیه",
     "hiddenQuotaRowsLabel": "پنهان شده:",
+    "quotaSpeedTitle": "سرعت رمزگشایی اخیر در این حساب (آخرین {count} درخواست موفق)",
+    "quotaSpeedLine": "{model}: {avg} tok/s میانگین · آخرین {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s میانگین · آخرین {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "خطا در به‌روزرسانی وضعیت نمایش سهمیه",
     "account": "حساب",
     "modelQuotas": "سهمیههای مدل",

@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-compatible پرووائیڈر سپورٹ کے ساتھ خود کو بہتر بنانے والا RLM کوڈنگ ہارنس",
       "warp": "کسٹم پرووائیڈر سپورٹ کے ساتھ Warp AI ٹرمینل",
       "agent-deck": "Agent Deck ملٹی ایجنٹ آرکیسٹریٹر",
-      "5dive": "5dive — خود میزبان کوڈنگ ایجنٹس کا بیڑا؛ ایک auth پروفائل ان سب کو OmniRoute کی طرف بھیجتی ہے"
+      "5dive": "5dive — خود میزبان کوڈنگ ایجنٹس کا بیڑا؛ ایک auth پروفائل ان سب کو OmniRoute کی طرف بھیجتی ہے",
+      "zed": "Zed کوڈ ایڈیٹر — OpenAI سے مطابقت رکھنے والے فراہم کنندہ کے ذریعے بلٹ اِن ایجنٹ"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "کنکشن غیر فعال کریں",
     "enableConnection": "کنکشن فعال کریں",
     "reauthenticateConnection": "اس کنکشن کی دوبارہ توثیق کریں",
+    "verifyAccount": "اکاؤنٹ کی تصدیق کریں",
+    "verifyAccountHint": "Google اس اکاؤنٹ کی تصدیق کا تقاضا کرتا ہے۔ لنک کھولیں، جانچ مکمل کریں، پھر دوبارہ کوشش کریں۔",
     "proxyConfig": "پراکسی کنفیگریشن",
     "aliasExistsAlert": "عرف \"{alias}\" پہلے سے موجود ہے۔ براہِ کرم کوئی مختلف ماڈل استعمال کریں یا موجودہ عرف میں ترمیم کریں۔",
     "aliasInputPlaceholder": "عرف کا نام",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "اس کوٹہ کی قطار کو چھپائیں",
     "showQuotaRow": "اس کوٹہ کی قطار کو دکھائیں",
     "hiddenQuotaRowsLabel": "چھپا ہوا:",
+    "quotaSpeedTitle": "اس اکاؤنٹ پر حالیہ ڈی کوڈ رفتار (آخری {count} کامیاب درخواستیں)",
+    "quotaSpeedLine": "{model}: {avg} tok/s اوسط · آخری {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s اوسط · آخری {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "کوٹہ کی نمائش کو اپ ڈیٹ کرنے میں ناکامی",
     "account": "اکاؤنٹ",
     "modelQuotas": "ماڈل کوٹے",

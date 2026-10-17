@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-compatible provider ပံ့ပိုးမှုပါဝင်သော မိမိကိုယ်ကို တိုးတက်စေသည့် RLM ကုဒ်ရေး harness",
       "warp": "စိတ်ကြိုက် provider ပံ့ပိုးမှုပါဝင်သော Warp AI terminal",
       "agent-deck": "Agent Deck အေးဂျင့်မျိုးစုံ စီမံညှိနှိုင်းရေးကိရိယာ",
-      "5dive": "5dive — ကိုယ်တိုင် host လုပ်ထားသော ကုဒ်ရေးအေးဂျင့်အုပ်စု၊ auth profile တစ်ခုတည်းဖြင့် ၎င်းတို့အားလုံးကို OmniRoute သို့ ချိတ်ဆက်ပေးသည်"
+      "5dive": "5dive — ကိုယ်တိုင် host လုပ်ထားသော ကုဒ်ရေးအေးဂျင့်အုပ်စု၊ auth profile တစ်ခုတည်းဖြင့် ၎င်းတို့အားလုံးကို OmniRoute သို့ ချိတ်ဆက်ပေးသည်",
+      "zed": "Zed ကုဒ်တည်းဖြတ်ကိရိယာ — OpenAI နှင့် ကိုက်ညီသော ပံ့ပိုးသူမှတစ်ဆင့် ပါဝင်ပြီးသား အေးဂျင့်"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "ချိတ်ဆက်မှုကို ပိတ်ရန်",
     "enableConnection": "ချိတ်ဆက်မှုကို ဖွင့်ရန်",
     "reauthenticateConnection": "ဤချိတ်ဆက်မှုကို စစ်မှန်ကြောင်း ပြန်လည်အတည်ပြုရန်",
+    "verifyAccount": "အကောင့်ကို အတည်ပြုပါ",
+    "verifyAccountHint": "Google က ဤအကောင့်ကို အတည်ပြုရန် တောင်းဆိုထားသည်။ လင့်ခ်ကိုဖွင့်ပြီး စစ်ဆေးမှုကို ပြီးဆုံးအောင်လုပ်ကာ ထပ်မံကြိုးစားပါ။",
     "proxyConfig": "ပရောက်စီ ဖွဲ့စည်းပုံ",
     "aliasExistsAlert": "အမည်ပွား \"{alias}\" ရှိပြီးသားဖြစ်သည်။ အခြားမော်ဒယ်တစ်ခုကို အသုံးပြုပါ သို့မဟုတ် ရှိပြီးသား အမည်ပွားကို ပြင်ဆင်ပါ။",
     "aliasInputPlaceholder": "အမည်ပွားအမည်",
@@ -9862,6 +9865,9 @@
     "hideQuotaRow": "ဤ quota အတန်းကို ဖျောက်ရန်",
     "showQuotaRow": "ဤ quota အတန်းကို ပြရန်",
     "hiddenQuotaRowsLabel": "ဖျောက်ထားသည်:",
+    "quotaSpeedTitle": "ဤအကောင့်ရှိ မကြာသေးမီ ဒီကုဒ်အမြန်နှုန်း (နောက်ဆုံး အောင်မြင်သော တောင်းဆိုမှု {count} ခု)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ပျမ်းမျှ · နောက်ဆုံး {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ပျမ်းမျှ · နောက်ဆုံး {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "ခွဲတမ်းမြင်နိုင်မှုကို အပ်ဒိတ်လုပ်၍မရပါ",
     "account": "အကောင့်",
     "modelQuotas": "မော်ဒယ်ခွဲတမ်းများ",

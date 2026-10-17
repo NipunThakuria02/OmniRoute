@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — RLM okvir za kodiranje koji se sam poboljšava, s podrškom za pružatelje kompatibilne s OpenAI-jem",
       "warp": "Warp AI terminal s podrškom za prilagođene pružatelje",
       "agent-deck": "Agent Deck orkestrator višestrukih agenata",
-      "5dive": "5dive — flota agenata za kodiranje s vlastitim hostingom; jedan profil za autentifikaciju usmjerava ih sve na OmniRoute"
+      "5dive": "5dive — flota agenata za kodiranje s vlastitim hostingom; jedan profil za autentifikaciju usmjerava ih sve na OmniRoute",
+      "zed": "Zed uređivač koda — ugrađeni agent putem pružatelja kompatibilnog s OpenAI-jem"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "Onemogući vezu",
     "enableConnection": "Omogući vezu",
     "reauthenticateConnection": "Ponovo autentificiraj ovu vezu",
+    "verifyAccount": "Potvrdi račun",
+    "verifyAccountHint": "Google traži da potvrdite ovaj račun. Otvorite poveznicu, dovršite provjeru i pokušajte ponovno.",
     "proxyConfig": "Konfiguracija proxyja",
     "aliasExistsAlert": "Pseudonim \"{alias}\" već postoji. Koristite drugi model ili uredite postojeći pseudonim.",
     "aliasInputPlaceholder": "naziv pseudonima",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "Sakrij ovaj redak kvote",
     "showQuotaRow": "Prikaži ovaj redak kvote",
     "hiddenQuotaRowsLabel": "Skriveno:",
+    "quotaSpeedTitle": "Nedavna brzina dekodiranja na ovom računu (zadnjih {count} uspješnih zahtjeva)",
+    "quotaSpeedLine": "{model}: {avg} tok/s prosjek · zadnja {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s prosjek · zadnja {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Ažuriranje vidljivosti kvote nije uspjelo",
     "account": "Račun",
     "modelQuotas": "Kvote modela",

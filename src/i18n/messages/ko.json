@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI 호환 제공업체를 지원하는 자기 개선형 RLM 코딩 하네스",
       "warp": "사용자 정의 제공자 지원 기능이 포함된 Warp AI 터미널",
       "agent-deck": "Agent Deck 다중 에이전트 오케스트레이터",
-      "5dive": "5dive — 자체 호스팅 코딩 에이전트 플릿; 인증 프로필 하나로 전체를 OmniRoute로 연결"
+      "5dive": "5dive — 자체 호스팅 코딩 에이전트 플릿; 인증 프로필 하나로 전체를 OmniRoute로 연결",
+      "zed": "Zed 코드 편집기 — OpenAI 호환 공급자를 통한 내장 에이전트"
     },
     "guides": {
       "cursor": {
@@ -5714,6 +5715,8 @@
     "disableConnection": "연결 비활성화",
     "enableConnection": "연결 활성화",
     "reauthenticateConnection": "이 연결을 다시 인증하세요.",
+    "verifyAccount": "계정 인증",
+    "verifyAccountHint": "Google에서 이 계정의 인증을 요구합니다. 링크를 열어 확인을 완료한 뒤 다시 시도하세요.",
     "proxyConfig": "프록시 구성",
     "aliasExistsAlert": "별칭 \"{alias}\"이(가) 이미 존재합니다. 다른 모델을 사용하거나 기존 별칭을 수정하세요.",
     "aliasInputPlaceholder": "별칭 이름",
@@ -9858,6 +9861,9 @@
     "hideQuotaRow": "이 할당량 행 숨기기",
     "showQuotaRow": "이 할당량 행 표시",
     "hiddenQuotaRowsLabel": "숨김:",
+    "quotaSpeedTitle": "이 계정의 최근 디코딩 속도 (최근 성공한 요청 {count}개)",
+    "quotaSpeedLine": "{model}: {avg} tok/s 평균 · 최근 {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s 평균 · 최근 {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "할당량 표시 여부 업데이트 실패",
     "account": "계정",
     "modelQuotas": "모델 할당량",

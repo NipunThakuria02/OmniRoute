@@ -311,14 +311,19 @@ export function isPrivateLanHost(hostHeader: string | null): boolean {
  * non-loopback clients when the request method is GET, HEAD, or OPTIONS.
  *
  * Rule: a path belongs here only when the read methods perform NO child-process
- * spawn and expose NO privileged mutation — only the write methods do.
+ * spawn for a non-local caller and expose NO privileged mutation — only the write
+ * methods do. A read handler that probes the host for loopback/LAN callers must
+ * gate that probe at its call site on `getRequestPeerLocality()`.
  *
  * Current exemptions:
  *   /api/system/version — GET reads package.json + npm registry; only POST
  *   triggers the auto-update flow (spawns git checkout + npm install + pm2).
  *   Hard Rules #15/#17 still apply to POST.
- *   /api/tunnels/cloudflared — GET reads tunnel status only; only POST
- *   spawns the cloudflared process (#11531).
+ *   /api/tunnels/cloudflared — GET reports tunnel status; only POST starts/stops
+ *   the cloudflared process (#11531). The status read resolves the binary with a
+ *   PATH lookup (`which cloudflared`), which runs only for loopback/LAN callers:
+ *   a remote caller gets the unprobed status (`probed: false`) with no spawn
+ *   (GHSA-35fw-cv32-2373 class, GHSA-jmq6-8j86-8xqj call-site gate).
  */
 export const LOCAL_ONLY_API_GET_EXEMPTIONS: ReadonlySet<string> = new Set([
   "/api/system/version",
