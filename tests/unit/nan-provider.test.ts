@@ -35,7 +35,11 @@ test("nan is registered as an API-key provider in the UI catalog", () => {
   for (const kind of ["llm", "embedding", "stt", "tts", "image"]) {
     assert.ok(entry.serviceKinds.includes(kind), `serviceKinds must include ${kind}`);
   }
-  assert.ok(String(entry.apiHint).includes("https://cloud.nan.builders"));
+  assert.equal(
+    entry.apiHint,
+    "Create an API key at https://cloud.nan.builders, then paste it here as a Bearer token. " +
+      "OpenAI-compatible base URL: https://api.nan.builders/v1."
+  );
 });
 
 test("nan chat registry entry is OpenAI-compatible with live model discovery", () => {
