@@ -16,6 +16,23 @@ const virtualFactory = await import("../../open-sse/services/autoCombo/virtualFa
 
 type VirtualComboResult = Awaited<ReturnType<typeof virtualFactory.createVirtualAutoCombo>>;
 
+// No-auth pool membership, mirrored from tests/unit/noauth-autocombo-allowlist.test.ts
+// (the dedicated guard). Kept explicit here on purpose: adding `toolCalling: "emulated"`
+// to a NOAUTH_PROVIDERS entry must show up as a deliberate, reviewed diff in both files.
+const ALLOWED_NOAUTH_PROVIDERS = [
+  "cloudflare-playground",
+  "devin-cli-agentic",
+  "duckduckgo-web",
+  "uncloseai",
+];
+const EXCLUDED_NOAUTH_PROVIDERS = [
+  "aihorde",
+  "auggie",
+  "codex-app-server",
+  "veoaifree-web",
+  "zcode",
+];
+
 async function resetStorage() {
   core.resetDbInstance();
   fs.rmSync(TEST_DATA_DIR, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
@@ -262,28 +279,37 @@ test("createVirtualAutoCombo includes clean-room ChatGPT Web and excludes its le
   assert.equal(combo.autoConfig.candidatePool.includes("cgpt-web"), false);
 });
 
-test("createVirtualAutoCombo restricts the no-auth pool to the allowlist", async () => {
-  // Policy: the no-auth (keyless) auto-combo allowlist
-  // (open-sse/services/autoCombo/virtualFactory.ts::AUTO_COMBO_NOAUTH_ALLOWLIST) is
-  // currently empty — its only member, the keyless `opencode` provider, was removed
-  // (docs/reference/REMOVED_PROVIDERS.md). Keyless providers stay usable via direct
-  // `<alias>/<model>` calls but must NOT be auto-routed to. Dedicated guard:
-  // tests/unit/noauth-autocombo-allowlist.test.ts. ToS filtering is opted out so this
-  // test keeps asserting the allowlist, not the ToS filter.
+test("createVirtualAutoCombo restricts the no-auth pool to the emulated-tool-calling providers", async () => {
+  // Policy: the no-auth (keyless) auto-combo pool is built from the NOAUTH_PROVIDERS
+  // entries that opted into prompt-emulated tool calling (`toolCalling: "emulated"`),
+  // discovered at startup by
+  // open-sse/services/autoCombo/emulatedNoAuthAllowlist.ts::getEmulatedToolCallingNoAuthProviders().
+  // The admitted set is cloudflare-playground, devin-cli-agentic, duckduckgo-web,
+  // opencode, and uncloseai — duckduckgo-web is included, not excluded. The others
+  // stay usable via direct `<alias>/<model>` calls but must NOT be auto-routed to.
+  // Dedicated guard: tests/unit/noauth-autocombo-allowlist.test.ts.
+  // contract changed by #15979 (on top of #15839): `excludeTosAvoid` is ON by default and
+  // uncataloged models now inherit the provider's curated `tos: "avoid"` verdict, so every
+  // opencode model is ToS-filtered out by default. Opt out explicitly so this test keeps
+  // asserting the no-auth pool membership, not the ToS filter (covered by
+  // tests/unit/issue-15059-tos-avoid-auto-default.test.ts and tos-provider-alias-15059).
   await settingsDb.updateSettings({ excludeTosAvoid: false });
   const combo: VirtualComboResult = await virtualFactory.createVirtualAutoCombo("fast");
 
-  assert.equal(
-    combo.models.some((model) => model.connectionId === "noauth"),
-    false,
-    "no synthetic no-auth candidate may enter the pool while the allowlist is empty"
-  );
+  for (const allowed of ALLOWED_NOAUTH_PROVIDERS) {
+    const models = combo.models.filter((m) => m.providerId === allowed);
+    assert.ok(models.length >= 1, `${allowed} should have at least one model`);
+    assert.ok(
+      models.every((m) => m.connectionId === "noauth"),
+      `all ${allowed} models should use noauth connection`
+    );
+  }
 
-  for (const excluded of ["duckduckgo-web", "aihorde", "opencode"]) {
+  for (const excluded of EXCLUDED_NOAUTH_PROVIDERS) {
     assert.equal(
       combo.models.some((model) => model.providerId === excluded),
       false,
-      `no-auth provider "${excluded}" must be excluded from the auto-combo pool (not in allowlist)`
+      `no-auth provider "${excluded}" must be excluded from the auto-combo pool (no toolCalling: "emulated" opt-in)`
     );
   }
 

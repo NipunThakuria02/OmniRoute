@@ -69,9 +69,6 @@ export const REMOVED_PROVIDERS: readonly RemovedProvider[] = [
       "opencode: {",
       "opencode: () =>",
       "registry/opencode/index.ts",
-      "opencodeFreeTierContract",
-      "OPENCODE_FREE_TIER_REQUEST_CONTRACT",
-      "OPENCODE_FREE_TIER_PLACEHOLDER_TOOLS",
     ],
   },
 ];

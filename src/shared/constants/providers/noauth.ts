@@ -48,6 +48,7 @@ export const NOAUTH_PROVIDERS = {
     noAuth: true,
     hasFree: true,
     serviceKinds: ["llm"],
+    toolCalling: "emulated",
     freeNote:
       "Free — Cloudflare's AI Playground: GLM 5.2, Kimi K2.7 Code, DeepSeek V4 Pro, gpt-oss-120B and 16 more. No account, no API key.",
     authHint:
@@ -144,6 +145,7 @@ export const NOAUTH_PROVIDERS = {
     hasFree: true,
     passthroughModels: true,
     serviceKinds: ["llm"],
+    toolCalling: "emulated",
     authHint:
       "No auth required. API accepts any non-empty string as key for identification. If older built-in models return 404, use Available Models → Import from /models or Auto-Sync; verified live model: Lorbus/Qwen3.6-27B-int4-AutoRound.",
     freeNote: "Free forever — no signup, no credit card. OpenAI-compatible endpoints.",

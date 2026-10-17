@@ -152,7 +152,7 @@ test("comboPinAllowlist does not invent an allowlist for header-forced pins", as
   assert.deepEqual(comboPinAllowlist(true, "combo-pin", undefined), ["combo-pin"]);
 });
 
-test("checkModelAvailable applies comboPinAllowlist before credential preflight", async () => {
+test("checkModelAvailable resolves combo restrictions before credential preflight", async () => {
   const { readFileSync } = await import("node:fs");
   const { fileURLToPath } = await import("node:url");
   const { resolve } = await import("node:path");
@@ -164,13 +164,37 @@ test("checkModelAvailable applies comboPinAllowlist before credential preflight"
   const body = src.slice(start, end);
   assert.match(
     body,
-    /comboPinAllowlist/,
+    /resolveConnectionRestrictions\(apiKeyInfo, target, true\)/,
     "combo preflight caches credentials; a pin without allowlist must not scan the pool"
   );
-  const pinAt = body.search(/comboPinAllowlist\s*\(/);
+  const pinAt = body.search(/resolveConnectionRestrictions\s*\(/);
   const credsAt = body.search(/getProviderCredentialsWithQuotaPreflight\s*\(/);
   assert.ok(
     pinAt >= 0 && credsAt > pinAt,
     "pin allowlist must be computed before preflight lookup"
   );
+});
+
+test("combo restrictions preserve an implicit pin and fail closed on an API-key conflict", async () => {
+  const { resolveConnectionRestrictions } =
+    await import("../../src/sse/services/connectionRestrictions.ts");
+  assert.deepEqual(resolveConnectionRestrictions(null, { connectionId: "pinned" }, true), {
+    allowedConnections: ["pinned"],
+    sources: ["combo_pin"],
+  });
+  assert.deepEqual(
+    resolveConnectionRestrictions(
+      { allowedConnections: ["other"] },
+      { connectionId: "pinned" },
+      true
+    ),
+    {
+      allowedConnections: [],
+      sources: ["api_key_allowlist", "combo_pin"],
+    }
+  );
+  assert.deepEqual(resolveConnectionRestrictions(null, { connectionId: "header-pin" }, false), {
+    allowedConnections: null,
+    sources: [],
+  });
 });
