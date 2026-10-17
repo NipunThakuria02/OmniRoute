@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — بيئة برمجة RLM ذاتية التحسين تدعم موفّري الخدمات المتوافقين مع OpenAI",
       "warp": "طرفية Warp AI مع دعم لمزودي الخدمة المخصصين",
       "agent-deck": "منسق الوكلاء المتعددين Agent Deck",
-      "5dive": "5dive — أسطول ذاتي الاستضافة من وكلاء البرمجة؛ ملف اعتماد واحد يوجّهها جميعًا إلى OmniRoute"
+      "5dive": "5dive — أسطول ذاتي الاستضافة من وكلاء البرمجة؛ ملف اعتماد واحد يوجّهها جميعًا إلى OmniRoute",
+      "zed": "محرر الأكواد Zed — وكيل مدمج عبر مزوّد متوافق مع OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9860,6 +9861,9 @@
     "hideQuotaRow": "إخفاء صف الحصة هذا",
     "showQuotaRow": "إظهار صف الحصة هذا",
     "hiddenQuotaRowsLabel": "مخفي:",
+    "quotaSpeedTitle": "سرعة فك الترميز الأخيرة لهذا الحساب (آخر {count} طلبات ناجحة)",
+    "quotaSpeedLine": "{model}: {avg} tok/s متوسط · الأخير {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s متوسط · الأخير {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "فشل تحديث ظهور الحصة",
     "account": "الحساب",
     "modelQuotas": "الحصص النموذجية",

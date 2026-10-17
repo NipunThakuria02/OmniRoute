@@ -6490,10 +6490,18 @@ paths:
           description: Backup list
     post:
       tags: [System]
-      summary: Create database backup
+      summary: Restore a database backup by id
+      description: >-
+        Replaces the live database with the stored backup named in `backupId`. Operator-only:
+        dashboard session, local CLI, or login disabled.
       responses:
         "200":
-          description: Backup created
+          description: Backup restored
+        "403":
+          description: >-
+            Machine credential refused. Restoring replaces the live database, so it requires
+            the dashboard session or the local CLI (or login disabled); API keys of any scope
+            and `oma_` access tokens get 403.
     patch:
       tags: [System]
       summary: Save database backup retention settings
@@ -9965,8 +9973,9 @@ paths:
       description: >-
         Replaces the live database with an uploaded `.sqlite` backup (multipart `file` field,
         or the raw bytes with `?filename=`). The upload is checked for SQLite integrity and the
-        required OmniRoute tables first. Accepts the dashboard session, a `manage`-scoped API
-        key, or the local CLI credential.
+        required OmniRoute tables first. Operator-only: accepts the dashboard session, the
+        local CLI credential, or login disabled; API keys of any scope and `oma_` access tokens
+        are refused (403), for the dry run as well.
       parameters:
         - name: dryRun
           in: query
@@ -9993,6 +10002,11 @@ paths:
           description: Not a valid OmniRoute SQLite backup (type, size, integrity or tables).
         "401":
           description: No accepted credential.
+        "403":
+          description: >-
+            Machine credential refused. Importing replaces the live database, so it requires
+            the dashboard session or the local CLI (or login disabled); API keys of any scope
+            and `oma_` access tokens get 403.
   /api/db/health:
     get:
       tags:
@@ -12020,6 +12034,11 @@ paths:
       responses:
         "200":
           description: OK
+        "403":
+          description: >-
+            Machine credential refused. The import replaces settings, connections and API keys,
+            so it requires the dashboard session or the local CLI (or login disabled); API keys
+            of any scope and `oma_` access tokens get 403.
   /api/settings/lkgp-cache:
     delete:
       tags:

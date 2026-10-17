@@ -311,6 +311,8 @@ export interface CostCalculationResult {
   costUsd: number;
   /** false when no pricing row (direct, normalized, or codex-effortless) was found. */
   priced: boolean;
+  /** A lookup error is not evidence that the model lacks a price. */
+  failed?: boolean;
 }
 
 export async function calculateCostDetailed(
@@ -345,7 +347,7 @@ export async function calculateCostDetailed(
     return { costUsd, priced: true };
   } catch (error) {
     console.error("Error calculating cost:", error);
-    return { costUsd: 0, priced: false };
+    return { costUsd: 0, priced: false, failed: true };
   }
 }
 

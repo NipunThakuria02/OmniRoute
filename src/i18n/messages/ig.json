@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — usoro RLM maka ide koodu nke na-emeziwanye onwe ya ma nwee nkwado maka ndị na-eweta ọrụ dakọtara na OpenAI",
       "warp": "Warp AI terminal nwere nkwado maka onye na-eweta ọrụ ahaziri iche",
       "agent-deck": "Agent Deck, onye nhazi ọtụtụ ndị nnọchi anya",
-      "5dive": "5dive — ìgwè ndị nnọchi anya ide koodu a na-akwado n'onwe gị; otu profaịlụ nkwenye na-ejikọ ha niile na OmniRoute"
+      "5dive": "5dive — ìgwè ndị nnọchi anya ide koodu a na-akwado n'onwe gị; otu profaịlụ nkwenye na-ejikọ ha niile na OmniRoute",
+      "zed": "Ihe ndezi koodu Zed — onye nnọchi anya arụnyere n'ime site n'aka onye na-enye ọrụ dakọtara na OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9864,6 +9865,9 @@
     "hideQuotaRow": "Zoo ahịrị oke ojiji a",
     "showQuotaRow": "Gosi ahịrị oke ojiji a",
     "hiddenQuotaRowsLabel": "Ihe ndị ezoro:",
+    "quotaSpeedTitle": "Ọsọ ntụgharị nso nso a na akaụntụ a (arịrịọ {count} gara nke ọma ikpeazụ)",
+    "quotaSpeedLine": "{model}: {avg} tok/s nkezi · ikpeazụ {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s nkezi · ikpeazụ {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Imelite ngosipụta oke ojiji kụrụ afọ n'ala",
     "account": "Akaụntụ",
     "modelQuotas": "Oke ojiji ụdị",
