@@ -1417,8 +1417,9 @@ paths:
                   default: 5
                 search_type:
                   type: string
-                  enum: [web, news, x]
+                  enum: [web, news, x, finance]
                   default: web
+                  description: "`finance` is supported by tavily-search only."
                 offset:
                   type: integer
                   minimum: 0
@@ -1455,6 +1456,11 @@ paths:
                 provider_options:
                   type: object
                   additionalProperties: true
+                  description: >-
+                    Provider-specific passthrough. Exa and Tavily read an allow-listed,
+                    type-checked bag under `exa` / `exa-search` and `tavily` / `tavily-search`;
+                    unknown keys and wrongly typed values are dropped. See
+                    docs/reference/API_REFERENCE.md (Search API).
                 strict_filters:
                   type: boolean
                   default: false

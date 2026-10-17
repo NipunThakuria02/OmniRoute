@@ -651,6 +651,36 @@ Web/search provider abstraction (Tavily, Brave, Exa, Serper, etc.).
 
 **Auth:** Bearer API key (`extractApiKey` + `isValidApiKey`). Search policy enforced via `enforceApiKeyPolicy`.
 
+### Exa and Tavily `provider_options`
+
+Exa and Tavily read provider-specific fields from a namespaced bag:
+`provider_options.exa` (or `provider_options["exa-search"]`) and `provider_options.tavily`
+(or `provider_options["tavily-search"]`). Only the keys below are forwarded. Each one is
+checked against its own Zod schema in `open-sse/handlers/search/providerOptionsPassthrough.ts`,
+and a key with the wrong type is dropped. Any other key is ignored, including auth, base URL,
+`stream` and `outputSchema`. The flat keys used by other providers (`cx`, `depth`, ...) work
+as before.
+
+| Provider | Top-level fields                                                                                                                                                                                                                                                                                                                                                          | Nested                                                                                                                                                            |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Exa      | `type`, `category`, `userLocation`, `moderation`, `additionalQueries`, `objective`, `systemPrompt`, `compliance` (flat primitives), `startPublishedDate`, `endPublishedDate`                                                                                                                                                                                              | `contents.{text, highlights, summary, extras, subpages, subpageTarget, livecrawlTimeout, maxAgeHours}` merged over the default `{ text: true, highlights: true }` |
+| Tavily   | `search_depth`, `chunks_per_source`, `time_range`, `start_date`, `end_date`, `include_published_date`, `filter_by_published_date`, `include_answer`, `include_raw_content`, `include_images`, `include_image_descriptions`, `include_favicon`, `include_domains_mode`, `language`, `filter_by_language`, `auto_parameters`, `exact_match`, `include_usage`, `safe_search` | —                                                                                                                                                                 |
+
+The generic fields always win: `query`, `max_results`, `filters` (domains), `country` and the
+topic derived from `search_type`. On Exa, `search_type: "news"` keeps `category: "news"`.
+Tavily also accepts `search_type: "finance"` (`topic: "finance"`).
+
+The generic `time_range` now reaches both providers: Exa gets `startPublishedDate` (ISO
+timestamp) and Tavily gets `start_date` (`YYYY-MM-DD`). An explicit date in `provider_options`
+overrides the mapped one.
+
+Exa results keep `id`, `highlight_scores`, `summary`, `subpages`, `entities` and `extras` in
+`provider_raw`. Tavily results keep `images` and `favicon`.
+
+Cost accounting is still the flat registry `costPerQuery`. Tavily bills
+`search_depth: "advanced"` at more credits per call, and that difference is not reflected in
+`usage.search_cost_usd`.
+
 ---
 
 ## Web Fetch API
