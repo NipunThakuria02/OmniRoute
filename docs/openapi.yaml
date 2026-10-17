@@ -2069,9 +2069,71 @@ paths:
     get:
       tags: [Models]
       summary: List available models
-      description: Returns all models available across configured providers.
+      description: >-
+        Returns all models available across configured providers. The discovery
+        filters (`capability`, `min_context`, `kind`, `q`) are opt-in: without them
+        the response is unchanged. They narrow the caller's own (key-filtered)
+        catalog and run before `limit`/`after` paging.
       security:
         - BearerAuth: []
+      parameters:
+        - in: query
+          name: capability
+          required: false
+          description: >-
+            Keep models whose `capabilities.<name>` is `true`. Repeatable or
+            comma-separated; every listed capability must match.
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                [
+                  attachment,
+                  reasoning,
+                  structured_output,
+                  temperature,
+                  thinking,
+                  tool_calling,
+                  vision,
+                ]
+          style: form
+          explode: true
+        - in: query
+          name: min_context
+          required: false
+          description: Keep models whose `context_length` is at least this value.
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          name: kind
+          required: false
+          description: Catalog surface (`type`); models without a `type` are `chat`.
+          schema:
+            type: string
+            enum: [chat, audio, embedding, image, moderation, music, rerank, video]
+        - in: query
+          name: q
+          required: false
+          description: Case-insensitive substring match on the model `id` or `name`.
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 200
+        - in: query
+          name: limit
+          required: false
+          description: OpenAI-style page size (applied after the discovery filters).
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: after
+          required: false
+          description: OpenAI-style cursor — return models after this id.
+          schema:
+            type: string
       responses:
         "200":
           description: Model list
@@ -2087,6 +2149,97 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Model"
+        "400":
+          description: Invalid discovery filter value
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/v1/models/query:
+    post:
+      tags: [Models]
+      summary: Query a model shortlist
+      description: >-
+        Filtered shortlist over the same catalog as `GET /v1/models` (same auth and
+        per-key visibility). Results are ordered by `owned_by`, then `id`, and capped
+        by `limit` (default 20, maximum 100).
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                capabilities:
+                  description: Array or comma-separated string; every capability must be `true`.
+                  oneOf:
+                    - type: array
+                      items:
+                        type: string
+                        enum:
+                          [
+                            attachment,
+                            reasoning,
+                            structured_output,
+                            temperature,
+                            thinking,
+                            tool_calling,
+                            vision,
+                          ]
+                    - type: string
+                min_context:
+                  type: integer
+                  minimum: 0
+                max_output:
+                  type: integer
+                  minimum: 0
+                  description: Keep models whose `max_output_tokens` is at least this value.
+                kind:
+                  type: string
+                  enum: [chat, audio, embedding, image, moderation, music, rerank, video]
+                q:
+                  type: string
+                  minLength: 1
+                  maxLength: 200
+                owned_by:
+                  type: string
+                exclude:
+                  description: Model ids to leave out (array or comma-separated string).
+                  oneOf:
+                    - type: array
+                      items:
+                        type: string
+                    - type: string
+                limit:
+                  type: integer
+                  minimum: 1
+                  default: 20
+                  description: Values above 100 are capped at 100.
+      responses:
+        "200":
+          description: Model shortlist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    example: list
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Model"
+        "400":
+          description: Invalid JSON, unknown field or invalid filter value
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /api/v1/providers/{provider}/models:
     get:

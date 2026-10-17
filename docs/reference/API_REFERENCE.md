@@ -455,6 +455,51 @@ field pointing at the primary id.
 Clients that render a model picker should request `?prefix=alias` — this is what the
 [OmniCopilot VS Code extension](../guides/VSCODE-COPILOT.md) does.
 
+### Discovery filters (`?capability=`, `?min_context=`, `?kind=`, `?q=`)
+
+`GET /v1/models` accepts opt-in discovery filters. Without any of them the response is
+unchanged. They narrow the catalog the caller already sees (API-key permissions apply first),
+and they run before the OpenAI-style `limit` / `after` paging:
+
+```bash
+GET /v1/models?capability=vision&capability=tool_calling   # every listed capability must be true
+GET /v1/models?capability=vision,reasoning&min_context=200000
+GET /v1/models?kind=embedding                              # catalog `type`; rows without one are `chat`
+GET /v1/models?q=sonnet&limit=10                           # case-insensitive match on id or name
+```
+
+| Param         | Values                                                                                              |
+| ------------- | --------------------------------------------------------------------------------------------------- |
+| `capability`  | `attachment`, `reasoning`, `structured_output`, `temperature`, `thinking`, `tool_calling`, `vision` |
+| `min_context` | non-negative integer, compared with `context_length`                                                |
+| `kind`        | `chat`, `audio`, `embedding`, `image`, `moderation`, `music`, `rerank`, `video`                     |
+| `q`           | 1–200 characters                                                                                    |
+
+An unknown value, or a `min_context` that is not a non-negative integer (for example `1.5`),
+returns HTTP `400` and the message lists the valid values. Implementation:
+`src/app/api/v1/models/catalogFilters.ts`.
+
+### Model shortlist (`POST /v1/models/query`)
+
+`POST /v1/models/query` returns a short, deterministic list from the same catalog, with the same
+auth and per-key visibility as `GET /v1/models`:
+
+```bash
+POST /v1/models/query
+Authorization: Bearer your-api-key
+Content-Type: application/json
+
+{ "capabilities": ["vision", "tool_calling"], "min_context": 128000, "max_output": 16000,
+  "kind": "chat", "q": "gpt", "owned_by": "openai", "exclude": ["openai/gpt-4o"], "limit": 5 }
+
+→ { "object": "list", "data": [ ...models ] }
+```
+
+Every field is optional. `capabilities` and `exclude` take an array or a comma-separated string;
+`max_output` compares with `max_output_tokens`. Results are sorted by `owned_by`, then `id`.
+`limit` defaults to `20` and values above `100` are capped at `100`. Invalid JSON, an unknown
+field or an invalid value returns HTTP `400`.
+
 ### Individually hidden chat models
 
 A model marked **Hidden** on its provider page is excluded from the catalog and rejected
@@ -516,6 +561,7 @@ Use this endpoint when a sidecar runs out-of-process and cannot import
 | POST   | `/v1/segment`                             | Jina segmenter (`segment.jina.ai`) |
 | POST   | `/v1/moderations`                         | OpenAI Moderations                 |
 | GET    | `/v1/models`                              | OpenAI                             |
+| POST   | `/v1/models/query`                        | Filtered model shortlist           |
 | POST   | `/v1/messages/count_tokens`               | Anthropic                          |
 | GET    | `/v1beta/models`                          | Gemini                             |
 | POST   | `/v1beta/models/{...path}`                | Gemini generateContent             |
