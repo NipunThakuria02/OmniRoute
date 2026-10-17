@@ -52,8 +52,12 @@ export const KNOWN_DUPLICATE_VERSIONS = new Set([
 // correspondentes aterrissarem na release.
 // #15564 landed 197 and 198. 199 (#15314), 200, and 201 (#15354) also exist.
 // None of 197–201 is a gap.
+// 206 and 207 stay reserved for open PRs that already claimed them (206: #16439,
+// #16548, #16864, #14665, #16087; 207: #15608, #14982, #13102); the Codex scheduled
+// wakeups migration takes 208 so it collides with none of them. Drop 206/207 from this
+// set in the PR that lands each file (stale-enforcement).
 // ---------------------------------------------------------------------------
-export const KNOWN_GAPS = new Set(["026", "055", "121"]); // 121: número queimado no ciclo v3.8.47 — 122 (#6909) mergeou antes e 121 nunca aterrissou (validação e2e 2026-07-12); 144/145 aterrissaram na release (radar offers/intel cache), 148/149 aterrissaram (provider_quota_state, api_key_combo_access); 197–201 exist on disk and are not gaps
+export const KNOWN_GAPS = new Set(["026", "055", "121", "206", "207"]); // 121: número queimado no ciclo v3.8.47 — 122 (#6909) mergeou antes e 121 nunca aterrissou (validação e2e 2026-07-12); 144/145 aterrissaram na release (radar offers/intel cache), 148/149 aterrissaram (provider_quota_state, api_key_combo_access); 197–201 exist on disk and are not gaps
 
 function pad3(n) {
   return String(n).padStart(3, "0");
