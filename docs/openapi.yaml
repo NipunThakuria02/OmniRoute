@@ -6549,6 +6549,9 @@ paths:
     patch:
       tags: [System]
       summary: Save database backup retention settings
+      description: >-
+        Persists `keepLatest` / `retentionDays`. Operator-only: dashboard session, local CLI, or
+        login disabled — the persisted values drive the automatic pruning after every backup.
       requestBody:
         required: true
         content:
@@ -6567,6 +6570,11 @@ paths:
       responses:
         "200":
           description: Backup retention settings saved
+        "403":
+          description: >-
+            Machine credential refused. The saved retention is what automatic pruning applies
+            after every backup, so it requires the dashboard session or the local CLI (or login
+            disabled); API keys of any scope and `oma_` access tokens get 403.
 
   /api/storage/health:
     get:

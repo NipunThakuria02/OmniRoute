@@ -1122,6 +1122,8 @@ curl -X PATCH "$OMNIROUTE_URL/api/keys/$KEY_ID" \
 | `/api/db-backups`           | GET    | List available backups                                                  |
 | `/api/db-backups`           | PUT    | Create a manual backup                                                  |
 | `/api/db-backups`           | POST   | Restore from a specific backup                                          |
+| `/api/db-backups`           | PATCH  | Save backup retention settings (operator-only)                          |
+| `/api/db-backups`           | DELETE | Prune stored backups to the retention settings (operator-only)          |
 | `/api/db-backups/export`    | GET    | Download database as .sqlite file                                       |
 | `/api/db-backups/import`    | POST   | Upload .sqlite file to replace database (`?dryRun=true` validates only) |
 | `/api/db-backups/exportAll` | GET    | Download full backup as .tar.gz archive                                 |
@@ -1131,7 +1133,10 @@ every stored credential, so they require the dashboard session or the local CLI 
 disabled). API keys of any scope and `oma_` access tokens get `403`. The restores hold the same
 boundary: `POST /api/db-backups/import` (`dryRun=true` included), `POST /api/db-backups` (restore
 by id) and `POST /api/settings/import-json` replace the live database or settings, so a machine
-credential gets `403` there too; `omniroute sync import` sends the local CLI credential.
+credential gets `403` there too; `omniroute sync import` sends the local CLI credential. So do
+`DELETE /api/db-backups` (prune stored backups) and `PATCH /api/db-backups` (retention settings:
+the persisted values drive the automatic pruning after every backup). Listing (`GET`) and creating
+a manual backup (`PUT`) keep ordinary management auth.
 
 ### Cloud Sync
 
