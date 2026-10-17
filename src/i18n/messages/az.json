@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-uyğun provayder dəstəyi ilə özünü təkmilləşdirən RLM kodlaşdırma mühiti",
       "warp": "Fərdi provayder dəstəyinə malik Warp AI terminalı",
       "agent-deck": "Agent Deck çoxagentli orkestratoru",
-      "5dive": "5dive — öz serverinizdə işləyən kodlaşdırma agentləri parkı; bir auth profili hamısını OmniRoute-a yönəldir"
+      "5dive": "5dive — öz serverinizdə işləyən kodlaşdırma agentləri parkı; bir auth profili hamısını OmniRoute-a yönəldir",
+      "zed": "Zed kod redaktoru — OpenAI ilə uyğun provayder vasitəsilə daxili agent"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Kombo → {name}"
   },
   "combos": {
+    "autoTosLoadError": "Xidmət şərtləri siyasətini yükləmək mümkün olmadı. Dəyişməzdən əvvəl yenidən cəhd edin.",
+    "autoTosSaveError": "Xidmət şərtləri siyasətini saxlamaq mümkün olmadı. Əvvəlki parametr hələ də göstərilir. Yenidən cəhd edin.",
+    "autoTosIncludeLabel": "ToS: avoid kimi işarələnmiş provayderləri auto-ya daxil et",
+    "autoTosDescription": "Standart olaraq söndürülüb. Tək hesaba deyil, bütün auto kombinasiyalarına aiddir. Provayderi qoşmaq bu seçimi aktivləşdirmir.",
     "title": "Kombinasiyalar",
     "description": "Çəkili yönləndirmə və ehtiyat keçid dəstəyi ilə model kombinasiyaları yaradın",
     "autoCatalogTitle": "Avtomatik marşrutlaşdırma kataloqu",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Bu provayder standart olaraq auto-dan çıxarılıb",
+    "tosAvoidNoticeDescription": "Onun xidmət şərtləri statusu avoid kimi işarələnib. Hesab qoşmaq bu siyasəti dəyişmir. Bütün auto kombinasiyaları üçün ümumi razılığı aktivləşdirməzdən əvvəl provayderin şərtlərini nəzərdən keçirin.",
+    "tosAvoidNoticeAction": "auto siyasətini nəzərdən keçir",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Bağlantını deaktiv edin",
     "enableConnection": "Bağlantını aktiv edin",
     "reauthenticateConnection": "Bu bağlantı üçün yenidən autentifikasiya edin",
+    "verifyAccount": "Hesabı təsdiqlə",
+    "verifyAccountHint": "Google bu hesabı təsdiqləməyinizi tələb edir. Linki açın, yoxlamanı tamamlayın, sonra yenidən cəhd edin.",
     "proxyConfig": "Proksi konfiqurasiyası",
     "aliasExistsAlert": "\"{alias}\" ləqəbi artıq mövcuddur. Fərqli modeldən istifadə edin və ya mövcud ləqəbi redaktə edin.",
     "aliasInputPlaceholder": "ləqəb adı",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Bu kvota sətrini gizlət",
     "showQuotaRow": "Bu kvota sətrini göstər",
     "hiddenQuotaRowsLabel": "Gizlədilib:",
+    "quotaSpeedTitle": "Bu hesabda son dekodlama sürəti (son {count} uğurlu sorğu)",
+    "quotaSpeedLine": "{model}: {avg} tok/s orta · son {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s orta · son {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kvota görünürlüyünü yeniləmək mümkün olmadı",
     "account": "Hesab",
     "modelQuotas": "Model kvotaları",

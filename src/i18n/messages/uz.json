@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-mos provayderlarni qo‘llab-quvvatlaydigan, o‘zini o‘zi takomillashtiruvchi RLM dasturlash muhiti",
       "warp": "Maxsus provayderlarni qo‘llab-quvvatlaydigan Warp AI terminali",
       "agent-deck": "Agent Deck ko‘p agentli orkestratori",
-      "5dive": "5dive — o‘z serverida joylashtiriladigan dasturlash agentlari floti; bitta autentifikatsiya profili ularning barchasini OmniRoute’ga yo‘naltiradi"
+      "5dive": "5dive — o‘z serverida joylashtiriladigan dasturlash agentlari floti; bitta autentifikatsiya profili ularning barchasini OmniRoute’ga yo‘naltiradi",
+      "zed": "Zed kod muharriri — OpenAI bilan mos provayder orqali o'rnatilgan agent"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Kombinatsiya → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "ToS: avoid deb belgilangan provayderlarni auto tarkibiga kiriting",
+    "autoTosDescription": "Sukut bo‘yicha o‘chirilgan. Faqat bitta hisobga emas, barcha auto kombinatsiyalariga tatbiq etiladi. Provayderni ulash bu parametrni yoqmaydi.",
+    "autoTosSaveError": "ToS siyosatini saqlab bo‘lmadi. Oldingi sozlama hali ham ko‘rsatilmoqda. Qayta urinib ko‘ring.",
+    "autoTosLoadError": "ToS siyosatini yuklab bo‘lmadi. O‘zgartirishdan oldin qayta urinib ko‘ring.",
     "title": "Kombinatsiyalar",
     "description": "Vaznli yoʻnaltirish va zaxira variantlarini qoʻllab-quvvatlaydigan model kombinatsiyalarini yarating",
     "autoCatalogTitle": "Avtomatik yoʻnaltirish katalogi",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Bu provayder sukut bo‘yicha auto tarkibidan chiqarilgan",
+    "tosAvoidNoticeDescription": "Uning ToS holati avoid deb belgilangan. Hisobni ulash bu siyosatni o‘zgartirmaydi. Barcha auto kombinatsiyalari uchun umumiy parametrni yoqishdan oldin provayder shartlarini o‘qing.",
+    "tosAvoidNoticeAction": "auto siyosatini ko‘rish",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Ulanishni oʻchirish",
     "enableConnection": "Ulanishni yoqish",
     "reauthenticateConnection": "Bu ulanishni qayta autentifikatsiya qilish",
+    "verifyAccount": "Hisobni tasdiqlash",
+    "verifyAccountHint": "Google ushbu hisobni tasdiqlashingizni talab qiladi. Havolani oching, tekshiruvni yakunlang va qayta urinib ko'ring.",
     "proxyConfig": "Proksi konfiguratsiyasi",
     "aliasExistsAlert": "\"{alias}\" taxallusi allaqachon mavjud. Boshqa modeldan foydalaning yoki mavjud taxallusni tahrirlang.",
     "aliasInputPlaceholder": "taxallus nomi",
@@ -9855,6 +9865,9 @@
     "hideQuotaRow": "Bu kvota qatorini yashirish",
     "showQuotaRow": "Bu kvota qatorini ko‘rsatish",
     "hiddenQuotaRowsLabel": "Yashirilgan:",
+    "quotaSpeedTitle": "Ushbu hisobdagi so'nggi dekodlash tezligi (oxirgi {count} ta muvaffaqiyatli so'rov)",
+    "quotaSpeedLine": "{model}: {avg} tok/s o'rtacha · oxirgi {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s o'rtacha · oxirgi {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kvota ko‘rinuvchanligini yangilab bo‘lmadi",
     "account": "Hisob",
     "modelQuotas": "Model kvotalari",

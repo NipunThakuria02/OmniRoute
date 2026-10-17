@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — mfumo wa uandishi wa msimbo wa RLM unaojiboresha wenye usaidizi wa watoa huduma wanaooana na OpenAI",
       "warp": "Terminal ya Warp AI yenye usaidizi wa mtoa huduma maalum",
       "agent-deck": "Mratibu wa mawakala wengi wa Agent Deck",
-      "5dive": "5dive — kundi la mawakala wa uandishi wa msimbo unaojipangisha; wasifu mmoja wa auth huwaelekeza wote kwa OmniRoute"
+      "5dive": "5dive — kundi la mawakala wa uandishi wa msimbo unaojipangisha; wasifu mmoja wa auth huwaelekeza wote kwa OmniRoute",
+      "zed": "Kihariri cha msimbo cha Zed — wakala aliyejengewa ndani kupitia mtoa huduma anayeendana na OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Mchanganyiko → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "Jumuisha watoa huduma wenye alama ToS: avoid katika auto",
+    "autoTosDescription": "Imezimwa kwa chaguo-msingi. Inatumika kwa michanganyiko yote ya auto, si akaunti moja tu. Kuunganisha mtoa huduma hakuwezeshi chaguo hili.",
+    "autoTosSaveError": "Imeshindikana kuhifadhi sera ya ToS. Mpangilio wa awali bado unaonyeshwa. Jaribu tena.",
+    "autoTosLoadError": "Imeshindikana kupakia sera ya ToS. Jaribu tena kabla ya kuibadilisha.",
     "title": "Mikusanyiko",
     "description": "Unda mikusanyiko ya modeli yenye uelekezaji wenye uzani na usaidizi wa kutumia mbadala",
     "autoCatalogTitle": "Katalogi ya uelekezaji kiotomatiki",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Mtoa huduma huyu ameondolewa kwenye auto kwa chaguo-msingi",
+    "tosAvoidNoticeDescription": "Hali yake ya ToS imewekwa alama avoid. Kuunganisha akaunti hakubadilishi sera hii. Soma masharti ya mtoa huduma kabla ya kuwezesha chaguo la jumla kwa michanganyiko yote ya auto.",
+    "tosAvoidNoticeAction": "Angalia sera ya auto",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Zima muunganisho",
     "enableConnection": "Washa muunganisho",
     "reauthenticateConnection": "Thibitisha upya muunganisho huu",
+    "verifyAccount": "Thibitisha akaunti",
+    "verifyAccountHint": "Google inahitaji uthibitishe akaunti hii. Fungua kiungo, kamilisha ukaguzi, kisha jaribu tena.",
     "proxyConfig": "Usanidi wa proksi",
     "aliasExistsAlert": "Lakabu \"{alias}\" tayari ipo. Tafadhali tumia modeli tofauti au hariri lakabu iliyopo.",
     "aliasInputPlaceholder": "jina la lakabu",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Ficha safu mlalo hii ya mgawo",
     "showQuotaRow": "Onyesha safu mlalo hii ya mgawo",
     "hiddenQuotaRowsLabel": "Imefichwa:",
+    "quotaSpeedTitle": "Kasi ya hivi karibuni ya usimbuaji kwenye akaunti hii (maombi {count} ya mwisho yaliyofaulu)",
+    "quotaSpeedLine": "{model}: {avg} tok/s wastani · mwisho {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s wastani · mwisho {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Imeshindwa kusasisha mwonekano wa mgawo",
     "account": "Akaunti",
     "modelQuotas": "Migao ya Modeli",

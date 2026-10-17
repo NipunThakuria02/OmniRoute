@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-අනුකූල සැපයුම්කරු සහාය සහිත ස්වයං-වැඩිදියුණු වන RLM කේතකරණ රාමුව",
       "warp": "අභිරුචි සැපයුම්කරු සහාය සහිත Warp AI ටර්මිනලය",
       "agent-deck": "Agent Deck බහු-නියෝජිත සම්බන්ධීකාරකය",
-      "5dive": "5dive — ස්වයං-සත්කාරක කේතකරණ නියෝජිත සමූහයක්; එක් සත්යාපන පැතිකඩක් ඒ සියල්ල OmniRoute වෙත යොමු කරයි"
+      "5dive": "5dive — ස්වයං-සත්කාරක කේතකරණ නියෝජිත සමූහයක්; එක් සත්යාපන පැතිකඩක් ඒ සියල්ල OmniRoute වෙත යොමු කරයි",
+      "zed": "Zed කේත සංස්කාරකය — OpenAI-අනුකූල සැපයුම්කරුවෙකු හරහා ගොඩනඟන ලද නියෝජිතයා"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "සංයෝජනය → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "ToS: avoid ලෙස සලකුණු කළ සපයන්නන් auto වෙත ඇතුළත් කරන්න",
+    "autoTosDescription": "පෙරනිමියෙන් අක්‍රියයි. එක් ගිණුමකට පමණක් නොව සියලු auto සංයෝජනවලට අදාළ වේ. සපයන්නෙකු සම්බන්ධ කිරීමෙන් මෙම විකල්පය සක්‍රිය නොවේ.",
+    "autoTosSaveError": "ToS ප්‍රතිපත්තිය සුරැකිය නොහැකි විය. පෙර සැකසුම තවමත් පෙන්වයි. නැවත උත්සාහ කරන්න.",
+    "autoTosLoadError": "ToS ප්‍රතිපත්තිය පූරණය කළ නොහැකි විය. වෙනස් කිරීමට පෙර නැවත උත්සාහ කරන්න.",
     "title": "සංයෝජන",
     "description": "බරිත මාර්ගගත කිරීම සහ විකල්ප සහාය සහිත ආකෘති සංයෝජන සාදන්න",
     "autoCatalogTitle": "ස්වයංක්රීය මාර්ගගත කිරීමේ නාමාවලිය",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "මෙම සපයන්නා පෙරනිමියෙන් auto වෙතින් ඉවත් කර ඇත",
+    "tosAvoidNoticeDescription": "එහි ToS තත්ත්වය avoid ලෙස සලකුණු කර ඇත. ගිණුමක් සම්බන්ධ කිරීමෙන් මෙම ප්‍රතිපත්තිය වෙනස් නොවේ. සියලු auto සංයෝජන සඳහා පොදු විකල්පය සක්‍රිය කිරීමට පෙර සපයන්නාගේ කොන්දේසි කියවන්න.",
+    "tosAvoidNoticeAction": "auto ප්‍රතිපත්තිය බලන්න",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "සම්බන්ධතාව අක්රිය කරන්න",
     "enableConnection": "සම්බන්ධතාව සක්රිය කරන්න",
     "reauthenticateConnection": "මෙම සම්බන්ධතාව නැවත සත්යාපනය කරන්න",
+    "verifyAccount": "ගිණුම තහවුරු කරන්න",
+    "verifyAccountHint": "Google මෙම ගිණුම තහවුරු කිරීමට ඉල්ලා සිටී. සබැඳිය විවෘත කර, පරීක්ෂාව සම්පූර්ණ කර, නැවත උත්සාහ කරන්න.",
     "proxyConfig": "ප්රොක්සි වින්යාසය",
     "aliasExistsAlert": "\"{alias}\" අන්වර්ථ නාමය දැනටමත් පවතී. කරුණාකර වෙනත් මාදිලියක් භාවිත කරන්න හෝ පවතින අන්වර්ථ නාමය සංස්කරණය කරන්න.",
     "aliasInputPlaceholder": "අන්වර්ථ නාමය",
@@ -9855,6 +9865,9 @@
     "hideQuotaRow": "මෙම කෝටා පේළිය සඟවන්න",
     "showQuotaRow": "මෙම කෝටා පේළිය පෙන්වන්න",
     "hiddenQuotaRowsLabel": "සඟවා ඇති දෑ:",
+    "quotaSpeedTitle": "මෙම ගිණුමේ මෑත විකේතන වේගය (අවසන් සාර්ථක ඉල්ලීම් {count})",
+    "quotaSpeedLine": "{model}: {avg} tok/s සාමාන්‍ය · අවසන් {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s සාමාන්‍ය · අවසන් {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "කෝටා දෘශ්යතාව යාවත්කාලීන කිරීමට අසමත් විය",
     "account": "ගිණුම",
     "modelQuotas": "මාදිලි කෝටා",

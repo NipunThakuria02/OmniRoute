@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — självförbättrande RLM-kodningsramverk med stöd för OpenAI-kompatibla leverantörer",
       "warp": "Warp AI-terminal med stöd för anpassad leverantör",
       "agent-deck": "Agent Deck multi-agent-orkestrerare",
-      "5dive": "5dive — självhostad flotta av kodningsagenter; en auth-profil pekar dem alla mot OmniRoute"
+      "5dive": "5dive — självhostad flotta av kodningsagenter; en auth-profil pekar dem alla mot OmniRoute",
+      "zed": "Zed-kodredigerare — inbyggd agent via en OpenAI-kompatibel leverantör"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Kombination → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "Inkludera leverantörer märkta ToS: avoid i auto",
+    "autoTosDescription": "Av som standard. Gäller alla auto-kombinationer, inte bara ett konto. Att ansluta en leverantör aktiverar inte det här alternativet.",
+    "autoTosSaveError": "Det gick inte att spara ToS-policyn. Den tidigare inställningen visas fortfarande. Försök igen.",
+    "autoTosLoadError": "Det gick inte att läsa in ToS-policyn. Försök igen innan du ändrar den.",
     "title": "Kombinationer",
     "description": "Skapa modellkombinationer med viktad routing och reservstöd",
     "autoCatalogTitle": "Katalog för automatisk routing",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Den här leverantören är som standard utesluten från auto",
+    "tosAvoidNoticeDescription": "Dess ToS-status är märkt avoid. Att ansluta ett konto ändrar inte policyn. Läs leverantörens villkor innan du aktiverar det globala alternativet för alla auto-kombinationer.",
+    "tosAvoidNoticeAction": "Visa auto-policyn",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Inaktivera anslutningen",
     "enableConnection": "Aktivera anslutning",
     "reauthenticateConnection": "Autentisera den här anslutningen igen",
+    "verifyAccount": "Verifiera konto",
+    "verifyAccountHint": "Google kräver att du verifierar det här kontot. Öppna länken, slutför kontrollen och försök igen.",
     "proxyConfig": "Proxykonfiguration",
     "aliasExistsAlert": "Aliaset \"{alias}\" finns redan. Använd en annan modell eller redigera befintligt alias.",
     "aliasInputPlaceholder": "aliasnamn",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Dölj denna kvotrad",
     "showQuotaRow": "Visa denna kvotrad",
     "hiddenQuotaRowsLabel": "Dold:",
+    "quotaSpeedTitle": "Senaste avkodningshastighet på det här kontot (senaste {count} lyckade förfrågningarna)",
+    "quotaSpeedLine": "{model}: {avg} tok/s snitt · senaste {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s snitt · senaste {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Misslyckades med att uppdatera kvotens synlighet",
     "account": "konto",
     "modelQuotas": "Modellkvoter",

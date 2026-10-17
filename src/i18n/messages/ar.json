@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — بيئة برمجة RLM ذاتية التحسين تدعم موفّري الخدمات المتوافقين مع OpenAI",
       "warp": "طرفية Warp AI مع دعم لمزودي الخدمة المخصصين",
       "agent-deck": "منسق الوكلاء المتعددين Agent Deck",
-      "5dive": "5dive — أسطول ذاتي الاستضافة من وكلاء البرمجة؛ ملف اعتماد واحد يوجّهها جميعًا إلى OmniRoute"
+      "5dive": "5dive — أسطول ذاتي الاستضافة من وكلاء البرمجة؛ ملف اعتماد واحد يوجّهها جميعًا إلى OmniRoute",
+      "zed": "محرر الأكواد Zed — وكيل مدمج عبر مزوّد متوافق مع OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "تركيبة → {name}"
   },
   "combos": {
+    "autoTosLoadError": "تعذر تحميل سياسة شروط الخدمة. أعد المحاولة قبل تغييرها.",
+    "autoTosSaveError": "تعذر حفظ سياسة شروط الخدمة. لا يزال الإعداد السابق معروضًا. أعد المحاولة.",
+    "autoTosIncludeLabel": "تضمين مقدمي الخدمة المصنفين ToS: avoid في auto",
+    "autoTosDescription": "معطّل افتراضيًا. يسري على جميع مجموعات auto، وليس على حساب واحد فقط. ربط مقدم خدمة لا يفعّل هذا الخيار.",
     "title": "المجموعات",
     "description": "أنشئ مجموعات نماذج باستخدام التوجيه المرجّح والتبديل الاحتياطي",
     "autoCatalogTitle": "كتالوج التوجيه التلقائي",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "مقدم الخدمة هذا مستبعد من auto افتراضيًا",
+    "tosAvoidNoticeDescription": "حالة شروط الخدمة لديه مصنفة avoid. ربط حساب لا يغيّر هذه السياسة. راجع شروط مقدم الخدمة قبل تفعيل الاشتراك العام لجميع مجموعات auto.",
+    "tosAvoidNoticeAction": "مراجعة سياسة auto",
     "codexReleaseCooldown": "مسح فترة التهدئة المحلية",
     "codexReleaseCooldownHint": "السماح بتجربة حساب Codex هذا مرة أخرى. لا يستبدل رصيد إعادة التعيين ولا يغيّر حدود المنبع.",
     "codexReleasingCooldown": "جارٍ المسح…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "تعطيل الاتصال",
     "enableConnection": "تمكين الاتصال",
     "reauthenticateConnection": "إعادة مصادقة هذا الاتصال",
+    "verifyAccount": "التحقق من الحساب",
+    "verifyAccountHint": "تطلب Google التحقق من هذا الحساب. افتح الرابط وأكمل التحقق ثم أعد المحاولة.",
     "proxyConfig": "تكوين بروكسي",
     "aliasExistsAlert": "الاسم المستعار \"{alias}\" موجود بالفعل. الرجاء استخدام نموذج مختلف أو تعديل الاسم المستعار الموجود.",
     "aliasInputPlaceholder": "اسم الاسم المستعار",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "إخفاء صف الحصة هذا",
     "showQuotaRow": "إظهار صف الحصة هذا",
     "hiddenQuotaRowsLabel": "مخفي:",
+    "quotaSpeedTitle": "سرعة فك الترميز الأخيرة لهذا الحساب (آخر {count} طلبات ناجحة)",
+    "quotaSpeedLine": "{model}: {avg} tok/s متوسط · الأخير {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s متوسط · الأخير {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "فشل تحديث ظهور الحصة",
     "account": "الحساب",
     "modelQuotas": "الحصص النموذجية",

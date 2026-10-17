@@ -103,6 +103,7 @@ import {
   parseIsoDateTimeResetMs,
   shouldPreserveQuotaSignals,
 } from "./quotaResetParsing.ts";
+import { isTransientComboCooldownReason } from "./combo/comboCooldownRetry.ts";
 import { evictLockoutOverflow } from "./accountFallback/lockoutEviction.ts";
 export { MODEL_LOCKOUT_EVICTION_CAP } from "./accountFallback/lockoutEviction.ts";
 export { hasPerModelFailureScope } from "./accountFallback/perModelFailureScope.ts";
@@ -114,6 +115,7 @@ import { CREDITS_EXHAUSTED_SIGNALS } from "./accountFallback/creditExhaustionSig
 export { CREDITS_EXHAUSTED_SIGNALS } from "./accountFallback/creditExhaustionSignals.ts";
 import { isMistralAmbiguous401 } from "./accountFallback/mistralAmbiguousAuth.ts";
 import { isMistralAmbiguous401SoftLockoutEnabled } from "@/shared/utils/featureFlags";
+import { boundedMap } from "@/lib/quota/boundedMap";
 export type ProviderProfile = {
   baseCooldownMs: number;
   useUpstreamRetryHints: boolean;
@@ -556,13 +558,19 @@ const modelFailureState = new Map<string, ModelFailureState>();
 
 // Aliases (e.g. "cx" → "codex") must share lockout state with their canonical
 // provider, otherwise a model locked via one spelling stays routable via the other.
-const canonicalProviderCache = new Map<string, string>();
-function getCanonicalLockProvider(provider: string): string {
-  let canonical = canonicalProviderCache.get(provider);
-  if (!canonical) {
-    canonical = resolveProviderId(provider);
-    canonicalProviderCache.set(provider, canonical);
-  }
+// Bounded LRU: resolveProviderId is a pure catalog lookup, so evicting an entry
+// and recomputing it returns the same id. Exported so the cap is testable.
+export const CANONICAL_PROVIDER_CACHE_LIMIT = 512;
+export const canonicalProviderCache = boundedMap<string>(
+  "canonical-provider-cache",
+  CANONICAL_PROVIDER_CACHE_LIMIT,
+  "lru"
+);
+export function getCanonicalLockProvider(provider: string): string {
+  const cached = canonicalProviderCache.get(provider);
+  if (cached !== undefined) return cached;
+  const canonical = resolveProviderId(provider);
+  canonicalProviderCache.set(provider, canonical);
   return canonical;
 }
 
@@ -1047,6 +1055,40 @@ export function getModelLockoutInfo(
     remainingMs: entry.until - Date.now(),
     lockedAt: new Date(entry.lockedAt).toISOString(),
     failureCount: entry.failureCount,
+  };
+}
+
+export function scanTransientModelLock(provider: string, model: string | null | undefined) {
+  if (!model) return null;
+  const marker = "__omniroute_connection_probe__";
+  const templates = getModelLockKeys(provider, marker, model)
+    .map((key) => {
+      const markerIndex = key.indexOf(`:${marker}:`);
+      if (markerIndex < 0) return null;
+      return {
+        prefix: key.slice(0, markerIndex + 1),
+        suffix: key.slice(markerIndex + marker.length + 1),
+      };
+    })
+    .filter((template): template is { prefix: string; suffix: string } => template !== null);
+  if (templates.length === 0) return null;
+
+  const now = Date.now();
+  let earliest: ModelLockoutEntry | null = null;
+  for (const [key, entry] of modelLockouts) {
+    cleanupModelLockKey(key, now);
+    if (entry.until <= now) continue;
+    if (!isTransientComboCooldownReason(entry.reason)) continue;
+    if (!templates.some(({ prefix, suffix }) => key.startsWith(prefix) && key.endsWith(suffix)))
+      continue;
+    if (!earliest || entry.until < earliest.until) earliest = entry;
+  }
+  if (!earliest) return null;
+  return {
+    reason: earliest.reason,
+    remainingMs: earliest.until - now,
+    lockedAt: new Date(earliest.lockedAt).toISOString(),
+    failureCount: earliest.failureCount,
   };
 }
 

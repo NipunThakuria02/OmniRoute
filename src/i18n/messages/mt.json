@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — qafas tal-kodifikazzjoni RLM li jtejjeb lilu nnifsu b’appoġġ għal fornituri kompatibbli ma’ OpenAI",
       "warp": "Terminal Warp AI b’appoġġ għal fornitur personalizzat",
       "agent-deck": "Orkestratur ta’ diversi aġenti Agent Deck",
-      "5dive": "5dive — flotta awtoospitata ta’ aġenti tal-kodifikazzjoni; profil wieħed tal-awtentikazzjoni jidderiġihom kollha lejn OmniRoute"
+      "5dive": "5dive — flotta awtoospitata ta’ aġenti tal-kodifikazzjoni; profil wieħed tal-awtentikazzjoni jidderiġihom kollha lejn OmniRoute",
+      "zed": "Editur tal-kodiċi Zed — aġent integrat permezz ta' fornitur kompatibbli ma' OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Combo → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "Inkludi fornituri mmarkati ToS: avoid f’auto",
+    "autoTosDescription": "Mitfi awtomatikament. Japplika għall-combos auto kollha, mhux għal kont wieħed biss. Il-konnessjoni ta’ fornitur ma tattivax din l-għażla.",
+    "autoTosSaveError": "Il-politika ToS ma setgħetx tiġi ssejvjata. Għadu jidher l-issettjar ta’ qabel. Erġa’ pprova.",
+    "autoTosLoadError": "Il-politika ToS ma setgħetx titgħabba. Erġa’ pprova qabel tibdilha.",
     "title": "Kombinazzjonijiet",
     "description": "Oħloq kombinazzjonijiet ta’ mudelli b’instradar ponderat u appoġġ għal alternattivi ta’ riżerva",
     "autoCatalogTitle": "Katalgu tal-instradar awtomatiku",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Dan il-fornitur huwa eskluż minn auto awtomatikament",
+    "tosAvoidNoticeDescription": "L-istatus ToS tiegħu huwa mmarkat avoid. Il-konnessjoni ta’ kont ma tbiddilx din il-politika. Aqra t-termini tal-fornitur qabel tattiva l-għażla globali għall-combos auto kollha.",
+    "tosAvoidNoticeAction": "Ara l-politika auto",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Iddiżattiva l-konnessjoni",
     "enableConnection": "Attiva l-konnessjoni",
     "reauthenticateConnection": "Awtentika mill-ġdid din il-konnessjoni",
+    "verifyAccount": "Ivverifika l-kont",
+    "verifyAccountHint": "Google jeħtieġ li tivverifika dan il-kont. Iftaħ il-link, lesti l-verifika, imbagħad erġa' pprova.",
     "proxyConfig": "Konfigurazzjoni tal-proxy",
     "aliasExistsAlert": "L-isem alternattiv \"{alias}\" diġà jeżisti. Jekk jogħġbok uża mudell differenti jew editja l-isem alternattiv eżistenti.",
     "aliasInputPlaceholder": "isem alternattiv",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Aħbi din ir-ringiela tal-kwota",
     "showQuotaRow": "Uri din ir-ringiela tal-kwota",
     "hiddenQuotaRowsLabel": "Moħbija:",
+    "quotaSpeedTitle": "Veloċità reċenti tad-dekodifikazzjoni fuq dan il-kont (l-aħħar {count} talbiet b'suċċess)",
+    "quotaSpeedLine": "{model}: {avg} tok/s medja · l-aħħar {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s medja · l-aħħar {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Ma setgħetx tiġi aġġornata l-viżibbiltà tal-kwota",
     "account": "Kont",
     "modelQuotas": "Kwoti tal-Mudelli",

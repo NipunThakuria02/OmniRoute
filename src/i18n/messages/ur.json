@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-compatible پرووائیڈر سپورٹ کے ساتھ خود کو بہتر بنانے والا RLM کوڈنگ ہارنس",
       "warp": "کسٹم پرووائیڈر سپورٹ کے ساتھ Warp AI ٹرمینل",
       "agent-deck": "Agent Deck ملٹی ایجنٹ آرکیسٹریٹر",
-      "5dive": "5dive — خود میزبان کوڈنگ ایجنٹس کا بیڑا؛ ایک auth پروفائل ان سب کو OmniRoute کی طرف بھیجتی ہے"
+      "5dive": "5dive — خود میزبان کوڈنگ ایجنٹس کا بیڑا؛ ایک auth پروفائل ان سب کو OmniRoute کی طرف بھیجتی ہے",
+      "zed": "Zed کوڈ ایڈیٹر — OpenAI سے مطابقت رکھنے والے فراہم کنندہ کے ذریعے بلٹ اِن ایجنٹ"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "کمبو → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "ToS: avoid کے نشان والے فراہم کنندگان کو auto میں شامل کریں",
+    "autoTosDescription": "بطور ڈیفالٹ بند ہے۔ صرف ایک اکاؤنٹ نہیں بلکہ تمام auto کومبوز پر لاگو ہوتا ہے۔ فراہم کنندہ کو جوڑنے سے یہ اختیار فعال نہیں ہوتا۔",
+    "autoTosSaveError": "ToS پالیسی محفوظ نہیں ہو سکی۔ پچھلی ترتیب اب بھی دکھائی جا رہی ہے۔ دوبارہ کوشش کریں۔",
+    "autoTosLoadError": "ToS پالیسی لوڈ نہیں ہو سکی۔ اسے بدلنے سے پہلے دوبارہ کوشش کریں۔",
     "title": "کمبوز",
     "description": "وزنی روٹنگ اور فال بیک سپورٹ کے ساتھ ماڈل کمبوز بنائیں",
     "autoCatalogTitle": "آٹو روٹنگ کیٹلاگ",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "یہ فراہم کنندہ بطور ڈیفالٹ auto سے خارج ہے",
+    "tosAvoidNoticeDescription": "اس کی ToS حیثیت avoid ہے۔ اکاؤنٹ جوڑنے سے یہ پالیسی تبدیل نہیں ہوتی۔ تمام auto کومبوز کے لیے عالمی اختیار فعال کرنے سے پہلے فراہم کنندہ کی شرائط پڑھیں۔",
+    "tosAvoidNoticeAction": "auto پالیسی دیکھیں",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "کنکشن غیر فعال کریں",
     "enableConnection": "کنکشن فعال کریں",
     "reauthenticateConnection": "اس کنکشن کی دوبارہ توثیق کریں",
+    "verifyAccount": "اکاؤنٹ کی تصدیق کریں",
+    "verifyAccountHint": "Google اس اکاؤنٹ کی تصدیق کا تقاضا کرتا ہے۔ لنک کھولیں، جانچ مکمل کریں، پھر دوبارہ کوشش کریں۔",
     "proxyConfig": "پراکسی کنفیگریشن",
     "aliasExistsAlert": "عرف \"{alias}\" پہلے سے موجود ہے۔ براہِ کرم کوئی مختلف ماڈل استعمال کریں یا موجودہ عرف میں ترمیم کریں۔",
     "aliasInputPlaceholder": "عرف کا نام",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "اس کوٹہ کی قطار کو چھپائیں",
     "showQuotaRow": "اس کوٹہ کی قطار کو دکھائیں",
     "hiddenQuotaRowsLabel": "چھپا ہوا:",
+    "quotaSpeedTitle": "اس اکاؤنٹ پر حالیہ ڈی کوڈ رفتار (آخری {count} کامیاب درخواستیں)",
+    "quotaSpeedLine": "{model}: {avg} tok/s اوسط · آخری {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s اوسط · آخری {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "کوٹہ کی نمائش کو اپ ڈیٹ کرنے میں ناکامی",
     "account": "اکاؤنٹ",
     "modelQuotas": "ماڈل کوٹے",

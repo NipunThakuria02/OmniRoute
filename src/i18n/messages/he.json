@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — מסגרת קידוד מבוססת RLM המשתפרת בעצמה, עם תמיכה בספקים תואמי OpenAI",
       "warp": "מסוף Warp AI עם תמיכה בספק מותאם אישית",
       "agent-deck": "מתזמר מרובה סוכנים Agent Deck",
-      "5dive": "5dive — צי מתארח עצמאית של סוכני קוד; פרופיל אימות אחד מכוון את כולם ל-OmniRoute"
+      "5dive": "5dive — צי מתארח עצמאית של סוכני קוד; פרופיל אימות אחד מכוון את כולם ל-OmniRoute",
+      "zed": "עורך הקוד Zed — סוכן מובנה דרך ספק תואם OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "שילוב → {name}"
   },
   "combos": {
+    "autoTosLoadError": "לא ניתן לטעון את מדיניות תנאי השירות. יש לנסות שוב לפני שמשנים אותה.",
+    "autoTosSaveError": "לא ניתן לשמור את מדיניות תנאי השירות. ההגדרה הקודמת עדיין מוצגת. יש לנסות שוב.",
+    "autoTosIncludeLabel": "כלול ב-auto ספקים המסומנים ToS: avoid",
+    "autoTosDescription": "כבוי כברירת מחדל. חל על כל שילובי auto, ולא רק על חשבון אחד. חיבור ספק אינו מפעיל אפשרות זו.",
     "title": "שילובים",
     "description": "צור שילובי דגמים עם ניתוב משוקלל ותמיכה ב-fallback",
     "autoCatalogTitle": "קטלוג ניתוב אוטומטי",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "ספק זה מוחרג מ-auto כברירת מחדל",
+    "tosAvoidNoticeDescription": "מצב תנאי השירות שלו מסומן avoid. חיבור חשבון אינו משנה מדיניות זו. יש לעיין בתנאי הספק לפני הפעלת ההרשאה הכללית לכל שילובי auto.",
+    "tosAvoidNoticeAction": "עיון במדיניות auto",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "השבת את החיבור",
     "enableConnection": "אפשר חיבור",
     "reauthenticateConnection": "אימות מחדש את החיבור הזה",
+    "verifyAccount": "אמת חשבון",
+    "verifyAccountHint": "Google דורשת לאמת את החשבון הזה. פתח את הקישור, השלם את הבדיקה ונסה שוב.",
     "proxyConfig": "תצורת פרוקסי",
     "aliasExistsAlert": "הכינוי \"{alias}\" כבר קיים. אנא השתמש בדגם אחר או ערוך כינוי קיים.",
     "aliasInputPlaceholder": "שם כינוי",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "הסתר שורת מכסה זו",
     "showQuotaRow": "הצג שורת מכסה זו",
     "hiddenQuotaRowsLabel": "מוסתר:",
+    "quotaSpeedTitle": "מהירות פענוח אחרונה בחשבון זה ({count} הבקשות המוצלחות האחרונות)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ממוצע · אחרון {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ממוצע · אחרון {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "עדכון נראות המכסה נכשל",
     "account": "חשבון",
     "modelQuotas": "מכסות דגם",

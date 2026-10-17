@@ -2321,8 +2321,7 @@ paths:
     post:
       tags: [Providers]
       summary: Validate provider credentials
-      description: "Spawns a fixed ACP summarizer binary to validate credentials — loopback-only (Hard Rules #15/#17, audit #15159 S-01)."
-      x-loopback-only: true
+      description: "Validates provider credentials over HTTP. The devin CLI-spawn fallback is call-site gated on the trusted peer-locality header (loopback/LAN only, Hard Rules #15/#17, audit #15159 S-01, #15766 shape); the route itself is management-auth remote-reachable."
       responses:
         "200":
           description: Validation result
@@ -6491,10 +6490,18 @@ paths:
           description: Backup list
     post:
       tags: [System]
-      summary: Create database backup
+      summary: Restore a database backup by id
+      description: >-
+        Replaces the live database with the stored backup named in `backupId`. Operator-only:
+        dashboard session, local CLI, or login disabled.
       responses:
         "200":
-          description: Backup created
+          description: Backup restored
+        "403":
+          description: >-
+            Machine credential refused. Restoring replaces the live database, so it requires
+            the dashboard session or the local CLI (or login disabled); API keys of any scope
+            and `oma_` access tokens get 403.
     patch:
       tags: [System]
       summary: Save database backup retention settings
@@ -9966,8 +9973,9 @@ paths:
       description: >-
         Replaces the live database with an uploaded `.sqlite` backup (multipart `file` field,
         or the raw bytes with `?filename=`). The upload is checked for SQLite integrity and the
-        required OmniRoute tables first. Accepts the dashboard session, a `manage`-scoped API
-        key, or the local CLI credential.
+        required OmniRoute tables first. Operator-only: accepts the dashboard session, the
+        local CLI credential, or login disabled; API keys of any scope and `oma_` access tokens
+        are refused (403), for the dry run as well.
       parameters:
         - name: dryRun
           in: query
@@ -9994,6 +10002,11 @@ paths:
           description: Not a valid OmniRoute SQLite backup (type, size, integrity or tables).
         "401":
           description: No accepted credential.
+        "403":
+          description: >-
+            Machine credential refused. Importing replaces the live database, so it requires
+            the dashboard session or the local CLI (or login disabled); API keys of any scope
+            and `oma_` access tokens get 403.
   /api/db/health:
     get:
       tags:
@@ -11194,8 +11207,7 @@ paths:
       tags:
         - Providers
       summary: "POST providers › bulk"
-      description: "Reaches the same spawn as /api/providers/validate (webProvidersB.ts) — loopback-only (Hard Rules #15/#17, audit #15159 S-01)."
-      x-loopback-only: true
+      description: "The devin CLI-spawn fallback (webProvidersB.ts) is call-site gated on the trusted peer-locality header — loopback/LAN only (Hard Rules #15/#17, audit #15159 S-01, #15766 shape); the route is management-auth remote-reachable."
       responses:
         "200":
           description: OK
@@ -11347,8 +11359,7 @@ paths:
       tags:
         - Providers
       summary: "POST providers › import"
-      description: "Reaches the same spawn as /api/providers/validate (webProvidersB.ts) — loopback-only (Hard Rules #15/#17, audit #15159 S-01)."
-      x-loopback-only: true
+      description: "The devin CLI-spawn fallback (webProvidersB.ts) is call-site gated on the trusted peer-locality header — loopback/LAN only (Hard Rules #15/#17, audit #15159 S-01, #15766 shape); the route is management-auth remote-reachable."
       responses:
         "200":
           description: OK
@@ -12023,6 +12034,11 @@ paths:
       responses:
         "200":
           description: OK
+        "403":
+          description: >-
+            Machine credential refused. The import replaces settings, connections and API keys,
+            so it requires the dashboard session or the local CLI (or login disabled); API keys
+            of any scope and `oma_` access tokens get 403.
   /api/settings/lkgp-cache:
     delete:
       tags:
@@ -13641,39 +13657,89 @@ paths:
       tags:
         - V1 Registered-keys
       summary: "GET registered keys"
+      description: >
+        Management-only, like `/api/keys`: a dashboard session, the local CLI token, or an
+        API key with `manage`/`admin` scope. Inference-only API keys get 403.
+      security:
+        - BearerAuth: []
+        - ManagementSessionAuth: []
       responses:
         "200":
           description: OK
+        "401":
+          $ref: "#/components/responses/ManagementAuthenticationRequired"
+        "403":
+          $ref: "#/components/responses/ManagementInvalidToken"
     post:
       tags:
         - V1 Registered-keys
       summary: "POST registered keys"
+      description: >
+        Management-only, like `/api/keys`: a dashboard session, the local CLI token, or an
+        API key with `manage`/`admin` scope. Inference-only API keys get 403.
+      security:
+        - BearerAuth: []
+        - ManagementSessionAuth: []
       responses:
         "200":
           description: OK
+        "401":
+          $ref: "#/components/responses/ManagementAuthenticationRequired"
+        "403":
+          $ref: "#/components/responses/ManagementInvalidToken"
   /api/v1/registered-keys/{id}:
     delete:
       tags:
         - V1 Registered-keys
       summary: "DELETE registered keys › <id>"
+      description: >
+        Management-only, like `/api/keys`: a dashboard session, the local CLI token, or an
+        API key with `manage`/`admin` scope. Inference-only API keys get 403.
+      security:
+        - BearerAuth: []
+        - ManagementSessionAuth: []
       responses:
         "200":
           description: OK
+        "401":
+          $ref: "#/components/responses/ManagementAuthenticationRequired"
+        "403":
+          $ref: "#/components/responses/ManagementInvalidToken"
     get:
       tags:
         - V1 Registered-keys
       summary: "GET registered keys › <id>"
+      description: >
+        Management-only, like `/api/keys`: a dashboard session, the local CLI token, or an
+        API key with `manage`/`admin` scope. Inference-only API keys get 403.
+      security:
+        - BearerAuth: []
+        - ManagementSessionAuth: []
       responses:
         "200":
           description: OK
+        "401":
+          $ref: "#/components/responses/ManagementAuthenticationRequired"
+        "403":
+          $ref: "#/components/responses/ManagementInvalidToken"
   /api/v1/registered-keys/{id}/revoke:
     post:
       tags:
         - V1 Registered-keys
       summary: "POST registered keys › <id> › revoke"
+      description: >
+        Management-only, like `/api/keys`: a dashboard session, the local CLI token, or an
+        API key with `manage`/`admin` scope. Inference-only API keys get 403.
+      security:
+        - BearerAuth: []
+        - ManagementSessionAuth: []
       responses:
         "200":
           description: OK
+        "401":
+          $ref: "#/components/responses/ManagementAuthenticationRequired"
+        "403":
+          $ref: "#/components/responses/ManagementInvalidToken"
   /api/v1/relay/chat/completions:
     post:
       tags:

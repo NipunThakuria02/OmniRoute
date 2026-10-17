@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — kusang humuhusay na RLM coding harness na may suporta para sa OpenAI-compatible na provider",
       "warp": "Warp AI terminal na may suporta sa custom provider",
       "agent-deck": "Agent Deck na tagapag-orkestra ng maraming ahente",
-      "5dive": "5dive — self-hosted fleet ng coding agents; isang auth profile ang nagtuturo sa kanilang lahat sa OmniRoute"
+      "5dive": "5dive — self-hosted fleet ng coding agents; isang auth profile ang nagtuturo sa kanilang lahat sa OmniRoute",
+      "zed": "Zed code editor — built-in na agent sa pamamagitan ng provider na compatible sa OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Combo → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "Isama sa auto ang mga provider na may markang ToS: avoid",
+    "autoTosDescription": "Naka-off bilang default. Para ito sa lahat ng auto combo, hindi lang sa isang account. Hindi pinapagana ang opsyong ito kapag kumonekta ka sa provider.",
+    "autoTosSaveError": "Hindi ma-save ang patakaran sa ToS. Nakikita pa rin ang dating setting. Subukan muli.",
+    "autoTosLoadError": "Hindi ma-load ang patakaran sa ToS. Subukan muli bago ito baguhin.",
     "title": "Mga combo",
     "description": "Gumawa ng mga combo ng modelo na may weighted routing at fallback support",
     "autoCatalogTitle": "Catalog ng auto-routing",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Hindi kasama sa auto ang provider na ito bilang default",
+    "tosAvoidNoticeDescription": "May markang avoid ang ToS status nito. Hindi nagbabago ang patakarang ito kapag nagkonekta ng account. Basahin ang mga tuntunin ng provider bago paganahin ang global na opsyon para sa lahat ng auto combo.",
+    "tosAvoidNoticeAction": "Tingnan ang patakaran ng auto",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Huwag paganahin ang koneksyon",
     "enableConnection": "Paganahin ang koneksyon",
     "reauthenticateConnection": "Muling patotohanan ang koneksyong ito",
+    "verifyAccount": "I-verify ang account",
+    "verifyAccountHint": "Hinihingi ng Google na i-verify mo ang account na ito. Buksan ang link, tapusin ang pagsusuri, saka subukang muli.",
     "proxyConfig": "Configuration ng proxy",
     "aliasExistsAlert": "Umiiral na ang alyas na \"{alias}\". Mangyaring gumamit ng ibang modelo o i-edit ang kasalukuyang alias.",
     "aliasInputPlaceholder": "pangalan ng alias",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Itago ang row ng quota na ito",
     "showQuotaRow": "Ipakita ang row ng quota na ito",
     "hiddenQuotaRowsLabel": "Nakatago:",
+    "quotaSpeedTitle": "Kamakailang bilis ng decode sa account na ito (huling {count} matagumpay na kahilingan)",
+    "quotaSpeedLine": "{model}: {avg} tok/s karaniwan · huli {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s karaniwan · huli {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Hindi ma-update ang visibility ng quota",
     "account": "Account",
     "modelQuotas": "Mga Modelong Quota",

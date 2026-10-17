@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-ਅਨੁਕੂਲ ਪ੍ਰੋਵਾਈਡਰ ਸਹਾਇਤਾ ਵਾਲਾ ਸਵੈ-ਸੁਧਾਰਸ਼ੀਲ RLM ਕੋਡਿੰਗ ਹਾਰਨੈੱਸ",
       "warp": "ਕਸਟਮ ਪ੍ਰੋਵਾਈਡਰ ਸਹਾਇਤਾ ਵਾਲਾ Warp AI ਟਰਮੀਨਲ",
       "agent-deck": "Agent Deck ਮਲਟੀ-ਏਜੰਟ ਆਰਕੈਸਟਰੇਟਰ",
-      "5dive": "5dive — ਕੋਡਿੰਗ ਏਜੰਟਾਂ ਦਾ ਸਵੈ-ਹੋਸਟ ਕੀਤਾ ਫਲੀਟ; ਇੱਕ ਪ੍ਰਮਾਣੀਕਰਨ ਪ੍ਰੋਫ਼ਾਈਲ ਉਹਨਾਂ ਸਭ ਨੂੰ OmniRoute ਵੱਲ ਨਿਰਦੇਸ਼ਿਤ ਕਰਦਾ ਹੈ"
+      "5dive": "5dive — ਕੋਡਿੰਗ ਏਜੰਟਾਂ ਦਾ ਸਵੈ-ਹੋਸਟ ਕੀਤਾ ਫਲੀਟ; ਇੱਕ ਪ੍ਰਮਾਣੀਕਰਨ ਪ੍ਰੋਫ਼ਾਈਲ ਉਹਨਾਂ ਸਭ ਨੂੰ OmniRoute ਵੱਲ ਨਿਰਦੇਸ਼ਿਤ ਕਰਦਾ ਹੈ",
+      "zed": "Zed ਕੋਡ ਐਡੀਟਰ — OpenAI-ਅਨੁਕੂਲ ਪ੍ਰਦਾਤਾ ਰਾਹੀਂ ਬਿਲਟ-ਇਨ ਏਜੰਟ"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "ਕੰਬੋ → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "ToS: avoid ਵਜੋਂ ਨਿਸ਼ਾਨਬੱਧ ਪ੍ਰਦਾਤਾਵਾਂ ਨੂੰ auto ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ",
+    "autoTosDescription": "ਮੂਲ ਰੂਪ ਵਿੱਚ ਬੰਦ ਹੈ। ਸਿਰਫ਼ ਇੱਕ ਖਾਤੇ ਲਈ ਨਹੀਂ, ਸਾਰੇ auto ਕੰਬੋ ਲਈ ਲਾਗੂ ਹੁੰਦਾ ਹੈ। ਪ੍ਰਦਾਤਾ ਜੋੜਨ ਨਾਲ ਇਹ ਵਿਕਲਪ ਚਾਲੂ ਨਹੀਂ ਹੁੰਦਾ।",
+    "autoTosSaveError": "ToS ਨੀਤੀ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕੀ। ਪਿਛਲੀ ਸੈਟਿੰਗ ਅਜੇ ਵੀ ਦਿਖਾਈ ਜਾ ਰਹੀ ਹੈ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+    "autoTosLoadError": "ToS ਨੀਤੀ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕੀ। ਬਦਲਣ ਤੋਂ ਪਹਿਲਾਂ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
     "title": "ਕੌਂਬੋ",
     "description": "ਭਾਰਿਤ ਰਾਊਟਿੰਗ ਅਤੇ ਫਾਲਬੈਕ ਸਹਾਇਤਾ ਨਾਲ ਮਾਡਲ ਕੌਂਬੋ ਬਣਾਓ",
     "autoCatalogTitle": "ਆਟੋ-ਰਾਊਟਿੰਗ ਕੈਟਾਲਾਗ",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "ਇਹ ਪ੍ਰਦਾਤਾ ਮੂਲ ਰੂਪ ਵਿੱਚ auto ਤੋਂ ਬਾਹਰ ਹੈ",
+    "tosAvoidNoticeDescription": "ਇਸ ਦੀ ToS ਸਥਿਤੀ avoid ਵਜੋਂ ਨਿਸ਼ਾਨਬੱਧ ਹੈ। ਖਾਤਾ ਜੋੜਨ ਨਾਲ ਇਹ ਨੀਤੀ ਨਹੀਂ ਬਦਲਦੀ। ਸਾਰੇ auto ਕੰਬੋ ਲਈ ਗਲੋਬਲ ਵਿਕਲਪ ਚਾਲੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਪ੍ਰਦਾਤਾ ਦੀਆਂ ਸ਼ਰਤਾਂ ਪੜ੍ਹੋ।",
+    "tosAvoidNoticeAction": "auto ਨੀਤੀ ਵੇਖੋ",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "ਕਨੈਕਸ਼ਨ ਅਸਮਰੱਥ ਕਰੋ",
     "enableConnection": "ਕਨੈਕਸ਼ਨ ਸਮਰੱਥ ਕਰੋ",
     "reauthenticateConnection": "ਇਸ ਕਨੈਕਸ਼ਨ ਨੂੰ ਮੁੜ ਪ੍ਰਮਾਣਿਤ ਕਰੋ",
+    "verifyAccount": "ਖਾਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+    "verifyAccountHint": "Google ਇਸ ਖਾਤੇ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਕਹਿੰਦਾ ਹੈ। ਲਿੰਕ ਖੋਲ੍ਹੋ, ਜਾਂਚ ਪੂਰੀ ਕਰੋ, ਫਿਰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
     "proxyConfig": "ਪ੍ਰਾਕਸੀ ਸੰਰਚਨਾ",
     "aliasExistsAlert": "ਉਪਨਾਮ \"{alias}\" ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਕੋਈ ਵੱਖਰਾ ਮਾਡਲ ਵਰਤੋ ਜਾਂ ਮੌਜੂਦਾ ਉਪਨਾਮ ਸੰਪਾਦਿਤ ਕਰੋ।",
     "aliasInputPlaceholder": "ਉਪਨਾਮ",
@@ -9855,6 +9865,9 @@
     "hideQuotaRow": "ਇਹ ਕੋਟਾ ਕਤਾਰ ਲੁਕਾਓ",
     "showQuotaRow": "ਇਹ ਕੋਟਾ ਕਤਾਰ ਦਿਖਾਓ",
     "hiddenQuotaRowsLabel": "ਲੁਕਵੇਂ:",
+    "quotaSpeedTitle": "ਇਸ ਖਾਤੇ 'ਤੇ ਹਾਲੀਆ ਡੀਕੋਡ ਗਤੀ (ਆਖਰੀ {count} ਸਫਲ ਬੇਨਤੀਆਂ)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ਔਸਤ · ਆਖਰੀ {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ਔਸਤ · ਆਖਰੀ {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "ਕੋਟੇ ਦੀ ਦਿੱਖ ਅੱਪਡੇਟ ਕਰਨ ਵਿੱਚ ਅਸਫਲ",
     "account": "ਖਾਤਾ",
     "modelQuotas": "ਮਾਡਲ ਕੋਟੇ",

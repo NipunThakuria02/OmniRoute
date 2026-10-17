@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI 호환 제공업체를 지원하는 자기 개선형 RLM 코딩 하네스",
       "warp": "사용자 정의 제공자 지원 기능이 포함된 Warp AI 터미널",
       "agent-deck": "Agent Deck 다중 에이전트 오케스트레이터",
-      "5dive": "5dive — 자체 호스팅 코딩 에이전트 플릿; 인증 프로필 하나로 전체를 OmniRoute로 연결"
+      "5dive": "5dive — 자체 호스팅 코딩 에이전트 플릿; 인증 프로필 하나로 전체를 OmniRoute로 연결",
+      "zed": "Zed 코드 편집기 — OpenAI 호환 공급자를 통한 내장 에이전트"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "조합 → {name}"
   },
   "combos": {
+    "autoTosLoadError": "서비스 약관 정책을 불러오지 못했습니다. 변경하기 전에 다시 시도하세요.",
+    "autoTosSaveError": "서비스 약관 정책을 저장하지 못했습니다. 이전 설정이 계속 표시됩니다. 다시 시도하세요.",
+    "autoTosIncludeLabel": "ToS: avoid로 표시된 제공자를 auto에 포함",
+    "autoTosDescription": "기본적으로 꺼져 있습니다. 한 계정뿐 아니라 모든 auto 콤보에 적용됩니다. 제공자를 연결해도 이 옵션은 활성화되지 않습니다.",
     "title": "콤보",
     "description": "가중치 기반 라우팅 및 폴백 지원을 통해 모델 콤보 생성",
     "autoCatalogTitle": "자동 라우팅 카탈로그",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "이 제공자는 기본적으로 auto에서 제외됩니다",
+    "tosAvoidNoticeDescription": "서비스 약관 상태가 avoid로 표시되어 있습니다. 계정을 연결해도 이 정책은 바뀌지 않습니다. 모든 auto 콤보에 대한 전역 허용을 활성화하기 전에 제공자의 약관을 검토하세요.",
+    "tosAvoidNoticeAction": "auto 정책 검토",
     "codexReleaseCooldown": "로컬 쿨다운 해제",
     "codexReleaseCooldownHint": "이 Codex 계정을 다시 시도할 수 있도록 허용합니다. 재설정 크레딧을 사용하거나 업스트림 한도를 변경하지 않습니다.",
     "codexReleasingCooldown": "해제 중…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "연결 비활성화",
     "enableConnection": "연결 활성화",
     "reauthenticateConnection": "이 연결을 다시 인증하세요.",
+    "verifyAccount": "계정 인증",
+    "verifyAccountHint": "Google에서 이 계정의 인증을 요구합니다. 링크를 열어 확인을 완료한 뒤 다시 시도하세요.",
     "proxyConfig": "프록시 구성",
     "aliasExistsAlert": "별칭 \"{alias}\"이(가) 이미 존재합니다. 다른 모델을 사용하거나 기존 별칭을 수정하세요.",
     "aliasInputPlaceholder": "별칭 이름",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "이 할당량 행 숨기기",
     "showQuotaRow": "이 할당량 행 표시",
     "hiddenQuotaRowsLabel": "숨김:",
+    "quotaSpeedTitle": "이 계정의 최근 디코딩 속도 (최근 성공한 요청 {count}개)",
+    "quotaSpeedLine": "{model}: {avg} tok/s 평균 · 최근 {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s 평균 · 최근 {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "할당량 표시 여부 업데이트 실패",
     "account": "계정",
     "modelQuotas": "모델 할당량",

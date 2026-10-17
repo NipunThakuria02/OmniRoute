@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — samostatne sa zlepšujúci RLM nástroj na programovanie s podporou poskytovateľov kompatibilných s OpenAI",
       "warp": "AI terminál Warp s podporou vlastného poskytovateľa",
       "agent-deck": "Multi-agentový orchestrátor Agent Deck",
-      "5dive": "5dive — vlastná flotila kódovacích agentov; jeden auth profil nasmeruje všetkých na OmniRoute"
+      "5dive": "5dive — vlastná flotila kódovacích agentov; jeden auth profil nasmeruje všetkých na OmniRoute",
+      "zed": "Editor kódu Zed — vstavaný agent cez poskytovateľa kompatibilného s OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Kombinácia → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "Zahrnúť do auto poskytovateľov označených ToS: avoid",
+    "autoTosDescription": "Predvolene vypnuté. Platí pre všetky kombinácie auto, nielen pre jeden účet. Pripojenie poskytovateľa túto možnosť nezapne.",
+    "autoTosSaveError": "Pravidlá ToS sa nepodarilo uložiť. Stále sa zobrazuje predchádzajúce nastavenie. Skúste to znova.",
+    "autoTosLoadError": "Pravidlá ToS sa nepodarilo načítať. Pred ich zmenou to skúste znova.",
     "title": "kombá",
     "description": "Vytvárajte kombinácie modelov s váženým smerovaním a záložnou podporou",
     "autoCatalogTitle": "Katalóg automatického smerovania",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Tento poskytovateľ je predvolene vylúčený z auto",
+    "tosAvoidNoticeDescription": "Jeho stav ToS je označený ako avoid. Pripojenie účtu tieto pravidlá nemení. Pred zapnutím globálnej možnosti pre všetky kombinácie auto si prečítajte podmienky poskytovateľa.",
+    "tosAvoidNoticeAction": "Zobraziť pravidlá auto",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Zakázať pripojenie",
     "enableConnection": "Povoliť pripojenie",
     "reauthenticateConnection": "Znova overte toto pripojenie",
+    "verifyAccount": "Overiť účet",
+    "verifyAccountHint": "Google vyžaduje overenie tohto účtu. Otvorte odkaz, dokončite overenie a skúste to znova.",
     "proxyConfig": "Konfigurácia proxy",
     "aliasExistsAlert": "Alias „{alias}“ už existuje. Použite iný model alebo upravte existujúci alias.",
     "aliasInputPlaceholder": "názov aliasu",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Skryť tento riadok kvóty",
     "showQuotaRow": "Zobraziť tento riadok kvóty",
     "hiddenQuotaRowsLabel": "Skryté:",
+    "quotaSpeedTitle": "Nedávna rýchlosť dekódovania na tomto účte (posledných {count} úspešných požiadaviek)",
+    "quotaSpeedLine": "{model}: {avg} tok/s priemer · posledná {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s priemer · posledná {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Nepodarilo sa aktualizovať viditeľnosť kvóty",
     "account": "účtu",
     "modelQuotas": "Modelové kvóty",

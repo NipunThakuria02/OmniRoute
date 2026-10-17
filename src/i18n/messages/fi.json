@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — itseään kehittävä RLM-koodauskehys, joka tukee OpenAI-yhteensopivia palveluntarjoajia",
       "warp": "Warp AI -terminaali mukautetun palveluntarjoajan tuella",
       "agent-deck": "Agent Deck -moniagenttiorkestraattori",
-      "5dive": "5dive — itse isännöity koodausagenttien laivue; yksi auth-profiili ohjaa ne kaikki OmniRouteen"
+      "5dive": "5dive — itse isännöity koodausagenttien laivue; yksi auth-profiili ohjaa ne kaikki OmniRouteen",
+      "zed": "Zed-koodieditori — sisäänrakennettu agentti OpenAI-yhteensopivan palveluntarjoajan kautta"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Yhdistelmä → {name}"
   },
   "combos": {
+    "autoTosLoadError": "Käyttöehtokäytäntöä ei voitu ladata. Yritä uudelleen ennen sen muuttamista.",
+    "autoTosSaveError": "Käyttöehtokäytäntöä ei voitu tallentaa. Aiempi asetus näkyy edelleen. Yritä uudelleen.",
+    "autoTosIncludeLabel": "Sisällytä ToS: avoid -merkityt palveluntarjoajat auto-valintaan",
+    "autoTosDescription": "Oletuksena pois käytöstä. Koskee kaikkia auto-yhdistelmiä, ei vain yhtä tiliä. Palveluntarjoajan yhdistäminen ei ota tätä asetusta käyttöön.",
     "title": "Yhdistelmät",
     "description": "Luo mallikomboja painotetulla reitityksellä ja varatuella",
     "autoCatalogTitle": "Automaattinen reititysluettelo",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Tämä palveluntarjoaja on oletuksena suljettu pois auto-valinnasta",
+    "tosAvoidNoticeDescription": "Sen käyttöehtotilaksi on merkitty avoid. Tilin yhdistäminen ei muuta tätä käytäntöä. Tarkista palveluntarjoajan ehdot ennen kaikille auto-yhdistelmille yhteisen suostumuksen antamista.",
+    "tosAvoidNoticeAction": "Tarkista auto-käytäntö",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Poista yhteys käytöstä",
     "enableConnection": "Ota yhteys käyttöön",
     "reauthenticateConnection": "Todenna tämä yhteys uudelleen",
+    "verifyAccount": "Vahvista tili",
+    "verifyAccountHint": "Google vaatii tämän tilin vahvistamisen. Avaa linkki, suorita tarkistus ja yritä uudelleen.",
     "proxyConfig": "Välityspalvelimen konfigurointi",
     "aliasExistsAlert": "Alias \"{alias}\" on jo olemassa. Käytä toista mallia tai muokkaa olemassa olevaa aliasta.",
     "aliasInputPlaceholder": "aliaksen nimi",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Piilota tämä kiintiörivi",
     "showQuotaRow": "Näytä tämä kiintiörivi",
     "hiddenQuotaRowsLabel": "Piilotettu:",
+    "quotaSpeedTitle": "Tämän tilin viimeaikainen dekoodausnopeus (viimeiset {count} onnistunutta pyyntöä)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ka. · viimeisin {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ka. · viimeisin {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kiintiön näkyvyyden päivittäminen epäonnistui",
     "account": "Tili",
     "modelQuotas": "Mallikiintiöt",

@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — harness de codificação RLM autoevolutivo com suporte a API compatível com OpenAI",
       "warp": "Terminal de IA Warp com suporte a provedor personalizado",
       "agent-deck": "Orquestrador multi-agente Agent Deck",
-      "5dive": "5dive — frota auto-hospedada de agentes de codificação; um perfil de autenticação aponta todos para o OmniRoute"
+      "5dive": "5dive — frota auto-hospedada de agentes de codificação; um perfil de autenticação aponta todos para o OmniRoute",
+      "zed": "Editor de código Zed — agente nativo por meio de um provedor compatível com OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Combo → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "Incluir no auto provedores marcados como ToS: avoid",
+    "autoTosDescription": "Desativado por padrão. Vale para todos os combos auto, não apenas uma conta. Conectar um provedor não ativa esta opção.",
+    "autoTosSaveError": "Não foi possível salvar a política de ToS. A configuração anterior continua sendo exibida. Tente novamente.",
+    "autoTosLoadError": "Não foi possível carregar a política de ToS. Tente novamente antes de alterá-la.",
     "title": "Combinações",
     "description": "Crie combos de modelos com roteamento ponderado e suporte a fallback",
     "autoCatalogTitle": "Catálogo de roteamento automático",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Este provedor é excluído do auto por padrão",
+    "tosAvoidNoticeDescription": "O status de ToS está marcado como avoid. Conectar uma conta não altera esta política. Consulte os termos do provedor antes de ativar a opção global para todos os combos auto.",
+    "tosAvoidNoticeAction": "Consultar a política do auto",
     "codexReleaseCooldown": "Limpar cooldown local",
     "codexReleaseCooldownHint": "Permite tentar esta conta do Codex novamente. Não resgata um crédito de redefinição nem altera os limites do provedor.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Desativar conexão",
     "enableConnection": "Ativar conexão",
     "reauthenticateConnection": "Reautenticar esta conexão",
+    "verifyAccount": "Verificar conta",
+    "verifyAccountHint": "O Google exige que você verifique esta conta. Abra o link, conclua a verificação e tente novamente.",
     "proxyConfig": "Configuração de proxy",
     "aliasExistsAlert": "O alias \"{alias}\" já existe. Use um modelo diferente ou edite o alias existente.",
     "aliasInputPlaceholder": "nome do alias",
@@ -6045,7 +6055,7 @@
     "ccCompatiblePrefixHint": "Usado para aliases como prefix/model-id.",
     "ccCompatiblePrefixPlaceholder": "cc",
     "ccCompatibleValidationHint": "A validação usa a bridge estrita compatível com Claude Code para este provedor.",
-    "claudeExtraUsageShort": "Bloquear Extra",
+    "claudeExtraUsageShort": "Uso extra",
     "claudeExtraUsageToggleTitle": "Alternar bloqueio de extra usage do Claude",
     "codex5hToggleTitle": "Alternar política de limite 5h do Codex",
     "codexFastServiceTierDescription": "Quando habilitado, injeta `service_tier=priority` para esta conexão se o cliente não definir o tier.",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Ocultar esta linha de cota",
     "showQuotaRow": "Mostrar esta linha de cota",
     "hiddenQuotaRowsLabel": "Oculto:",
+    "quotaSpeedTitle": "Velocidade de decodificação recente nesta conta (últimas {count} requisições bem-sucedidas)",
+    "quotaSpeedLine": "{model}: {avg} tok/s média · última {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s média · última {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Falha ao atualizar a visibilidade da cota",
     "account": "Conta",
     "modelQuotas": "Cotas de Modelo",

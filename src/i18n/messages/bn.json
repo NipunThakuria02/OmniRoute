@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-সামঞ্জস্যপূর্ণ প্রোভাইডার সমর্থনসহ স্ব-উন্নয়নশীল RLM কোডিং হারনেস",
       "warp": "কাস্টম প্রোভাইডার সাপোর্ট সহ Warp AI টার্মিনাল",
       "agent-deck": "Agent Deck মাল্টি-এজেন্ট অর্কেস্ট্রেটর",
-      "5dive": "5dive — নিজে হোস্ট করা কোডিং এজেন্টের বহর; একটি auth প্রোফাইল সবগুলোকে OmniRoute-এ নির্দেশ করে"
+      "5dive": "5dive — নিজে হোস্ট করা কোডিং এজেন্টের বহর; একটি auth প্রোফাইল সবগুলোকে OmniRoute-এ নির্দেশ করে",
+      "zed": "Zed কোড এডিটর — OpenAI-সামঞ্জস্যপূর্ণ প্রোভাইডারের মাধ্যমে বিল্ট-ইন এজেন্ট"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "কম্বো → {name}"
   },
   "combos": {
+    "autoTosLoadError": "পরিষেবার শর্তাবলির নীতি লোড করা যায়নি। পরিবর্তন করার আগে আবার চেষ্টা করুন।",
+    "autoTosSaveError": "পরিষেবার শর্তাবলির নীতি সংরক্ষণ করা যায়নি। আগের সেটিংটিই দেখানো হচ্ছে। আবার চেষ্টা করুন।",
+    "autoTosIncludeLabel": "ToS: avoid হিসেবে চিহ্নিত প্রদানকারীদের auto-তে অন্তর্ভুক্ত করুন",
+    "autoTosDescription": "ডিফল্টভাবে বন্ধ। এটি শুধু একটি অ্যাকাউন্টের জন্য নয়, সব auto কম্বোর জন্য প্রযোজ্য। কোনো প্রদানকারীকে সংযুক্ত করলে এই বিকল্প চালু হয় না।",
     "title": "কম্বোসমূহ",
     "description": "ওজনভিত্তিক রাউটিং ও ফলব্যাক সমর্থনসহ মডেল কম্বো তৈরি করুন",
     "autoCatalogTitle": "স্বয়ংক্রিয়-রাউটিং ক্যাটালগ",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "এই প্রদানকারী ডিফল্টভাবে auto থেকে বাদ থাকে",
+    "tosAvoidNoticeDescription": "এর পরিষেবার শর্তাবলির অবস্থা avoid হিসেবে চিহ্নিত। একটি অ্যাকাউন্ট সংযুক্ত করলে এই নীতি পরিবর্তন হয় না। সব auto কম্বোর জন্য সম্মিলিত অনুমতি চালু করার আগে প্রদানকারীর শর্তাবলি পর্যালোচনা করুন।",
+    "tosAvoidNoticeAction": "auto নীতি পর্যালোচনা করুন",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "সংযোগ নিষ্ক্রিয় করুন",
     "enableConnection": "সংযোগ সক্রিয় করুন",
     "reauthenticateConnection": "এই সংযোগটি পুনরায় প্রমাণীকরণ করুন",
+    "verifyAccount": "অ্যাকাউন্ট যাচাই করুন",
+    "verifyAccountHint": "Google এই অ্যাকাউন্টটি যাচাই করতে বলছে। লিঙ্কটি খুলুন, যাচাই সম্পূর্ণ করুন, তারপর আবার চেষ্টা করুন।",
     "proxyConfig": "প্রক্সি কনফিগারেশন",
     "aliasExistsAlert": "\"{alias}\" উপনামটি ইতিমধ্যে বিদ্যমান। অনুগ্রহ করে অন্য একটি মডেল ব্যবহার করুন অথবা বিদ্যমান উপনামটি সম্পাদনা করুন।",
     "aliasInputPlaceholder": "উপনামের নাম",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "এই কোটা সারিটি লুকান",
     "showQuotaRow": "এই কোটা সারিটি দেখান",
     "hiddenQuotaRowsLabel": "লুকানো:",
+    "quotaSpeedTitle": "এই অ্যাকাউন্টে সাম্প্রতিক ডিকোড গতি (শেষ {count}টি সফল অনুরোধ)",
+    "quotaSpeedLine": "{model}: {avg} tok/s গড় · শেষ {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s গড় · শেষ {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "কোটার দৃশ্যমানতা আপডেট করতে ব্যর্থ হয়েছে",
     "account": "অ্যাকাউন্ট",
     "modelQuotas": "মডেল কোটা",

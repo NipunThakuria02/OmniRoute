@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-ಹೊಂದಾಣಿಕೆಯ ಪ್ರೊವೈಡರ್ ಬೆಂಬಲವನ್ನು ಹೊಂದಿರುವ ಸ್ವಯಂ-ಸುಧಾರಣೆಯ RLM ಕೋಡಿಂಗ್ ಹಾರ್ನೆಸ್",
       "warp": "ಕಸ್ಟಮ್ ಪ್ರೊವೈಡರ್ ಬೆಂಬಲವನ್ನು ಹೊಂದಿರುವ Warp AI ಟರ್ಮಿನಲ್",
       "agent-deck": "Agent Deck ಮಲ್ಟಿ-ಏಜೆಂಟ್ ಆರ್ಕೆಸ್ಟ್ರೇಟರ್",
-      "5dive": "5dive — ಸ್ವಯಂ-ಹೋಸ್ಟ್ ಮಾಡಲಾದ ಕೋಡಿಂಗ್ ಏಜೆಂಟ್ಗಳ ಫ್ಲೀಟ್; ಒಂದೇ ಆಥ್ ಪ್ರೊಫೈಲ್ ಅವೆಲ್ಲವನ್ನೂ OmniRoute ಕಡೆಗೆ ನಿರ್ದೇಶಿಸುತ್ತದೆ"
+      "5dive": "5dive — ಸ್ವಯಂ-ಹೋಸ್ಟ್ ಮಾಡಲಾದ ಕೋಡಿಂಗ್ ಏಜೆಂಟ್ಗಳ ಫ್ಲೀಟ್; ಒಂದೇ ಆಥ್ ಪ್ರೊಫೈಲ್ ಅವೆಲ್ಲವನ್ನೂ OmniRoute ಕಡೆಗೆ ನಿರ್ದೇಶಿಸುತ್ತದೆ",
+      "zed": "Zed ಕೋಡ್ ಎಡಿಟರ್ — OpenAI-ಹೊಂದಾಣಿಕೆಯ ಪೂರೈಕೆದಾರರ ಮೂಲಕ ಅಂತರ್ನಿರ್ಮಿತ ಏಜೆಂಟ್"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "ಕಾಂಬೊ → {name}"
   },
   "combos": {
+    "autoTosLoadError": "ಸೇವಾ ನಿಯಮಗಳ ನೀತಿಯನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಬದಲಾಯಿಸುವ ಮೊದಲು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+    "autoTosSaveError": "ಸೇವಾ ನಿಯಮಗಳ ನೀತಿಯನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಹಿಂದಿನ ಸೆಟ್ಟಿಂಗ್ ಇನ್ನೂ ತೋರಿಸಲಾಗುತ್ತಿದೆ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+    "autoTosIncludeLabel": "ToS: avoid ಎಂದು ಗುರುತಿಸಲಾದ ಪೂರೈಕೆದಾರರನ್ನು auto ದಲ್ಲಿ ಸೇರಿಸಿ",
+    "autoTosDescription": "ಪೂರ್ವನಿಯೋಜಿತವಾಗಿ ಆಫ್ ಆಗಿದೆ. ಇದು ಒಂದು ಖಾತೆಗೆ ಮಾತ್ರವಲ್ಲ, ಎಲ್ಲಾ auto ಸಂಯೋಜನೆಗಳಿಗೂ ಅನ್ವಯಿಸುತ್ತದೆ. ಪೂರೈಕೆದಾರರನ್ನು ಸಂಪರ್ಕಿಸುವುದರಿಂದ ಈ ಆಯ್ಕೆ ಆನ್ ಆಗುವುದಿಲ್ಲ.",
     "title": "ಸಂಯೋಜನೆಗಳು",
     "description": "ತೂಕಾಧಾರಿತ ರೌಟಿಂಗ್ ಮತ್ತು ಫಾಲ್ಬ್ಯಾಕ್ ಬೆಂಬಲದೊಂದಿಗೆ ಮಾದರಿ ಸಂಯೋಜನೆಗಳನ್ನು ರಚಿಸಿ",
     "autoCatalogTitle": "ಸ್ವಯಂಚಾಲಿತ ರೌಟಿಂಗ್ ಕ್ಯಾಟಲಾಗ್",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "ಈ ಪೂರೈಕೆದಾರರನ್ನು ಪೂರ್ವನಿಯೋಜಿತವಾಗಿ auto ದಿಂದ ಹೊರಗಿಡಲಾಗಿದೆ",
+    "tosAvoidNoticeDescription": "ಇದರ ಸೇವಾ ನಿಯಮಗಳ ಸ್ಥಿತಿಯನ್ನು avoid ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ. ಖಾತೆಯನ್ನು ಸಂಪರ್ಕಿಸುವುದರಿಂದ ಈ ನೀತಿ ಬದಲಾಗುವುದಿಲ್ಲ. ಎಲ್ಲಾ auto ಸಂಯೋಜನೆಗಳಿಗಾಗಿ ಸಾಮಾನ್ಯ ಅನುಮತಿಯನ್ನು ಆನ್ ಮಾಡುವ ಮೊದಲು ಪೂರೈಕೆದಾರರ ನಿಯಮಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.",
+    "tosAvoidNoticeAction": "auto ನೀತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "ಸಂಪರ್ಕವನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ",
     "enableConnection": "ಸಂಪರ್ಕವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ",
     "reauthenticateConnection": "ಈ ಸಂಪರ್ಕವನ್ನು ಮರುದೃಢೀಕರಿಸಿ",
+    "verifyAccount": "ಖಾತೆಯನ್ನು ಪರಿಶೀಲಿಸಿ",
+    "verifyAccountHint": "Google ಈ ಖಾತೆಯನ್ನು ಪರಿಶೀಲಿಸಲು ಕೇಳುತ್ತಿದೆ. ಲಿಂಕ್ ತೆರೆಯಿರಿ, ಪರಿಶೀಲನೆ ಪೂರ್ಣಗೊಳಿಸಿ, ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
     "proxyConfig": "ಪ್ರಾಕ್ಸಿ ಸಂರಚನೆ",
     "aliasExistsAlert": "\"{alias}\" ಎಂಬ ಅಲಿಯಾಸ್ ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ. ದಯವಿಟ್ಟು ಬೇರೆ ಮಾದರಿಯನ್ನು ಬಳಸಿ ಅಥವಾ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಅಲಿಯಾಸ್ ಅನ್ನು ಸಂಪಾದಿಸಿ.",
     "aliasInputPlaceholder": "ಅಲಿಯಾಸ್ ಹೆಸರು",
@@ -9855,6 +9865,9 @@
     "hideQuotaRow": "ಈ ಕೋಟಾ ಸಾಲನ್ನು ಮರೆಮಾಡಿ",
     "showQuotaRow": "ಈ ಕೋಟಾ ಸಾಲನ್ನು ತೋರಿಸಿ",
     "hiddenQuotaRowsLabel": "ಮರೆಮಾಡಲಾಗಿದೆ:",
+    "quotaSpeedTitle": "ಈ ಖಾತೆಯಲ್ಲಿ ಇತ್ತೀಚಿನ ಡಿಕೋಡ್ ವೇಗ (ಕೊನೆಯ {count} ಯಶಸ್ವಿ ವಿನಂತಿಗಳು)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ಸರಾಸರಿ · ಕೊನೆಯ {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ಸರಾಸರಿ · ಕೊನೆಯ {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "ಕೋಟಾ ಗೋಚರತೆಯನ್ನು ನವೀಕರಿಸಲು ವಿಫಲವಾಗಿದೆ",
     "account": "ಖಾತೆ",
     "modelQuotas": "ಮಾದರಿ ಕೋಟಾಗಳು",

@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — framework RLM di programmazione capace di auto-migliorarsi, con supporto per provider compatibili con OpenAI",
       "warp": "Terminale Warp AI con supporto per provider personalizzato",
       "agent-deck": "Orchestratore multi-agente Agent Deck",
-      "5dive": "5dive — flotta self-hosted di agenti di codifica; un profilo di autenticazione li punta tutti su OmniRoute"
+      "5dive": "5dive — flotta self-hosted di agenti di codifica; un profilo di autenticazione li punta tutti su OmniRoute",
+      "zed": "Editor di codice Zed — agente integrato tramite un provider compatibile con OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Combo → {name}"
   },
   "combos": {
+    "autoTosLoadError": "Impossibile caricare la politica sui termini di servizio. Riprova prima di modificarla.",
+    "autoTosSaveError": "Impossibile salvare la politica sui termini di servizio. È ancora visualizzata l’impostazione precedente. Riprova.",
+    "autoTosIncludeLabel": "Includi in auto i provider contrassegnati ToS: avoid",
+    "autoTosDescription": "Disattivato per impostazione predefinita. Si applica a tutte le combinazioni auto, non solo a un account. Collegare un provider non attiva questa opzione.",
     "title": "Combinazioni",
     "description": "Crea combinazioni di modelli con routing ponderato e supporto fallback",
     "autoCatalogTitle": "Catalogo dell'autorouting",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Questo provider è escluso da auto per impostazione predefinita",
+    "tosAvoidNoticeDescription": "Il suo stato dei termini di servizio è contrassegnato come avoid. Collegare un account non modifica questa politica. Consulta i termini del provider prima di attivare il consenso globale per tutte le combinazioni auto.",
+    "tosAvoidNoticeAction": "Consulta la politica di auto",
     "codexReleaseCooldown": "Azzera cooldown locale",
     "codexReleaseCooldownHint": "Consente di riprovare questo account Codex. Non riscatta un credito di ripristino né modifica i limiti del fornitore.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Disabilita connessione",
     "enableConnection": "Abilita connessione",
     "reauthenticateConnection": "Autenticare nuovamente questa connessione",
+    "verifyAccount": "Verifica account",
+    "verifyAccountHint": "Google richiede la verifica di questo account. Apri il link, completa il controllo e riprova.",
     "proxyConfig": "Configurazione proxy",
     "aliasExistsAlert": "L'alias \"{alias}\" esiste già. Utilizza un modello diverso o modifica l'alias esistente.",
     "aliasInputPlaceholder": "nome dell'alias",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Nascondi questa riga della quota",
     "showQuotaRow": "Mostra questa riga della quota",
     "hiddenQuotaRowsLabel": "Nascosto:",
+    "quotaSpeedTitle": "Velocità di decodifica recente su questo account (ultime {count} richieste riuscite)",
+    "quotaSpeedLine": "{model}: {avg} tok/s media · ultima {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s media · ultima {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Impossibile aggiornare la visibilità della quota",
     "account": "Account",
     "modelQuotas": "Quote modello",

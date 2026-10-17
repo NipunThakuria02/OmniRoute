@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — selbstoptimierendes RLM-Programmier-Framework mit Unterstützung für OpenAI-kompatible Anbieter",
       "warp": "Warp AI-Terminal mit Unterstützung für benutzerdefinierte Anbieter",
       "agent-deck": "Agent Deck Multi-Agenten-Orchestrator",
-      "5dive": "5dive — selbst gehostete Flotte von Coding-Agenten; ein Auth-Profil richtet sie alle auf OmniRoute aus"
+      "5dive": "5dive — selbst gehostete Flotte von Coding-Agenten; ein Auth-Profil richtet sie alle auf OmniRoute aus",
+      "zed": "Zed-Code-Editor — integrierter Agent über einen OpenAI-kompatiblen Anbieter"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Combo → {name}"
   },
   "combos": {
+    "autoTosLoadError": "Die Richtlinie zu den Nutzungsbedingungen konnte nicht geladen werden. Versuchen Sie es vor einer Änderung erneut.",
+    "autoTosSaveError": "Die Richtlinie zu den Nutzungsbedingungen konnte nicht gespeichert werden. Die vorherige Einstellung wird weiterhin angezeigt. Versuchen Sie es erneut.",
+    "autoTosIncludeLabel": "Mit ToS: avoid markierte Anbieter in auto einbeziehen",
+    "autoTosDescription": "Standardmäßig deaktiviert. Gilt für alle auto-Kombinationen, nicht nur für ein Konto. Das Verbinden eines Anbieters aktiviert diese Option nicht.",
     "title": "Kombinationen",
     "description": "Erstellen Sie Modellkombinationen mit gewichtetem Routing und Fallback-Unterstützung",
     "autoCatalogTitle": "Katalog für automatisches Routing",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Dieser Anbieter ist standardmäßig von auto ausgeschlossen",
+    "tosAvoidNoticeDescription": "Sein Status für die Nutzungsbedingungen ist als avoid markiert. Das Verbinden eines Kontos ändert diese Richtlinie nicht. Prüfen Sie die Bedingungen des Anbieters, bevor Sie die globale Freigabe für alle auto-Kombinationen aktivieren.",
+    "tosAvoidNoticeAction": "Richtlinie für auto prüfen",
     "codexReleaseCooldown": "Lokale Sperre aufheben",
     "codexReleaseCooldownHint": "Diesen Codex-Account erneut zulassen. Verbraucht keinen Reset-Credit und ändert keine Limits beim Anbieter.",
     "codexReleasingCooldown": "Wird aufgehoben…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Verbindung deaktivieren",
     "enableConnection": "Verbindung aktivieren",
     "reauthenticateConnection": "Authentifizieren Sie diese Verbindung erneut",
+    "verifyAccount": "Konto verifizieren",
+    "verifyAccountHint": "Google verlangt, dass du dieses Konto verifizierst. Öffne den Link, schließe die Prüfung ab und versuche es erneut.",
     "proxyConfig": "Proxy-Konfiguration",
     "aliasExistsAlert": "Alias „{alias}“ existiert bereits. Bitte verwenden Sie ein anderes Modell oder bearbeiten Sie den vorhandenen Alias.",
     "aliasInputPlaceholder": "Aliasname",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Diese Kontingentzeile ausblenden",
     "showQuotaRow": "Diese Kontingentzeile einblenden",
     "hiddenQuotaRowsLabel": "Ausgeblendet:",
+    "quotaSpeedTitle": "Aktuelle Dekodiergeschwindigkeit dieses Kontos (letzte {count} erfolgreiche Anfragen)",
+    "quotaSpeedLine": "{model}: {avg} tok/s Ø · zuletzt {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s Ø · zuletzt {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Aktualisierung der Kontingentsichtbarkeit fehlgeschlagen",
     "account": "Konto",
     "modelQuotas": "Modellkontingente",

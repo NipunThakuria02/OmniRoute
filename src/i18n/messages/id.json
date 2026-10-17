@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — kerangka kerja coding RLM yang dapat meningkatkan diri dengan dukungan penyedia yang kompatibel dengan OpenAI",
       "warp": "Terminal AI Warp dengan dukungan penyedia kustom",
       "agent-deck": "Orkestrator multi-agen Agent Deck",
-      "5dive": "5dive — armada agen coding yang di-host sendiri; satu profil auth mengarahkan semuanya ke OmniRoute"
+      "5dive": "5dive — armada agen coding yang di-host sendiri; satu profil auth mengarahkan semuanya ke OmniRoute",
+      "zed": "Editor kode Zed — agen bawaan melalui penyedia yang kompatibel dengan OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Kombo → {name}"
   },
   "combos": {
+    "autoTosLoadError": "Kebijakan ketentuan layanan tidak dapat dimuat. Coba lagi sebelum mengubahnya.",
+    "autoTosSaveError": "Kebijakan ketentuan layanan tidak dapat disimpan. Pengaturan sebelumnya masih ditampilkan. Coba lagi.",
+    "autoTosIncludeLabel": "Sertakan penyedia bertanda ToS: avoid dalam auto",
+    "autoTosDescription": "Nonaktif secara bawaan. Berlaku untuk semua kombinasi auto, bukan hanya satu akun. Menghubungkan penyedia tidak mengaktifkan opsi ini.",
     "title": "kombo",
     "description": "Buat kombo model dengan perutean berbobot dan dukungan fallback",
     "autoCatalogTitle": "Katalog perutean otomatis",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Penyedia ini dikecualikan dari auto secara bawaan",
+    "tosAvoidNoticeDescription": "Status ketentuan layanannya ditandai avoid. Menghubungkan akun tidak mengubah kebijakan ini. Tinjau ketentuan penyedia sebelum mengaktifkan persetujuan global untuk semua kombinasi auto.",
+    "tosAvoidNoticeAction": "Tinjau kebijakan auto",
     "codexReleaseCooldown": "Hapus cooldown lokal",
     "codexReleaseCooldownHint": "Izinkan akun Codex ini dicoba lagi. Tidak menukar kredit reset dan tidak mengubah batas upstream.",
     "codexReleasingCooldown": "Menghapus…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Nonaktifkan koneksi",
     "enableConnection": "Aktifkan koneksi",
     "reauthenticateConnection": "Otentikasi ulang koneksi ini",
+    "verifyAccount": "Verifikasi akun",
+    "verifyAccountHint": "Google meminta Anda memverifikasi akun ini. Buka tautan, selesaikan pemeriksaan, lalu coba lagi.",
     "proxyConfig": "Konfigurasi proxy",
     "aliasExistsAlert": "Alias \"{alias}\" sudah ada. Silakan gunakan model lain atau edit alias yang ada.",
     "aliasInputPlaceholder": "nama alias",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Sembunyikan baris kuota ini",
     "showQuotaRow": "Tampilkan baris kuota ini",
     "hiddenQuotaRowsLabel": "Tersembunyi:",
+    "quotaSpeedTitle": "Kecepatan dekode terbaru di akun ini ({count} permintaan sukses terakhir)",
+    "quotaSpeedLine": "{model}: {avg} tok/s rata-rata · terakhir {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s rata-rata · terakhir {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Gagal memperbarui visibilitas kuota",
     "account": "Akun",
     "modelQuotas": "Kuota Model",

@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — self-improving RLM coding harness with OpenAI-compatible provider support",
       "warp": "Warp AI terminal with custom provider support",
       "agent-deck": "Agent Deck multi-agent orchestrator",
-      "5dive": "5dive — self-hosted fleet of coding agents; one auth profile points them all at OmniRoute"
+      "5dive": "5dive — self-hosted fleet of coding agents; one auth profile points them all at OmniRoute",
+      "zed": "Zed code editor — built-in agent through an OpenAI-compatible provider"
     },
     "guides": {
       "cursor": {
@@ -3387,6 +3388,10 @@
     "title": "Combos",
     "description": "Create model combos with weighted routing and fallback support",
     "autoCatalogTitle": "Auto-routing catalog",
+    "autoTosLoadError": "Could not load the ToS policy. Retry before changing it.",
+    "autoTosSaveError": "Could not save the ToS policy. The previous setting is still shown. Try again.",
+    "autoTosIncludeLabel": "Include providers marked ToS: avoid in auto",
+    "autoTosDescription": "Off by default. Applies to all auto combos, not just one account. Connecting a provider does not enable this option.",
     "autoCatalogTemplateCount": "{count} templates",
     "autoCatalogDescription": "Built-in auto/* combos resolved dynamically from connected providers. Use any of these IDs as the model field — no setup needed.",
     "autoCatalogExpand": "Expand auto-routing catalog",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "This provider is excluded from auto by default",
+    "tosAvoidNoticeDescription": "Its ToS status is marked avoid. Connecting an account does not change this policy. Review the provider terms before using the global opt-in for all auto combos.",
+    "tosAvoidNoticeAction": "Review the auto policy",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Disable connection",
     "enableConnection": "Enable connection",
     "reauthenticateConnection": "Re-authenticate this connection",
+    "verifyAccount": "Verify account",
+    "verifyAccountHint": "Google requires you to verify this account. Open the link, complete the check, then retry.",
     "proxyConfig": "Proxy config",
     "aliasExistsAlert": "Alias \"{alias}\" already exists. Please use a different model or edit existing alias.",
     "aliasInputPlaceholder": "alias name",
@@ -9855,6 +9865,9 @@
     "hideQuotaRow": "Hide this quota row",
     "showQuotaRow": "Show this quota row",
     "hiddenQuotaRowsLabel": "Hidden:",
+    "quotaSpeedTitle": "Recent decode speed on this account (last {count} successful requests)",
+    "quotaSpeedLine": "{model}: {avg} tok/s avg · last {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s avg · last {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Failed to update quota visibility",
     "account": "Account",
     "modelQuotas": "Model Quotas",

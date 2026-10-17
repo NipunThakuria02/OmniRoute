@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-இணக்கமான வழங்குநர் ஆதரவுடன் தன்னை மேம்படுத்திக்கொள்ளும் RLM குறியீட்டாக்கக் கட்டமைப்பு",
       "warp": "தனிப்பயன் வழங்குநர் ஆதரவுடன் கூடிய Warp AI டெர்மினல்",
       "agent-deck": "Agent Deck பல-முகவர் ஒருங்கிணைப்பாளர்",
-      "5dive": "5dive — சுய-ஹோஸ்ட் செய்யப்பட்ட குறியீட்டு முகவர்களின் கூட்டம்; ஒரு auth சுயவிவரம் அனைத்தையும் OmniRoute-க்கு திருப்புகிறது"
+      "5dive": "5dive — சுய-ஹோஸ்ட் செய்யப்பட்ட குறியீட்டு முகவர்களின் கூட்டம்; ஒரு auth சுயவிவரம் அனைத்தையும் OmniRoute-க்கு திருப்புகிறது",
+      "zed": "Zed குறியீட்டு எடிட்டர் — OpenAI-இணக்கமான வழங்குநர் மூலம் உள்ளமைந்த முகவர்"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "காம்போ → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "ToS: avoid எனக் குறிக்கப்பட்ட வழங்குநர்களை auto-வில் சேர்க்கவும்",
+    "autoTosDescription": "இயல்பாக முடக்கப்பட்டுள்ளது. ஒரு கணக்குக்கு மட்டுமல்ல, அனைத்து auto கூட்டுகளுக்கும் பொருந்தும். வழங்குநரை இணைப்பதால் இந்தத் தேர்வு இயக்கப்படாது.",
+    "autoTosSaveError": "ToS கொள்கையைச் சேமிக்க முடியவில்லை. முந்தைய அமைப்பே இன்னும் காட்டப்படுகிறது. மீண்டும் முயலவும்.",
+    "autoTosLoadError": "ToS கொள்கையை ஏற்ற முடியவில்லை. மாற்றுவதற்கு முன் மீண்டும் முயலவும்.",
     "title": "காம்போக்கள்",
     "description": "எடையிட்ட வழிப்படுத்தல் மற்றும் மாற்று ஆதரவுடன் மாதிரி காம்போக்களை உருவாக்கவும்",
     "autoCatalogTitle": "தானாக ரூட்டிங் பட்டியல்",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "இந்த வழங்குநர் இயல்பாக auto-விலிருந்து விலக்கப்பட்டுள்ளார்",
+    "tosAvoidNoticeDescription": "இதன் ToS நிலை avoid எனக் குறிக்கப்பட்டுள்ளது. கணக்கை இணைப்பதால் இந்தக் கொள்கை மாறாது. அனைத்து auto கூட்டுகளுக்கும் பொதுவான தேர்வை இயக்குவதற்கு முன் வழங்குநரின் விதிமுறைகளைப் படிக்கவும்.",
+    "tosAvoidNoticeAction": "auto கொள்கையைப் பார்க்கவும்",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "இணைப்பை முடக்கவும்",
     "enableConnection": "இணைப்பை இயக்கவும்",
     "reauthenticateConnection": "இந்த இணைப்பை மீண்டும் அங்கீகரிக்கவும்",
+    "verifyAccount": "கணக்கைச் சரிபார்க்கவும்",
+    "verifyAccountHint": "இந்தக் கணக்கைச் சரிபார்க்க Google கேட்கிறது. இணைப்பைத் திறந்து, சரிபார்ப்பை முடித்து, மீண்டும் முயலவும்.",
     "proxyConfig": "பதிலி உள்ளமைவு",
     "aliasExistsAlert": "\"{alias}\" என்ற மாற்றுப்பெயர் ஏற்கனவே உள்ளது. வேறொரு மாதிரியைப் பயன்படுத்தவும் அல்லது ஏற்கனவே உள்ள மாற்றுப்பெயரைத் திருத்தவும்.",
     "aliasInputPlaceholder": "மாற்றுப்பெயர்",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "இந்த ஒதுக்கீட்டு வரிசையை மறை",
     "showQuotaRow": "இந்த ஒதுக்கீட்டு வரிசையைக் காட்டு",
     "hiddenQuotaRowsLabel": "மறைக்கப்பட்டது:",
+    "quotaSpeedTitle": "இந்தக் கணக்கில் சமீபத்திய டிகோட் வேகம் (கடைசி {count} வெற்றிகரமான கோரிக்கைகள்)",
+    "quotaSpeedLine": "{model}: {avg} tok/s சராசரி · கடைசி {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s சராசரி · கடைசி {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "ஒதுக்கீட்டுத் தெரிவுநிலையைப் புதுப்பிக்க முடியவில்லை",
     "account": "கணக்கு",
     "modelQuotas": "மாதிரி ஒதுக்கீடுகள்",

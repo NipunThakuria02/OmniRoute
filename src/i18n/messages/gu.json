@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-સુસંગત પ્રદાતા સપોર્ટ સાથે સ્વ-સુધારણા કરતું RLM કોડિંગ હાર્નેસ",
       "warp": "કસ્ટમ પ્રોવાઇડર સપોર્ટ સાથે Warp AI ટર્મિનલ",
       "agent-deck": "Agent Deck મલ્ટિ-એજન્ટ ઓર્કેસ્ટ્રેટર",
-      "5dive": "5dive — સ્વ-હોસ્ટેડ કોડિંગ એજન્ટ્સનો કાફલો; એક auth પ્રોફાઇલ બધાને OmniRoute તરફ દોરે છે"
+      "5dive": "5dive — સ્વ-હોસ્ટેડ કોડિંગ એજન્ટ્સનો કાફલો; એક auth પ્રોફાઇલ બધાને OmniRoute તરફ દોરે છે",
+      "zed": "Zed કોડ એડિટર — OpenAI-સુસંગત પ્રદાતા દ્વારા બિલ્ટ-ઇન એજન્ટ"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "કૉમ્બો → {name}"
   },
   "combos": {
+    "autoTosLoadError": "સેવાની શરતોની નીતિ લોડ થઈ શકી નથી. તેને બદલતા પહેલાં ફરી પ્રયાસ કરો.",
+    "autoTosSaveError": "સેવાની શરતોની નીતિ સાચવી શકાઈ નથી. અગાઉની સેટિંગ હજી દેખાય છે. ફરી પ્રયાસ કરો.",
+    "autoTosIncludeLabel": "ToS: avoid તરીકે ચિહ્નિત પ્રદાતાઓને auto માં સામેલ કરો",
+    "autoTosDescription": "ડિફૉલ્ટ રૂપે બંધ છે. માત્ર એક ખાતા માટે નહીં, બધી auto સંયોજન માટે લાગુ પડે છે. પ્રદાતાને જોડવાથી આ વિકલ્પ ચાલુ થતો નથી.",
     "title": "કોમ્બોઝ",
     "description": "ભારાંકિત રૂટિંગ અને ફૉલબૅક સપોર્ટ સાથે મોડેલ કોમ્બોઝ બનાવો",
     "autoCatalogTitle": "સ્વતઃ-રાઉટીંગ કેટલોગ",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "આ પ્રદાતા ડિફૉલ્ટ રૂપે auto માંથી બાકાત છે",
+    "tosAvoidNoticeDescription": "તેની સેવાની શરતોની સ્થિતિ avoid તરીકે ચિહ્નિત છે. ખાતું જોડવાથી આ નીતિ બદલાતી નથી. બધી auto સંયોજન માટે વૈશ્વિક મંજૂરી ચાલુ કરતા પહેલાં પ્રદાતાની શરતો વાંચો.",
+    "tosAvoidNoticeAction": "auto નીતિની સમીક્ષા કરો",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "કનેક્શન અક્ષમ કરો",
     "enableConnection": "કનેક્શન સક્ષમ કરો",
     "reauthenticateConnection": "આ કનેક્શનનું ફરી પ્રમાણીકરણ કરો",
+    "verifyAccount": "એકાઉન્ટ ચકાસો",
+    "verifyAccountHint": "Google આ એકાઉન્ટ ચકાસવા માટે કહે છે. લિંક ખોલો, ચકાસણી પૂર્ણ કરો, પછી ફરી પ્રયાસ કરો.",
     "proxyConfig": "પ્રોક્સી રૂપરેખાંકન",
     "aliasExistsAlert": "ઉપનામ \"{alias}\" પહેલેથી અસ્તિત્વમાં છે. કૃપા કરીને અલગ મોડેલનો ઉપયોગ કરો અથવા હાલના ઉપનામમાં ફેરફાર કરો.",
     "aliasInputPlaceholder": "ઉપનામનું નામ",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "આ ક્વોટા રો છુપાવો",
     "showQuotaRow": "આ ક્વોટા રો બતાવો",
     "hiddenQuotaRowsLabel": "છુપાયેલ:",
+    "quotaSpeedTitle": "આ એકાઉન્ટ પર તાજેતરની ડીકોડ ઝડપ (છેલ્લી {count} સફળ વિનંતીઓ)",
+    "quotaSpeedLine": "{model}: {avg} tok/s સરેરાશ · છેલ્લું {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s સરેરાશ · છેલ્લું {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "ક્વોટા દૃશ્યતા અપડેટ કરવામાં નિષ્ફળ",
     "account": "એકાઉન્ટ",
     "modelQuotas": "મોડેલ ક્વોટા",

@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — sevi pilnveidojošs RLM kodēšanas rīks ar OpenAI saderīgu pakalpojumu sniedzēju atbalstu",
       "warp": "Warp AI terminālis ar pielāgotu pakalpojumu sniedzēju atbalstu",
       "agent-deck": "Agent Deck vairāku aģentu orķestrētājs",
-      "5dive": "5dive — pašmitināta kodēšanas aģentu flote; viens autentifikācijas profils tos visus novirza uz OmniRoute"
+      "5dive": "5dive — pašmitināta kodēšanas aģentu flote; viens autentifikācijas profils tos visus novirza uz OmniRoute",
+      "zed": "Zed koda redaktors — iebūvēts aģents, izmantojot ar OpenAI saderīgu nodrošinātāju"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Kombinācija → {name}"
   },
   "combos": {
+    "autoTosLoadError": "Neizdevās ielādēt pakalpojuma noteikumu politiku. Pirms tās maiņas mēģiniet vēlreiz.",
+    "autoTosSaveError": "Neizdevās saglabāt pakalpojuma noteikumu politiku. Joprojām tiek rādīts iepriekšējais iestatījums. Mēģiniet vēlreiz.",
+    "autoTosIncludeLabel": "Iekļaut auto pakalpojumu sniedzējus ar atzīmi ToS: avoid",
+    "autoTosDescription": "Pēc noklusējuma izslēgts. Attiecas uz visām auto kombinācijām, ne tikai vienu kontu. Pakalpojuma sniedzēja pievienošana neieslēdz šo iespēju.",
     "title": "Kombinācijas",
     "description": "Izveidojiet modeļu kombinācijas ar svērtu maršrutēšanu un rezerves variantu atbalstu",
     "autoCatalogTitle": "Automātiskās maršrutēšanas katalogs",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Šis pakalpojumu sniedzējs pēc noklusējuma ir izslēgts no auto",
+    "tosAvoidNoticeDescription": "Tā pakalpojuma noteikumu statuss ir atzīmēts kā avoid. Konta pievienošana nemaina šo politiku. Pirms kopīgās atļaujas ieslēgšanas visām auto kombinācijām pārskatiet pakalpojuma sniedzēja noteikumus.",
+    "tosAvoidNoticeAction": "Pārskatīt auto politiku",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Atspējot savienojumu",
     "enableConnection": "Iespējot savienojumu",
     "reauthenticateConnection": "Atkārtoti autentificēt šo savienojumu",
+    "verifyAccount": "Verificēt kontu",
+    "verifyAccountHint": "Google pieprasa verificēt šo kontu. Atveriet saiti, pabeidziet pārbaudi un mēģiniet vēlreiz.",
     "proxyConfig": "Proxija konfigurācija",
     "aliasExistsAlert": "Aizstājvārds \"{alias}\" jau pastāv. Lūdzu, izmantojiet citu modeli vai rediģējiet esošo aizstājvārdu.",
     "aliasInputPlaceholder": "aizstājvārda nosaukums",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Slēpt šo kvotas rindu",
     "showQuotaRow": "Rādīt šo kvotas rindu",
     "hiddenQuotaRowsLabel": "Slēptās:",
+    "quotaSpeedTitle": "Nesenais dekodēšanas ātrums šajā kontā (pēdējie {count} veiksmīgie pieprasījumi)",
+    "quotaSpeedLine": "{model}: {avg} tok/s vid. · pēdējais {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s vid. · pēdējais {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Neizdevās atjaunināt kvotas redzamību",
     "account": "Konts",
     "modelQuotas": "Modeļu kvotas",

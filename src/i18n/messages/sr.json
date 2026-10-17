@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — samopoboljšavajući RLM okvir za kodiranje sa podrškom za OpenAI-kompatibilne provajdere",
       "warp": "Warp AI terminal sa podrškom za prilagođene provajdere",
       "agent-deck": "Agent Deck orkestrator za više agenata",
-      "5dive": "5dive — samostalno hostovana flota agenata za kodiranje; jedan profil za autentifikaciju ih sve usmerava na OmniRoute"
+      "5dive": "5dive — samostalno hostovana flota agenata za kodiranje; jedan profil za autentifikaciju ih sve usmerava na OmniRoute",
+      "zed": "Zed уређивач кода — уграђени агент преко OpenAI-компатибилног провајдера"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Комбинација → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "Укључи у auto добављаче означене као ToS: avoid",
+    "autoTosDescription": "Подразумевано искључено. Важи за све auto комбинације, не само за један налог. Повезивање добављача не укључује ову опцију.",
+    "autoTosSaveError": "Није могуће сачувати ToS правила. И даље се приказује претходно подешавање. Покушајте поново.",
+    "autoTosLoadError": "Није могуће учитати ToS правила. Покушајте поново пре измене.",
     "title": "Комбинације",
     "description": "Креирајте комбинације модела са пондерисаним рутирањем и подршком за резервне опције",
     "autoCatalogTitle": "Каталог аутоматског рутирања",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Овај добављач је подразумевано искључен из auto",
+    "tosAvoidNoticeDescription": "Његов ToS статус је означен као avoid. Повезивање налога не мења ова правила. Прочитајте услове добављача пре укључивања глобалне опције за све auto комбинације.",
+    "tosAvoidNoticeAction": "Погледајте auto правила",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Онемогући везу",
     "enableConnection": "Омогући везу",
     "reauthenticateConnection": "Поново аутентификуј ову везу",
+    "verifyAccount": "Потврди налог",
+    "verifyAccountHint": "Google захтева да потврдите овај налог. Отворите везу, завршите проверу, па покушајте поново.",
     "proxyConfig": "Подешавање проксија",
     "aliasExistsAlert": "Псеудоним „{alias}“ већ постоји. Користите други модел или измените постојећи псеудоним.",
     "aliasInputPlaceholder": "назив псеудонима",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Сакриј овај ред квоте",
     "showQuotaRow": "Прикажи овај ред квоте",
     "hiddenQuotaRowsLabel": "Скривено:",
+    "quotaSpeedTitle": "Недавна брзина декодирања на овом налогу (последњих {count} успешних захтева)",
+    "quotaSpeedLine": "{model}: {avg} tok/s просек · последња {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s просек · последња {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Ажурирање видљивости квоте није успело",
     "account": "Налог",
     "modelQuotas": "Квоте модела",

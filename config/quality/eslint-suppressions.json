@@ -191,7 +191,7 @@
   },
   "open-sse/handlers/imageGeneration.ts": {
     "@typescript-eslint/no-unused-vars": {
-      "count": 5
+      "count": 4
     }
   },
   "open-sse/handlers/musicGeneration.ts": {
@@ -291,11 +291,6 @@
   "open-sse/mcp-server/tools/githubSkillTools.ts": {
     "@typescript-eslint/no-unused-vars": {
       "count": 1
-    }
-  },
-  "open-sse/mcp-server/tools/obsidianTools.ts": {
-    "@typescript-eslint/no-unused-vars": {
-      "count": 3
     }
   },
   "open-sse/mcp-server/tools/pickFastestModel.ts": {
@@ -1563,11 +1558,6 @@
   },
   "src/lib/usage/callLogs.ts": {
     "@typescript-eslint/no-unused-vars": {
-      "count": 1
-    }
-  },
-  "src/lib/usage/costCalculator.ts": {
-    "no-restricted-syntax": {
       "count": 1
     }
   },
@@ -4000,11 +3990,6 @@
   },
   "tests/unit/opencode-executor.test.ts": {
     "@typescript-eslint/no-explicit-any": {
-      "count": 1
-    }
-  },
-  "tests/unit/opencode-premium-keyless-gate-8681.test.ts": {
-    "@typescript-eslint/no-unused-vars": {
       "count": 1
     }
   },

@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — ระบบการเขียนโค้ด RLM ที่พัฒนาตนเองได้ พร้อมรองรับผู้ให้บริการที่เข้ากันได้กับ OpenAI",
       "warp": "เทอร์มินัล Warp AI ที่รองรับผู้ให้บริการแบบกำหนดเอง",
       "agent-deck": "ตัวประสานงานหลายเอเจนต์ Agent Deck",
-      "5dive": "5dive — ฟลีตเอเจนต์เขียนโค้ดที่โฮสต์เอง; โปรไฟล์ auth เดียวชี้ทั้งหมดไปที่ OmniRoute"
+      "5dive": "5dive — ฟลีตเอเจนต์เขียนโค้ดที่โฮสต์เอง; โปรไฟล์ auth เดียวชี้ทั้งหมดไปที่ OmniRoute",
+      "zed": "โปรแกรมแก้ไขโค้ด Zed — เอเจนต์ในตัวผ่านผู้ให้บริการที่เข้ากันได้กับ OpenAI"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "คอมโบ → {name}"
   },
   "combos": {
+    "autoTosLoadError": "โหลดนโยบาย ToS ไม่สำเร็จ โปรดลองอีกครั้งก่อนเปลี่ยนแปลง",
+    "autoTosSaveError": "บันทึกนโยบาย ToS ไม่สำเร็จ ยังคงแสดงการตั้งค่าเดิม โปรดลองอีกครั้ง",
+    "autoTosIncludeLabel": "รวมผู้ให้บริการที่ระบุ ToS: avoid ใน auto",
+    "autoTosDescription": "ปิดไว้โดยค่าเริ่มต้น มีผลกับคอมโบ auto ทั้งหมด ไม่ใช่แค่บัญชีเดียว การเชื่อมต่อผู้ให้บริการจะไม่เปิดตัวเลือกนี้",
     "title": "คอมโบ",
     "description": "สร้างโมเดลคอมโบด้วยการกำหนดเส้นทางแบบถ่วงน้ำหนักและการสนับสนุนทางเลือก",
     "autoCatalogTitle": "แค็ตตาล็อกการกำหนดเส้นทางอัตโนมัติ",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "ผู้ให้บริการนี้ถูกยกเว้นจาก auto โดยค่าเริ่มต้น",
+    "tosAvoidNoticeDescription": "สถานะ ToS ถูกระบุว่า avoid การเชื่อมต่อบัญชีไม่เปลี่ยนนโยบายนี้ โปรดอ่านข้อกำหนดของผู้ให้บริการก่อนเปิดตัวเลือกส่วนกลางสำหรับคอมโบ auto ทั้งหมด",
+    "tosAvoidNoticeAction": "ดูนโยบาย auto",
     "codexReleaseCooldown": "ล้างคูลดาวน์ในเครื่อง",
     "codexReleaseCooldownHint": "อนุญาตให้ลองใช้บัญชี Codex นี้อีกครั้ง ไม่ใช้เครดิตรีเซ็ตและไม่เปลี่ยนขีดจำกัดของอัปสตรีม",
     "codexReleasingCooldown": "กำลังล้าง…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "ปิดการใช้งานการเชื่อมต่อ",
     "enableConnection": "เปิดใช้งานการเชื่อมต่อ",
     "reauthenticateConnection": "ตรวจสอบการเชื่อมต่อนี้อีกครั้ง",
+    "verifyAccount": "ยืนยันบัญชี",
+    "verifyAccountHint": "Google กำหนดให้ยืนยันบัญชีนี้ เปิดลิงก์ ทำการตรวจสอบให้เสร็จ แล้วลองอีกครั้ง",
     "proxyConfig": "การกำหนดค่าพร็อกซี",
     "aliasExistsAlert": "มีนามแฝง \"{alias}\" อยู่แล้ว โปรดใช้โมเดลอื่นหรือแก้ไขนามแฝงที่มีอยู่",
     "aliasInputPlaceholder": "ชื่อแฝง",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "ซ่อนแถวโควตานี้",
     "showQuotaRow": "แสดงแถวโควตานี้",
     "hiddenQuotaRowsLabel": "ซ่อนอยู่:",
+    "quotaSpeedTitle": "ความเร็วถอดรหัสล่าสุดของบัญชีนี้ ({count} คำขอที่สำเร็จล่าสุด)",
+    "quotaSpeedLine": "{model}: {avg} tok/s เฉลี่ย · ล่าสุด {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s เฉลี่ย · ล่าสุด {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "ไม่สามารถอัปเดตการแสดงผลโควตาได้",
     "account": "บัญชี",
     "modelQuotas": "โควต้าโมเดล",

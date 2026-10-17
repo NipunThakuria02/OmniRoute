@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-सुसंगत प्रदाता समर्थनासह स्वयं-सुधारणारा RLM कोडिंग हार्नेस",
       "warp": "कस्टम प्रोव्हायडर सपोर्टसह Warp AI टर्मिनल",
       "agent-deck": "Agent Deck मल्टी-एजंट ऑर्केस्ट्रेटर",
-      "5dive": "5dive — स्वयं-होस्टेड कोडिंग एजंट्सचा ताफा; एक auth प्रोफाइल सर्वांना OmniRoute कडे निर्देशित करते"
+      "5dive": "5dive — स्वयं-होस्टेड कोडिंग एजंट्सचा ताफा; एक auth प्रोफाइल सर्वांना OmniRoute कडे निर्देशित करते",
+      "zed": "Zed कोड एडिटर — OpenAI-सुसंगत प्रदात्याद्वारे अंगभूत एजंट"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "कॉम्बो → {name}"
   },
   "combos": {
+    "autoTosIncludeLabel": "ToS: avoid म्हणून चिन्हांकित प्रदाते auto मध्ये समाविष्ट करा",
+    "autoTosDescription": "मूलतः बंद. केवळ एका खात्याला नव्हे, सर्व auto कॉम्बोंना लागू होते. प्रदाता जोडल्याने हा पर्याय सुरू होत नाही.",
+    "autoTosSaveError": "ToS धोरण जतन करता आले नाही. आधीची सेटिंगच दिसत आहे. पुन्हा प्रयत्न करा.",
+    "autoTosLoadError": "ToS धोरण लोड करता आले नाही. बदलण्यापूर्वी पुन्हा प्रयत्न करा.",
     "title": "कॉम्बोज",
     "description": "भारित रूटिंग आणि फॉलबॅक समर्थनासह मॉडेल कॉम्बोज तयार करा",
     "autoCatalogTitle": "ऑटो-राउटिंग कॅटलॉग",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "हा प्रदाता मूलतः auto मधून वगळलेला आहे",
+    "tosAvoidNoticeDescription": "याची ToS स्थिती avoid आहे. खाते जोडल्याने हे धोरण बदलत नाही. सर्व auto कॉम्बोंसाठी जागतिक पर्याय सुरू करण्यापूर्वी प्रदात्याच्या अटी वाचा.",
+    "tosAvoidNoticeAction": "auto धोरण पाहा",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "कनेक्शन अक्षम करा",
     "enableConnection": "कनेक्शन सक्षम करा",
     "reauthenticateConnection": "या कनेक्शनसाठी पुन्हा प्रमाणीकरण करा",
+    "verifyAccount": "खाते सत्यापित करा",
+    "verifyAccountHint": "Google हे खाते सत्यापित करण्यास सांगत आहे. लिंक उघडा, तपासणी पूर्ण करा, नंतर पुन्हा प्रयत्न करा.",
     "proxyConfig": "प्रॉक्सी कॉन्फिगरेशन",
     "aliasExistsAlert": "\"{alias}\" हे उपनाव आधीपासून अस्तित्वात आहे. कृपया वेगळे मॉडेल वापरा किंवा विद्यमान उपनाव संपादित करा.",
     "aliasInputPlaceholder": "उपनावाचे नाव",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "हा कोटा रो लपवा",
     "showQuotaRow": "हा कोटा रो दाखवा",
     "hiddenQuotaRowsLabel": "लपवलेले:",
+    "quotaSpeedTitle": "या खात्यावरील अलीकडील डिकोड वेग (शेवटच्या {count} यशस्वी विनंत्या)",
+    "quotaSpeedLine": "{model}: {avg} tok/s सरासरी · शेवटचा {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s सरासरी · शेवटचा {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "कोटा दृश्यमानता अपडेट करण्यात अयशस्वी",
     "account": "खाते",
     "modelQuotas": "मॉडेल कोटे",

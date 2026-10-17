@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — ራሱን የሚያሻሽል RLM የኮድ ማዕቀፍ፣ ከOpenAI ጋር ተኳኋኝ የሆኑ አቅራቢዎችን የሚደግፍ",
       "warp": "Warp AI ተርሚናል ከብጁ አቅራቢ ድጋፍ ጋር",
       "agent-deck": "Agent Deck የብዙ ወኪሎች አስተባባሪ",
-      "5dive": "5dive — በራስ አገልጋይ ላይ የሚስተናገድ የኮድ ወኪሎች ስብስብ፤ አንድ የማንነት ማረጋገጫ መገለጫ ሁሉንም ወደ OmniRoute ያመራል"
+      "5dive": "5dive — በራስ አገልጋይ ላይ የሚስተናገድ የኮድ ወኪሎች ስብስብ፤ አንድ የማንነት ማረጋገጫ መገለጫ ሁሉንም ወደ OmniRoute ያመራል",
+      "zed": "Zed የኮድ አርታዒ — አብሮ የተሰራ ወኪል በOpenAI-ተኳሃኝ አቅራቢ በኩል"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "ጥምረት → {name}"
   },
   "combos": {
+    "autoTosLoadError": "የአገልግሎት ውሎች ፖሊሲ መጫን አልተቻለም። ከመቀየርዎ በፊት እንደገና ይሞክሩ።",
+    "autoTosSaveError": "የአገልግሎት ውሎች ፖሊሲ ማስቀመጥ አልተቻለም። ያለፈው ቅንብር አሁንም ይታያል። እንደገና ይሞክሩ።",
+    "autoTosIncludeLabel": "ToS: avoid ተብለው የተሰየሙ አቅራቢዎችን በauto ውስጥ ያካትቱ",
+    "autoTosDescription": "በነባሪ ጠፍቷል። ለሁሉም የauto ጥምረቶች ይሠራል፣ ለአንድ መለያ ብቻ አይደለም። አቅራቢን ማገናኘት ይህን አማራጭ አያበራም።",
     "title": "ጥምረቶች",
     "description": "ክብደት ያለው ማስተላለፊያ እና የመጠባበቂያ ድጋፍ ያላቸው የሞዴል ጥምረቶችን ይፍጠሩ",
     "autoCatalogTitle": "የራስ-ሰር ማስተላለፊያ ካታሎግ",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "ይህ አቅራቢ በነባሪ ከauto ተገልሏል",
+    "tosAvoidNoticeDescription": "የአገልግሎት ውሎች ሁኔታው avoid ተብሎ ተሰይሟል። መለያ ማገናኘት ይህን ፖሊሲ አይቀይርም። ለሁሉም የauto ጥምረቶች የጋራ ፈቃድ ከማብራትዎ በፊት የአቅራቢውን ውሎች ይከልሱ።",
+    "tosAvoidNoticeAction": "የauto ፖሊሲን ይከልሱ",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "ግንኙነትን አሰናክል",
     "enableConnection": "ግንኙነትን አንቃ",
     "reauthenticateConnection": "የዚህን ግንኙነት ማንነት እንደገና አረጋግጥ",
+    "verifyAccount": "መለያን አረጋግጥ",
+    "verifyAccountHint": "Google ይህን መለያ እንዲያረጋግጡ ይጠይቃል። አገናኙን ይክፈቱ፣ ማረጋገጫውን ያጠናቅቁ፣ ከዚያ እንደገና ይሞክሩ።",
     "proxyConfig": "የፕሮክሲ ውቅር",
     "aliasExistsAlert": "ተለዋጭ ስም \"{alias}\" አስቀድሞ አለ። እባክዎ ሌላ ሞዴል ይጠቀሙ ወይም ያለውን ተለዋጭ ስም ያርትዑ።",
     "aliasInputPlaceholder": "ተለዋጭ ስም",
@@ -9855,6 +9865,9 @@
     "hideQuotaRow": "ይህን የኮታ ረድፍ ደብቅ",
     "showQuotaRow": "ይህን የኮታ ረድፍ አሳይ",
     "hiddenQuotaRowsLabel": "የተደበቀ፦",
+    "quotaSpeedTitle": "በዚህ መለያ ላይ የቅርብ ጊዜ የዲኮድ ፍጥነት (የመጨረሻዎቹ {count} የተሳኩ ጥያቄዎች)",
+    "quotaSpeedLine": "{model}: {avg} tok/s አማካይ · የመጨረሻ {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s አማካይ · የመጨረሻ {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "የኮታ ታይነትን ማዘመን አልተሳካም",
     "account": "መለያ",
     "modelQuotas": "የሞዴል ኮታዎች",

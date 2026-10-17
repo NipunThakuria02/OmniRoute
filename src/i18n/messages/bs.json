@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — samopoboljšujući RLM coding harness sa podrškom za OpenAI-kompatibilne provajdere",
       "warp": "Warp AI terminal sa podrškom za prilagođene provajdere",
       "agent-deck": "Agent Deck orkestrator više agenata",
-      "5dive": "5dive — self-hosted flota coding agenata; jedan auth profil sve njih usmjerava na OmniRoute"
+      "5dive": "5dive — self-hosted flota coding agenata; jedan auth profil sve njih usmjerava na OmniRoute",
+      "zed": "Zed uređivač koda — ugrađeni agent putem OpenAI-kompatibilnog provajdera"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Kombinacija → {name}"
   },
   "combos": {
+    "autoTosLoadError": "Nije moguće učitati pravila uslova korištenja. Pokušajte ponovo prije izmjene.",
+    "autoTosSaveError": "Nije moguće sačuvati pravila uslova korištenja. I dalje je prikazana prethodna postavka. Pokušajte ponovo.",
+    "autoTosIncludeLabel": "Uključi u auto pružaoce označene sa ToS: avoid",
+    "autoTosDescription": "Podrazumijevano je isključeno. Važi za sve auto kombinacije, ne samo za jedan račun. Povezivanje pružaoca ne uključuje ovu opciju.",
     "title": "Kombinacije",
     "description": "Kreirajte kombinacije modela sa ponderisanim rutiranjem i podrškom za fallback",
     "autoCatalogTitle": "Katalog auto-rutiranja",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Ovaj pružalac je podrazumijevano isključen iz auto",
+    "tosAvoidNoticeDescription": "Njegov status uslova korištenja označen je kao avoid. Povezivanje računa ne mijenja ova pravila. Pregledajte uslove pružaoca prije davanja zajedničke saglasnosti za sve auto kombinacije.",
+    "tosAvoidNoticeAction": "Pregledaj pravila za auto",
     "codexReleaseCooldown": "Ukloni lokalno vrijeme čekanja",
     "codexReleaseCooldownHint": "Dozvoli ponovni pokušaj korištenja ovog Codex računa. Ovo ne koristi kredit za resetovanje niti mijenja ograničenja nadređenog sistema.",
     "codexReleasingCooldown": "Uklanjanje…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Onemogući vezu",
     "enableConnection": "Omogući vezu",
     "reauthenticateConnection": "Ponovo autentifikuj ovu vezu",
+    "verifyAccount": "Potvrdi račun",
+    "verifyAccountHint": "Google traži da potvrdite ovaj račun. Otvorite link, završite provjeru, pa pokušajte ponovo.",
     "proxyConfig": "Konfiguracija proxy-ja",
     "aliasExistsAlert": "Alias \"{alias}\" već postoji. Koristite drugi model ili uredite postojeći alias.",
     "aliasInputPlaceholder": "naziv aliasa",
@@ -9855,6 +9865,9 @@
     "hideQuotaRow": "Sakrij ovaj red kvote",
     "showQuotaRow": "Prikaži ovaj red kvote",
     "hiddenQuotaRowsLabel": "Skriveno:",
+    "quotaSpeedTitle": "Nedavna brzina dekodiranja na ovom računu (posljednjih {count} uspješnih zahtjeva)",
+    "quotaSpeedLine": "{model}: {avg} tok/s prosjek · posljednja {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s prosjek · posljednja {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Neuspjelo ažuriranje vidljivosti kvote",
     "account": "Račun",
     "modelQuotas": "Kvote modela",

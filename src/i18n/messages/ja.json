@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI互換プロバイダーをサポートする自己改善型RLMコーディングハーネス",
       "warp": "カスタムプロバイダーをサポートするWarp AIターミナル",
       "agent-deck": "Agent Deckマルチエージェントオーケストレーター",
-      "5dive": "5dive — セルフホスト型のコーディングエージェント群。1つの認証プロファイルで全体をOmniRouteに向けます"
+      "5dive": "5dive — セルフホスト型のコーディングエージェント群。1つの認証プロファイルで全体をOmniRouteに向けます",
+      "zed": "Zed コードエディター — OpenAI 互換プロバイダー経由の内蔵エージェント"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "コンボ → {name}"
   },
   "combos": {
+    "autoTosLoadError": "利用規約のポリシーを読み込めませんでした。変更する前に再試行してください。",
+    "autoTosSaveError": "利用規約のポリシーを保存できませんでした。以前の設定が引き続き表示されています。再試行してください。",
+    "autoTosIncludeLabel": "ToS: avoid とマークされたプロバイダーを auto に含める",
+    "autoTosDescription": "デフォルトではオフです。1つのアカウントだけでなく、すべての auto コンボに適用されます。プロバイダーを接続しても、このオプションは有効になりません。",
     "title": "コンボ",
     "description": "重み付けルーティングとフォールバックのサポートを備えたモデルのコンボを作成する",
     "autoCatalogTitle": "自動ルーティングカタログ",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "このプロバイダーはデフォルトで auto から除外されています",
+    "tosAvoidNoticeDescription": "利用規約のステータスが avoid とマークされています。アカウントを接続しても、このポリシーは変わりません。すべての auto コンボに対する共通の許可を有効にする前に、プロバイダーの規約を確認してください。",
+    "tosAvoidNoticeAction": "auto のポリシーを確認",
     "codexReleaseCooldown": "ローカルのクールダウンを解除",
     "codexReleaseCooldownHint": "この Codex アカウントを再び試行できるようにします。リセットクレジットは消費されず、アップストリームの制限も変更されません。",
     "codexReleasingCooldown": "解除中…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "接続を無効にする",
     "enableConnection": "接続を有効にする",
     "reauthenticateConnection": "この接続を再認証します",
+    "verifyAccount": "アカウントを確認",
+    "verifyAccountHint": "Google がこのアカウントの確認を求めています。リンクを開いて確認を完了してから、再試行してください。",
     "proxyConfig": "プロキシ構成",
     "aliasExistsAlert": "エイリアス「{alias}」はすでに存在します。別のモデルを使用するか、既存のエイリアスを編集してください。",
     "aliasInputPlaceholder": "エイリアス名",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "このクォータ行を非表示",
     "showQuotaRow": "このクォータ行を表示",
     "hiddenQuotaRowsLabel": "非表示:",
+    "quotaSpeedTitle": "このアカウントの最近のデコード速度（直近 {count} 件の成功リクエスト）",
+    "quotaSpeedLine": "{model}: {avg} tok/s 平均 · 直近 {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s 平均 · 直近 {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "クォータの表示設定の更新に失敗しました",
     "account": "アカウント",
     "modelQuotas": "モデルのクォータ",

@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — isetäiustuv RLM-i programmeerimisraamistik OpenAI-ga ühilduvate teenusepakkujate toega",
       "warp": "Warp AI-terminal kohandatud teenusepakkuja toega",
       "agent-deck": "Agent Deck mitme agendi orkestreerija",
-      "5dive": "5dive — isemajutatud programmeerimisagentide kogum; üks autentimisprofiil suunab nad kõik OmniRoute'i"
+      "5dive": "5dive — isemajutatud programmeerimisagentide kogum; üks autentimisprofiil suunab nad kõik OmniRoute'i",
+      "zed": "Zedi koodiredaktor — sisseehitatud agent OpenAI-ga ühilduva teenusepakkuja kaudu"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Kombinatsioon → {name}"
   },
   "combos": {
+    "autoTosLoadError": "Teenustingimuste reegleid ei saanud laadida. Enne nende muutmist proovige uuesti.",
+    "autoTosSaveError": "Teenustingimuste reegleid ei saanud salvestada. Kuvatakse endiselt eelmine säte. Proovige uuesti.",
+    "autoTosIncludeLabel": "Kaasa auto-valikusse pakkujad märkega ToS: avoid",
+    "autoTosDescription": "Vaikimisi välja lülitatud. Kehtib kõigile auto-kombinatsioonidele, mitte ainult ühele kontole. Pakkuja ühendamine seda valikut ei lülita sisse.",
     "title": "Kombinatsioonid",
     "description": "Loo kaalutud marsruutimise ja varuvalikute toega mudelikombinatsioone",
     "autoCatalogTitle": "Automaatse marsruutimise kataloog",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "See pakkuja on vaikimisi auto-valikust välja jäetud",
+    "tosAvoidNoticeDescription": "Tema teenustingimuste olek on märgitud avoid. Konto ühendamine neid reegleid ei muuda. Enne kõigi auto-kombinatsioonide jaoks üldise nõusoleku andmist vaadake pakkuja tingimused üle.",
+    "tosAvoidNoticeAction": "Vaata auto reegleid",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Keela ühendus",
     "enableConnection": "Luba ühendus",
     "reauthenticateConnection": "Autendi see ühendus uuesti",
+    "verifyAccount": "Kinnita konto",
+    "verifyAccountHint": "Google nõuab selle konto kinnitamist. Ava link, vii kontroll lõpule ja proovi uuesti.",
     "proxyConfig": "Puhverserveri seadistus",
     "aliasExistsAlert": "Alias „{alias}” on juba olemas. Kasuta teist mudelit või muuda olemasolevat aliast.",
     "aliasInputPlaceholder": "aliase nimi",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Peida see kvoodirida",
     "showQuotaRow": "Kuva see kvoodirida",
     "hiddenQuotaRowsLabel": "Peidetud:",
+    "quotaSpeedTitle": "Selle konto hiljutine dekodeerimiskiirus (viimased {count} edukat päringut)",
+    "quotaSpeedLine": "{model}: {avg} tok/s keskm. · viimane {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s keskm. · viimane {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kvoodi nähtavuse värskendamine ebaõnnestus",
     "account": "Konto",
     "modelQuotas": "Mudelite kvoodid",

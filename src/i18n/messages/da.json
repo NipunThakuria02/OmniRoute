@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — selvforbedrende RLM-kodningsramme med understøttelse af OpenAI-kompatible providere",
       "warp": "Warp AI-terminal med understøttelse af brugerdefineret udbyder",
       "agent-deck": "Agent Deck multi-agent-orkestrator",
-      "5dive": "5dive — selv-hostet flåde af kodningsagenter; én auth-profil peger dem alle mod OmniRoute"
+      "5dive": "5dive — selv-hostet flåde af kodningsagenter; én auth-profil peger dem alle mod OmniRoute",
+      "zed": "Zed-kodeeditor — indbygget agent via en OpenAI-kompatibel udbyder"
     },
     "guides": {
       "cursor": {
@@ -3384,6 +3385,10 @@
     "comboRefMember": "Kombination → {name}"
   },
   "combos": {
+    "autoTosLoadError": "Politikken for tjenestevilkår kunne ikke indlæses. Prøv igen, før du ændrer den.",
+    "autoTosSaveError": "Politikken for tjenestevilkår kunne ikke gemmes. Den tidligere indstilling vises stadig. Prøv igen.",
+    "autoTosIncludeLabel": "Medtag udbydere markeret ToS: avoid i auto",
+    "autoTosDescription": "Slået fra som standard. Gælder alle auto-kombinationer, ikke kun én konto. Tilslutning af en udbyder aktiverer ikke denne mulighed.",
     "title": "Kombinationer",
     "description": "Skab modelkombinationer med vægtet routing og fallback-understøttelse",
     "autoCatalogTitle": "Auto-routing katalog",
@@ -5271,6 +5276,9 @@
     }
   },
   "providers": {
+    "tosAvoidNoticeTitle": "Denne udbyder er som standard udelukket fra auto",
+    "tosAvoidNoticeDescription": "Udbyderens status for tjenestevilkår er markeret avoid. Tilslutning af en konto ændrer ikke denne politik. Læs udbyderens vilkår, før du aktiverer det fælles tilvalg for alle auto-kombinationer.",
+    "tosAvoidNoticeAction": "Gennemgå politikken for auto",
     "codexReleaseCooldown": "Clear local cooldown",
     "codexReleaseCooldownHint": "Allow this Codex account to be tried again. Does not redeem a reset credit or change upstream limits.",
     "codexReleasingCooldown": "Clearing…",
@@ -5707,6 +5715,8 @@
     "disableConnection": "Deaktiver forbindelse",
     "enableConnection": "Aktiver forbindelse",
     "reauthenticateConnection": "Genautentificer denne forbindelse",
+    "verifyAccount": "Bekræft konto",
+    "verifyAccountHint": "Google kræver, at du bekræfter denne konto. Åbn linket, gennemfør kontrollen, og prøv igen.",
     "proxyConfig": "Proxy konfiguration",
     "aliasExistsAlert": "Aliaset \"{alias}\" findes allerede. Brug venligst en anden model, eller rediger eksisterende alias.",
     "aliasInputPlaceholder": "aliasnavn",
@@ -9851,6 +9861,9 @@
     "hideQuotaRow": "Skjul denne kvoterække",
     "showQuotaRow": "Vis denne kvoterække",
     "hiddenQuotaRowsLabel": "Skjult:",
+    "quotaSpeedTitle": "Seneste afkodningshastighed på denne konto (seneste {count} vellykkede anmodninger)",
+    "quotaSpeedLine": "{model}: {avg} tok/s gns. · seneste {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s gns. · seneste {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kunne ikke opdatere kvotesynlighed",
     "account": "Konto",
     "modelQuotas": "Modelkvoter",
