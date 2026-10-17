@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-അനുയോജ്യമായ പ്രൊവൈഡർ പിന്തുണയുള്ള സ്വയം മെച്ചപ്പെടുന്ന RLM കോഡിംഗ് ഹാർനെസ്",
       "warp": "ഇഷ്ടാനുസൃത പ്രൊവൈഡർ പിന്തുണയുള്ള Warp AI ടെർമിനൽ",
       "agent-deck": "Agent Deck മൾട്ടി-ഏജന്റ് ഓർക്കസ്ട്രേറ്റർ",
-      "5dive": "5dive — സ്വയം ഹോസ്റ്റ് ചെയ്ത കോഡിംഗ് ഏജന്റുകളുടെ ഫ്ലീറ്റ്; ഒരൊറ്റ ഓത്ത് പ്രൊഫൈൽ അവയെല്ലാം OmniRoute-ലേക്ക് നയിക്കുന്നു"
+      "5dive": "5dive — സ്വയം ഹോസ്റ്റ് ചെയ്ത കോഡിംഗ് ഏജന്റുകളുടെ ഫ്ലീറ്റ്; ഒരൊറ്റ ഓത്ത് പ്രൊഫൈൽ അവയെല്ലാം OmniRoute-ലേക്ക് നയിക്കുന്നു",
+      "zed": "Zed കോഡ് എഡിറ്റർ — OpenAI-അനുയോജ്യ ദാതാവ് വഴി ബിൽറ്റ്-ഇൻ ഏജന്റ്"
     },
     "guides": {
       "cursor": {
@@ -9867,6 +9868,9 @@
     "hideQuotaRow": "ഈ ക്വോട്ട വരി മറയ്ക്കുക",
     "showQuotaRow": "ഈ ക്വോട്ട വരി കാണിക്കുക",
     "hiddenQuotaRowsLabel": "മറച്ചവ:",
+    "quotaSpeedTitle": "ഈ അക്കൗണ്ടിലെ സമീപകാല ഡീകോഡ് വേഗത (അവസാന {count} വിജയകരമായ അഭ്യർത്ഥനകൾ)",
+    "quotaSpeedLine": "{model}: {avg} tok/s ശരാശരി · അവസാനം {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s ശരാശരി · അവസാനം {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "ക്വോട്ട ദൃശ്യപരത അപ്ഡേറ്റ് ചെയ്യാനായില്ല",
     "account": "അക്കൗണ്ട്",
     "modelQuotas": "മോഡൽ ക്വോട്ടകൾ",

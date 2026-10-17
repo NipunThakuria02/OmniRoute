@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — ambiente de programação RLM com autoaperfeiçoamento e suporte para fornecedores compatíveis com OpenAI",
       "warp": "Terminal Warp AI com suporte para fornecedor personalizado",
       "agent-deck": "Orquestrador multi-agente Agent Deck",
-      "5dive": "5dive — frota auto-alojada de agentes de codificação; um perfil de autenticação aponta todos para o OmniRoute"
+      "5dive": "5dive — frota auto-alojada de agentes de codificação; um perfil de autenticação aponta todos para o OmniRoute",
+      "zed": "Editor de código Zed — agente integrado através de um fornecedor compatível com OpenAI"
     },
     "guides": {
       "cursor": {
@@ -9863,6 +9864,9 @@
     "hideQuotaRow": "Ocultar esta linha de quota",
     "showQuotaRow": "Mostrar esta linha de quota",
     "hiddenQuotaRowsLabel": "Oculto:",
+    "quotaSpeedTitle": "Velocidade de descodificação recente nesta conta (últimos {count} pedidos bem-sucedidos)",
+    "quotaSpeedLine": "{model}: {avg} tok/s média · último {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s média · último {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Falha ao atualizar a visibilidade da quota",
     "account": "Conta",
     "modelQuotas": "Cotas de modelo",

@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — 支持 OpenAI 兼容提供者的自我改进型 RLM 编码工具框架",
       "warp": "支持自定义提供者的 Warp AI 终端",
       "agent-deck": "Agent Deck 多智能体编排器",
-      "5dive": "5dive — 自托管的编码智能体集群；一个认证配置即可将全部指向 OmniRoute"
+      "5dive": "5dive — 自托管的编码智能体集群；一个认证配置即可将全部指向 OmniRoute",
+      "zed": "Zed 代码编辑器 — 通过 OpenAI 兼容提供商使用内置智能体"
     },
     "guides": {
       "cursor": {
@@ -9863,6 +9864,9 @@
     "hideQuotaRow": "隐藏此配额行",
     "showQuotaRow": "显示此配额行",
     "hiddenQuotaRowsLabel": "已隐藏：",
+    "quotaSpeedTitle": "此账号最近的解码速度（最近 {count} 次成功请求）",
+    "quotaSpeedLine": "{model}: {avg} tok/s 平均 · 最近 {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s 平均 · 最近 {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "更新配额可见性失败",
     "account": "账户",
     "modelQuotas": "模型配额",

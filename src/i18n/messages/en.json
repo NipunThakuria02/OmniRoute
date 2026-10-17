@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — self-improving RLM coding harness with OpenAI-compatible provider support",
       "warp": "Warp AI terminal with custom provider support",
       "agent-deck": "Agent Deck multi-agent orchestrator",
-      "5dive": "5dive — self-hosted fleet of coding agents; one auth profile points them all at OmniRoute"
+      "5dive": "5dive — self-hosted fleet of coding agents; one auth profile points them all at OmniRoute",
+      "zed": "Zed code editor — built-in agent through an OpenAI-compatible provider"
     },
     "guides": {
       "cursor": {
@@ -9867,6 +9868,9 @@
     "hideQuotaRow": "Hide this quota row",
     "showQuotaRow": "Show this quota row",
     "hiddenQuotaRowsLabel": "Hidden:",
+    "quotaSpeedTitle": "Recent decode speed on this account (last {count} successful requests)",
+    "quotaSpeedLine": "{model}: {avg} tok/s avg · last {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s avg · last {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Failed to update quota visibility",
     "account": "Account",
     "modelQuotas": "Model Quotas",

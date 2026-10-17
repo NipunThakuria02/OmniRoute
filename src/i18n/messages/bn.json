@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — OpenAI-সামঞ্জস্যপূর্ণ প্রোভাইডার সমর্থনসহ স্ব-উন্নয়নশীল RLM কোডিং হারনেস",
       "warp": "কাস্টম প্রোভাইডার সাপোর্ট সহ Warp AI টার্মিনাল",
       "agent-deck": "Agent Deck মাল্টি-এজেন্ট অর্কেস্ট্রেটর",
-      "5dive": "5dive — নিজে হোস্ট করা কোডিং এজেন্টের বহর; একটি auth প্রোফাইল সবগুলোকে OmniRoute-এ নির্দেশ করে"
+      "5dive": "5dive — নিজে হোস্ট করা কোডিং এজেন্টের বহর; একটি auth প্রোফাইল সবগুলোকে OmniRoute-এ নির্দেশ করে",
+      "zed": "Zed কোড এডিটর — OpenAI-সামঞ্জস্যপূর্ণ প্রোভাইডারের মাধ্যমে বিল্ট-ইন এজেন্ট"
     },
     "guides": {
       "cursor": {
@@ -9863,6 +9864,9 @@
     "hideQuotaRow": "এই কোটা সারিটি লুকান",
     "showQuotaRow": "এই কোটা সারিটি দেখান",
     "hiddenQuotaRowsLabel": "লুকানো:",
+    "quotaSpeedTitle": "এই অ্যাকাউন্টে সাম্প্রতিক ডিকোড গতি (শেষ {count}টি সফল অনুরোধ)",
+    "quotaSpeedLine": "{model}: {avg} tok/s গড় · শেষ {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s গড় · শেষ {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "কোটার দৃশ্যমানতা আপডেট করতে ব্যর্থ হয়েছে",
     "account": "অ্যাকাউন্ট",
     "modelQuotas": "মডেল কোটা",

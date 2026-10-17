@@ -3009,7 +3009,8 @@
       "prime-agent": "Prime Agent — isetäiustuv RLM-i programmeerimisraamistik OpenAI-ga ühilduvate teenusepakkujate toega",
       "warp": "Warp AI-terminal kohandatud teenusepakkuja toega",
       "agent-deck": "Agent Deck mitme agendi orkestreerija",
-      "5dive": "5dive — isemajutatud programmeerimisagentide kogum; üks autentimisprofiil suunab nad kõik OmniRoute'i"
+      "5dive": "5dive — isemajutatud programmeerimisagentide kogum; üks autentimisprofiil suunab nad kõik OmniRoute'i",
+      "zed": "Zedi koodiredaktor — sisseehitatud agent OpenAI-ga ühilduva teenusepakkuja kaudu"
     },
     "guides": {
       "cursor": {
@@ -9863,6 +9864,9 @@
     "hideQuotaRow": "Peida see kvoodirida",
     "showQuotaRow": "Kuva see kvoodirida",
     "hiddenQuotaRowsLabel": "Peidetud:",
+    "quotaSpeedTitle": "Selle konto hiljutine dekodeerimiskiirus (viimased {count} edukat päringut)",
+    "quotaSpeedLine": "{model}: {avg} tok/s keskm. · viimane {last} · TTFT {ttft}s (n={samples})",
+    "quotaSpeedLineNoTtft": "{model}: {avg} tok/s keskm. · viimane {last} (n={samples})",
     "quotaVisibilityUpdateFailed": "Kvoodi nähtavuse värskendamine ebaõnnestus",
     "account": "Konto",
     "modelQuotas": "Mudelite kvoodid",
