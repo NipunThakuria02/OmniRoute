@@ -23,9 +23,16 @@ const installRoute = await import("../../src/app/api/skills/skillssh/install/rou
 const { fetchSkillMd, SkillsShSourceSchema, SkillsShSkillIdSchema, SkillsShVersionSchema } =
   skillssh;
 
+/** The registry keeps its in-memory maps private; tests reset them between runs. */
+type RegistryInternals = {
+  registeredSkills?: { clear?: () => void };
+  versionCache?: { clear?: () => void };
+};
+
 function clearSkillRegistry() {
-  skillRegistry.registeredSkills?.clear?.();
-  skillRegistry.versionCache?.clear?.();
+  const internals = skillRegistry as unknown as RegistryInternals;
+  internals.registeredSkills?.clear?.();
+  internals.versionCache?.clear?.();
 }
 
 function resetStorage() {
@@ -184,15 +191,22 @@ test("fetchSkillMd rejects invalid source/skillId before any network call", asyn
     ["owner/repo", ""],
   ];
 
+  // Fixed, sanitized messages: the rejected input is never echoed back.
+  const sanitizedMessages = new Set([
+    "Invalid skills.sh source: expected a GitHub owner/repo",
+    "Invalid skills.sh skill id: expected letters, digits, '_' or '-'",
+  ]);
+
   for (const [source, skillId] of badPairs) {
     await assert.rejects(
       () => fetchSkillMd(source, skillId),
       (err: unknown) => {
         assert.ok(err instanceof Error, `plain Error expected for ${source}/${skillId}`);
         assert.equal(err.name, "Error");
-        // The message must not echo the rejected input back.
-        if (source !== "" && source !== "owner/repo") assert.ok(!err.message.includes(source));
-        if (skillId !== "" && skillId !== "skill") assert.ok(!err.message.includes(skillId));
+        assert.ok(
+          sanitizedMessages.has(err.message),
+          `fixed sanitized message expected, got: ${err.message}`
+        );
         return true;
       },
       `expected rejection for ${JSON.stringify(source)} / ${JSON.stringify(skillId)}`
